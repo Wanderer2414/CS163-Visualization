@@ -6,7 +6,7 @@ class TextBox: public Controller {
 public:
     TextBox();
     std::string         *getString();
-    virtual void         handle()                        override,
+    virtual void        handle()                        override,
                         draw()                          override,
                         setFont(const Font&),
                         setFontSize(const float& size);
