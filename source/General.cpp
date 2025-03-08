@@ -1,6 +1,8 @@
 #include "../include/General.h"
-#include <chrono>
-#include "cmath"
+#include <cctype>
+#include <cmath>
+#include <string>
+
 using namespace std;
 float abs(const Vector2& vector) {
     return sqrt(vector.x*vector.x + vector.y*vector.y);
@@ -28,3 +30,11 @@ bool operator==(const Vector2& a, const Vector2& b) {
 bool operator!=(const Vector2& a, const Vector2& b) {
     return a.x!=b.x || a.y!=b.y;
 }
+
+int to_int(const std::string& str) {
+    int ans = 0;
+    for (int i = 0; i<str.size(); i++) {
+        if (std::isdigit(str[i])) ans = ans*10 + str[i]-'0';
+    }
+    return ans;
+} 

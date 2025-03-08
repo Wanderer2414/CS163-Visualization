@@ -1,6 +1,6 @@
 #include "../include/Controller.h"
 #include "../raylib/raylib.h"
-Controller::Controller() {
+Controller::Controller(Vector2* origin):m_origin(origin) {
     m_position = {0, 0};
     m_size = {100, 50};
 }

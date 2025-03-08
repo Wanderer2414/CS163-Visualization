@@ -1,7 +1,8 @@
 #include "../include/TextButton.h"
 #include "../include/General.h"
 #include "../raylib/raylib.h"
-TextButton::TextButton() {
+
+TextButton::TextButton(Vector2* origin): Button(origin) {
     
 }
 void TextButton::init() {
@@ -45,9 +46,12 @@ void TextButton::setSpacing(const float& spacing) {
 }
 void TextButton::update_text() {
     m_text_position = m_position + m_size/2;
-    Vector2 text_size = MeasureTextEx(m_font, m_text.c_str(),m_font_size, m_spacing);
+    Vector2 text_size = MeasureTextEx(m_font, m_text.c_str(), m_font_size, m_spacing);
     m_text_position.x -= text_size.x/2;
     m_text_position.y -= text_size.y/2;
+}
+std::string* TextButton::getText() {
+    return &m_text;
 }
 TextButton::~TextButton(){
 

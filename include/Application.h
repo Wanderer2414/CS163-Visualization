@@ -1,7 +1,9 @@
-#pragma once
+#ifndef APPLICATION_H
+#define APPLICATION_H
 
 #include "Form.h"
 #include "Menu.h"
+#include "BinaryTree.h"
 class Application {
 public:
     Application();
@@ -11,5 +13,7 @@ private:
     int     m_width = 800,
             m_height = 600;
     Menu    menu;
-    Form    form;
+    BinaryTreeForm BSTForm;
 };
+
+#endif

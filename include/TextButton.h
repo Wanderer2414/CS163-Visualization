@@ -4,7 +4,7 @@
 #include <string>
 class TextButton: public Button {
 public:
-    TextButton();
+    TextButton(Vector2* origin = 0);
     virtual void    init()                                              override,
                     draw()                                              override,
                     setPosition(const float& x, const float& y)         override,
@@ -14,6 +14,7 @@ public:
                     setFontSize(const float& size),
                     setTextColor(const Color& color),
                     setSpacing(const float& spacing);
+    std::string     *getText();
     ~TextButton();
 protected:
     float           m_font_size         = 30,

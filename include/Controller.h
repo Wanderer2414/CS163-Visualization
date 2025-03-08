@@ -2,7 +2,7 @@
 #include "../raylib/raylib.h"
 class Controller {
 public:
-    Controller();
+    Controller(Vector2* origin = 0);
     void            setRoundness(const float& roundness),
                     setSegment(const int& segment);
     virtual void    init()      = 0,
@@ -17,5 +17,6 @@ protected:
     float           m_roundness = 0.1;
     int             m_segment   = 30;
     Vector2         m_position,
-                    m_size;
+                    m_size,
+                    *m_origin;
 };

@@ -3,9 +3,9 @@
 
 Application::Application(): 
             menu({1.0f*m_width, 1.0f*m_height}),
-            form({1.0f*m_width, 1.0f*m_height}) 
+            BSTForm({1.0f*m_width, 1.0f*m_height}) 
 {
-    InitWindow(m_width, m_height, "Tree of Name Visualization");
+    InitWindow(m_width, m_height, "Visualization");
     SetTargetFPS(60);
 }
 void Application::run() {
@@ -19,9 +19,9 @@ void Application::run() {
             }
                 break;
             case 1: {
-                form.init();
-                form_index = form.run();
-                form.close();
+                BSTForm.init();
+                form_index = BSTForm.run();
+                BSTForm.close();
             }
                 break;
             default: {

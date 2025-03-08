@@ -1,27 +1,19 @@
 #include "../include/Form.h"
 #include "../raylib/raylib.h"
-
+#include "../include/General.h"
 Form::Form(const Vector2& window_size):m_window_size(window_size) {
 
 }
-int Form::run() {
-    while (!WindowShouldClose()) {
-        for (auto i:children) i->handle();
-        handle();
-        BeginDrawing();
-            ClearBackground(BLACK);
-            draw();
-        EndDrawing();
-        if (add_button.isPressed() || input.isEnter()) {
-            console.push_back("Add "+*input.getString());
-            input.clear();
-        }
-    }
-    return 0;
+float Form::PullCommand() {
+    if (CommandQueue.empty()) return -1;
+    float ans = CommandQueue.front();
+    CommandQueue.pop_front();
+    return ans;
 }
+
 void Form::init() {
     children.push_back(&add_button);
-    children.push_back(&input);
+    children.push_back(&input_textbox);
     children.push_back(&console);
     for (auto i:children) i->init();
 
@@ -37,23 +29,51 @@ void Form::init() {
     add_button.m_hover_color = {200, 200, 200, 255};
     add_button.setTextColor(BLACK);
 
-    input.setPosition(10, 240);
-    input.setSize(150, 50);
-    input.m_normal_color = WHITE;
-    input.m_hover_color = {200, 200, 200, 255};
-    input.setTextColor(BLACK);
+    input_textbox.setPosition(10, 240);
+    input_textbox.setSize(150, 50);
+    input_textbox.m_normal_color = WHITE;
+    input_textbox.m_hover_color = {200, 200, 200, 255};
+    input_textbox.setTextColor(BLACK);
 
+    m_origin = {m_window_size.x/2, 50};
+    setSpeed(0.5);
 }
 void Form::loadAsset() {
 
 }
+int Form::run() {
+    while (!WindowShouldClose()) {
+        for (auto i:children) i->handle();
+        handle();
+        BeginDrawing();
+            ClearBackground(BLACK);
+            draw();
+        EndDrawing();
+        if (add_button.isPressed() || input_textbox.isEnter()) {
+            add(to_int(*input_textbox.getString()));
+            input_textbox.clear();
+        }
+    }
+    return 0;
+}
 void Form::handle() {
-
+    if (m_clock.get() && CommandQueue.size()) FetchCommandQueue();
+    if (IsMouseButtonDown(MOUSE_BUTTON_LEFT)) m_origin = m_origin + GetMouseDelta();
 }
 void Form::draw() {
     add_button.draw();
-    input.draw();
+    input_textbox.draw();
     console.draw();
+}
+void Form::FetchCommandQueue() {
+    
+}
+void Form::PushCommand(const std::vector<float>& list) {
+    for (float i:list) CommandQueue.push_back(i);
+}
+void Form::setSpeed(const float& duration) {
+    m_speed = duration;
+    m_clock.setDuration(duration);
 }
 void Form::add(const int& x) {
 

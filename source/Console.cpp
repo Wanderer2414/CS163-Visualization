@@ -74,8 +74,8 @@ void Console::draw() {
         DrawRectangleRounded({m_position.x, m_position.y, m_size.x, m_size.y}, m_roundness, m_segment, m_normal_color);
     BeginScissorMode(m_position.x, m_position.x, m_size.x, m_size.y);
         if (m_line_choice>=0) 
-            DrawRectangle(m_position.x, m_position.y+m_font_size*m_line_choice+m_delta.y, m_size.x, m_font_size, m_color_line);
+            DrawRectangle(m_position.x, m_origin.y + m_position.y+m_font_size*m_line_choice+m_delta.y, m_size.x, m_font_size, m_color_line);
         for (int i = 0; i<m_list.size(); i++) 
-            DrawTextEx(m_font, m_list[i].c_str(), m_origin+m_delta+m_position+(Vector2){0, m_font_size*i}, m_font_size, m_spacing, m_text_color);
+            DrawTextEx(m_font, m_list[i].c_str(), m_origin+m_delta+m_position+Vector2({0, m_font_size*i}), m_font_size, m_spacing, m_text_color);
     EndScissorMode();
 }
