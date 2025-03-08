@@ -1,21 +1,13 @@
 #pragma once
-#include "raylib.h"
+#include "../raylib/raylib.h"
 #include <cstddef>
 class Clock {
 public:
     Clock();
-    static size_t getTime();
-    bool    isStarted(),
-            isEnd();
-    void    start(),
-            setRange(const Vector2& start, const Vector2& end),
-            setDuration(const float& duration);
-    Vector2 get();
+    bool        get();
+    void        setDuration(const float& duration);
     ~Clock();
 private:
-    bool    m_is_started    = false,
-            m_is_end        = false;
-    float   m_duration      = 0;
-    Vector2 m_start_point,
-            m_delta;
+    int         old_time        = 0;
+    float       m_duration      = 0;
 };

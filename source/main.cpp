@@ -1,8 +1,7 @@
-#include "../raylib/raylib.h"
-
-using namespace std;
+#include "../include/Application.h"
 
 int main() {
-    
+    Application application;
+    application.run();
     return 0;
 }

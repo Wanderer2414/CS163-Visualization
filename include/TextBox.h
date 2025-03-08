@@ -1,18 +1,24 @@
 #pragma once
-#include "Controller.h"
+#include <cstddef>
 #include <string>
-#include "raylib.h"
-class TextBox: public Controller {
+#include "TextButton.h"
+#include "../raylib/raylib.h"
+class TextBox: public TextButton {
 public:
     TextBox();
+    bool                isFocus(),
+                        isEnter();
     std::string         *getString();
-    virtual void        handle()                        override,
+    virtual void        init()                          override,
+                        handle()                        override,
                         draw()                          override,
-                        setFont(const Font&),
-                        setFontSize(const float& size);
+                        clear();
     ~TextBox();
 private:
-    float               m_font_size;
-    std::string         m_text;
-    Font                m_font;
+    unsigned int        m_cursor_index  = 0;
+    bool                m_is_focus  = false,
+                        m_is_enter  = false;
+    virtual void        update_text() override;
+    Color               m_font_color;
+    Rectangle           m_cursor_pos;
 };

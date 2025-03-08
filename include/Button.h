@@ -1,13 +1,14 @@
 #pragma once
 #include "Controller.h"
-#include "raylib.h"
+#include "../raylib/raylib.h"
 class Button: public Controller {
 public:
     Button();
     bool                isHovered(),
                         isPressed();
-    Color               m_normal_color,
-                        m_hover_color;
+    virtual void        handle()        override;
+    Color               m_normal_color  = WHITE,
+                        m_hover_color   = {200, 200, 200, 255};
     ~Button();
 protected:
     bool                m_is_hovered = false,
