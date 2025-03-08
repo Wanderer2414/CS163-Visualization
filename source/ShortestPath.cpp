@@ -88,21 +88,6 @@ void localDijsktra(vector<vector<pair<int, int>>>& graph, vector<int>& dist, vec
     }
 }
 
-vector<vector<int>> readAdjacencyMatrix(string& filename) {
-    ifstream file(filename);
-    string line;
-    vector<vector<int>> matrix;
-    while (getline(file, line)) {
-        istringstream iss(line);
-        vector<int> row;
-        int value;
-        while (iss >> value) row.push_back(value);
-        matrix.push_back(row);
-    }
-    file.close();
-    return matrix;
-}
-
 void dfs(const vector<vector<int>>& matrix, vector<bool>& visited, int vertex, vector<int>& component) {
     visited[vertex] = true;
     component.push_back(vertex);
@@ -160,7 +145,7 @@ void ConnectedSubgraph(int** a, int n) {
     }
 }
 
-int parent(vector<int>& a, int n, int i) {
+/*int parent(vector<int>& a, int n, int i) {
     if (i == 0) return -1;
     return (i - 1) / 2;
 }
@@ -181,35 +166,7 @@ void swap(vector<int>& a, int i, int j) {
     int temp = a[i];
     a[i] = a[j];
     a[j] = temp;
-}
-
-void maxHeapify(vector<int>& a, int n, int i) {
-    int max = i;
-    int left_child = 2*i + 1;
-    int right_child = 2*i + 2;
-    if (left_child < n && a[left_child] > a[max]) {
-        max = left_child;
-    }
-    if (right_child < n && a[right_child] > a[max]) {
-        max = right_child;
-    }
-    if (max != i) {
-        swap(a, i, max);
-        maxHeapify(a, n, max);
-    }
-}
-void buildMaxHeap(vector<int>& a, int n) {
-    for (int i = n/2 - 1; i >= 0; --i) {
-        maxHeapify(a, n, i);
-    }
-}
-void heapSort(vector<int>& a, int n) {
-    buildMaxHeap(a, n);
-    for (int i = n - 1; i > 0; --i) {
-        swap(a, 0, i);
-        maxHeapify(a, i, 0);
-    }
-}
+}*/
 
 //Testing
 int main() {
