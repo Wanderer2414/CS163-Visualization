@@ -10,6 +10,15 @@
 #include <deque>
 #include <initializer_list>
 
+#define Home_width  300
+#define Home_height 30
+#define Console_x 10
+#define Console_y 50
+#define TextInput_Width 150
+#define Console_width 250
+#define Console_height 300
+#define Control_width 80
+#define Control_height 30
 class Form {
 public:
     Form(const Vector2& window_size);
@@ -21,7 +30,7 @@ public:
                     draw()          ,
                     unloadAsset()   ,
                     close()         ,
-                    add(const int& x)           ,
+                    add(const std::string& str) ,
                     add(std::vector<int>& x)    ,
                     remove()                    ,
                     update(const int& x)        ,
@@ -48,9 +57,11 @@ protected:
     Vector2         m_window_size,
                     m_origin;
     TextBox         input_textbox;
-    TextButton      add_button;
+    TextButton      add_button,
+                    home_button;
     Console         console;
     Clock           m_clock;
+    Rectangle       m_workspace;
     std::deque<float> CommandQueue;
 };
 #endif

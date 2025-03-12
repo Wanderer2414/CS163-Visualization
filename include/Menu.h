@@ -1,12 +1,11 @@
 #pragma once
-#include "../include/Form.h"
 #include "Console.h"
 #include "TextButton.h"
 #include "../raylib/raylib.h"
-#define main_button_width 150
-#define main_button_height 50
-#define button_count 2
-class Menu: public Form {
+#define main_button_width 100
+#define main_button_height 350
+#define button_count 3
+class Menu {
 public:
     Menu(const Vector2& windowSize);
     virtual int     run()           ;
@@ -16,12 +15,10 @@ public:
                     draw()          ,
                     unloadAsset()   ,
                     close()         ;
-    virtual void    add(const int& x)           ,
-                    add(std::vector<int>& x)    ,
-                    remove()                    ,
-                    update(const int& x)        ,
-                    search(const int& x)        ;
 private:
-    TextButton      start;
+    TextButton      BSTForm,
+                    GraphForm,
+                    StringTree;
+    std::vector<Controller*> children;
     Vector2         m_windowSize;
 };

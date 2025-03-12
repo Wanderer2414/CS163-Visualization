@@ -1,11 +1,10 @@
 #include "../include/BinaryTree.h"
 #include "../include/General.h"
-using namespace std;
 BinaryTreeForm::BinaryTreeForm(const Vector2& window_size):Form(window_size) {
-
+    m_root = 0;
 };
-void BinaryTreeForm::add(const int& x) {
-    insert(m_root, {0,0}, x);
+void BinaryTreeForm::add(const std::string& x) {
+    insert(m_root, {0,0}, to_int(x));
 }
 void BinaryTreeForm::insert(Node*& root, const Vector2& par, const int& x) {
     if (!root) {
@@ -49,9 +48,9 @@ void BinaryTreeForm::FetchCommandQueue() {
     case CommandCode::add: {
         int index = PullCommand();
         dur = PullCommand();
-        rePosition();
         console.setFillLine(console.getFillLine()+1);
         m_list[index]->isVisible = true;
+        rePosition();
         m_clock.setDuration(dur*m_speed);
     }
         break;
@@ -88,8 +87,11 @@ int BinaryTreeForm::rePosition(Node* root, const int& level, float index, std::m
     float right = rePosition(root->right, level+1, left+1, board) - 1;
     index = (left+right)/2;
     board[{index, level}] = true;
-    root->setSlowPosition(index*50, level*50, m_speed/2);
-    return index;
+    if (root->isVisible) {
+        root->setDuration(m_speed/2);
+        root->setSlowPosition(index*50, level*50);
+    }
+    return right;
 }
 void BinaryTreeForm::rePosition() {
     if (!m_root) return;
@@ -98,12 +100,29 @@ void BinaryTreeForm::rePosition() {
 }
 void BinaryTreeForm::draw() {
     Form::draw();
-    for (int i =0; i<m_list.size(); i++)
-        if (m_list[i]->isVisible) m_list[i]->draw();
+    BeginScissorMode(m_workspace.x, m_workspace.y, m_workspace.width, m_workspace.height);
+        for (int i =0; i<m_list.size(); i++)
+            if (m_list[i]->isVisible) m_list[i]->draw();
+    EndScissorMode();
 }
 void BinaryTreeForm::handle() {
     Form::handle();
     for (int i = 0; i<m_list.size(); i++) m_list[i]->handle();
+}
+void BinaryTreeForm::free() {
+    free(m_root);
+    m_root = 0;
+    m_list.clear();
+}
+void BinaryTreeForm::free(Node* root) {
+    if (!root) return ;
+    free(root->left);
+    free(root->right);
+    delete root;
+}
+void BinaryTreeForm::close() {
+    Form::close();
+    free();
 }
 BinaryTreeForm::~BinaryTreeForm() {
 

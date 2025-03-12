@@ -12,30 +12,44 @@ float Form::PullCommand() {
 }
 
 void Form::init() {
+    children.push_back(&home_button);
+    children.push_back(&console);
     children.push_back(&add_button);
     children.push_back(&input_textbox);
-    children.push_back(&console);
-    for (auto i:children) i->init();
+    for (auto i: children) i->init();
+    Vector2 center = 0.5f*m_window_size;
 
-    console.setPosition(10, 10);
-    console.setSize(300, 200);
+    home_button.setPosition(center.x-0.5f*Home_width, 10);
+    home_button.setSize(Home_width, Home_height);
+    home_button.setText("Home");
+    home_button.setRoundness(m_roundness);
+
+    console.setPosition(Console_x, Console_y);
+    console.setSize(Console_width, Console_height);
     console.setTextOrigin({10,10});
     console.m_normal_color = {150,150,150,100};
 
-    add_button.setPosition(10, 300);
-    add_button.setSize(150, 50);
+    add_button.setPosition(Console_x, Console_y + Console_height + 10);
+    add_button.setSize(Control_width,Control_height);
     add_button.setText("Add");
+    add_button.setRoundness(m_roundness);
     add_button.m_normal_color = WHITE;
     add_button.m_hover_color = {200, 200, 200, 255};
     add_button.setTextColor(BLACK);
 
-    input_textbox.setPosition(10, 240);
-    input_textbox.setSize(150, 50);
+    input_textbox.setPosition(Console_x+Control_width + 10, add_button.getPosition().y);
+    input_textbox.setSize(TextInput_Width, Control_height);
     input_textbox.m_normal_color = WHITE;
     input_textbox.m_hover_color = {200, 200, 200, 255};
+    input_textbox.setRoundness(m_roundness);
     input_textbox.setTextColor(BLACK);
 
-    m_origin = {m_window_size.x/2, 50};
+    m_workspace.x = Console_width + Console_x + 10;
+    m_workspace.y = Console_y;
+    m_workspace.width = m_window_size.x - m_workspace.x;
+    m_workspace.height = m_window_size.y - m_workspace.y;
+
+    m_origin = {m_window_size.x/2, 100};
     setSpeed(0.5);
 }
 void Form::loadAsset() {
@@ -50,9 +64,10 @@ int Form::run() {
             draw();
         EndDrawing();
         if (add_button.isPressed() || input_textbox.isEnter()) {
-            add(to_int(*input_textbox.getString()));
+            add(*input_textbox.getString());
             input_textbox.clear();
         }
+        if (home_button.isPressed()) return 0;
     }
     return 0;
 }
@@ -61,9 +76,7 @@ void Form::handle() {
     if (IsMouseButtonDown(MOUSE_BUTTON_LEFT)) m_origin = m_origin + GetMouseDelta();
 }
 void Form::draw() {
-    add_button.draw();
-    input_textbox.draw();
-    console.draw();
+    for (auto i:children) i->draw();
 }
 void Form::FetchCommandQueue() {
     
@@ -75,7 +88,7 @@ void Form::setSpeed(const float& duration) {
     m_speed = duration;
     m_clock.setDuration(duration);
 }
-void Form::add(const int& x) {
+void Form::add(const std::string& x) {
 
 }
 void Form::add(std::vector<int>& x) {
@@ -94,7 +107,9 @@ void Form::unloadAsset() {
     UnloadTexture(m_background_image);
 }
 void Form::close() {
-
+    children.clear();
+    CommandQueue.clear();
+    console.clear();
 }
 void Form::setButtonRoundness(const float& roundness) {
     m_roundness = roundness;

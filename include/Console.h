@@ -11,6 +11,7 @@ public:
     virtual void    push_back(const std::string& log),
                     insert(const int& index, const std::string& log),
                     pop_back(),
+                    clear(),
                     handle() override,
                     draw() override,
                     setSize(const float& width, const float& y) override,

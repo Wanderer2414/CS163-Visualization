@@ -9,8 +9,9 @@ public:
                     handle()    = 0,
                     draw()      = 0,
                     setPosition(const float& x, const float& y),
-                    setSize(const float& width, const float& height);
-    Vector2         getSize() const,
+                    setSize(const float& width, const float& height),
+                    setOrigin(Vector2* origin);
+    virtual Vector2 getSize() const,
                     getPosition() const;
     ~Controller();
 protected:

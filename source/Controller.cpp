@@ -4,6 +4,9 @@ Controller::Controller(Vector2* origin):m_origin(origin) {
     m_position = {0, 0};
     m_size = {100, 50};
 }
+void Controller::setOrigin(Vector2* origin) {
+    m_origin = origin;
+}
 void Controller::setRoundness(const float& roundness) {
     m_roundness = roundness;
 }
