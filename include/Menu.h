@@ -7,13 +7,12 @@
 #define button_count 3
 class Menu {
 public:
-    Menu(const Vector2& windowSize);
+    Menu(const Vector2& windowSize) ;
     virtual int     run()           ;
+    
     virtual void    init()          ,
-                    loadAsset()     ,
                     handle()        ,
                     draw()          ,
-                    unloadAsset()   ,
                     close()         ;
 private:
     TextButton      BSTForm,

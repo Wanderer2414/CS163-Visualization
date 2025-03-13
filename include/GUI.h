@@ -5,7 +5,7 @@
 #include "TextButton.h"
 class Node: public TextButton, public SlowMotion {
 public:
-    Node(const int& index, Vector2* origin, const int& val);
+    Node(const int& index, const int& val);
     bool                isVisible = false;
     virtual int         getIndex() const,
                         getValue() const;

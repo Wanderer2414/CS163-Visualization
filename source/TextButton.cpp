@@ -2,7 +2,7 @@
 #include "../include/General.h"
 #include "../raylib/raylib.h"
 
-TextButton::TextButton(Vector2* origin): Button(origin) {
+TextButton::TextButton() {
     
 }
 void TextButton::init() {
@@ -11,13 +11,11 @@ void TextButton::init() {
     update_text();
 }
 void TextButton::draw() {
-    Vector2 pos = m_position;
-    if (m_origin) pos = pos + *m_origin;
     if (m_is_hovered)
-        DrawRectangleRounded({pos.x, pos.y, m_size.x, m_size.y}, m_roundness, m_segment, m_hover_color);
+        DrawRectangleRounded({m_position.x, m_position.y, m_size.x, m_size.y}, m_roundness, m_segment, m_hover_color);
     else 
-        DrawRectangleRounded({pos.x, pos.y, m_size.x, m_size.y}, m_roundness, m_segment, m_normal_color);
-    DrawTextEx(m_font, m_text.c_str(), (m_origin)?m_text_position+*m_origin:m_text_position, m_font_size, m_spacing, m_text_color);
+        DrawRectangleRounded({m_position.x, m_position.y, m_size.x, m_size.y}, m_roundness, m_segment, m_normal_color);
+    DrawTextEx(m_font, m_text.c_str(), m_text_position, m_font_size, m_spacing, m_text_color);
 }
 void TextButton::setPosition(const float& x, const float& y) {
     Button::setPosition(x, y);

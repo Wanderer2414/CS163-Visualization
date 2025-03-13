@@ -2,7 +2,7 @@
 #include <cctype>
 #include <cmath>
 #include <string>
-
+#include <fstream>
 using namespace std;
 float abs(const Vector2& vector) {
     return sqrt(vector.x*vector.x + vector.y*vector.y);
@@ -38,3 +38,34 @@ int to_int(const std::string& str) {
     }
     return ans;
 } 
+
+Rectangle TransToCameraRec(const Camera2D& camera, Rectangle rec) {
+    rec.x = camera.offset.x + rec.x*camera.zoom;
+    rec.y = camera.offset.y + rec.y*camera.zoom;
+    rec.width *= camera.zoom;
+    rec.height *= camera.zoom;
+    return rec;
+}
+
+vector<string> readFromFileStr(const string& link) {
+    vector<string> ans;
+    ifstream fin(link);
+    while (!fin.eof()) {
+        ans.push_back("");
+        getline(fin, ans.back());
+    }
+    ans.pop_back();
+    fin.close();
+    return ans;
+}
+vector<int> readFromFileInt(const string &link) {
+    vector<int> ans;
+    ifstream fin(link);
+    while (!fin.eof()) {
+        ans.push_back(0);
+        fin >> ans.back();
+    }
+    ans.pop_back();
+    fin.close();
+    return ans;
+}

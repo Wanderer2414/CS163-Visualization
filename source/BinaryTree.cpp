@@ -8,7 +8,7 @@ void BinaryTreeForm::add(const std::string& x) {
 }
 void BinaryTreeForm::insert(Node*& root, const Vector2& par, const int& x) {
     if (!root) {
-        root = new Node(m_list.size(), &m_origin, x);
+        root = new Node(m_list.size(), x);
         root->setPosition(par.x, par.y);
         m_list.push_back(root);
         console.push_back("Add " + *root->getText());
@@ -26,9 +26,6 @@ void BinaryTreeForm::insert(Node*& root, const Vector2& par, const int& x) {
         console.push_back("Go to right");
         insert(root->right, root->getPosition(), x);
     }
-}
-void BinaryTreeForm::add(std::vector<int>& x) {
-
 }
 void BinaryTreeForm::remove() {
 
@@ -100,10 +97,12 @@ void BinaryTreeForm::rePosition() {
 }
 void BinaryTreeForm::draw() {
     Form::draw();
+    BeginMode2D(m_camera);
     BeginScissorMode(m_workspace.x, m_workspace.y, m_workspace.width, m_workspace.height);
         for (int i =0; i<m_list.size(); i++)
             if (m_list[i]->isVisible) m_list[i]->draw();
     EndScissorMode();
+    EndMode2D();
 }
 void BinaryTreeForm::handle() {
     Form::handle();

@@ -2,6 +2,7 @@
 #define FORM_H
 #include "Console.h"
 #include "Controller.h"
+#include "FileDropBox.h"
 #include "TextBox.h"
 #include "TextButton.h"
 #include "../raylib/raylib.h"
@@ -25,17 +26,17 @@ public:
     virtual int     run()           ;
     float           PullCommand();
     virtual void    init()          ,
-                    loadAsset()     ,
                     handle()        ,
                     draw()          ,
-                    unloadAsset()   ,
-                    close()         ,
-                    add(const std::string& str) ,
-                    add(std::vector<int>& x)    ,
+                    close()         ;
+
+    virtual void    add(const std::string& str),
+                    add_from_file(const std::string& source),
                     remove()                    ,
                     update(const int& x)        ,
                     search(const int& x)        ,
                     FetchCommandQueue()         ;
+                    
     void            setButtonRoundness(const float& roundness),
                     setBackgroundImage(const std::string& str),
                     setBackgroundColor(const Color&),
@@ -54,14 +55,20 @@ protected:
     Color           m_background_color,
                     m_text_color;
     Font            m_font;
-    Vector2         m_window_size,
-                    m_origin;
-    TextBox         input_textbox;
+    Vector2         m_window_size;
+    TextBox         input_textbox,
+                    remove_textbox;
+                    
     TextButton      add_button,
-                    home_button;
+                    home_button,
+                    remove_button;
+
+    DropBox         m_drop_box;
+
     Console         console;
     Clock           m_clock;
     Rectangle       m_workspace;
     std::deque<float> CommandQueue;
+    Camera2D        m_camera;
 };
 #endif

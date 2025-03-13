@@ -5,9 +5,6 @@ Graph::Graph(const Vector2& window_size):Form(window_size) {
 };
 void Graph::add(const std::string& x) {
 }
-void Graph::add(std::vector<int>& x) {
-
-}
 void Graph::remove() {
 
 }

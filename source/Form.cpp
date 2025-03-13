@@ -4,6 +4,7 @@
 Form::Form(const Vector2& window_size):m_window_size(window_size) {
 
 }
+
 float Form::PullCommand() {
     if (CommandQueue.empty()) return -1;
     float ans = CommandQueue.front();
@@ -16,6 +17,9 @@ void Form::init() {
     children.push_back(&console);
     children.push_back(&add_button);
     children.push_back(&input_textbox);
+    children.push_back(&m_drop_box);
+    children.push_back(&remove_textbox);
+    children.push_back(&remove_button);
     for (auto i: children) i->init();
     Vector2 center = 0.5f*m_window_size;
 
@@ -37,6 +41,12 @@ void Form::init() {
     add_button.m_hover_color = {200, 200, 200, 255};
     add_button.setTextColor(BLACK);
 
+    remove_button.setPosition(Console_x, Console_y + Console_height + Control_height + 20);
+    remove_button.setSize(Control_width, Control_height);
+    remove_button.setText("Remove");
+    remove_button.setRoundness(m_roundness);
+    remove_button.setTextColor(BLACK);
+
     input_textbox.setPosition(Console_x+Control_width + 10, add_button.getPosition().y);
     input_textbox.setSize(TextInput_Width, Control_height);
     input_textbox.m_normal_color = WHITE;
@@ -44,20 +54,30 @@ void Form::init() {
     input_textbox.setRoundness(m_roundness);
     input_textbox.setTextColor(BLACK);
 
+    remove_textbox.setPosition(Console_x + Control_width + 10, remove_button.getPosition().y);
+    remove_textbox.setSize(TextInput_Width, Control_height);
+    remove_button.m_hover_color = {200, 200, 200, 255};
+    remove_button.setRoundness(m_roundness);
+    remove_button.setTextColor(BLACK);
+
     m_workspace.x = Console_width + Console_x + 10;
     m_workspace.y = Console_y;
     m_workspace.width = m_window_size.x - m_workspace.x;
     m_workspace.height = m_window_size.y - m_workspace.y;
 
-    m_origin = {m_window_size.x/2, 100};
-    setSpeed(0.5);
-}
-void Form::loadAsset() {
+    m_drop_box.setPosition(Console_x,Console_y+ Console_height+ Control_height*3);
+    m_drop_box.setSize(Console_width, Console_height);
+    m_drop_box.setText("Drop file here");
+    m_drop_box.m_normal_color = m_drop_box.m_hover_color = LIGHTGRAY;
 
+    m_camera.offset = {m_window_size.x/2, 100};
+    m_camera.zoom = 1;
+    m_camera.rotation = 0;
+    m_camera.target = {0, 0};
+    setSpeed(0.5);
 }
 int Form::run() {
     while (!WindowShouldClose()) {
-        for (auto i:children) i->handle();
         handle();
         BeginDrawing();
             ClearBackground(BLACK);
@@ -68,12 +88,17 @@ int Form::run() {
             input_textbox.clear();
         }
         if (home_button.isPressed()) return 0;
+        if (m_drop_box.IsFileAdd()) {
+            add_from_file(m_drop_box.getFiles()[0]);
+        }
     }
     return 0;
 }
 void Form::handle() {
+    for (auto i:children) i->handle();
     if (m_clock.get() && CommandQueue.size()) FetchCommandQueue();
-    if (IsMouseButtonDown(MOUSE_BUTTON_LEFT)) m_origin = m_origin + GetMouseDelta();
+    if (IsMouseButtonDown(MOUSE_BUTTON_LEFT)) m_camera.offset = m_camera.offset + GetMouseDelta();
+    if (CheckCollisionPointRec(GetMousePosition(), m_workspace)) m_camera.zoom += GetMouseWheelMove()/10;
 }
 void Form::draw() {
     for (auto i:children) i->draw();
@@ -91,7 +116,7 @@ void Form::setSpeed(const float& duration) {
 void Form::add(const std::string& x) {
 
 }
-void Form::add(std::vector<int>& x) {
+void Form::add_from_file(const std::string& x) {
 
 }
 void Form::remove() {
@@ -102,9 +127,6 @@ void Form::update(const int& x) {
 }
 void Form::search(const int& x) {
 
-}
-void Form::unloadAsset() {
-    UnloadTexture(m_background_image);
 }
 void Form::close() {
     children.clear();

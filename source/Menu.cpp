@@ -10,20 +10,6 @@ Menu::Menu(const Vector2& windowSize):
 {
 }
 
-int Menu::run() {
-    while (!WindowShouldClose()) {
-        handle();
-        for (auto i:children) i->handle();
-        BeginDrawing();
-        ClearBackground(BLACK);
-        draw();
-        EndDrawing();
-        if (BSTForm.isPressed()) return 1;
-        if (GraphForm.isPressed()) return 2;
-        if (StringTree.isPressed()) return 3;
-    };
-    return 0;
-};
 void Menu::init() {
     children.push_back(&BSTForm);
     children.push_back(&GraphForm);
@@ -51,17 +37,24 @@ void Menu::init() {
 
 
 }
-void Menu::loadAsset() {
-    
-}
+int Menu::run() {
+    while (!WindowShouldClose()) {
+        handle();
+        BeginDrawing();
+            ClearBackground(BLACK);
+        draw();
+        EndDrawing();
+        if (BSTForm.isPressed()) return 1;
+        if (GraphForm.isPressed()) return 2;
+        if (StringTree.isPressed()) return 3;
+    };
+    return 0;
+};
 void Menu::handle() {
-    
+    for (auto i:children) i->handle();
 }
 void Menu::draw() {
     for (auto i:children) i->draw();
-}
-void Menu::unloadAsset() {
-
 }
 void Menu::close() {
     children.clear();

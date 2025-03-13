@@ -13,12 +13,12 @@ public:
     void    run();
     ~Application();
 private:
-    int     m_width = 800,
-            m_height = 600;
+    int     m_width = 1000,
+            m_height = 700;
     Menu    menu;
     BinaryTreeForm  BSTForm;
     Graph           GraphForm;
-    StringTreeForm  StrTreeForm;
+    Ex::NameTree        StrTreeForm;
 };
 
 #endif

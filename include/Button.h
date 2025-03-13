@@ -3,7 +3,7 @@
 #include "../raylib/raylib.h"
 class Button: public Controller {
 public:
-    Button(Vector2* origin = 0);
+    Button();
     bool                isHovered(),
                         isPressed();
     virtual void        handle()        override;

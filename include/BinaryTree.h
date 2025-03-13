@@ -15,8 +15,7 @@ enum CommandCode {
 class BinaryTreeForm:public Form {
 public:
     BinaryTreeForm(const Vector2& window_size);
-    void            add(const std::string& x)           override,
-                    add(std::vector<int>& x)    override,
+    void            add(const std::string& x)   override,
                     remove()                    override,
                     update(const int& x)        override,
                     search(const int& x)        override,

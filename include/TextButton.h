@@ -4,7 +4,7 @@
 #include <string>
 class TextButton: public Button {
 public:
-    TextButton(Vector2* origin = 0);
+    TextButton();
     virtual void    init()                                              override,
                     draw()                                              override,
                     setPosition(const float& x, const float& y)         override,

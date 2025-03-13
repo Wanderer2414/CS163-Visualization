@@ -10,7 +10,6 @@ class Graph: public Form {
 public:
     Graph(const Vector2& window_size);
     void            add(const std::string& x)   override,
-                    add(std::vector<int>& x)    override,
                     remove()                    override,
                     update(const int& x)        override,
                     search(const int& x)        override,
