@@ -49,8 +49,8 @@
 	"kind" : "codemodel",
 	"paths" : 
 	{
-		"build" : "C:/Users/MY PC/ProjectDSA/CS163-DSAVisualization/out/build/x64-Debug",
-		"source" : "C:/Users/MY PC/ProjectDSA/CS163-DSAVisualization"
+		"build" : "C:/Users/MY PC/source/repos/Huy/out/build/x64-Debug",
+		"source" : "C:/Users/MY PC/source/repos/Huy"
 	},
 	"version" : 
 	{
