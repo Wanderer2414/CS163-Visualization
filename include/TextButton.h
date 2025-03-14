@@ -14,6 +14,7 @@ public:
                     setFontSize(const float& size),
                     setTextColor(const Color& color),
                     setSpacing(const float& spacing);
+    std::string     *getText();
     ~TextButton();
 protected:
     float           m_font_size         = 30,
