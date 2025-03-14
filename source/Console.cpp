@@ -1,9 +1,10 @@
 #include "../include/Console.h"
 #include "../include/General.h"
 #include <algorithm>
-
 Console::Console() {
     clock.setDuration(0.01);
+    m_line_choice = -1;
+    max_width = max_height = 0;
 }
 int Console::getFillLine() const {
     return m_line_choice;
@@ -28,6 +29,11 @@ void Console::insert(const int& index, const std::string& log) {
 void Console::pop_back() {
     m_list.pop_back();
     update_text();
+}
+void Console::clear() {
+    m_list.clear();
+    m_line_choice = -1;
+    m_origin = {0,0};
 }
 void Console::setTextOrigin(const Vector2& origin) {
     m_origin = origin;
@@ -55,11 +61,11 @@ void Console::handle() {
     }
     if (m_is_hovered) {
         m_delta = m_delta + GetMouseWheelMoveV()*20;
-        if (m_delta.x>0) m_delta.x = m_fixed.x = 0;
-        if (m_delta.y>0) m_delta.y = m_fixed.y = 0;
-        if (m_delta.x<min_x) m_delta.x = min_x;
-        if (m_delta.y<min_y) m_delta.y = min_y;
     }
+    if (m_delta.x>0) m_delta.x = m_fixed.x = 0;
+    if (m_delta.y>0) m_delta.y = m_fixed.y = 0;
+    if (m_delta.x<min_x) m_delta.x = m_fixed.x = min_x;
+    if (m_delta.y<min_y) m_delta.y = m_fixed.y = min_y;
 }
 void Console::setFillLine(const int& line) {
     if (line>=0 && line<m_list.size()) {
@@ -75,8 +81,7 @@ void Console::draw() {
     BeginScissorMode(m_position.x, m_position.x, m_size.x, m_size.y);
         if (m_line_choice >= 0) 
             DrawRectangle(m_position.x, m_position.y + m_font_size * m_line_choice + m_delta.y, m_size.x, m_font_size, m_color_line);
-        for (size_t i = 0; i < m_list.size(); i++) 
-            DrawTextEx(m_font, m_list[i].c_str(),
-                       m_origin + m_delta + m_position + Vector2{0, m_font_size * (float)i}, m_font_size, m_spacing, m_text_color);
+        for (int i = 0; i < m_list.size(); i++) 
+            DrawTextEx(m_font, m_list[i].c_str(), m_origin + m_delta + m_position + Vector2{0, m_font_size * i}, m_font_size, m_spacing, m_text_color);
     EndScissorMode();
 }

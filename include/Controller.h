@@ -10,7 +10,7 @@ public:
                     draw()      = 0,
                     setPosition(const float& x, const float& y),
                     setSize(const float& width, const float& height);
-    Vector2         getSize() const,
+    virtual Vector2 getSize() const,
                     getPosition() const;
     ~Controller();
 protected:
