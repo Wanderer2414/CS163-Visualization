@@ -1,0 +1,49 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="17.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="C:\Users\MY PC\ProjectDSA\CS163-DSAVisualization\source\Application.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\MY PC\ProjectDSA\CS163-DSAVisualization\source\Button.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\MY PC\ProjectDSA\CS163-DSAVisualization\source\Clock.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\MY PC\ProjectDSA\CS163-DSAVisualization\source\Console.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\MY PC\ProjectDSA\CS163-DSAVisualization\source\Controller.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\MY PC\ProjectDSA\CS163-DSAVisualization\source\Form.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\MY PC\ProjectDSA\CS163-DSAVisualization\source\General.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\MY PC\ProjectDSA\CS163-DSAVisualization\source\main.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\MY PC\ProjectDSA\CS163-DSAVisualization\source\Menu.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\MY PC\ProjectDSA\CS163-DSAVisualization\source\TextBox.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\MY PC\ProjectDSA\CS163-DSAVisualization\source\TextButton.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\MY PC\ProjectDSA\CS163-DSAVisualization\source\TextureButton.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <CustomBuild Include="C:\Users\MY PC\ProjectDSA\CS163-DSAVisualization\CMakeLists.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{255E3CD0-556F-3DBD-AE71-6C135ACA864C}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>

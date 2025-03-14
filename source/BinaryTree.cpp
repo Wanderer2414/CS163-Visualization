@@ -124,5 +124,4 @@ void BinaryTreeForm::close() {
     free();
 }
 BinaryTreeForm::~BinaryTreeForm() {
-
 }

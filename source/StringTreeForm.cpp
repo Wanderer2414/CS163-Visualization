@@ -124,6 +124,7 @@ Node* Ex::NameTree::split(Branch* root, const bool& isLeaf) {
 }
 
 Ex::NameTree::NameTree(const Vector2& window_size): Form(window_size) {
+    m_root = 0;
 }
 void Ex::NameTree::init() {
     Form::init();
