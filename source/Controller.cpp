@@ -4,6 +4,15 @@ Controller::Controller() {
     m_position = {0, 0};
     m_size = {100, 50};
 }
+void Controller::init() {
+
+}
+void Controller::handle() {
+
+}
+void Controller::draw() {
+    
+}
 void Controller::setRoundness(const float& roundness) {
     m_roundness = roundness;
 }

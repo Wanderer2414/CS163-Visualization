@@ -39,7 +39,7 @@
 				}
 			],
 			"type" : "INTERNAL",
-			"value" : "c:/Users/MY PC/ProjectDSA/CS163-DSAVisualization/out/build/x64-Debug"
+			"value" : "c:/Users/MY PC/source/repos/Huy/out/build/x64-Debug"
 		},
 		{
 			"name" : "CMAKE_CACHE_MAJOR_VERSION",
@@ -467,7 +467,7 @@
 				}
 			],
 			"type" : "STATIC",
-			"value" : "C:/Users/MY PC/ProjectDSA/CS163-DSAVisualization/out/build/x64-Debug/CMakeFiles/pkgRedirects"
+			"value" : "C:/Users/MY PC/source/repos/Huy/out/build/x64-Debug/CMakeFiles/pkgRedirects"
 		},
 		{
 			"name" : "CMAKE_GENERATOR",
@@ -527,7 +527,7 @@
 				}
 			],
 			"type" : "INTERNAL",
-			"value" : "C:/Users/MY PC/ProjectDSA/CS163-DSAVisualization"
+			"value" : "C:/Users/MY PC/source/repos/Huy"
 		},
 		{
 			"name" : "CMAKE_INSTALL_PREFIX",
@@ -539,7 +539,7 @@
 				}
 			],
 			"type" : "PATH",
-			"value" : "C:/Users/MY PC/ProjectDSA/CS163-DSAVisualization/out/install/x64-Debug"
+			"value" : "C:/Users/MY PC/source/repos/Huy/out/install/x64-Debug"
 		},
 		{
 			"name" : "CMAKE_LINKER",
@@ -1091,7 +1091,7 @@
 				}
 			],
 			"type" : "STATIC",
-			"value" : "C:/Users/MY PC/ProjectDSA/CS163-DSAVisualization/out/build/x64-Debug"
+			"value" : "C:/Users/MY PC/source/repos/Huy/out/build/x64-Debug"
 		},
 		{
 			"name" : "DSAVisualization_IS_TOP_LEVEL",
@@ -1115,43 +1115,7 @@
 				}
 			],
 			"type" : "STATIC",
-			"value" : "C:/Users/MY PC/ProjectDSA/CS163-DSAVisualization"
-		},
-		{
-			"name" : "Project_BINARY_DIR",
-			"properties" : 
-			[
-				{
-					"name" : "HELPSTRING",
-					"value" : "Value Computed by CMake"
-				}
-			],
-			"type" : "STATIC",
-			"value" : "C:/Users/MY PC/ProjectDSA/CS163-DSAVisualization/out/build/x64-Debug"
-		},
-		{
-			"name" : "Project_IS_TOP_LEVEL",
-			"properties" : 
-			[
-				{
-					"name" : "HELPSTRING",
-					"value" : "Value Computed by CMake"
-				}
-			],
-			"type" : "STATIC",
-			"value" : "ON"
-		},
-		{
-			"name" : "Project_SOURCE_DIR",
-			"properties" : 
-			[
-				{
-					"name" : "HELPSTRING",
-					"value" : "Value Computed by CMake"
-				}
-			],
-			"type" : "STATIC",
-			"value" : "C:/Users/MY PC/ProjectDSA/CS163-DSAVisualization"
+			"value" : "C:/Users/MY PC/source/repos/Huy"
 		},
 		{
 			"name" : "VCPKG_APPLOCAL_DEPS",

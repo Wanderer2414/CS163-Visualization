@@ -44,9 +44,9 @@ int Menu::run() {
             ClearBackground(BLACK);
         draw();
         EndDrawing();
-        if (BSTForm.isPressed()) return 1;
-        if (GraphForm.isPressed()) return 2;
-        if (StringTree.isPressed()) return 3;
+        if (BSTForm.isPressed()) return 3;
+        if (GraphForm.isPressed()) return 4;
+        if (StringTree.isPressed()) return 5;
     };
     return 0;
 };

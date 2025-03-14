@@ -3,6 +3,7 @@
 #include "Console.h"
 #include "Controller.h"
 #include "FileDropBox.h"
+#include "ProgressBar.h"
 #include "TextBox.h"
 #include "TextButton.h"
 #include "../raylib/raylib.h"
@@ -61,7 +62,8 @@ protected:
                     
     TextButton      add_button,
                     home_button,
-                    remove_button;
+                    remove_button,
+                    back_button;
 
     DropBox         m_drop_box;
 
@@ -69,6 +71,7 @@ protected:
     Clock           m_clock;
     Rectangle       m_workspace;
     std::deque<float> CommandQueue;
+    ProgressBar     m_progress;
     Camera2D        m_camera;
 };
 #endif

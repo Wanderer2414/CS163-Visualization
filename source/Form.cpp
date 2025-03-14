@@ -18,8 +18,10 @@ void Form::init() {
     children.push_back(&add_button);
     children.push_back(&input_textbox);
     children.push_back(&m_drop_box);
+    children.push_back(&m_progress);
     children.push_back(&remove_textbox);
     children.push_back(&remove_button);
+    children.push_back(&back_button);
     for (auto i: children) i->init();
     Vector2 center = 0.5f*m_window_size;
 
@@ -40,6 +42,14 @@ void Form::init() {
     add_button.m_normal_color = WHITE;
     add_button.m_hover_color = {200, 200, 200, 255};
     add_button.setTextColor(BLACK);
+
+    back_button.setPosition(10, 10);
+    back_button.setSize(Control_width, Control_height);
+    back_button.setText("Back");
+    back_button.setRoundness(m_roundness);
+    back_button.m_normal_color = WHITE;
+    back_button.m_hover_color = { 200, 200, 200, 255 };
+    back_button.setTextColor(BLACK);
 
     remove_button.setPosition(Console_x, Console_y + Console_height + Control_height + 20);
     remove_button.setSize(Control_width, Control_height);
@@ -74,6 +84,10 @@ void Form::init() {
     m_camera.zoom = 1;
     m_camera.rotation = 0;
     m_camera.target = {0, 0};
+
+    m_progress.setPosition(10, m_window_size.y - 20);
+    m_progress.setSize(m_window_size.x-20, 20);
+    m_progress.setThick(3);
     setSpeed(0.5);
 }
 int Form::run() {
@@ -87,6 +101,7 @@ int Form::run() {
             add(*input_textbox.getString());
             input_textbox.clear();
         }
+        if (back_button.isPressed()) return 1;
         if (home_button.isPressed()) return 0;
         if (m_drop_box.IsFileAdd()) {
             add_from_file(m_drop_box.getFiles()[0]);
