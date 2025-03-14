@@ -10,7 +10,7 @@ class SinglyLinkedList {
 	private:
 		ListNode* head;
 		ListNode* tail;
-	int size;
+		int size;
 	public:
 		void add(int val);
 		void update(int index, int val);

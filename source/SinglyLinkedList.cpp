@@ -15,7 +15,7 @@ void SinglyLinkedList::add(int val)
 void SinglyLinkedList::update(int index, int val)
 {
 	ListNode* temp = head;
-	for (int i = 0; i < index; i++) {
+	for (int i = 1; i <= index; i++) {
 		if (temp->next) {
 			temp = temp->next;
 		}
@@ -32,11 +32,13 @@ void SinglyLinkedList::remove(int index)
 	}
 	else {
 		ListNode* temp = head;
-		for (int i = 0; i < index - 1; i++) {
-			temp = temp->next;
+		for (int i = 1; i < index; i++) {
+			if (temp->next) {
+				temp = temp->next;
+			}
 		}
 		ListNode* del = temp->next;
-		temp = del->next;
+		temp->next = temp->next->next;
 		delete del;
 	}
 }
