@@ -61,7 +61,8 @@ protected:
                     
     TextButton      add_button,
                     home_button,
-                    remove_button;
+                    remove_button,
+                    back_button;
 
     DropBox         m_drop_box;
 
