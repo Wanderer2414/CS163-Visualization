@@ -6,7 +6,6 @@
 class Node: public TextButton, public SlowMotion {
 public:
     Node(const int& index, const int& val);
-    bool                isVisible = false;
     virtual int         getIndex() const,
                         getValue() const;
     virtual void        draw() override,

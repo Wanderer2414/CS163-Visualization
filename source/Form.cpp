@@ -2,17 +2,11 @@
 #include "../raylib/raylib.h"
 #include "../include/General.h"
 Form::Form(const Vector2& window_size):m_window_size(window_size) {
-
-}
-
-float Form::PullCommand() {
-    if (CommandQueue.empty()) return -1;
-    float ans = CommandQueue.front();
-    CommandQueue.pop_front();
-    return ans;
+    m_workspace_focus = false;
 }
 
 void Form::init() {
+    CommandList::init();
     children.push_back(&home_button);
     children.push_back(&console);
     children.push_back(&add_button);
@@ -73,7 +67,7 @@ void Form::init() {
     m_workspace.x = Console_width + Console_x + 10;
     m_workspace.y = Console_y;
     m_workspace.width = m_window_size.x - m_workspace.x;
-    m_workspace.height = m_window_size.y - m_workspace.y;
+    m_workspace.height = m_window_size.y - m_workspace.y - 50;
 
     m_drop_box.setPosition(Console_x,Console_y+ Console_height+ Control_height*3);
     m_drop_box.setSize(Console_width, Console_height);
@@ -101,6 +95,10 @@ int Form::run() {
             add(*input_textbox.getString());
             input_textbox.clear();
         }
+        if (remove_button.isPressed() || remove_textbox.isEnter()) {
+            remove(*remove_textbox.getString());
+            remove_textbox.clear();
+        }
         if (back_button.isPressed()) return 1;
         if (home_button.isPressed()) return 0;
         if (m_drop_box.IsFileAdd()) {
@@ -110,23 +108,16 @@ int Form::run() {
     return 0;
 }
 void Form::handle() {
+    CommandList::handle();
     for (auto i:children) i->handle();
-    if (m_clock.get() && CommandQueue.size()) FetchCommandQueue();
-    if (IsMouseButtonDown(MOUSE_BUTTON_LEFT)) m_camera.offset = m_camera.offset + GetMouseDelta();
-    if (CheckCollisionPointRec(GetMousePosition(), m_workspace)) m_camera.zoom += GetMouseWheelMove()/10;
+    bool workspace_hover = CheckCollisionPointRec(GetMousePosition(), m_workspace);
+    if (!m_workspace_focus && workspace_hover && IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) m_workspace_focus = true;
+    else if (IsMouseButtonReleased(MOUSE_BUTTON_LEFT)) m_workspace_focus = false;
+    if (workspace_hover && m_workspace_focus && IsMouseButtonDown(MOUSE_BUTTON_LEFT)) m_camera.offset = m_camera.offset + GetMouseDelta();
+    if (workspace_hover) m_camera.zoom += GetMouseWheelMove()/10;
 }
 void Form::draw() {
     for (auto i:children) i->draw();
-}
-void Form::FetchCommandQueue() {
-    
-}
-void Form::PushCommand(const std::vector<float>& list) {
-    for (float i:list) CommandQueue.push_back(i);
-}
-void Form::setSpeed(const float& duration) {
-    m_speed = duration;
-    m_clock.setDuration(duration);
 }
 void Form::add(const std::string& x) {
 
@@ -134,7 +125,7 @@ void Form::add(const std::string& x) {
 void Form::add_from_file(const std::string& x) {
 
 }
-void Form::remove() {
+void Form::remove(const std::string& str) {
 
 }
 void Form::update(const int& x) {
@@ -145,7 +136,7 @@ void Form::search(const int& x) {
 }
 void Form::close() {
     children.clear();
-    CommandQueue.clear();
+    clear();
     console.clear();
 }
 void Form::setButtonRoundness(const float& roundness) {

@@ -5,6 +5,7 @@ class Clock {
 public:
     Clock();
     bool        get();
+    float       getDuration() const;
     void        setDuration(const float& duration);
     ~Clock();
 private:
