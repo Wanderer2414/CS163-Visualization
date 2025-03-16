@@ -5,8 +5,8 @@ Application::Application():
             menu({1.0f*m_width, 1.0f*m_height}),
             BSTForm({1.0f*m_width, 1.0f*m_height}) ,
             GraphForm({1.0f*m_width, 1.0f*m_height}),
-            StrTreeForm({1.0f*m_width, 1.0f*m_height}),
-            menuStart({1.0f*m_width, 1.0f*m_height})
+            menuStart({1.0f*m_width, 1.0f*m_height}),
+            HashTableForm({1.0f*m_width, 1.0f*m_height})
 {
     InitWindow(m_width, m_height, "Visualization");
     SetTargetFPS(60);
@@ -20,7 +20,7 @@ void Application::run() {
                 form_index = menuStart.run();
                 menuStart.close();
             }
-                  break;
+                break;
             case 1: {
                 menu.init();
                 form_index = menu.run();
@@ -40,9 +40,9 @@ void Application::run() {
             }
                 break;
             case 5: {
-                StrTreeForm.init();
-                form_index = StrTreeForm.run();
-                StrTreeForm.close();
+                HashTableForm.init();
+                form_index = HashTableForm.run();
+                HashTableForm.close();
             }
                 break;
             default: {

@@ -9,7 +9,8 @@ public:
                     setDuration(const float& duration),
                     setPosition(const float& x, const float& y),
                     handle();
-    virtual Vector2 getPosition() const;
+    virtual Vector2 getPosition() const,
+                    getEndPoint() const;
 private:
     float               m_duration = 0,
                         m_start_time = 0,

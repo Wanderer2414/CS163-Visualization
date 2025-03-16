@@ -1,5 +1,6 @@
 #include "../include/SlowMotion.h"
 #include "../include/General.h"
+
 float SlowMotion::getDuration() const {
     return m_duration;
 }
@@ -34,4 +35,7 @@ void SlowMotion::setPosition(const float& x, const float& y) {
 }
 Vector2 SlowMotion::getPosition() const {
     return {0,0};
+}
+Vector2 SlowMotion::getEndPoint() const {
+    return m_start_point+m_delta;
 }

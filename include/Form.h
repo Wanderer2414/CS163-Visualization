@@ -1,8 +1,10 @@
 #ifndef FORM_H
 #define FORM_H
+#include "CommandLists.h"
 #include "Console.h"
 #include "Controller.h"
 #include "FileDropBox.h"
+#include "ProgressBar.h"
 #include "TextBox.h"
 #include "TextButton.h"
 #include "../raylib/raylib.h"
@@ -20,11 +22,11 @@
 #define Console_height 300
 #define Control_width 80
 #define Control_height 30
-class Form {
+
+class Form: public CommandList {
 public:
     Form(const Vector2& window_size);
     virtual int     run()           ;
-    float           PullCommand();
     virtual void    init()          ,
                     handle()        ,
                     draw()          ,
@@ -32,23 +34,20 @@ public:
 
     virtual void    add(const std::string& str),
                     add_from_file(const std::string& source),
-                    remove()                    ,
+                    remove(const std::string& str),
                     update(const int& x)        ,
-                    search(const int& x)        ,
-                    FetchCommandQueue()         ;
+                    search(const int& x)        ;
                     
     void            setButtonRoundness(const float& roundness),
                     setBackgroundImage(const std::string& str),
                     setBackgroundColor(const Color&),
                     setFont(const Font& font),
-                    setFontSize(const int& size),
-                    setSpeed(const float& duration),
-                    PushCommand(const std::vector<float>& list);
+                    setFontSize(const int& size);
     ~Form();
 protected:
+    bool            m_workspace_focus;
     float           m_roundness = 0,
-                    m_font_size = 30,
-                    m_speed;
+                    m_font_size = 30;
     int             m_segment   = 30;
     std::vector<Controller*> children;
     Texture2D       m_background_image;
@@ -67,9 +66,8 @@ protected:
     DropBox         m_drop_box;
 
     Console         console;
-    Clock           m_clock;
     Rectangle       m_workspace;
-    std::deque<float> CommandQueue;
+    ProgressBar     m_progress;
     Camera2D        m_camera;
 };
 #endif

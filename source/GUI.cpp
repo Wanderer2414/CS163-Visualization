@@ -26,8 +26,6 @@ void Node::draw() {
     Color cur;
     if (m_is_hovered) cur = m_hover_color;
     else cur = m_normal_color;
-    if (left && left->isVisible) DrawLineEx(m_center, left->getCenter(), 1.5f, cur);
-    if (right && right->isVisible) DrawLineEx(m_center, right->getCenter(), 1.5f, cur);
     DrawEllipse(m_center.x, m_center.y, m_size.x/2, m_size.y/2, cur);
     DrawTextEx(m_font, m_text.c_str(), m_text_position, m_font_size, m_spacing, m_text_color);
 };

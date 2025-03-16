@@ -46,7 +46,9 @@ Rectangle TransToCameraRec(const Camera2D& camera, Rectangle rec) {
     rec.height *= camera.zoom;
     return rec;
 }
-
+Vector2 TransToGlobalPoint(const Camera2D& camera, const Vector2& point) {
+    return (point - camera.offset)/camera.zoom;
+}
 vector<string> readFromFileStr(const string& link) {
     vector<string> ans;
     ifstream fin(link);

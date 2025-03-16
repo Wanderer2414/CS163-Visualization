@@ -13,11 +13,7 @@ Menu::Menu(const Vector2& windowSize):
 void Menu::init() {
     children.push_back(&BSTForm);
     children.push_back(&GraphForm);
-    children.push_back(&StringTree);
-    children.push_back(&AVLTreeForm);
-    children.push_back(&SLLForm);
     children.push_back(&HashTableForm);
-
     for (auto i:children) i->init();
 
     // BSTForm.setPosition(center.x - 0.5f*main_button_width, center.y - main_button_height);
@@ -29,21 +25,9 @@ void Menu::init() {
     GraphForm.setText("Graph");
     GraphForm.setRoundness(0.3);
 
-    StringTree.setSize(main_button_width, main_button_height);
-    StringTree.setText("String");
-    StringTree.setRoundness(0.3);
-
-    AVLTreeForm.setSize(main_button_width, main_button_height);
-    AVLTreeForm.setText("AVL Tree");
-    AVLTreeForm.setRoundness(0.3);
-
     HashTableForm.setSize(main_button_width, main_button_height);
-    HashTableForm.setText("Hash Table");
+    HashTableForm.setText("HashTable");
     HashTableForm.setRoundness(0.3);
-    
-    SLLForm.setSize(main_button_width, main_button_height);
-    SLLForm.setText("Singly Linked List");
-    SLLForm.setRoundness(0.3);
 
     Vector2 center = m_windowSize/2;
     Vector2 origin = {center.x - 0.5f*(main_button_width+2)*button_count, center.y - main_button_height/2};
@@ -62,10 +46,9 @@ int Menu::run() {
         EndDrawing();
         if (BSTForm.isPressed()) return 3;
         if (GraphForm.isPressed()) return 4;
-        if (StringTree.isPressed()) return 5;
-        if (SLLForm.isPressed()) return 6;
-        if (HashTableForm.isPressed()) return 7;
-        if (AVLTreeForm.isPressed()) return 8;
+        if (HashTableForm.isPressed()) return 5;
+        //if (SLLForm.isPressed()) return 6;
+        //if (AVLTreeForm.isPressed()) return 7;
     };
     return 0;
 };

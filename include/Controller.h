@@ -5,9 +5,9 @@ public:
     Controller();
     void            setRoundness(const float& roundness),
                     setSegment(const int& segment);
-    virtual void    init()      = 0,
-                    handle()    = 0,
-                    draw()      = 0,
+    virtual void    init()      ,
+                    handle()    ,
+                    draw()      ,
                     setPosition(const float& x, const float& y),
                     setSize(const float& width, const float& height);
     virtual Vector2 getSize() const,
