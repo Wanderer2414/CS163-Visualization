@@ -7,9 +7,6 @@
 TextBox::TextBox() {
     
 }
-std::string* TextBox::getString() {
-    return &m_text;
-}
 bool TextBox::isFocus() {
     return m_is_focus;
 }

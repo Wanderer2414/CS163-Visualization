@@ -92,11 +92,11 @@ int Form::run() {
             draw();
         EndDrawing();
         if (add_button.isPressed() || input_textbox.isEnter()) {
-            add(*input_textbox.getString());
+            add(*input_textbox.getText());
             input_textbox.clear();
         }
         if (remove_button.isPressed() || remove_textbox.isEnter()) {
-            remove(*remove_textbox.getString());
+            remove(*remove_textbox.getText());
             remove_textbox.clear();
         }
         if (back_button.isPressed()) return 1;
@@ -115,6 +115,16 @@ void Form::handle() {
     else if (IsMouseButtonReleased(MOUSE_BUTTON_LEFT)) m_workspace_focus = false;
     if (workspace_hover && m_workspace_focus && IsMouseButtonDown(MOUSE_BUTTON_LEFT)) m_camera.offset = m_camera.offset + GetMouseDelta();
     if (workspace_hover) m_camera.zoom += GetMouseWheelMove()/10;
+    
+    m_progress.setSplitCount(getCommandCount());
+    if (m_progress.isChanged()) {
+        GotoCommandLine(m_progress.getProgress());
+        if (!IsMouseButtonDown(MOUSE_BUTTON_LEFT)) m_progress.setProgresss(getProgress());
+    } else {
+        if (IsKeyReleased(KEY_RIGHT)) goNext();
+        else if (IsKeyReleased(KEY_LEFT)) goBack();
+        m_progress.setProgresss(getProgress());
+    } 
 }
 void Form::draw() {
     for (auto i:children) i->draw();

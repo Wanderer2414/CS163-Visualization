@@ -13,7 +13,7 @@ Menu::Menu(const Vector2& windowSize):
 void Menu::init() {
     children.push_back(&BSTForm);
     children.push_back(&GraphForm);
-    children.push_back(&StringTree);
+    children.push_back(&HashTableForm);
     for (auto i:children) i->init();
 
     // BSTForm.setPosition(center.x - 0.5f*main_button_width, center.y - main_button_height);
@@ -22,12 +22,12 @@ void Menu::init() {
     BSTForm.setRoundness(0.3);
 
     GraphForm.setSize(main_button_width,main_button_height);
-    GraphForm.setText("Graph");
+GraphForm.setText("Graph");
     GraphForm.setRoundness(0.3);
 
-    StringTree.setSize(main_button_width, main_button_height);
-    StringTree.setText("String");
-    StringTree.setRoundness(0.3);
+    HashTableForm.setSize(main_button_width, main_button_height);
+    HashTableForm.setText("HashTable");
+    HashTableForm.setRoundness(0.3);
 
     Vector2 center = m_windowSize/2;
     Vector2 origin = {center.x - 0.5f*(main_button_width+2)*button_count, center.y - main_button_height/2};
@@ -46,7 +46,7 @@ int Menu::run() {
         EndDrawing();
         if (BSTForm.isPressed()) return 3;
         if (GraphForm.isPressed()) return 4;
-        if (StringTree.isPressed()) return 5;
+        if (HashTableForm.isPressed()) return 5;
     };
     return 0;
 };

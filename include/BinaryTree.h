@@ -28,7 +28,7 @@ public:
     ~BinaryTreeForm();
 private:
     Node            *m_root;
-    void            insert(Node*& root, const Vector2& par, const int& x, const int& index),
+    void            insert(Node*& root, const Vector2& par, const int& x),
                     remove(Node*& root, const int& x),
                     rePosition(),
                     draw(Node* root),

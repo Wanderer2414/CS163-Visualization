@@ -9,7 +9,7 @@ void BinaryTreeForm::add(const std::string& x) {
     console.InsertNextMainCommand("Add " + x);
     InsertNextMainCommand({CommandCode::add, 1.0f*to_int(x), 1});
 }
-void BinaryTreeForm::insert(Node*& root, const Vector2& par, const int& x, const int& index) {
+void BinaryTreeForm::insert(Node*& root, const Vector2& par, const int& x) {
     if (!root) {
         root = new Node(m_list.size(), x);
         root->setPosition(par.x, par.y);
@@ -21,10 +21,10 @@ void BinaryTreeForm::insert(Node*& root, const Vector2& par, const int& x, const
     InsertNextSubCommand({CommandCode::choose, 1.0f*root->getIndex(), 1});
     InsertNextSubCommand({CommandCode::unchoose, 1.0f*root->getIndex(), 0});
     if (x<root->getValue()) {
-        insert(root->left, root->getEndPoint(), x, index+2);
+        insert(root->left, root->getEndPoint(), x);
     }
     else {
-        insert(root->right, root->getEndPoint(), x, index+2);
+        insert(root->right, root->getEndPoint(), x);
     }
 }
 void BinaryTreeForm::remove(Node*& root, const int& x) {
@@ -50,7 +50,7 @@ void BinaryTreeForm::FetchNextCommand(const std::vector<float>& command) {
     switch((int)command[0])
     {
     case CommandCode::add: {
-        insert(m_root, {0,0}, command[1], 0);
+        insert(m_root, {0,0}, command[1]);
         setDuration(0);
     }
         break;
@@ -100,7 +100,7 @@ void BinaryTreeForm::FetchPrevCommand(const std::vector<float>& command) {
         }
             break;
         case CommandCode::erase: {
-            insert(m_root, {0,0 }, command[1], 0);
+            insert(m_root, {0,0 }, command[1]);
             rePosition();
             console.goUp();
         }
@@ -150,19 +150,6 @@ void BinaryTreeForm::draw(Node* root) {
 void BinaryTreeForm::handle() {
     Form::handle();
     handle(m_root);
-    m_progress.setSplitCount(getCommandCount());
-    if (m_progress.isChanged()) {
-        GotoCommandLine(m_progress.getProgress());
-        if (!IsMouseButtonDown(MOUSE_BUTTON_LEFT)) m_progress.setProgresss(getProgress());
-    } else {
-        if (IsKeyReleased(KEY_RIGHT)) {
-            goNext();
-        }
-        else if (IsKeyReleased(KEY_LEFT)) {
-            goBack();
-        }
-        m_progress.setProgresss(getProgress());
-    } 
 }
 void BinaryTreeForm::handle(Node* root) {
     if (!root) return ;

@@ -8,7 +8,6 @@ public:
     TextBox();
     bool                isFocus(),
                         isEnter();
-    std::string         *getString();
     virtual void        init()                          override,
                         handle()                        override,
                         draw()                          override,
