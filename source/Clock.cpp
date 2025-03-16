@@ -6,7 +6,8 @@ Clock::Clock() {
 }
 bool Clock::get() {
     if (!m_duration) return true;
-    if (int tmp = (int)(GetTime()/m_duration); tmp!=old_time) {
+    int tmp = (int)(GetTime() / m_duration);
+    if (tmp != old_time) {
         old_time = tmp;
         return true;
     }

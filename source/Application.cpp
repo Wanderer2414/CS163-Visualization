@@ -20,6 +20,7 @@ void Application::run() {
                 form_index = menuStart.run();
                 menuStart.close();
             }
+                  break;
             case 1: {
                 menu.init();
                 form_index = menu.run();

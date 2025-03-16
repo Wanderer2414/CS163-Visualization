@@ -8,6 +8,10 @@
 #include "FormStart.h"
 #include "Graph.h"
 #include "StringTreeForm.h"
+#include "AVLTree.h"
+#include "SinglyLinkedList.h"
+#include "LinearHashTable.h"
+
 class Application {
 public:
     Application();
@@ -20,6 +24,9 @@ private:
     MenuStart menuStart;
     BinaryTreeForm  BSTForm;
     Graph           GraphForm;
+    
+
+    
     Ex::NameTree        StrTreeForm;
 };
 

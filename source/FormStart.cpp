@@ -17,6 +17,13 @@ int MenuStart::run() {
         BeginDrawing();
         ClearBackground(BLACK);
         draw();
+
+        const char* text = "DATA STRUCTURE VISUALIZATION";
+        int fontSize = 40;
+        int textWidth = MeasureText(text, fontSize);
+        int textX = m_windowSize.x / 2 -  textWidth / 2; // Center horizontall
+        DrawText(text, textX, 100, fontSize, WHITE);
+
         EndDrawing();
         if (Start.isPressed()) return 1;
         if (Setting.isPressed()) return 2;
