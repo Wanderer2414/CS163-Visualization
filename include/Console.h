@@ -4,7 +4,7 @@
 #include "TextButton.h"
 #include <string>
 #include <vector>
-class Console:public TextButton {
+class Console :public TextButton {
 public:
     Console();
     int             getFillLine() const;
@@ -22,25 +22,25 @@ public:
                     setText(const std::string& str)             override,
                     setTextOrigin(const Vector2& origin),
                     setEnable(const bool& enable);
-    Color           m_color_line    = RED;
+    Color           m_color_line = RED;
     ~Console();
 private:
     bool            m_is_enable;
-    float           min_x           = 0,
-                    min_y           = 0,
-                    max_width       = 0,
-                    max_height      = 0;
-    int             line_cursor     = 0,
-                    main_line_cursor= 0,
-                    current_add     = 0;
+    float           min_x = 0,
+                    min_y = 0,
+                    max_width = 0,
+                    max_height = 0;
+    int             line_cursor = 0,
+                    main_line_cursor = 0,
+                    current_add = 0;
     void            BeforeGoUp(),
                     BeforeGoDown(),
                     update_tail();
     virtual void    update_text() override;
     std::vector<std::string>    m_list;
     std::vector<bool>           temporary;
-    Vector2     m_origin    = {0, 0},
-                m_delta     = {0 , 0},
-                m_fixed     = {0, 0};
+    Vector2     m_origin = { 0, 0 },
+                m_delta = { 0 , 0 },
+                m_fixed = { 0, 0 };
     Clock       clock;
 };

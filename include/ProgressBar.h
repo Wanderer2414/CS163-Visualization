@@ -2,7 +2,7 @@
 #define PROGRESS_BAR_H
 
 #include "Controller.h"
-class ProgressBar: public Controller {
+class ProgressBar : public Controller {
 public:
     ProgressBar();
     bool            isFocus(),

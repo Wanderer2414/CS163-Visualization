@@ -7,9 +7,7 @@
 #include "Menu.h"
 #include "BinaryTree.h"
 #include "FormStart.h"
-#include "AVLTree.h"
-#include "SinglyLinkedList.h"
-
+#include "Graph.h"
 
 class Application {
 public:
