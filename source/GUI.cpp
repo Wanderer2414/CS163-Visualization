@@ -1,6 +1,7 @@
 #include "../include/GUI.h"
 #include "../raylib/raylib.h"
 #include "../include/General.h"
+
 Node::Node(const int& index, const int& val) :m_index(index), m_value(val) {
     init();
     setSize(50, 50);

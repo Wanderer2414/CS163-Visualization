@@ -145,6 +145,22 @@ build CMakeFiles\DSAVisualization.dir\source\TextureButton.cpp.obj: CXX_COMPILER
   TARGET_COMPILE_PDB = CMakeFiles\DSAVisualization.dir\
   TARGET_PDB = DSAVisualization.pdb
 
+build CMakeFiles\DSAVisualization.dir\source\Colors.cpp.obj: CXX_COMPILER__DSAVisualization_unscanned_Debug C$:\Users\MY$ PC\source\repos\Huy\source\Colors.cpp || cmake_object_order_depends_target_DSAVisualization
+  FLAGS = /DWIN32 /D_WINDOWS /W3 /GR /EHsc /MDd /Zi /Ob0 /Od /RTC1 -std:c++17
+  INCLUDES = -I"C:\Users\MY PC\ProjectDSA\CS163-DSAVisualization\raylib"
+  OBJECT_DIR = CMakeFiles\DSAVisualization.dir
+  OBJECT_FILE_DIR = CMakeFiles\DSAVisualization.dir\source
+  TARGET_COMPILE_PDB = CMakeFiles\DSAVisualization.dir\
+  TARGET_PDB = DSAVisualization.pdb
+
+build CMakeFiles\DSAVisualization.dir\source\Mode.cpp.obj: CXX_COMPILER__DSAVisualization_unscanned_Debug C$:\Users\MY$ PC\source\repos\Huy\source\Mode.cpp || cmake_object_order_depends_target_DSAVisualization
+  FLAGS = /DWIN32 /D_WINDOWS /W3 /GR /EHsc /MDd /Zi /Ob0 /Od /RTC1 -std:c++17
+  INCLUDES = -I"C:\Users\MY PC\ProjectDSA\CS163-DSAVisualization\raylib"
+  OBJECT_DIR = CMakeFiles\DSAVisualization.dir
+  OBJECT_FILE_DIR = CMakeFiles\DSAVisualization.dir\source
+  TARGET_COMPILE_PDB = CMakeFiles\DSAVisualization.dir\
+  TARGET_PDB = DSAVisualization.pdb
+
 
 # =============================================================================
 # Link build statements for EXECUTABLE target DSAVisualization
@@ -153,7 +169,7 @@ build CMakeFiles\DSAVisualization.dir\source\TextureButton.cpp.obj: CXX_COMPILER
 #############################################
 # Link the executable DSAVisualization.exe
 
-build DSAVisualization.exe: CXX_EXECUTABLE_LINKER__DSAVisualization_Debug CMakeFiles\DSAVisualization.dir\source\Application.cpp.obj CMakeFiles\DSAVisualization.dir\source\Button.cpp.obj CMakeFiles\DSAVisualization.dir\source\Clock.cpp.obj CMakeFiles\DSAVisualization.dir\source\Console.cpp.obj CMakeFiles\DSAVisualization.dir\source\Controller.cpp.obj CMakeFiles\DSAVisualization.dir\source\Form.cpp.obj CMakeFiles\DSAVisualization.dir\source\General.cpp.obj CMakeFiles\DSAVisualization.dir\source\main.cpp.obj CMakeFiles\DSAVisualization.dir\source\Menu.cpp.obj CMakeFiles\DSAVisualization.dir\source\TextBox.cpp.obj CMakeFiles\DSAVisualization.dir\source\TextButton.cpp.obj CMakeFiles\DSAVisualization.dir\source\TextureButton.cpp.obj
+build DSAVisualization.exe: CXX_EXECUTABLE_LINKER__DSAVisualization_Debug CMakeFiles\DSAVisualization.dir\source\Application.cpp.obj CMakeFiles\DSAVisualization.dir\source\Button.cpp.obj CMakeFiles\DSAVisualization.dir\source\Clock.cpp.obj CMakeFiles\DSAVisualization.dir\source\Console.cpp.obj CMakeFiles\DSAVisualization.dir\source\Controller.cpp.obj CMakeFiles\DSAVisualization.dir\source\Form.cpp.obj CMakeFiles\DSAVisualization.dir\source\General.cpp.obj CMakeFiles\DSAVisualization.dir\source\main.cpp.obj CMakeFiles\DSAVisualization.dir\source\Menu.cpp.obj CMakeFiles\DSAVisualization.dir\source\TextBox.cpp.obj CMakeFiles\DSAVisualization.dir\source\TextButton.cpp.obj CMakeFiles\DSAVisualization.dir\source\TextureButton.cpp.obj CMakeFiles\DSAVisualization.dir\source\Colors.cpp.obj CMakeFiles\DSAVisualization.dir\source\Mode.cpp.obj
   FLAGS = /DWIN32 /D_WINDOWS /W3 /GR /EHsc /MDd /Zi /Ob0 /Od /RTC1
   LINK_FLAGS = /machine:x64 /debug /INCREMENTAL /subsystem:console
   LINK_LIBRARIES = -lraylib  -lopengl32  -lgdi32  -lwinmm  kernel32.lib user32.lib gdi32.lib winspool.lib shell32.lib ole32.lib oleaut32.lib uuid.lib comdlg32.lib advapi32.lib

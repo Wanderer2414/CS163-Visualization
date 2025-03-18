@@ -1,5 +1,6 @@
 #include "../include/CommandLists.h"
 #include <vector>
+#include <iostream>
 CommandList::CommandList() {
 }
 bool CommandList::isEnd() {
@@ -17,7 +18,7 @@ int CommandList::getCommandCount() {
 float CommandList::getProgress() {
     if (sub_count.empty()) return 1;
     float ans = 1.0f * main_command_pointer / sub_count.size();
-    if (main_command_pointer)
+    if (main_command_pointer < sub_count.size())
         ans += 1.0f * (command_pointer - main_command_pointer) / (sub_count[main_command_pointer] + 1) / sub_count.size();
     return ans;
 }

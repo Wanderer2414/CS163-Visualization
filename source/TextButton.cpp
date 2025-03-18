@@ -6,7 +6,7 @@ TextButton::TextButton() {
 
 }
 void TextButton::init() {
-    m_font = GetFontDefault();
+    m_font = GetFontDefault(); 
     m_text = "Button";
     update_text();
 }

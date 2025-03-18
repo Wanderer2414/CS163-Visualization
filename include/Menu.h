@@ -17,7 +17,8 @@ public:
 private:
     TextButton      BSTForm,
                     GraphForm,
-                    HashTableForm;
+                    HashTableForm,
+                    SLLForm;
     std::vector<Controller*> children;
     Vector2         m_windowSize;
 };

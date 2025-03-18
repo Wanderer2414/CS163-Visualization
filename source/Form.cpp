@@ -1,6 +1,8 @@
 #include "../include/Form.h"
 #include "../raylib/raylib.h"
 #include "../include/General.h"
+#include "../include/Colors.h"
+#include "../include/Mode.h"
 Form::Form(const Vector2& window_size) :m_window_size(window_size) {
     m_workspace_focus = false;
 }
@@ -88,7 +90,9 @@ int Form::run() {
     while (!WindowShouldClose()) {
         handle();
         BeginDrawing();
-        ClearBackground(BLACK);
+
+        ColorScheme currentTheme = DarkTheme;
+        ClearBackground(currentTheme.background);
         draw();
         EndDrawing();
         if (add_button.isPressed() || input_textbox.isEnter()) {

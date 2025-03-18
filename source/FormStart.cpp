@@ -2,9 +2,11 @@
 #include "../raylib/raylib.h"
 #include "../include/General.h"
 #include "../include/General.h"
+#include "../include/Colors.h"
+#include "../include/Mode.h"
 #include <cmath>
 #include <string>
-
+#include "../include/GUI.h"
 MenuStart::MenuStart(const Vector2& windowSize) :
     m_windowSize(windowSize)
 {
@@ -15,7 +17,16 @@ int MenuStart::run() {
         handle();
         for (auto i : children) i->handle();
         BeginDrawing();
-        ClearBackground(BLACK);
+        ColorScheme currentTheme = DarkTheme;
+        ClearBackground(currentTheme.background);
+        
+        const char* text = "DATA STRUCTURE VISUALIZATION";
+        int fontSize = 40;
+        // Calculate the position to center the text
+        int textWidth = MeasureText(text, fontSize);
+        int posX = (m_windowSize.x - textWidth) / 2;
+        DrawText(text, posX, 100, fontSize, currentTheme.text);
+
         draw();
         EndDrawing();
         if (Start.isPressed()) return 1;
