@@ -1,10 +1,8 @@
+#include "../raylib/raylib.h"
 #include "../include/ShortestPath.h"
 #include "../include/Global.h"
 
-struct TreeNode {
-    TreeNode *left, *right;
-    int val;
-};
+
 
 const int INF = numeric_limits<int>::max();
 
@@ -143,33 +141,4 @@ void ConnectedSubgraph(int** a, int n) {
         res.push_back(sub);
         ++cnt;
     }
-}
-
-/*int parent(vector<int>& a, int n, int i) {
-    if (i == 0) return -1;
-    return (i - 1) / 2;
-}
-
-int left(vector<int>& a, int n, int i) {
-    int left_child = 2*i + 1;
-    if (left_child >= n) return -1;
-    return left_child;
-}
-
-int right(vector<int>& a, int n, int i) {
-    int right_child = 2*i + 2;
-    if (right_child >= n) return -1;
-    return right_child;
-}
-
-void swap(vector<int>& a, int i, int j) {
-    int temp = a[i];
-    a[i] = a[j];
-    a[j] = temp;
-}*/
-
-//Testing
-int main() {
-    
-    return 0;
 }
