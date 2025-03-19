@@ -1,7 +1,7 @@
 #include "../include/Button.h"
 
 Button::Button() {
-
+    
 }
 bool Button::isHovered() {
     return m_is_hovered;

@@ -11,7 +11,7 @@ public:
     virtual void        handle()        override;
     Color               m_normal_color  = WHITE,
                         m_hover_color   = {200, 200, 200, 255};
-    ~Button();
+    virtual ~Button() = default;
 protected:
     bool                m_is_hovered = false,
                         m_is_pressed = false;
