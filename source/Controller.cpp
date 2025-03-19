@@ -13,12 +13,6 @@ void Controller::handle() {
 void Controller::draw() {
 
 }
-void Controller::setRoundness(const float& roundness) {
-    m_roundness = roundness;
-}
-void Controller::setSegment(const int& segment) {
-    m_segment = segment;
-}
 void Controller::setPosition(const float& x, const float& y) {
     m_position = { x,y };
 }

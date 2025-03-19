@@ -2,12 +2,14 @@
 #define MENU_BOX_H
 #include "../include/Controller.h"
 #include "Colors.h"
+#include "SettingPackage.h"
 #include "VerticalOpen.h"
 #include <vector>
 using namespace std;
 class MenuBox: public Controller, public VerticalOpen {
 public:
     MenuBox();
+    ButtonSetting   *button_setting;
     virtual void    init()      override,
                     handle()    override,
                     draw()      override;

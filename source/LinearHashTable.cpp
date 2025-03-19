@@ -2,11 +2,8 @@
 #include <string>
 #include "../include/General.h"
 HT::Node::Node() {
-    TextButton::init();
     m_value = 0;
     m_index = 0;
-    setSize(50, 50);
-    setText(std::to_string(m_value));
 }
 int HT::Node::getValue() const {
     return m_value;
@@ -21,8 +18,8 @@ void HT::Node::setValue(const int& value) {
 void HT::Node::draw() {
     TextButton::draw();
     Vector2 index_pos = m_text_position;
-    index_pos.y -= m_font_size + 5;
-    DrawTextEx(m_font, std::to_string(m_index).c_str(), index_pos, m_font_size / 1.5, m_spacing, WHITE);
+    index_pos.y -= text_setting->font_size + 5;
+    DrawTextEx(text_setting->font, std::to_string(m_index).c_str(), index_pos, text_setting->font_size / 1.5, text_setting->spacing, WHITE);
 }
 void HT::Node::handle() {
     TextButton::handle();
@@ -39,9 +36,10 @@ void HT::HashTable::init() {
     m_node_spacing = 5;
     max_size = 0;
 
+    m_memory_sz_textBox.button_setting = &form_setting;
+    m_memory_sz_textBox.text_setting = &form_setting;
     m_memory_sz_textBox.setPosition(m_window_size.x - 100, 10);
     m_memory_sz_textBox.setSize(70, 50);
-    m_memory_sz_textBox.setRoundness(0.4);
 
     setMemorySize(10);
 
@@ -50,7 +48,11 @@ void HT::HashTable::init() {
 void HT::HashTable::setMemorySize(const int& sz) {
     m_memory.resize(sz);
     for (int i = 0; i < sz; i++) {
+        m_memory[i].init();
+        m_memory[i].button_setting = &form_setting;
+        m_memory[i].text_setting = &form_setting;
         m_memory[i].setSize(m_node_size, m_node_size);
+        m_memory[i].setValue(0);
         m_memory[i].setIndex(i);
     }
 }
@@ -64,6 +66,8 @@ void HT::HashTable::draw() {
 }
 void HT::HashTable::handle() {
     Form::handle();
+    for (auto& i:m_memory) i.handle();
+    
     m_camera.offset.x = m_workspace.x + 10;
     if (m_memory_sz_textBox.isEnter()) {
         setMemorySize(to_int(*m_memory_sz_textBox.getText()));
@@ -163,12 +167,12 @@ void HT::HashTable::FetchNextCommand(const std::vector<float>& command) {
     }
                 break;
     case _choose: {
-        m_memory[(int)command[1]].m_normal_color = RED;
+        // m_memory[(int)command[1]].m_normal_color = RED;
         setDuration(command[2]);
     }
                 break;
     case _unchoose: {
-        m_memory[(int)command[1]].m_normal_color = WHITE;
+        // m_memory[(int)command[1]].m_normal_color = WHITE;
         setDuration(0);
     }
                   break;
@@ -197,12 +201,12 @@ void HT::HashTable::FetchPrevCommand(const std::vector<float>& command) {
         setDuration(0);
     }
     case _choose: {
-        m_memory[(int)command[1]].m_normal_color = WHITE;
+        // m_memory[(int)command[1]].m_normal_color = WHITE;
         setDuration(0);
     }
                 break;
     case _unchoose: {
-        m_memory[(int)command[1]].m_normal_color = RED;
+        // m_memory[(int)command[1]].m_normal_color = RED;
         setDuration(0);
     }
                   break;

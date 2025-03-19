@@ -20,7 +20,6 @@ private:
     bool                m_is_focus  = false,
                         m_is_enter  = false;
     virtual void        update_text() override;
-    Color               m_font_color;
     Rectangle           m_cursor_pos;
 };
 

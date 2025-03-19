@@ -1,12 +1,12 @@
 #include "../include/Button.h"
 
 Button::Button() {
-
+    button_setting = 0;
 }
-bool Button::isHovered() {
+bool Button::isHovered() const {
     return m_is_hovered;
 }
-bool Button::isPressed() {
+bool Button::isPressed() const {
     return m_is_pressed;
 }
 void Button::handle() {
@@ -14,5 +14,4 @@ void Button::handle() {
     m_is_pressed = m_is_hovered && IsMouseButtonReleased(MOUSE_BUTTON_LEFT);
 }
 Button::~Button() {
-
 }

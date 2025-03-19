@@ -12,6 +12,9 @@ Application::Application() :
     InitWindow(m_width, m_height, "Visualization");
     SetTargetFPS(60);
 }
+#include <iostream>
+using namespace std;
+
 void Application::run() {
     int form_index = 0;
     while (!WindowShouldClose()) {
@@ -45,6 +48,7 @@ void Application::run() {
             form_index = HashTableForm.run();
             HashTableForm.close();
         }
+            break;
         case 6: {
             SLLForm.init();
             form_index = SLLForm.run();

@@ -2,11 +2,10 @@
 #define CONTROLLER_H
 
 #include "../raylib/raylib.h"
+#include "SettingPackage.h"
 class Controller {
 public:
     Controller();
-    void            setRoundness(const float& roundness),
-                    setSegment(const int& segment);
     virtual void    init()      ,
                     handle()    ,
                     draw()      ,
@@ -16,8 +15,6 @@ public:
                     getPosition() const;
     ~Controller();
 protected:
-    float           m_roundness = 0.1;
-    int             m_segment   = 30;
     Vector2         m_position,
                     m_size;
 };

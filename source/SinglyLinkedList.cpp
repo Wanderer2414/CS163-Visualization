@@ -30,13 +30,11 @@ namespace SLL {
 	}
 	SLLForm::SLLForm(const Vector2& window_size) : Form(window_size) {
 		m_head = nullptr;
-		init();
 		setPause(true);
 	}
-	void SLLForm::add(const std::string& x, const std::string& index) {
-		int idx = std::stoi(index);
+	void SLLForm::add(const std::string& x) {
 		console.InsertNextMainCommand("Add " + x);
-		InsertNextMainCommand({ _Insert, 1.0f * to_int(x), (float)idx});
+		InsertNextMainCommand({ _Insert, 1.0f * to_int(x), 1});
 	}
 	void SLLForm::insert(Node*& head, const int& x, const int& index) {
 		Node* newNode = new Node(m_list.size(), x);
@@ -116,11 +114,11 @@ namespace SLL {
 			break;
 		case _Choose:
 			console.goDown();
-			m_list[(int)command[1]]->m_normal_color = RED;
+			// m_list[(int)command[1]] = RED;
 			setDuration(command[2]);
 			break;
 		case _Unchoose:
-			m_list[(int)command[1]]->m_normal_color = WHITE;
+			// m_list[(int)command[1]]->m_normal_color = WHITE;
 			setDuration(command[2]);
 			break;
 		default:
@@ -152,11 +150,11 @@ namespace SLL {
 			console.goUp();
 			break;
 		case _Choose:
-			m_list[(int)command[1]]->m_normal_color = WHITE;
+			// m_list[(int)command[1]]->m_normal_color = WHITE;
 			setDuration(command[2]);
 			break;
 		case _Unchoose:
-			m_list[(int)command[1]]->m_normal_color = RED;
+			// m_list[(int)command[1]]->m_normal_color = RED;
 			setDuration(command[2]);
 			break;
 		default:
@@ -183,8 +181,8 @@ namespace SLL {
 	void Node::draw() {
 		TextButton::draw();
 		Vector2 index_pos = m_text_position;
-		index_pos.y -= m_font_size + 5;
-		DrawTextEx(m_font, std::to_string(m_index).c_str(), index_pos, m_font_size / 1.5, m_spacing, WHITE);
+		index_pos.y -= text_setting->font_size + 5;
+		DrawTextEx(text_setting->font, std::to_string(m_index).c_str(), index_pos, text_setting->font_size / 1.5,text_setting->spacing, WHITE);
 	}
 	void SLLForm::handle() {
 		Form::handle();

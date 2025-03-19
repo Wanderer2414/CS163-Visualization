@@ -31,8 +31,8 @@ void DropBox::draw() {
     Vector2 pos = m_textfile_position + m_position;
     for (auto i : files) {
         i = GetFileName(i.c_str());
-        DrawTextEx(m_font, i.c_str(), pos, m_font_size, m_spacing, m_text_color);
-        pos.y += m_font_size;
+        DrawTextEx(text_setting->font, i.c_str(), pos, text_setting->font_size, text_setting->spacing, text_setting->color);
+        pos.y += text_setting->font_size;
     }
     EndScissorMode();
 }

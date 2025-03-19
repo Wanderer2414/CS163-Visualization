@@ -4,7 +4,9 @@
 #include "Console.h"
 #include "Controller.h"
 #include "FileDropBox.h"
+#include "HomeButton.h"
 #include "ProgressBar.h"
+#include "SettingPackage.h"
 #include "TextBox.h"
 #include "TextButton.h"
 #include "../raylib/raylib.h"
@@ -59,9 +61,11 @@ protected:
                     remove_textbox;
 
     TextButton      add_button,
-                    home_button,
                     remove_button,
                     back_button;
+    HomeButton      home_button;
+
+    FormSetting     form_setting;
 
     DropBox         m_drop_box;
 
