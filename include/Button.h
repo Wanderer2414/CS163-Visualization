@@ -1,4 +1,6 @@
-#pragma once
+#ifndef BUTTON_H
+#define BUTTON_H
+
 #include "Controller.h"
 #include "../raylib/raylib.h"
 class Button: public Controller {
@@ -14,3 +16,5 @@ protected:
     bool                m_is_hovered = false,
                         m_is_pressed = false;
 };
+
+#endif //BUTTON_H

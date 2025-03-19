@@ -1,4 +1,6 @@
-#pragma once
+#ifndef FORMSTART_H
+#define FORMSTART_H
+
 #include "Console.h"
 #include "TextButton.h"
 #include "../raylib/raylib.h"
@@ -20,3 +22,5 @@ private:
     std::vector<Controller*> children;
     Vector2         m_windowSize;
 };
+
+#endif //FORMSTART_H

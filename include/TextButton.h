@@ -1,4 +1,6 @@
-#pragma once
+#ifndef TEXTBUTTON_H
+#define TEXTBUTTON_H
+
 #include "Button.h"
 #include "../raylib/raylib.h"
 #include <string>
@@ -29,3 +31,5 @@ protected:
                     m_textureHovered;
     bool            m_useTexture = false; // Flag
 };
+
+#endif

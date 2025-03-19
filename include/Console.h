@@ -1,4 +1,6 @@
-#pragma once
+#ifndef CONSOLE_H
+#define CONSOLE_H
+
 #include "Clock.h"
 #include "Controller.h"
 #include "TextButton.h"
@@ -44,3 +46,5 @@ private:
                 m_fixed = { 0, 0 };
     Clock       clock;
 };
+
+#endif //CONSOLE_H

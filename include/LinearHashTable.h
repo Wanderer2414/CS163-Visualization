@@ -1,5 +1,5 @@
-#ifndef HASHTABLE_H
-#define HASHTABLE_H
+#ifndef LINEARHASHTABLE_H
+#define LINEARHASHTABLE_H
 
 #include "Form.h"
 #include "TextBox.h"
