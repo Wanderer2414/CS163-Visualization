@@ -1,4 +1,6 @@
-#pragma once
+#ifndef TEXTBUTTON_H
+#define TEXTBUTTON_H
+
 #include "Button.h"
 #include "../raylib/raylib.h"
 #include <string>
@@ -14,6 +16,7 @@ public:
                     setFontSize(const float& size),
                     setTextColor(const Color& color),
                     setSpacing(const float& spacing);
+    std::string     *getText();
     ~TextButton();
 protected:
     float           m_font_size         = 30,
@@ -24,3 +27,5 @@ protected:
     Font            m_font              ;
     Color           m_text_color        = BLACK;
 };
+
+#endif //TEXTBUTTON_H

@@ -1,4 +1,6 @@
-#pragma once
+#ifndef TEXTUREBUTTON_H
+#define TEXTUREBUTTON_H
+
 #include "Button.h"
 #include <cmath>
 #include "../raylib/raylib.h"
@@ -15,3 +17,5 @@ private:
                     m_scale;
     Texture2D       m_texture;
 };
+
+#endif //TEXTUREBUTTON_H

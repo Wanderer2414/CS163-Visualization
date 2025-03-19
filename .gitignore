@@ -1,0 +1,39 @@
+# Ignore Visual Studio-specific files
+.vs/
+*.suo
+*.user
+*.vcxproj.user
+*.ncb
+*.aps
+*.ilk
+*.log
+
+# Ignore build files
+*.obj
+*.pdb
+*.idb
+*.ipch
+*.tlog
+
+# Ignore compiled binaries
+*.exe
+*.dll
+*.lib
+*.out
+
+# Ignore CMake build directories
+CMakeCache.txt
+CMakeFiles/
+
+# Ignore Debug and Release folders
+Debug/
+Release/
+x64/
+x86/
+
+# Ignore temporary files
+*.tmp
+*.log
+*.bak
+*.swp
+*.vsidx
