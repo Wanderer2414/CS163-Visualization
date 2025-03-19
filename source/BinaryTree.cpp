@@ -1,34 +1,43 @@
 #include "../include/BinaryTree.h"
 #include "../include/General.h"
-BinaryTreeForm::BinaryTreeForm(const Vector2& window_size):Form(window_size) {
+#include <cmath>
+BinaryTreeForm::BinaryTreeForm(const Vector2& window_size) :Form(window_size) {
     m_root = 0;
+    setPause(true);
 };
 void BinaryTreeForm::add(const std::string& x) {
-    insert(m_root, {0,0}, to_int(x));
+    console.InsertNextMainCommand("Add " + x);
+    InsertNextMainCommand({ CommandCode::add, 1.0f * to_int(x), 1 });
 }
 void BinaryTreeForm::insert(Node*& root, const Vector2& par, const int& x) {
     if (!root) {
         root = new Node(m_list.size(), x);
         root->setPosition(par.x, par.y);
         m_list.push_back(root);
-        console.push_back("Add " + *root->getText());
-        PushCommand({CommandCode::add, 1.0f*root->getIndex(), 1});
-        return ;
+        InsertNextSubCommand({ CommandCode::redraw, 1.0f });
+        return;
     }
-    PushCommand({CommandCode::choose, 1.0f*root->getIndex(), 1});
-    console.push_back("Comparing " + *root->getText());
-    PushCommand({CommandCode::unchoose, 1.0f*root->getIndex(), 0});
-    if (x<root->getValue()) {
-        console.push_back("Go to left");
-        insert(root->left, root->getPosition(), x);
+    console.InsertNextSubCommand("Compare with " + std::to_string(root->getValue()));
+    InsertNextSubCommand({ CommandCode::choose, 1.0f * root->getIndex(), 1 });
+    InsertNextSubCommand({ CommandCode::unchoose, 1.0f * root->getIndex(), 0 });
+    if (x < root->getValue()) {
+        insert(root->left, root->getEndPoint(), x);
     }
     else {
-        console.push_back("Go to right");
-        insert(root->right, root->getPosition(), x);
+        insert(root->right, root->getEndPoint(), x);
     }
 }
-void BinaryTreeForm::remove() {
-
+void BinaryTreeForm::remove(Node*& root, const int& x) {
+    if (!root) return;
+    if (root->getValue() < x)  remove(root->right, x);
+    else if (root->getValue() > x) remove(root->left, x);
+    else {
+        delete root;
+        root = 0;
+    }
+}
+void BinaryTreeForm::remove(const std::string& str) {
+    InsertNextMainCommand({ CommandCode::erase,1.0f * to_int(str) });
 }
 void BinaryTreeForm::update(const int& x) {
 
@@ -36,58 +45,81 @@ void BinaryTreeForm::update(const int& x) {
 void BinaryTreeForm::search(const int& x) {
 
 }
-void BinaryTreeForm::FetchCommandQueue() {
-    int command = PullCommand();
-    if (command == -1) return ;
-    float dur = 0;
-    switch (command)
+void BinaryTreeForm::FetchNextCommand(const std::vector<float>& command) {
+    if (command.empty()) return;
+    switch ((int)command[0])
     {
     case CommandCode::add: {
-        int index = PullCommand();
-        dur = PullCommand();
-        console.setFillLine(console.getFillLine()+1);
-        m_list[index]->isVisible = true;
-        rePosition();
-        m_clock.setDuration(dur*m_speed);
+        insert(m_root, { 0,0 }, command[1]);
+        setDuration(0);
     }
-        break;
+                         break;
     case CommandCode::choose: {
-        int index = PullCommand();
-        dur = PullCommand();
-        console.setFillLine(console.getFillLine()+1);
-        m_list[index]->m_normal_color = RED;
-        m_clock.setDuration(dur*m_speed);
+        console.goDown();
+        m_list[command[1]]->m_normal_color = RED;
+        setDuration(command[2]);
     }
-        break;
+                            break;
     case CommandCode::unchoose: {
-        int index = PullCommand();
-        dur = PullCommand();
-        console.setFillLine(console.getFillLine()+1);
-        m_list[index]->m_normal_color = WHITE;
-        m_clock.setDuration(dur*m_speed);
+        m_list[command[1]]->m_normal_color = WHITE;
+        setDuration(command[2]);
     }
-        break;
-    case CommandCode::compare: {
+                              break;
+    case CommandCode::redraw: {
+        console.goDown();
+        rePosition();
+        setDuration(command[1]);
     }
-        break;
+                            break;
+    case CommandCode::erase: {
+        remove(m_root, command[1]);
+    }
+                           break;
     default:
         break;
     }
-    if (!dur) FetchCommandQueue();
+}
+void BinaryTreeForm::FetchPrevCommand(const std::vector<float>& command) {
+    switch ((int)command[0])
+    {
+    case CommandCode::add: {
+        remove(m_root, command[1]);
+        rePosition();
+        setDuration(command[2]);
+        console.goUp();
+    }
+                         break;
+    case CommandCode::choose: {
+        m_list[command[1]]->m_normal_color = WHITE;
+        setDuration(0);
+    }
+                            break;
+    case CommandCode::unchoose: {
+        m_list[command[1]]->m_normal_color = RED;
+        setDuration(command[2]);
+    }
+                              break;
+    case CommandCode::erase: {
+        insert(m_root, { 0,0 }, command[1]);
+        rePosition();
+        console.goUp();
+    }
+                           break;
+    default:
+        break;
+    }
 }
 int BinaryTreeForm::rePosition(Node* root, const int& level, float index, std::map<std::pair<float, int>, bool>& board) {
     if (!root) return index;
-    if (board[{index,level}]) {
-        while (board[{index, level}]) index+=2;
+    if (board[{index, level}]) {
+        while (board[{index, level}]) index += 2;
     }
-    float left = rePosition(root->left, level+1, index-1, board) + 1;
-    float right = rePosition(root->right, level+1, left+1, board) - 1;
-    index = (left+right)/2;
+    float left = rePosition(root->left, level + 1, index - 1, board) + 1;
+    float right = rePosition(root->right, level + 1, left + 1, board) - 1;
+    index = (left + right) / 2;
     board[{index, level}] = true;
-    if (root->isVisible) {
-        root->setDuration(m_speed/2);
-        root->setSlowPosition(index*50, level*50);
-    }
+    root->setDuration(getSpeed() / 2);
+    root->setSlowPosition(index * 50, level * 50);
     return right;
 }
 void BinaryTreeForm::rePosition() {
@@ -99,14 +131,31 @@ void BinaryTreeForm::draw() {
     Form::draw();
     BeginMode2D(m_camera);
     BeginScissorMode(m_workspace.x, m_workspace.y, m_workspace.width, m_workspace.height);
-        for (int i =0; i<m_list.size(); i++)
-            if (m_list[i]->isVisible) m_list[i]->draw();
+    draw(m_root);
     EndScissorMode();
     EndMode2D();
 }
+void BinaryTreeForm::draw(Node* root) {
+    if (!root) return;
+    if (root->left) {
+        DrawLineEx(root->getCenter(), root->left->getCenter(), 2.0f, root->m_normal_color);
+        draw(root->left);
+    }
+    if (root->right) {
+        DrawLineEx(root->getCenter(), root->right->getCenter(), 2.0f, root->m_normal_color);
+        draw(root->right);
+    }
+    root->draw();
+}
 void BinaryTreeForm::handle() {
     Form::handle();
-    for (int i = 0; i<m_list.size(); i++) m_list[i]->handle();
+    handle(m_root);
+}
+void BinaryTreeForm::handle(Node* root) {
+    if (!root) return;
+    root->handle();
+    if (root->left) handle(root->left);
+    if (root->right) handle(root->right);
 }
 void BinaryTreeForm::free() {
     free(m_root);
@@ -114,7 +163,7 @@ void BinaryTreeForm::free() {
     m_list.clear();
 }
 void BinaryTreeForm::free(Node* root) {
-    if (!root) return ;
+    if (!root) return;
     free(root->left);
     free(root->right);
     delete root;

@@ -1,4 +1,6 @@
-#pragma once
+#ifndef MENU_H
+#define MENU_H
+
 #include "Console.h"
 #include "TextButton.h"
 #include "../raylib/raylib.h"
@@ -17,7 +19,10 @@ public:
 private:
     TextButton      BSTForm,
                     GraphForm,
-                    StringTree;
+                    HashTableForm,
+                    SLLForm;
     std::vector<Controller*> children;
     Vector2         m_windowSize;
 };
+
+#endif //MENU_H

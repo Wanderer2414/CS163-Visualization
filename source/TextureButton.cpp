@@ -9,7 +9,7 @@ void TextureButton::draw() {
     else DrawTextureEx(m_texture, m_position, m_rotate, m_scale, m_normal_color);
 }
 void TextureButton::setSize(const float& width, const float& height) {
-    m_size = {width, height};
+    m_size = { width, height };
     m_texture.width = width;
     m_texture.height = height;
 }

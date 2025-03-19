@@ -1,4 +1,6 @@
-#pragma once
+#ifndef TEXTBUTTON_H
+#define TEXTBUTTON_H
+
 #include "Button.h"
 #include "../raylib/raylib.h"
 #include <string>
@@ -25,3 +27,5 @@ protected:
     Font            m_font              ;
     Color           m_text_color        = BLACK;
 };
+
+#endif //TEXTBUTTON_H

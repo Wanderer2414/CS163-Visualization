@@ -1,4 +1,3 @@
-
 #ifndef GENERAL_H
 #define GENERAL_H
 
@@ -21,6 +20,7 @@ bool operator!=(const Vector2& a, const Vector2& b);
 int to_int(const std::string& str);
 
 Rectangle TransToCameraRec(const Camera2D& camera, Rectangle rec);
+Vector2 TransToGlobalPoint(const Camera2D& camera, const Vector2& point);
 
 vector<string> readFromFileStr(const string& link);
 vector<int> readFromFileInt(const string& link);

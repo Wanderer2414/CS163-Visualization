@@ -39,7 +39,7 @@ include CMakeFiles\rules.ninja
 #############################################
 # Logical path to working directory; prefix for absolute paths.
 
-cmake_ninja_workdir = C$:\Users\MY$ PC\ProjectDSA\CS163-DSAVisualization\out\build\x64-Debug\
+cmake_ninja_workdir = C$:\Users\MY$ PC\source\repos\Huy\out\build\x64-Debug\
 # =============================================================================
 # Object build statements for EXECUTABLE target DSAVisualization
 
@@ -49,7 +49,7 @@ cmake_ninja_workdir = C$:\Users\MY$ PC\ProjectDSA\CS163-DSAVisualization\out\bui
 
 build cmake_object_order_depends_target_DSAVisualization: phony || .
 
-build CMakeFiles\DSAVisualization.dir\source\Application.cpp.obj: CXX_COMPILER__DSAVisualization_unscanned_Debug C$:\Users\MY$ PC\ProjectDSA\CS163-DSAVisualization\source\Application.cpp || cmake_object_order_depends_target_DSAVisualization
+build CMakeFiles\DSAVisualization.dir\source\Application.cpp.obj: CXX_COMPILER__DSAVisualization_unscanned_Debug C$:\Users\MY$ PC\source\repos\Huy\source\Application.cpp || cmake_object_order_depends_target_DSAVisualization
   FLAGS = /DWIN32 /D_WINDOWS /W3 /GR /EHsc /MDd /Zi /Ob0 /Od /RTC1 -std:c++17
   INCLUDES = -I"C:\Users\MY PC\ProjectDSA\CS163-DSAVisualization\raylib"
   OBJECT_DIR = CMakeFiles\DSAVisualization.dir
@@ -57,7 +57,7 @@ build CMakeFiles\DSAVisualization.dir\source\Application.cpp.obj: CXX_COMPILER__
   TARGET_COMPILE_PDB = CMakeFiles\DSAVisualization.dir\
   TARGET_PDB = DSAVisualization.pdb
 
-build CMakeFiles\DSAVisualization.dir\source\Button.cpp.obj: CXX_COMPILER__DSAVisualization_unscanned_Debug C$:\Users\MY$ PC\ProjectDSA\CS163-DSAVisualization\source\Button.cpp || cmake_object_order_depends_target_DSAVisualization
+build CMakeFiles\DSAVisualization.dir\source\Button.cpp.obj: CXX_COMPILER__DSAVisualization_unscanned_Debug C$:\Users\MY$ PC\source\repos\Huy\source\Button.cpp || cmake_object_order_depends_target_DSAVisualization
   FLAGS = /DWIN32 /D_WINDOWS /W3 /GR /EHsc /MDd /Zi /Ob0 /Od /RTC1 -std:c++17
   INCLUDES = -I"C:\Users\MY PC\ProjectDSA\CS163-DSAVisualization\raylib"
   OBJECT_DIR = CMakeFiles\DSAVisualization.dir
@@ -65,7 +65,7 @@ build CMakeFiles\DSAVisualization.dir\source\Button.cpp.obj: CXX_COMPILER__DSAVi
   TARGET_COMPILE_PDB = CMakeFiles\DSAVisualization.dir\
   TARGET_PDB = DSAVisualization.pdb
 
-build CMakeFiles\DSAVisualization.dir\source\Clock.cpp.obj: CXX_COMPILER__DSAVisualization_unscanned_Debug C$:\Users\MY$ PC\ProjectDSA\CS163-DSAVisualization\source\Clock.cpp || cmake_object_order_depends_target_DSAVisualization
+build CMakeFiles\DSAVisualization.dir\source\Clock.cpp.obj: CXX_COMPILER__DSAVisualization_unscanned_Debug C$:\Users\MY$ PC\source\repos\Huy\source\Clock.cpp || cmake_object_order_depends_target_DSAVisualization
   FLAGS = /DWIN32 /D_WINDOWS /W3 /GR /EHsc /MDd /Zi /Ob0 /Od /RTC1 -std:c++17
   INCLUDES = -I"C:\Users\MY PC\ProjectDSA\CS163-DSAVisualization\raylib"
   OBJECT_DIR = CMakeFiles\DSAVisualization.dir
@@ -73,7 +73,7 @@ build CMakeFiles\DSAVisualization.dir\source\Clock.cpp.obj: CXX_COMPILER__DSAVis
   TARGET_COMPILE_PDB = CMakeFiles\DSAVisualization.dir\
   TARGET_PDB = DSAVisualization.pdb
 
-build CMakeFiles\DSAVisualization.dir\source\Console.cpp.obj: CXX_COMPILER__DSAVisualization_unscanned_Debug C$:\Users\MY$ PC\ProjectDSA\CS163-DSAVisualization\source\Console.cpp || cmake_object_order_depends_target_DSAVisualization
+build CMakeFiles\DSAVisualization.dir\source\Console.cpp.obj: CXX_COMPILER__DSAVisualization_unscanned_Debug C$:\Users\MY$ PC\source\repos\Huy\source\Console.cpp || cmake_object_order_depends_target_DSAVisualization
   FLAGS = /DWIN32 /D_WINDOWS /W3 /GR /EHsc /MDd /Zi /Ob0 /Od /RTC1 -std:c++17
   INCLUDES = -I"C:\Users\MY PC\ProjectDSA\CS163-DSAVisualization\raylib"
   OBJECT_DIR = CMakeFiles\DSAVisualization.dir
@@ -81,7 +81,7 @@ build CMakeFiles\DSAVisualization.dir\source\Console.cpp.obj: CXX_COMPILER__DSAV
   TARGET_COMPILE_PDB = CMakeFiles\DSAVisualization.dir\
   TARGET_PDB = DSAVisualization.pdb
 
-build CMakeFiles\DSAVisualization.dir\source\Controller.cpp.obj: CXX_COMPILER__DSAVisualization_unscanned_Debug C$:\Users\MY$ PC\ProjectDSA\CS163-DSAVisualization\source\Controller.cpp || cmake_object_order_depends_target_DSAVisualization
+build CMakeFiles\DSAVisualization.dir\source\Controller.cpp.obj: CXX_COMPILER__DSAVisualization_unscanned_Debug C$:\Users\MY$ PC\source\repos\Huy\source\Controller.cpp || cmake_object_order_depends_target_DSAVisualization
   FLAGS = /DWIN32 /D_WINDOWS /W3 /GR /EHsc /MDd /Zi /Ob0 /Od /RTC1 -std:c++17
   INCLUDES = -I"C:\Users\MY PC\ProjectDSA\CS163-DSAVisualization\raylib"
   OBJECT_DIR = CMakeFiles\DSAVisualization.dir
@@ -89,7 +89,7 @@ build CMakeFiles\DSAVisualization.dir\source\Controller.cpp.obj: CXX_COMPILER__D
   TARGET_COMPILE_PDB = CMakeFiles\DSAVisualization.dir\
   TARGET_PDB = DSAVisualization.pdb
 
-build CMakeFiles\DSAVisualization.dir\source\Form.cpp.obj: CXX_COMPILER__DSAVisualization_unscanned_Debug C$:\Users\MY$ PC\ProjectDSA\CS163-DSAVisualization\source\Form.cpp || cmake_object_order_depends_target_DSAVisualization
+build CMakeFiles\DSAVisualization.dir\source\Form.cpp.obj: CXX_COMPILER__DSAVisualization_unscanned_Debug C$:\Users\MY$ PC\source\repos\Huy\source\Form.cpp || cmake_object_order_depends_target_DSAVisualization
   FLAGS = /DWIN32 /D_WINDOWS /W3 /GR /EHsc /MDd /Zi /Ob0 /Od /RTC1 -std:c++17
   INCLUDES = -I"C:\Users\MY PC\ProjectDSA\CS163-DSAVisualization\raylib"
   OBJECT_DIR = CMakeFiles\DSAVisualization.dir
@@ -97,7 +97,7 @@ build CMakeFiles\DSAVisualization.dir\source\Form.cpp.obj: CXX_COMPILER__DSAVisu
   TARGET_COMPILE_PDB = CMakeFiles\DSAVisualization.dir\
   TARGET_PDB = DSAVisualization.pdb
 
-build CMakeFiles\DSAVisualization.dir\source\General.cpp.obj: CXX_COMPILER__DSAVisualization_unscanned_Debug C$:\Users\MY$ PC\ProjectDSA\CS163-DSAVisualization\source\General.cpp || cmake_object_order_depends_target_DSAVisualization
+build CMakeFiles\DSAVisualization.dir\source\General.cpp.obj: CXX_COMPILER__DSAVisualization_unscanned_Debug C$:\Users\MY$ PC\source\repos\Huy\source\General.cpp || cmake_object_order_depends_target_DSAVisualization
   FLAGS = /DWIN32 /D_WINDOWS /W3 /GR /EHsc /MDd /Zi /Ob0 /Od /RTC1 -std:c++17
   INCLUDES = -I"C:\Users\MY PC\ProjectDSA\CS163-DSAVisualization\raylib"
   OBJECT_DIR = CMakeFiles\DSAVisualization.dir
@@ -105,7 +105,7 @@ build CMakeFiles\DSAVisualization.dir\source\General.cpp.obj: CXX_COMPILER__DSAV
   TARGET_COMPILE_PDB = CMakeFiles\DSAVisualization.dir\
   TARGET_PDB = DSAVisualization.pdb
 
-build CMakeFiles\DSAVisualization.dir\source\main.cpp.obj: CXX_COMPILER__DSAVisualization_unscanned_Debug C$:\Users\MY$ PC\ProjectDSA\CS163-DSAVisualization\source\main.cpp || cmake_object_order_depends_target_DSAVisualization
+build CMakeFiles\DSAVisualization.dir\source\main.cpp.obj: CXX_COMPILER__DSAVisualization_unscanned_Debug C$:\Users\MY$ PC\source\repos\Huy\source\main.cpp || cmake_object_order_depends_target_DSAVisualization
   FLAGS = /DWIN32 /D_WINDOWS /W3 /GR /EHsc /MDd /Zi /Ob0 /Od /RTC1 -std:c++17
   INCLUDES = -I"C:\Users\MY PC\ProjectDSA\CS163-DSAVisualization\raylib"
   OBJECT_DIR = CMakeFiles\DSAVisualization.dir
@@ -113,7 +113,7 @@ build CMakeFiles\DSAVisualization.dir\source\main.cpp.obj: CXX_COMPILER__DSAVisu
   TARGET_COMPILE_PDB = CMakeFiles\DSAVisualization.dir\
   TARGET_PDB = DSAVisualization.pdb
 
-build CMakeFiles\DSAVisualization.dir\source\Menu.cpp.obj: CXX_COMPILER__DSAVisualization_unscanned_Debug C$:\Users\MY$ PC\ProjectDSA\CS163-DSAVisualization\source\Menu.cpp || cmake_object_order_depends_target_DSAVisualization
+build CMakeFiles\DSAVisualization.dir\source\Menu.cpp.obj: CXX_COMPILER__DSAVisualization_unscanned_Debug C$:\Users\MY$ PC\source\repos\Huy\source\Menu.cpp || cmake_object_order_depends_target_DSAVisualization
   FLAGS = /DWIN32 /D_WINDOWS /W3 /GR /EHsc /MDd /Zi /Ob0 /Od /RTC1 -std:c++17
   INCLUDES = -I"C:\Users\MY PC\ProjectDSA\CS163-DSAVisualization\raylib"
   OBJECT_DIR = CMakeFiles\DSAVisualization.dir
@@ -121,7 +121,7 @@ build CMakeFiles\DSAVisualization.dir\source\Menu.cpp.obj: CXX_COMPILER__DSAVisu
   TARGET_COMPILE_PDB = CMakeFiles\DSAVisualization.dir\
   TARGET_PDB = DSAVisualization.pdb
 
-build CMakeFiles\DSAVisualization.dir\source\TextBox.cpp.obj: CXX_COMPILER__DSAVisualization_unscanned_Debug C$:\Users\MY$ PC\ProjectDSA\CS163-DSAVisualization\source\TextBox.cpp || cmake_object_order_depends_target_DSAVisualization
+build CMakeFiles\DSAVisualization.dir\source\TextBox.cpp.obj: CXX_COMPILER__DSAVisualization_unscanned_Debug C$:\Users\MY$ PC\source\repos\Huy\source\TextBox.cpp || cmake_object_order_depends_target_DSAVisualization
   FLAGS = /DWIN32 /D_WINDOWS /W3 /GR /EHsc /MDd /Zi /Ob0 /Od /RTC1 -std:c++17
   INCLUDES = -I"C:\Users\MY PC\ProjectDSA\CS163-DSAVisualization\raylib"
   OBJECT_DIR = CMakeFiles\DSAVisualization.dir
@@ -129,7 +129,7 @@ build CMakeFiles\DSAVisualization.dir\source\TextBox.cpp.obj: CXX_COMPILER__DSAV
   TARGET_COMPILE_PDB = CMakeFiles\DSAVisualization.dir\
   TARGET_PDB = DSAVisualization.pdb
 
-build CMakeFiles\DSAVisualization.dir\source\TextButton.cpp.obj: CXX_COMPILER__DSAVisualization_unscanned_Debug C$:\Users\MY$ PC\ProjectDSA\CS163-DSAVisualization\source\TextButton.cpp || cmake_object_order_depends_target_DSAVisualization
+build CMakeFiles\DSAVisualization.dir\source\TextButton.cpp.obj: CXX_COMPILER__DSAVisualization_unscanned_Debug C$:\Users\MY$ PC\source\repos\Huy\source\TextButton.cpp || cmake_object_order_depends_target_DSAVisualization
   FLAGS = /DWIN32 /D_WINDOWS /W3 /GR /EHsc /MDd /Zi /Ob0 /Od /RTC1 -std:c++17
   INCLUDES = -I"C:\Users\MY PC\ProjectDSA\CS163-DSAVisualization\raylib"
   OBJECT_DIR = CMakeFiles\DSAVisualization.dir
@@ -137,7 +137,23 @@ build CMakeFiles\DSAVisualization.dir\source\TextButton.cpp.obj: CXX_COMPILER__D
   TARGET_COMPILE_PDB = CMakeFiles\DSAVisualization.dir\
   TARGET_PDB = DSAVisualization.pdb
 
-build CMakeFiles\DSAVisualization.dir\source\TextureButton.cpp.obj: CXX_COMPILER__DSAVisualization_unscanned_Debug C$:\Users\MY$ PC\ProjectDSA\CS163-DSAVisualization\source\TextureButton.cpp || cmake_object_order_depends_target_DSAVisualization
+build CMakeFiles\DSAVisualization.dir\source\TextureButton.cpp.obj: CXX_COMPILER__DSAVisualization_unscanned_Debug C$:\Users\MY$ PC\source\repos\Huy\source\TextureButton.cpp || cmake_object_order_depends_target_DSAVisualization
+  FLAGS = /DWIN32 /D_WINDOWS /W3 /GR /EHsc /MDd /Zi /Ob0 /Od /RTC1 -std:c++17
+  INCLUDES = -I"C:\Users\MY PC\ProjectDSA\CS163-DSAVisualization\raylib"
+  OBJECT_DIR = CMakeFiles\DSAVisualization.dir
+  OBJECT_FILE_DIR = CMakeFiles\DSAVisualization.dir\source
+  TARGET_COMPILE_PDB = CMakeFiles\DSAVisualization.dir\
+  TARGET_PDB = DSAVisualization.pdb
+
+build CMakeFiles\DSAVisualization.dir\source\Colors.cpp.obj: CXX_COMPILER__DSAVisualization_unscanned_Debug C$:\Users\MY$ PC\source\repos\Huy\source\Colors.cpp || cmake_object_order_depends_target_DSAVisualization
+  FLAGS = /DWIN32 /D_WINDOWS /W3 /GR /EHsc /MDd /Zi /Ob0 /Od /RTC1 -std:c++17
+  INCLUDES = -I"C:\Users\MY PC\ProjectDSA\CS163-DSAVisualization\raylib"
+  OBJECT_DIR = CMakeFiles\DSAVisualization.dir
+  OBJECT_FILE_DIR = CMakeFiles\DSAVisualization.dir\source
+  TARGET_COMPILE_PDB = CMakeFiles\DSAVisualization.dir\
+  TARGET_PDB = DSAVisualization.pdb
+
+build CMakeFiles\DSAVisualization.dir\source\Mode.cpp.obj: CXX_COMPILER__DSAVisualization_unscanned_Debug C$:\Users\MY$ PC\source\repos\Huy\source\Mode.cpp || cmake_object_order_depends_target_DSAVisualization
   FLAGS = /DWIN32 /D_WINDOWS /W3 /GR /EHsc /MDd /Zi /Ob0 /Od /RTC1 -std:c++17
   INCLUDES = -I"C:\Users\MY PC\ProjectDSA\CS163-DSAVisualization\raylib"
   OBJECT_DIR = CMakeFiles\DSAVisualization.dir
@@ -153,12 +169,12 @@ build CMakeFiles\DSAVisualization.dir\source\TextureButton.cpp.obj: CXX_COMPILER
 #############################################
 # Link the executable DSAVisualization.exe
 
-build DSAVisualization.exe: CXX_EXECUTABLE_LINKER__DSAVisualization_Debug CMakeFiles\DSAVisualization.dir\source\Application.cpp.obj CMakeFiles\DSAVisualization.dir\source\Button.cpp.obj CMakeFiles\DSAVisualization.dir\source\Clock.cpp.obj CMakeFiles\DSAVisualization.dir\source\Console.cpp.obj CMakeFiles\DSAVisualization.dir\source\Controller.cpp.obj CMakeFiles\DSAVisualization.dir\source\Form.cpp.obj CMakeFiles\DSAVisualization.dir\source\General.cpp.obj CMakeFiles\DSAVisualization.dir\source\main.cpp.obj CMakeFiles\DSAVisualization.dir\source\Menu.cpp.obj CMakeFiles\DSAVisualization.dir\source\TextBox.cpp.obj CMakeFiles\DSAVisualization.dir\source\TextButton.cpp.obj CMakeFiles\DSAVisualization.dir\source\TextureButton.cpp.obj
+build DSAVisualization.exe: CXX_EXECUTABLE_LINKER__DSAVisualization_Debug CMakeFiles\DSAVisualization.dir\source\Application.cpp.obj CMakeFiles\DSAVisualization.dir\source\Button.cpp.obj CMakeFiles\DSAVisualization.dir\source\Clock.cpp.obj CMakeFiles\DSAVisualization.dir\source\Console.cpp.obj CMakeFiles\DSAVisualization.dir\source\Controller.cpp.obj CMakeFiles\DSAVisualization.dir\source\Form.cpp.obj CMakeFiles\DSAVisualization.dir\source\General.cpp.obj CMakeFiles\DSAVisualization.dir\source\main.cpp.obj CMakeFiles\DSAVisualization.dir\source\Menu.cpp.obj CMakeFiles\DSAVisualization.dir\source\TextBox.cpp.obj CMakeFiles\DSAVisualization.dir\source\TextButton.cpp.obj CMakeFiles\DSAVisualization.dir\source\TextureButton.cpp.obj CMakeFiles\DSAVisualization.dir\source\Colors.cpp.obj CMakeFiles\DSAVisualization.dir\source\Mode.cpp.obj
   FLAGS = /DWIN32 /D_WINDOWS /W3 /GR /EHsc /MDd /Zi /Ob0 /Od /RTC1
   LINK_FLAGS = /machine:x64 /debug /INCREMENTAL /subsystem:console
   LINK_LIBRARIES = -lraylib  -lopengl32  -lgdi32  -lwinmm  kernel32.lib user32.lib gdi32.lib winspool.lib shell32.lib ole32.lib oleaut32.lib uuid.lib comdlg32.lib advapi32.lib
   OBJECT_DIR = CMakeFiles\DSAVisualization.dir
-  POST_BUILD = C:\WINDOWS\system32\cmd.exe /C "cd /D "C:\Users\MY PC\ProjectDSA\CS163-DSAVisualization\out\build\x64-Debug" && C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe -noprofile -executionpolicy Bypass -file C:/vcpkg/scripts/buildsystems/msbuild/applocal.ps1 -targetBinary "C:/Users/MY PC/ProjectDSA/CS163-DSAVisualization/out/build/x64-Debug/DSAVisualization.exe" -installedDir C:/vcpkg/installed/x64-windows/debug/bin -OutVariable out"
+  POST_BUILD = C:\WINDOWS\system32\cmd.exe /C "cd /D "C:\Users\MY PC\source\repos\Huy\out\build\x64-Debug" && C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe -noprofile -executionpolicy Bypass -file C:/vcpkg/scripts/buildsystems/msbuild/applocal.ps1 -targetBinary "C:/Users/MY PC/source/repos/Huy/out/build/x64-Debug/DSAVisualization.exe" -installedDir C:/vcpkg/installed/x64-windows/debug/bin -OutVariable out"
   PRE_LINK = cd .
   TARGET_COMPILE_PDB = CMakeFiles\DSAVisualization.dir\
   TARGET_FILE = DSAVisualization.exe
@@ -170,7 +186,7 @@ build DSAVisualization.exe: CXX_EXECUTABLE_LINKER__DSAVisualization_Debug CMakeF
 # Utility command for edit_cache
 
 build CMakeFiles\edit_cache.util: CUSTOM_COMMAND
-  COMMAND = C:\WINDOWS\system32\cmd.exe /C "cd /D "C:\Users\MY PC\ProjectDSA\CS163-DSAVisualization\out\build\x64-Debug" && "C:\Program Files\Microsoft Visual Studio\2022\Community\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\bin\cmake.exe" -E echo "No interactive CMake dialog available.""
+  COMMAND = C:\WINDOWS\system32\cmd.exe /C "cd /D "C:\Users\MY PC\source\repos\Huy\out\build\x64-Debug" && "C:\Program Files\Microsoft Visual Studio\2022\Community\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\bin\cmake.exe" -E echo "No interactive CMake dialog available.""
   DESC = No interactive CMake dialog available...
   restat = 1
 
@@ -181,7 +197,7 @@ build edit_cache: phony CMakeFiles\edit_cache.util
 # Utility command for rebuild_cache
 
 build CMakeFiles\rebuild_cache.util: CUSTOM_COMMAND
-  COMMAND = C:\WINDOWS\system32\cmd.exe /C "cd /D "C:\Users\MY PC\ProjectDSA\CS163-DSAVisualization\out\build\x64-Debug" && "C:\Program Files\Microsoft Visual Studio\2022\Community\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\bin\cmake.exe" --regenerate-during-build -S"C:\Users\MY PC\ProjectDSA\CS163-DSAVisualization" -B"C:\Users\MY PC\ProjectDSA\CS163-DSAVisualization\out\build\x64-Debug""
+  COMMAND = C:\WINDOWS\system32\cmd.exe /C "cd /D "C:\Users\MY PC\source\repos\Huy\out\build\x64-Debug" && "C:\Program Files\Microsoft Visual Studio\2022\Community\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\bin\cmake.exe" --regenerate-during-build -S"C:\Users\MY PC\source\repos\Huy" -B"C:\Users\MY PC\source\repos\Huy\out\build\x64-Debug""
   DESC = Running CMake to regenerate build system...
   pool = console
   restat = 1
@@ -199,7 +215,7 @@ build DSAVisualization: phony DSAVisualization.exe
 # =============================================================================
 
 #############################################
-# Folder: C:/Users/MY PC/ProjectDSA/CS163-DSAVisualization/out/build/x64-Debug
+# Folder: C:/Users/MY PC/source/repos/Huy/out/build/x64-Debug
 
 build all: phony DSAVisualization.exe
 
@@ -210,14 +226,14 @@ build all: phony DSAVisualization.exe
 #############################################
 # Re-run CMake if any of its inputs changed.
 
-build build.ninja: RERUN_CMAKE | C$:\Program$ Files\Microsoft$ Visual$ Studio\2022\Community\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.29\Modules\CMakeCInformation.cmake C$:\Program$ Files\Microsoft$ Visual$ Studio\2022\Community\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.29\Modules\CMakeCXXInformation.cmake C$:\Program$ Files\Microsoft$ Visual$ Studio\2022\Community\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.29\Modules\CMakeCommonLanguageInclude.cmake C$:\Program$ Files\Microsoft$ Visual$ Studio\2022\Community\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.29\Modules\CMakeDependentOption.cmake C$:\Program$ Files\Microsoft$ Visual$ Studio\2022\Community\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.29\Modules\CMakeGenericSystem.cmake C$:\Program$ Files\Microsoft$ Visual$ Studio\2022\Community\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.29\Modules\CMakeInitializeConfigs.cmake C$:\Program$ Files\Microsoft$ Visual$ Studio\2022\Community\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.29\Modules\CMakeLanguageInformation.cmake C$:\Program$ Files\Microsoft$ Visual$ Studio\2022\Community\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.29\Modules\CMakeRCInformation.cmake C$:\Program$ Files\Microsoft$ Visual$ Studio\2022\Community\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.29\Modules\CMakeSystemSpecificInformation.cmake C$:\Program$ Files\Microsoft$ Visual$ Studio\2022\Community\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.29\Modules\CMakeSystemSpecificInitialize.cmake C$:\Program$ Files\Microsoft$ Visual$ Studio\2022\Community\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.29\Modules\Compiler\CMakeCommonCompilerMacros.cmake C$:\Program$ Files\Microsoft$ Visual$ Studio\2022\Community\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.29\Modules\Compiler\MSVC-C.cmake C$:\Program$ Files\Microsoft$ Visual$ Studio\2022\Community\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.29\Modules\Compiler\MSVC-CXX.cmake C$:\Program$ Files\Microsoft$ Visual$ Studio\2022\Community\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.29\Modules\Compiler\MSVC.cmake C$:\Program$ Files\Microsoft$ Visual$ Studio\2022\Community\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.29\Modules\Platform\Windows-Initialize.cmake C$:\Program$ Files\Microsoft$ Visual$ Studio\2022\Community\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.29\Modules\Platform\Windows-MSVC-C.cmake C$:\Program$ Files\Microsoft$ Visual$ Studio\2022\Community\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.29\Modules\Platform\Windows-MSVC-CXX.cmake C$:\Program$ Files\Microsoft$ Visual$ Studio\2022\Community\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.29\Modules\Platform\Windows-MSVC.cmake C$:\Program$ Files\Microsoft$ Visual$ Studio\2022\Community\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.29\Modules\Platform\Windows.cmake C$:\Program$ Files\Microsoft$ Visual$ Studio\2022\Community\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.29\Modules\Platform\WindowsPaths.cmake C$:\Users\MY$ PC\ProjectDSA\CS163-DSAVisualization\CMakeLists.txt C$:\vcpkg\scripts\buildsystems\vcpkg.cmake CMakeCache.txt CMakeFiles\3.29.5-msvc4\CMakeCCompiler.cmake CMakeFiles\3.29.5-msvc4\CMakeCXXCompiler.cmake CMakeFiles\3.29.5-msvc4\CMakeRCCompiler.cmake CMakeFiles\3.29.5-msvc4\CMakeSystem.cmake
+build build.ninja: RERUN_CMAKE | C$:\Program$ Files\Microsoft$ Visual$ Studio\2022\Community\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.29\Modules\CMakeCInformation.cmake C$:\Program$ Files\Microsoft$ Visual$ Studio\2022\Community\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.29\Modules\CMakeCXXInformation.cmake C$:\Program$ Files\Microsoft$ Visual$ Studio\2022\Community\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.29\Modules\CMakeCommonLanguageInclude.cmake C$:\Program$ Files\Microsoft$ Visual$ Studio\2022\Community\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.29\Modules\CMakeDependentOption.cmake C$:\Program$ Files\Microsoft$ Visual$ Studio\2022\Community\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.29\Modules\CMakeGenericSystem.cmake C$:\Program$ Files\Microsoft$ Visual$ Studio\2022\Community\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.29\Modules\CMakeInitializeConfigs.cmake C$:\Program$ Files\Microsoft$ Visual$ Studio\2022\Community\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.29\Modules\CMakeLanguageInformation.cmake C$:\Program$ Files\Microsoft$ Visual$ Studio\2022\Community\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.29\Modules\CMakeRCInformation.cmake C$:\Program$ Files\Microsoft$ Visual$ Studio\2022\Community\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.29\Modules\CMakeSystemSpecificInformation.cmake C$:\Program$ Files\Microsoft$ Visual$ Studio\2022\Community\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.29\Modules\CMakeSystemSpecificInitialize.cmake C$:\Program$ Files\Microsoft$ Visual$ Studio\2022\Community\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.29\Modules\Compiler\CMakeCommonCompilerMacros.cmake C$:\Program$ Files\Microsoft$ Visual$ Studio\2022\Community\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.29\Modules\Compiler\MSVC-C.cmake C$:\Program$ Files\Microsoft$ Visual$ Studio\2022\Community\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.29\Modules\Compiler\MSVC-CXX.cmake C$:\Program$ Files\Microsoft$ Visual$ Studio\2022\Community\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.29\Modules\Compiler\MSVC.cmake C$:\Program$ Files\Microsoft$ Visual$ Studio\2022\Community\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.29\Modules\Platform\Windows-Initialize.cmake C$:\Program$ Files\Microsoft$ Visual$ Studio\2022\Community\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.29\Modules\Platform\Windows-MSVC-C.cmake C$:\Program$ Files\Microsoft$ Visual$ Studio\2022\Community\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.29\Modules\Platform\Windows-MSVC-CXX.cmake C$:\Program$ Files\Microsoft$ Visual$ Studio\2022\Community\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.29\Modules\Platform\Windows-MSVC.cmake C$:\Program$ Files\Microsoft$ Visual$ Studio\2022\Community\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.29\Modules\Platform\Windows.cmake C$:\Program$ Files\Microsoft$ Visual$ Studio\2022\Community\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.29\Modules\Platform\WindowsPaths.cmake C$:\Users\MY$ PC\source\repos\Huy\CMakeLists.txt C$:\vcpkg\scripts\buildsystems\vcpkg.cmake CMakeCache.txt CMakeFiles\3.29.5-msvc4\CMakeCCompiler.cmake CMakeFiles\3.29.5-msvc4\CMakeCXXCompiler.cmake CMakeFiles\3.29.5-msvc4\CMakeRCCompiler.cmake CMakeFiles\3.29.5-msvc4\CMakeSystem.cmake
   pool = console
 
 
 #############################################
 # A missing CMake input file is not an error.
 
-build C$:\Program$ Files\Microsoft$ Visual$ Studio\2022\Community\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.29\Modules\CMakeCInformation.cmake C$:\Program$ Files\Microsoft$ Visual$ Studio\2022\Community\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.29\Modules\CMakeCXXInformation.cmake C$:\Program$ Files\Microsoft$ Visual$ Studio\2022\Community\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.29\Modules\CMakeCommonLanguageInclude.cmake C$:\Program$ Files\Microsoft$ Visual$ Studio\2022\Community\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.29\Modules\CMakeDependentOption.cmake C$:\Program$ Files\Microsoft$ Visual$ Studio\2022\Community\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.29\Modules\CMakeGenericSystem.cmake C$:\Program$ Files\Microsoft$ Visual$ Studio\2022\Community\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.29\Modules\CMakeInitializeConfigs.cmake C$:\Program$ Files\Microsoft$ Visual$ Studio\2022\Community\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.29\Modules\CMakeLanguageInformation.cmake C$:\Program$ Files\Microsoft$ Visual$ Studio\2022\Community\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.29\Modules\CMakeRCInformation.cmake C$:\Program$ Files\Microsoft$ Visual$ Studio\2022\Community\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.29\Modules\CMakeSystemSpecificInformation.cmake C$:\Program$ Files\Microsoft$ Visual$ Studio\2022\Community\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.29\Modules\CMakeSystemSpecificInitialize.cmake C$:\Program$ Files\Microsoft$ Visual$ Studio\2022\Community\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.29\Modules\Compiler\CMakeCommonCompilerMacros.cmake C$:\Program$ Files\Microsoft$ Visual$ Studio\2022\Community\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.29\Modules\Compiler\MSVC-C.cmake C$:\Program$ Files\Microsoft$ Visual$ Studio\2022\Community\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.29\Modules\Compiler\MSVC-CXX.cmake C$:\Program$ Files\Microsoft$ Visual$ Studio\2022\Community\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.29\Modules\Compiler\MSVC.cmake C$:\Program$ Files\Microsoft$ Visual$ Studio\2022\Community\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.29\Modules\Platform\Windows-Initialize.cmake C$:\Program$ Files\Microsoft$ Visual$ Studio\2022\Community\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.29\Modules\Platform\Windows-MSVC-C.cmake C$:\Program$ Files\Microsoft$ Visual$ Studio\2022\Community\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.29\Modules\Platform\Windows-MSVC-CXX.cmake C$:\Program$ Files\Microsoft$ Visual$ Studio\2022\Community\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.29\Modules\Platform\Windows-MSVC.cmake C$:\Program$ Files\Microsoft$ Visual$ Studio\2022\Community\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.29\Modules\Platform\Windows.cmake C$:\Program$ Files\Microsoft$ Visual$ Studio\2022\Community\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.29\Modules\Platform\WindowsPaths.cmake C$:\Users\MY$ PC\ProjectDSA\CS163-DSAVisualization\CMakeLists.txt C$:\vcpkg\scripts\buildsystems\vcpkg.cmake CMakeCache.txt CMakeFiles\3.29.5-msvc4\CMakeCCompiler.cmake CMakeFiles\3.29.5-msvc4\CMakeCXXCompiler.cmake CMakeFiles\3.29.5-msvc4\CMakeRCCompiler.cmake CMakeFiles\3.29.5-msvc4\CMakeSystem.cmake: phony
+build C$:\Program$ Files\Microsoft$ Visual$ Studio\2022\Community\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.29\Modules\CMakeCInformation.cmake C$:\Program$ Files\Microsoft$ Visual$ Studio\2022\Community\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.29\Modules\CMakeCXXInformation.cmake C$:\Program$ Files\Microsoft$ Visual$ Studio\2022\Community\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.29\Modules\CMakeCommonLanguageInclude.cmake C$:\Program$ Files\Microsoft$ Visual$ Studio\2022\Community\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.29\Modules\CMakeDependentOption.cmake C$:\Program$ Files\Microsoft$ Visual$ Studio\2022\Community\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.29\Modules\CMakeGenericSystem.cmake C$:\Program$ Files\Microsoft$ Visual$ Studio\2022\Community\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.29\Modules\CMakeInitializeConfigs.cmake C$:\Program$ Files\Microsoft$ Visual$ Studio\2022\Community\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.29\Modules\CMakeLanguageInformation.cmake C$:\Program$ Files\Microsoft$ Visual$ Studio\2022\Community\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.29\Modules\CMakeRCInformation.cmake C$:\Program$ Files\Microsoft$ Visual$ Studio\2022\Community\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.29\Modules\CMakeSystemSpecificInformation.cmake C$:\Program$ Files\Microsoft$ Visual$ Studio\2022\Community\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.29\Modules\CMakeSystemSpecificInitialize.cmake C$:\Program$ Files\Microsoft$ Visual$ Studio\2022\Community\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.29\Modules\Compiler\CMakeCommonCompilerMacros.cmake C$:\Program$ Files\Microsoft$ Visual$ Studio\2022\Community\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.29\Modules\Compiler\MSVC-C.cmake C$:\Program$ Files\Microsoft$ Visual$ Studio\2022\Community\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.29\Modules\Compiler\MSVC-CXX.cmake C$:\Program$ Files\Microsoft$ Visual$ Studio\2022\Community\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.29\Modules\Compiler\MSVC.cmake C$:\Program$ Files\Microsoft$ Visual$ Studio\2022\Community\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.29\Modules\Platform\Windows-Initialize.cmake C$:\Program$ Files\Microsoft$ Visual$ Studio\2022\Community\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.29\Modules\Platform\Windows-MSVC-C.cmake C$:\Program$ Files\Microsoft$ Visual$ Studio\2022\Community\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.29\Modules\Platform\Windows-MSVC-CXX.cmake C$:\Program$ Files\Microsoft$ Visual$ Studio\2022\Community\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.29\Modules\Platform\Windows-MSVC.cmake C$:\Program$ Files\Microsoft$ Visual$ Studio\2022\Community\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.29\Modules\Platform\Windows.cmake C$:\Program$ Files\Microsoft$ Visual$ Studio\2022\Community\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.29\Modules\Platform\WindowsPaths.cmake C$:\Users\MY$ PC\source\repos\Huy\CMakeLists.txt C$:\vcpkg\scripts\buildsystems\vcpkg.cmake CMakeCache.txt CMakeFiles\3.29.5-msvc4\CMakeCCompiler.cmake CMakeFiles\3.29.5-msvc4\CMakeCXXCompiler.cmake CMakeFiles\3.29.5-msvc4\CMakeRCCompiler.cmake CMakeFiles\3.29.5-msvc4\CMakeSystem.cmake: phony
 
 
 #############################################

@@ -29,7 +29,7 @@ set(SOURCES
 )
 
 # Create executable
-add_executable(DSAVisualization ${SOURCES})
+add_executable(DSAVisualization ${SOURCES} "include/Colors.h" "source/Colors.cpp" "include/Mode.h" "source/Mode.cpp")
 
 # Link libraries
 target_link_libraries(DSAVisualization

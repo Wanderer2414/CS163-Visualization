@@ -92,7 +92,9 @@
 				8,
 				9,
 				10,
-				11
+				11,
+				13,
+				15
 			]
 		}
 	],
@@ -160,7 +162,17 @@
 				8,
 				9,
 				10,
-				11
+				11,
+				13,
+				15
+			]
+		},
+		{
+			"name" : "Header Files",
+			"sourceIndexes" : 
+			[
+				12,
+				14
 			]
 		}
 	],
@@ -236,6 +248,28 @@
 			"backtrace" : 2,
 			"compileGroupIndex" : 0,
 			"path" : "source/TextureButton.cpp",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 2,
+			"path" : "include/Colors.h",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 2,
+			"compileGroupIndex" : 0,
+			"path" : "source/Colors.cpp",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 2,
+			"path" : "include/Mode.h",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 2,
+			"compileGroupIndex" : 0,
+			"path" : "source/Mode.cpp",
 			"sourceGroupIndex" : 0
 		}
 	],
