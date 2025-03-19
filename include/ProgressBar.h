@@ -1,5 +1,5 @@
-#ifndef PROGRESS_BAR_H
-#define PROGRESS_BAR_H
+#ifndef PROGRESSBAR_H
+#define PROGRESSBAR_H
 
 #include "Controller.h"
 class ProgressBar : public Controller {

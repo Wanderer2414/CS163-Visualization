@@ -1,4 +1,6 @@
-#pragma once
+#ifndef CONTROLLER_H
+#define CONTROLLER_H
+
 #include "../raylib/raylib.h"
 class Controller {
 public:
@@ -19,3 +21,5 @@ protected:
     Vector2         m_position,
                     m_size;
 };
+
+#endif //CONTROLLER_H

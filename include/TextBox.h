@@ -1,4 +1,6 @@
-#pragma once
+#ifndef TEXTBOX_H
+#define TEXTBOX_H
+
 #include <cstddef>
 #include <string>
 #include "TextButton.h"
@@ -21,3 +23,5 @@ private:
     Color               m_font_color;
     Rectangle           m_cursor_pos;
 };
+
+#endif //TEXTBOX_H

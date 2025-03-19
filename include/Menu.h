@@ -1,4 +1,6 @@
-#pragma once
+#ifndef MENU_H
+#define MENU_H
+
 #include "Console.h"
 #include "TextButton.h"
 #include "../raylib/raylib.h"
@@ -22,3 +24,5 @@ private:
     std::vector<Controller*> children;
     Vector2         m_windowSize;
 };
+
+#endif //MENU_H

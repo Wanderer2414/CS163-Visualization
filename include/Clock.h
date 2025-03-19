@@ -1,4 +1,6 @@
-#pragma once
+#ifndef CLOCK_H
+#define CLOCK_H
+
 #include "../raylib/raylib.h"
 #include <cstddef>
 class Clock {
@@ -12,3 +14,5 @@ private:
     int         old_time        = 0;
     float       m_duration      = 0;
 };
+
+#endif //CLOCK_H
