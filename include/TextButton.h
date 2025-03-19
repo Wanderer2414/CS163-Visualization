@@ -5,15 +5,16 @@
 class TextButton: public Button {
 public:
     TextButton();
-    virtual void    init()                                              override,
-                    draw()                                              override,
-                    setPosition(const float& x, const float& y)         override,
-                    setSize(const float& width, const float& height)    override,
-                    setText(const std::string& str),
-                    setFont(const Font&),
-                    setFontSize(const float& size),
-                    setTextColor(const Color& color),
-                    setSpacing(const float& spacing);
+    virtual void    init()                                  override,
+        draw()                                              override,
+        setPosition(const float& x, const float& y)         override,
+        setSize(const float& width, const float& height)    override,
+        setText(const std::string& str),
+        setFont(const Font&),
+        setFontSize(const float& size),
+        setTextColor(const Color& color),
+        setSpacing(const float& spacing),
+        setTexture(const std::string& normalPath, const std::string& hoverPath);
     std::string     *getText();
     ~TextButton();
 protected:
@@ -24,4 +25,7 @@ protected:
     Vector2         m_text_position;
     Font            m_font              ;
     Color           m_text_color        = BLACK;
+    Texture2D       m_textureNormal, //  Add texture field
+                    m_textureHovered;
+    bool            m_useTexture = false; // Flag
 };

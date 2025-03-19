@@ -1,9 +1,10 @@
 #pragma once
 #include "Console.h"
 #include "TextButton.h"
+#include "TextureButton.h"
 #include "../raylib/raylib.h"
-#define main_button_width 100
-#define main_button_height 350
+#define main_button_width 350
+#define main_button_height 100
 #define button_count 3
 class Menu {
 public:
@@ -18,7 +19,8 @@ private:
     TextButton      BSTForm,
                     GraphForm,
                     HashTableForm,
-                    SLLForm;
+                    SLLForm,
+                    Back;
     std::vector<Controller*> children;
     Vector2         m_windowSize;
 };

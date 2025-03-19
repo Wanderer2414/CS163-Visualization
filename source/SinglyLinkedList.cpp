@@ -30,13 +30,11 @@ namespace SLL {
 	}
 	SLLForm::SLLForm(const Vector2& window_size) : Form(window_size) {
 		m_head = nullptr;
-		init();
 		setPause(true);
 	}
-	void SLLForm::add(const std::string& x, const std::string& index) {
-		int idx = std::stoi(index);
+	void SLLForm::add(const std::string& x) {
 		console.InsertNextMainCommand("Add " + x);
-		InsertNextMainCommand({ _Insert, 1.0f * to_int(x), (float)idx});
+		InsertNextMainCommand({ _Insert, 1.0f * to_int(x), 1});
 	}
 	void SLLForm::insert(Node*& head, const int& x, const int& index) {
 		Node* newNode = new Node(m_list.size(), x);

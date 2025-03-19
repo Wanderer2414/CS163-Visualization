@@ -9,7 +9,7 @@ Form::Form(const Vector2& window_size) :m_window_size(window_size) {
 
 void Form::init() {
     CommandList::init();
-    children.push_back(&home_button);
+    //children.push_back(&home_button);
     children.push_back(&console);
     children.push_back(&add_button);
     children.push_back(&input_textbox);
@@ -20,11 +20,6 @@ void Form::init() {
     children.push_back(&back_button);
     for (auto i : children) i->init();
     Vector2 center = 0.5f * m_window_size;
-
-    home_button.setPosition(center.x - 0.5f * Home_width, 10);
-    home_button.setSize(Home_width, Home_height);
-    home_button.setText("Home");
-    home_button.setRoundness(m_roundness);
 
     console.setPosition(Console_x, Console_y);
     console.setSize(Console_width, Console_height);
@@ -104,7 +99,10 @@ int Form::run() {
             remove_textbox.clear();
         }
         if (back_button.isPressed()) return 1;
-        if (home_button.isPressed()) return 0;
+        Vector2 position = { m_window_size.x - 90, 10 };
+        if (CheckCollisionPointRec(GetMousePosition(), { position.x, position.y, 50, 50 }) && IsMouseButtonPressed(MOUSE_LEFT_BUTTON)) {
+            return 0;
+        }
         if (m_drop_box.IsFileAdd()) {
             add_from_file(m_drop_box.getFiles()[0]);
         }
@@ -133,6 +131,24 @@ void Form::handle() {
 }
 void Form::draw() {
     for (auto i : children) i->draw();
+    // Draw homebutton
+    Vector2 position = { m_window_size.x - 90, 10 };
+    float houseWidth = 40;
+    float houseHeight = 30;
+    float roofHeight = 10;
+
+    Vector2 mousePos = GetMousePosition();
+    bool isHovered = CheckCollisionPointRec(mousePos, { position.x, position.y, houseWidth, houseHeight });
+    Color homeColor = isHovered ? DARKGRAY : GRAY;
+
+    Vector2 roofPoints[3] = {
+        {position.x, position.y + houseHeight},
+        {position.x + houseWidth, position.y + houseHeight},
+        {position.x + houseWidth / 2, position.y}
+    };
+    DrawTriangle(roofPoints[0], roofPoints[1], roofPoints[2], homeColor);
+    DrawRectangle(position.x, position.y + houseHeight, houseWidth, houseHeight, homeColor);
+    DrawRectangle(position.x + houseWidth / 2 - 10, position.y + houseHeight + 10, 20, 20, WHITE);
 }
 void Form::add(const std::string& x) {
 

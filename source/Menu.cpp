@@ -3,6 +3,7 @@
 #include "../include/General.h"
 #include "../include/Colors.h"
 #include "../include/Mode.h"
+#include "../include/Form.h"
 #include <cmath>
 #include <string>
 
@@ -17,7 +18,7 @@ void Menu::init() {
     children.push_back(&HashTableForm);
     children.push_back(&SLLForm);
     for (auto i : children) i->init();
-
+    Back.init();
     // BSTForm.setPosition(center.x - 0.5f*main_button_width, center.y - main_button_height);
     BSTForm.setSize(main_button_width, main_button_height);
     BSTForm.setText("BST");
@@ -35,10 +36,26 @@ void Menu::init() {
     SLLForm.setText("Singly Linked List");
     SLLForm.setRoundness(0.3);
 
+    Back.setTexture("C:/asset/BackPage.png", "C:/asset/BackPage_Hovered.png");
+    Back.setPosition(20, 20);
+    Back.setSize(30, 30);
+
     Vector2 center = m_windowSize / 2;
-    Vector2 origin = { center.x - 0.5f * (main_button_width + 2) * button_count, center.y - main_button_height / 2 };
+    int cols = 2;
+    int rows = (children.size() + cols - 1) / cols;
+    float spacing_x = main_button_width + 50;
+    float spacing_y = main_button_height + 50;
+    float total_width = cols * spacing_x - 50;
+    float total_height = rows * spacing_y - 50;
+    // Corrected origin calculation
+    Vector2 origin = {
+        center.x - total_width / 2, center.y - total_height / 2
+    };
+
     for (int i = 0; i < children.size(); i++) {
-        children[i]->setPosition(origin.x + (main_button_width + 50) * i, origin.y);
+        int row = i / cols;
+        int col = i % cols;
+        children[i]->setPosition(origin.x + col * spacing_x, origin.y + row * spacing_y);
     }
 
 }
@@ -51,6 +68,7 @@ int Menu::run() {
 
         draw();
         EndDrawing();
+        if (Back.isPressed()) return 0;
         if (BSTForm.isPressed()) return 3;
         if (GraphForm.isPressed()) return 4;
         if (HashTableForm.isPressed()) return 5;
@@ -60,9 +78,11 @@ int Menu::run() {
 };
 void Menu::handle() {
     for (auto i : children) i->handle();
+    Back.handle();
 }
 void Menu::draw() {
     for (auto i : children) i->draw();
+    Back.draw();
 }
 void Menu::close() {
     children.clear();

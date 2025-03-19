@@ -34,7 +34,7 @@ namespace SLL {
 		};
 		SLLForm(const Vector2& window_size);
 		virtual void		init()						override,
-							add(const std::string& x, const std::string& index = "-1"),
+							add(const std::string& x)	override,
 							remove(const std::string& x) override,
 							removeAtIndex(const int& index),
 							update(const int& x) override,
