@@ -37,6 +37,7 @@ public:
                             getCharPosition(const int& row, const int& col) const;
     std::string             getText(),
                             getText(const Vector2& start, const Vector2& end);
+    float                   margin;
     ~Label();
 protected:
     vector<string>          m_text;

@@ -83,3 +83,11 @@ vector<int> readFromFileInt(const string& link) {
     fin.close();
     return ans;
 }
+vector<string> split(const string& str) {
+    vector<string> ans = {""};
+    for (char c:str) {
+        if (c==' ' && ans.back().size()) ans.push_back("");
+        else ans.back().push_back(c);
+    }
+    return ans;
+}

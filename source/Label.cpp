@@ -21,7 +21,10 @@ void Label::init() {
     update_text();
 }
 void Label::clear() {
-
+    m_text.clear();
+    m_text_position.clear();
+    m_text = {""};
+    m_text_position = {{0, 0}};
 }
 void Label::draw() {
     if (text_setting) {
@@ -123,8 +126,8 @@ void Label::update_text() {
         update_line(i);
         m_text_position[i].y = m_position.y + m_size.y/2;
         Vector2 text_size = MeasureTextEx(text_setting->font, m_text[i].c_str(),text_setting->font_size,text_setting->spacing);
-        if ((m_align & Top) == Top) m_text_position[i].y = m_position.y + i*text_setting->font_size;
-        else if ((m_align & Bottom) == Bottom) m_text_position[i].y = m_text_position[i].y + m_size.y - (m_text.size()-i)*text_setting->font_size;
+        if ((m_align & Top) == Top) m_text_position[i].y = m_position.y + margin + i*text_setting->font_size;
+        else if ((m_align & Bottom) == Bottom) m_text_position[i].y = m_text_position[i].y + m_size.y - margin - (m_text.size()-i)*text_setting->font_size;
         else {
             m_text_position[i].y -= (0.5f*m_text_position.size() - i)*text_setting->font_size;
         }
@@ -135,8 +138,8 @@ void Label::update_line(const int& line) {
     if (line>=m_text.size()) return ;
     m_text_position[line].x = m_position.x + m_size.x/2;
     Vector2 text_size = MeasureTextEx(text_setting->font, m_text[line].c_str(),text_setting->font_size,text_setting->spacing);
-    if ((m_align & Left)  == Left) m_text_position[line].x = m_position.x;
-    else if ((m_align & Right)   == Right) m_text_position[line].x = m_position.x + m_size.x - text_size.x;
+    if ((m_align & Left)  == Left) m_text_position[line].x = m_position.x + margin;
+    else if ((m_align & Right)   == Right) m_text_position[line].x = m_position.x + m_size.x - text_size.x - margin;
     else m_text_position[line].x -= text_size.x/2;
 
 }

@@ -5,9 +5,11 @@ BinaryTreeForm::BinaryTreeForm(const Vector2& window_size) :Form(window_size) {
     m_root = 0;
     setPause(true);
 };
-void BinaryTreeForm::add(const std::string& x) {
-    console.InsertNextMainCommand("Add " + x);
-    InsertNextMainCommand({ CommandCode::add, 1.0f * to_int(x), 1 });
+void BinaryTreeForm::add(const vector<std::string>& vec) {
+    for (int i = vec.size()-1; i>=0; i--) {
+        console.InsertNextMainCommand("Add " + vec[i]);
+        InsertNextMainCommand({ CommandCode::add, 1.0f * to_int(vec[i]), 1 });
+    }
 }
 void BinaryTreeForm::insert(Node*& root, const Vector2& par, const int& x) {
     if (!root) {

@@ -79,11 +79,13 @@ void Console::goUp() {
     if (!line_cursor) return;
     BeforeGoUp();
     update_tail();
+    m_fixed.y = -line_cursor*text_setting->font_size + m_size.y/3;
 }
 void Console::goDown() {
     if (line_cursor == m_list.size()) return;
     BeforeGoDown();
     update_tail();
+    m_fixed.y = -line_cursor*text_setting->font_size + m_size.y/3;;
 }
 void Console::BeforeGoUp() {
     if (!line_cursor) return;

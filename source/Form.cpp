@@ -1,6 +1,7 @@
 #include "../include/Form.h"
 #include "../raylib/raylib.h"
 #include "../include/General.h"
+#include "../include/include.h"
 
 Form::Form(const Vector2& window_size) :m_window_size(window_size) {
     m_workspace_focus = false;
@@ -20,8 +21,10 @@ void Form::init() {
     children.push_back(&back_button);
     children.push_back(&home_button);
 
-    option_box.tabs = {{&add_button, &input_textbox, &m_drop_box}, {&remove_button, &remove_textbox}};
-    option_box.name = {"Add","Remove"};
+    option_box.tabs.push_back({&play_button});
+    option_box.tabs.push_back({&add_button, &input_textbox, &m_drop_box});
+    option_box.tabs.push_back({&remove_button, &remove_textbox});
+    option_box.name = {"Replay", "Add","Remove"};
     option_box.setVisible(false);
     option_box.setDuration(0.25);
 
@@ -45,6 +48,13 @@ void Form::init() {
     input_textbox.setPosition(40, 50);
     input_textbox.setSize(145,200);
     input_textbox.setAlignText(TextBox::Left | TextBox::Top);
+
+    play_button.button_setting = &form_setting;
+    play_button.setPosition(90, 260);
+    play_button.setSize(30, 30);
+    play_button.setButtonStage(0, PlayButton, PlayButton);
+    play_button.setButtonStage(1, PauseButton,PauseButton);
+    play_button.setButtonStage(2, Replay, Replay);
 
     back_button.button_setting = &form_setting;
     back_button.text_setting  = &form_setting;
@@ -109,7 +119,8 @@ int Form::run() {
         draw();
         EndDrawing();
         if (add_button.isPressed() || input_textbox.isEnter()) {
-            add(input_textbox.getText());
+            string str = input_textbox.getText();
+            add(split(str));
             input_textbox.clear();
         }
         if (remove_button.isPressed() || remove_textbox.isEnter()) {
@@ -124,6 +135,8 @@ int Form::run() {
     }
     return 0;
 }
+#include <iostream>
+using namespace std;
 void Form::handle() {
     //Base handle + children handle
     CommandList::handle();
@@ -136,10 +149,12 @@ void Form::handle() {
     if (workspace_hover) m_camera.zoom += GetMouseWheelMove() / 10;
 
     //Progresss setting
+    float progress = 0;
     m_progress.setSplitCount(getCommandCount());
     if (m_progress.isChanged()) {
         //PProgress drag and drop
-        GotoCommandLine(m_progress.getProgress());
+        progress = m_progress.getProgress();
+        GotoCommandLine(progress);
         if (!IsMouseButtonDown(MOUSE_BUTTON_LEFT)) m_progress.setProgresss(getProgress());
     }
     else {
@@ -147,7 +162,8 @@ void Form::handle() {
         if (IsKeyReleased(KEY_RIGHT)) goNext();
         else if (IsKeyReleased(KEY_LEFT)) goBack();
         //Reshow progress
-        m_progress.setProgresss(getProgress());
+        progress = getProgress();
+        m_progress.setProgresss(progress);
     }
     //Main box show
     if (track_hover.isHovered() && !option_box.isVisible()) {
@@ -166,14 +182,31 @@ void Form::handle() {
     if (m_drop_box.IsFileAdd()) {
         input_textbox.setText(readFromFile(m_drop_box.getFiles()[0]));
     }
+    //Play button;
+    if (!isPause() && progress < 1) play_button.go(0);
+    else if (isPause()) play_button.go(1);
+    else play_button.go(2);
+    if (play_button.isPressed()) {
+        if (play_button.getStage() == 0) {
+            setPause(true);
+            play_button.next();
+        } else if (play_button.getStage() == 1) {
+            if (progress == 1) {
+                play_button.next();
+            } else {
+                play_button.back();
+                setPause(false);
+            }
+        } else if (play_button.getStage() == 2) {
+            GotoCommandLine(0);
+            play_button.go(0);
+        }
+    }
 }
 void Form::draw() {
     for (auto i : children) i->draw();
 }
-void Form::add(const std::string& x) {
-
-}
-void Form::add_from_file(const std::string& x) {
+void Form::add(const vector<string>& x) {
 
 }
 void Form::remove(const std::string& str) {

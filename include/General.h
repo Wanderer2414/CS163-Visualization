@@ -25,4 +25,6 @@ Vector2 TransToGlobalPoint(const Camera2D& camera, const Vector2& point);
 string readFromFile(const string& link);
 vector<string> readFromFileStr(const string& link);
 vector<int> readFromFileInt(const string& link);
+
+vector<string> split(const string& str);
 #endif

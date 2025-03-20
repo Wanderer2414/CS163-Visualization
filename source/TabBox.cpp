@@ -78,8 +78,10 @@ void TabBox::handle() {
         m_is_pressed = m_is_hovered && IsMouseButtonReleased(MOUSE_BUTTON_LEFT);
         if (m_is_hovered) {
             if (pos.x<m_position.x + 30 && pos.x>=m_position.x) tab_hover = (pos.y-m_position.y)/105;
-            else tab_hover = 0;
+            else tab_hover = -1;
             if (m_is_pressed && tab_hover<tabs.size()) tab_index = tab_hover;
+            if (GetMouseWheelMove()<0 && tab_index < tabs.size()-1) tab_index++;
+            else if (GetMouseWheelMove()>0 && tab_index) tab_index--;
         }
         for (auto& i:tabs[tab_index]) i->handle();
     } else m_is_hovered = m_is_pressed = false;

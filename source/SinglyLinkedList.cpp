@@ -32,9 +32,11 @@ namespace SLL {
 		m_head = nullptr;
 		setPause(true);
 	}
-	void SLLForm::add(const std::string& x) {
-		console.InsertNextMainCommand("Add " + x);
-		InsertNextMainCommand({ _Insert, 1.0f * to_int(x), 1});
+	void SLLForm::add(const vector<std::string>& x) {
+		for (auto& i:x) {
+			console.InsertNextMainCommand("Add " + i);
+			InsertNextMainCommand({ _Insert, 1.0f * to_int(i), 1});
+		}
 	}
 	void SLLForm::insert(Node*& head, const int& x, const int& index) {
 		Node* newNode = new Node(m_list.size(), x);

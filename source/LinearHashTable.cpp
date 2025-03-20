@@ -91,8 +91,10 @@ HT::HashTable::~HashTable() {
 int HT::HashTable::index(const int& value) {
     return value % m_memory.size();
 }
-void HT::HashTable::add(const std::string& data) {
-    InsertNextMainCommand({ _insert, (float)to_int(data) });
+void HT::HashTable::add(const vector<std::string>& data) {
+    for (auto& i:data) {
+        InsertNextMainCommand({ _insert, (float)to_int(i) });
+    }
 }
 void HT::HashTable::remove(const std::string& data) {
     InsertNextMainCommand({ _delete, (float)to_int(data) });

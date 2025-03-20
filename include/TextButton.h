@@ -12,7 +12,6 @@ public:
     virtual void    init()                                              override,
                     handle()                                            override,
                     draw()                                              override,
-                    setTexture(const std::string& normalPath, const std::string& hoverPath),
                     setText(const std::string& text);
     std::string     *getText();
     ~TextButton();
@@ -21,9 +20,6 @@ protected:
     std::string     m_text;
     virtual void    update_text();
     Vector2         m_text_position;
-    Texture2D       m_textureNormal, //  Add texture field
-                    m_textureHovered;
-    bool            m_useTexture = false; // Flag
 };
 
 #endif

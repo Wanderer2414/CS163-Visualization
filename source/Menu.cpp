@@ -43,8 +43,7 @@ void Menu::init() {
     SLLForm.setText("Singly Linked List");
 
     Back.button_setting = &form_setting;
-    Back.text_setting = &form_setting;
-    Back.setTexture("C:/asset/BackPage.png", "C:/asset/BackPage_Hovered.png");
+    Back.setButtonStage(0,"CS163-DSAVisualization/asset/Icon/BackPage.png",  "CS163-DSAVisualization/asset/Icon/BackPage_Hovered.png");
     Back.setPosition(20, 20);
     Back.setSize(30, 30);
 

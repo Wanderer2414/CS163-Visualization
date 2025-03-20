@@ -13,27 +13,12 @@ void TextButton::handle() {
 void TextButton::init() {
     m_text = "";
 }
-void TextButton::setTexture(const std::string& normalPath, const std::string& hoverPath) {
-    m_textureNormal = LoadTexture(normalPath.c_str());
-    m_textureHovered = LoadTexture(hoverPath.c_str());
-    m_useTexture = true;
-}
 void TextButton::draw() {
     if (button_setting) {
-        if (m_useTexture) {
-        // Use the hover texture if the button is hovered
-            if (m_is_hovered) {
-                DrawTexture(m_textureHovered, m_position.x, m_position.y, WHITE);
-            }
-            else {
-                DrawTexture(m_textureNormal, m_position.x, m_position.y, WHITE);
-            }
-        } else {
-            if (m_is_hovered)
-                DrawRectangleRounded({ m_position.x, m_position.y, m_size.x, m_size.y }, button_setting->roundness, button_setting->segment, button_setting->hover_color);
-            else
-                DrawRectangleRounded({ m_position.x, m_position.y, m_size.x, m_size.y }, button_setting->roundness,button_setting->segment, button_setting->normal_color);
-        }
+        if (m_is_hovered)
+            DrawRectangleRounded({ m_position.x, m_position.y, m_size.x, m_size.y }, button_setting->roundness, button_setting->segment, button_setting->hover_color);
+        else
+            DrawRectangleRounded({ m_position.x, m_position.y, m_size.x, m_size.y }, button_setting->roundness,button_setting->segment, button_setting->normal_color);
     }
     if (text_setting)
         DrawTextEx(text_setting->font, m_text.c_str(), m_text_position, text_setting->font_size, text_setting->spacing,text_setting->color);

@@ -6,6 +6,7 @@
 #include "FileDropBox.h"
 #include "HomeButton.h"
 #include "TabBox.h"
+#include "TextureButton.h"
 #include "ProgressBar.h"
 #include "SettingPackage.h"
 #include "TextBox.h"
@@ -27,14 +28,14 @@
 class Form : public CommandList {
 public:
     Form(const Vector2& window_size);
+    FormSetting     form_setting;
     virtual int     run();
     virtual void    init(),
                     handle(),
                     draw(),
                     close();
 
-    virtual void    add(const std::string& str),
-                    add_from_file(const std::string& source),
+    virtual void    add(const vector<string>& str),
                     remove(const std::string& str),
                     update(const int& x),
                     search(const int& x);
@@ -43,19 +44,20 @@ protected:
     bool            m_workspace_focus;
     std::vector<Controller*> children;
     Vector2         m_window_size;
+
     TextBox         input_textbox,
                     remove_textbox;
 
     TextButton      track_hover;
+    TextureButton   play_button;
+
     TabBox          option_box;
 
     TextButton      add_button,
                     remove_button,
                     back_button;
     HomeButton      home_button;
-
-    FormSetting     form_setting;
-
+    
     DropBox         m_drop_box;
 
     Console         console;

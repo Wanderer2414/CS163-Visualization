@@ -9,6 +9,7 @@ TextBox::TextBox() {
     m_position = {10, 10};
     text_setting = 0;
     button_setting = 0;
+    margin = 5;
 }
 bool TextBox::isFocus() {
     return m_is_focus;
@@ -90,9 +91,9 @@ void TextBox::clear() {
 void TextBox::handle() {
     m_is_hovered = CheckCollisionPointRec(GetMousePosition(), { m_position.x, m_position.y, m_size.x, m_size.y });
     m_is_pressed = m_is_hovered && IsMouseButtonReleased(MOUSE_BUTTON_LEFT);
+    m_is_enter = false;
     if (IsMouseButtonReleased(MOUSE_BUTTON_LEFT)) {
         m_is_focus = m_is_hovered;
-        m_is_enter = false;
         if (m_is_focus) {
             m_cursor_row = 0;
             m_cursor_col = 0;
@@ -286,7 +287,7 @@ void TextBox::handle() {
 void TextBox::draw() {
     DrawRectangleRounded({m_position.x, m_position.y, m_size.x, m_size.y}, button_setting->roundness, button_setting->segment, button_setting->normal_color);
     if (text_setting) {
-        BeginScissorMode(m_position.x, m_position.y, m_size.x, m_size.y);
+        BeginScissorMode(m_position.x + margin, m_position.y + margin, m_size.x - 2*margin, m_size.y - 2*margin);
         Label::draw();
         if (m_is_focus && (int)(GetTime() * 5) % 2)
             DrawRectangle(m_cursor_pos.x, m_cursor_pos.y, m_cursor_pos.width, m_cursor_pos.height, BLACK);
