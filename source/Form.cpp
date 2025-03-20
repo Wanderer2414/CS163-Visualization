@@ -3,6 +3,7 @@
 #include "../include/General.h"
 #include "../include/Colors.h"
 #include "../include/Mode.h"
+#include "../include/IncludePath.h"
 Form::Form(const Vector2& window_size) :m_window_size(window_size) {
     m_workspace_focus = false;
 }
@@ -18,6 +19,7 @@ void Form::init() {
     children.push_back(&remove_textbox);
     children.push_back(&remove_button);
     children.push_back(&back_button);
+    children.push_back(&home_button);
     for (auto i : children) i->init();
     Vector2 center = 0.5f * m_window_size;
 
@@ -34,13 +36,16 @@ void Form::init() {
     add_button.m_hover_color = { 200, 200, 200, 255 };
     add_button.setTextColor(BLACK);
 
-    back_button.setPosition(10, 10);
+    back_button.setPosition(10, 5);
     back_button.setSize(Control_width, Control_height);
-    back_button.setText("Back");
+    back_button.setTexture(back_normal, back_hovered);
     back_button.setRoundness(m_roundness);
-    back_button.m_normal_color = WHITE;
-    back_button.m_hover_color = { 200, 200, 200, 255 };
-    back_button.setTextColor(BLACK);
+
+    home_button.setPosition(m_window_size.x / 2,  10);
+    home_button.setSize(Control_width, Control_height);
+    home_button.setTexture(home_normal, home_hovered);
+    home_button.setRoundness(m_roundness);
+
 
     remove_button.setPosition(Console_x, Console_y + Console_height + Control_height + 20);
     remove_button.setSize(Control_width, Control_height);
@@ -99,10 +104,7 @@ int Form::run() {
             remove_textbox.clear();
         }
         if (back_button.isPressed()) return 1;
-        Vector2 position = { m_window_size.x - 90, 10 };
-        if (CheckCollisionPointRec(GetMousePosition(), { position.x, position.y, 50, 50 }) && IsMouseButtonPressed(MOUSE_LEFT_BUTTON)) {
-            return 0;
-        }
+        if (home_button.isPressed()) return 0;
         if (m_drop_box.IsFileAdd()) {
             add_from_file(m_drop_box.getFiles()[0]);
         }
@@ -131,24 +133,6 @@ void Form::handle() {
 }
 void Form::draw() {
     for (auto i : children) i->draw();
-    // Draw homebutton
-    Vector2 position = { m_window_size.x - 90, 10 };
-    float houseWidth = 40;
-    float houseHeight = 30;
-    float roofHeight = 10;
-
-    Vector2 mousePos = GetMousePosition();
-    bool isHovered = CheckCollisionPointRec(mousePos, { position.x, position.y, houseWidth, houseHeight });
-    Color homeColor = isHovered ? DARKGRAY : GRAY;
-
-    Vector2 roofPoints[3] = {
-        {position.x, position.y + houseHeight},
-        {position.x + houseWidth, position.y + houseHeight},
-        {position.x + houseWidth / 2, position.y}
-    };
-    DrawTriangle(roofPoints[0], roofPoints[1], roofPoints[2], homeColor);
-    DrawRectangle(position.x, position.y + houseHeight, houseWidth, houseHeight, homeColor);
-    DrawRectangle(position.x + houseWidth / 2 - 10, position.y + houseHeight + 10, 20, 20, WHITE);
 }
 void Form::add(const std::string& x) {
 

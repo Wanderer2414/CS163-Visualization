@@ -4,6 +4,7 @@
 #include "../include/Colors.h"
 #include "../include/Mode.h"
 #include "../include/Form.h"
+#include "../include/IncludePath.h"
 #include <cmath>
 #include <string>
 
@@ -21,42 +22,37 @@ void Menu::init() {
     Back.init();
     // BSTForm.setPosition(center.x - 0.5f*main_button_width, center.y - main_button_height);
     BSTForm.setSize(main_button_width, main_button_height);
-    BSTForm.setText("BST");
+    BSTForm.setTexture(menu_avltree_normal, menu_avltree_hovered);
     BSTForm.setRoundness(0.3);
 
     GraphForm.setSize(main_button_width, main_button_height);
-    GraphForm.setText("Graph");
+    GraphForm.setTexture(menu_graph_normal, menu_graph_hovered);
     GraphForm.setRoundness(0.3);
 
     HashTableForm.setSize(main_button_width, main_button_height);
-    HashTableForm.setText("HashTable");
+    HashTableForm.setTexture(menu_hash_normal, menu_hash_hoverd);
     HashTableForm.setRoundness(0.3);
 
     SLLForm.setSize(main_button_width, main_button_height);
-    SLLForm.setText("Singly Linked List");
+    SLLForm.setTexture(menu_sll_normal, menu_sll_hovered);
     SLLForm.setRoundness(0.3);
 
-    Back.setTexture("C:/asset/BackPage.png", "C:/asset/BackPage_Hovered.png");
-    Back.setPosition(20, 20);
-    Back.setSize(30, 30);
+    Back.setTexture(back_normal, back_hovered);
+    Back.setPosition(10, 10);
+    Back.setSize(20, 20);
 
-    Vector2 center = m_windowSize / 2;
-    int cols = 2;
-    int rows = (children.size() + cols - 1) / cols;
-    float spacing_x = main_button_width + 50;
-    float spacing_y = main_button_height + 50;
-    float total_width = cols * spacing_x - 50;
-    float total_height = rows * spacing_y - 50;
-    // Corrected origin calculation
-    Vector2 origin = {
-        center.x - total_width / 2, center.y - total_height / 2
-    };
+    // Define spacing and button size
+    int spacingX = main_button_width + 20;
+    int spacingY = main_button_height + 20;
+    int centerX = m_windowSize.x / 2;
+    int centerY = m_windowSize.y / 2;
 
-    for (int i = 0; i < children.size(); i++) {
-        int row = i / cols;
-        int col = i % cols;
-        children[i]->setPosition(origin.x + col * spacing_x, origin.y + row * spacing_y);
-    }
+    // Position elements properly within bounds
+    BSTForm.setPosition(centerX - spacingX, centerY - spacingY); // Top-left
+    HashTableForm.setPosition(centerX - spacingX, centerY + spacingY); // Bottom-left
+    GraphForm.setPosition(centerX + spacingX, centerY - spacingY); // Top-right
+    SLLForm.setPosition(centerX + spacingX, centerY + spacingY); // Bottom-right
+
 
 }
 int Menu::run() {
