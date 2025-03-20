@@ -70,7 +70,7 @@ void HT::HashTable::handle() {
     
     m_camera.offset.x = m_workspace.x + 10;
     if (m_memory_sz_textBox.isEnter()) {
-        setMemorySize(to_int(*m_memory_sz_textBox.getText()));
+        setMemorySize(to_int(m_memory_sz_textBox.getText()));
     }
     int count = m_workspace.width / m_camera.zoom / (m_node_size + m_node_spacing);
     if (count != max_size || m_memory_sz_textBox.isEnter()) {
@@ -81,7 +81,7 @@ void HT::HashTable::handle() {
             int offset = i;
             for (; i < m_memory.size() && (i - offset) < count; i++)
                 m_memory[i].setPosition((m_node_size + m_node_spacing) * (i - offset), y);
-            y += m_node_size + m_font_size + 10;
+            y += m_node_size + form_setting.font_size + 10;
         }
     }
 };

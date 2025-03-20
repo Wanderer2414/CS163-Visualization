@@ -3,6 +3,8 @@
 #include "Controller.h"
 #include "SettingPackage.h"
 #include <string>
+#include <vector>
+using namespace std;
 class Label: public Controller {
 public:
     Label();
@@ -15,20 +17,32 @@ public:
         Center  = 0
     };
     TextSetting             *text_setting;
+    bool                    empty() const;
+    int                     getLineSize(const int& line) const,
+                            getLineCount()              const;
     virtual void            init()          override,
                             draw()          override,
                             handle()        override,
                             setSize(const float& width, const float& height) override,
-    
+                            setPosition(const float& x, const float& height) override,
                             setText(const std::string& str),
 
-                            setAlignText(const int& align);
-    std::string             *getText();
+                            setAlignText(const int& align),
+                            insert(const int& row, const int& col, const char& c),
+                            insert(int& row, int& col, const string& c),
+                            erase(const int& row, const int& col),
+                            erase(const Vector2& start, const Vector2& end),
+                            clear();
+    Vector2                 getLinePosition(const int& index) const,
+                            getCharPosition(const int& row, const int& col) const;
+    std::string             getText(),
+                            getText(const Vector2& start, const Vector2& end);
     ~Label();
-private:
-    std::string             m_text;
-    virtual void            update_text();
-    Vector2                 m_text_position;
+protected:
+    vector<string>          m_text;
+    virtual void            update_text(),
+                            update_line(const int& line);
+    vector<Vector2>         m_text_position;
 
     int                     m_align;
 };

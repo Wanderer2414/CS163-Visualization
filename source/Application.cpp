@@ -12,9 +12,6 @@ Application::Application() :
     InitWindow(m_width, m_height, "Visualization");
     SetTargetFPS(60);
 }
-#include <iostream>
-using namespace std;
-
 void Application::run() {
     int form_index = 0;
     while (!WindowShouldClose()) {

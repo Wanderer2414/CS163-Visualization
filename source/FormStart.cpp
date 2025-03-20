@@ -1,12 +1,7 @@
 #include "../include/FormStart.h"
-#include "../raylib/raylib.h"
-#include "../include/General.h"
-#include "../include/General.h"
 #include "../include/Colors.h"
-#include "../include/Mode.h"
 #include <cmath>
 #include <string>
-#include "../include/GUI.h"
 MenuStart::MenuStart(const Vector2& windowSize) :
     m_windowSize(windowSize)
 {
