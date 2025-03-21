@@ -2,8 +2,7 @@
 #include "../raylib/raylib.h"
 #include "../include/General.h"
 #include "../include/Colors.h"
-#include "../include/Mode.h"
-#include "../include/include.h"
+#include "../include/IncludePath.h"
 #include <cmath>
 #include <string>
 
@@ -18,12 +17,10 @@ void Menu::init() {
     children.push_back(&GraphForm);
     children.push_back(&HashTableForm);
     children.push_back(&SLLForm);
-    children.push_back(&Back);
     for (auto i : children) i->init();
 
     BSTForm.button_setting = &form_setting;
     BSTForm.text_setting = &form_setting;
-    // BSTForm.setPosition(center.x - 0.5f*main_button_width, center.y - main_button_height);
     BSTForm.setSize(main_button_width, main_button_height);
     BSTForm.setText("BST");
 
@@ -41,11 +38,12 @@ void Menu::init() {
     SLLForm.text_setting = &form_setting;
     SLLForm.setSize(main_button_width, main_button_height);
     SLLForm.setText("Singly Linked List");
-
+    
     Back.button_setting = &form_setting;
-    Back.setButtonStage(0,"CS163-DSAVisualization/asset/Icon/BackPage.png",  "CS163-DSAVisualization/asset/Icon/BackPage_Hovered.png");
-    Back.setPosition(20, 20);
-    Back.setSize(30, 30);
+    Back.setPosition(30, 30);
+    Back.setButtonStage(0, back_normal, back_hovered);
+    Back.setSize(50, 50);
+
 
     Vector2 center = m_windowSize / 2;
     int cols = 2;
@@ -64,7 +62,6 @@ void Menu::init() {
         int col = i % cols;
         children[i]->setPosition(origin.x + col * spacing_x, origin.y + row * spacing_y);
     }
-
 }
 int Menu::run() {
     while (!WindowShouldClose()) {

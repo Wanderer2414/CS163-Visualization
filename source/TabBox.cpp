@@ -1,5 +1,6 @@
 #include "../include/TabBox.h"
 #include "../include/General.h"
+#include "../include/IncludePath.h"
 TabBox::TabBox() {
     pos_changed = false;
 }
@@ -8,7 +9,7 @@ bool TabBox::isVisible() const {
 }
 void TabBox::init() {
     Controller::init();
-    text_setting.font = GetFontDefault();
+    text_setting.font = LoadFont(font_link);
     m_size = {300, 400};
     m_position = {0, 0};
 
@@ -77,11 +78,13 @@ void TabBox::handle() {
         m_is_hovered = CheckCollisionPointRec(pos, {m_position.x, m_position.y, m_size.x, m_size.y});
         m_is_pressed = m_is_hovered && IsMouseButtonReleased(MOUSE_BUTTON_LEFT);
         if (m_is_hovered) {
-            if (pos.x<m_position.x + 30 && pos.x>=m_position.x) tab_hover = (pos.y-m_position.y)/105;
+            if (pos.x<m_position.x + 30 && pos.x>=m_position.x) {
+                tab_hover = (pos.y-m_position.y)/105;
+                if (GetMouseWheelMove()<0 && tab_index < tabs.size()-1) tab_index++;
+                else if (GetMouseWheelMove()>0 && tab_index) tab_index--;
+            }
             else tab_hover = -1;
             if (m_is_pressed && tab_hover<tabs.size()) tab_index = tab_hover;
-            if (GetMouseWheelMove()<0 && tab_index < tabs.size()-1) tab_index++;
-            else if (GetMouseWheelMove()>0 && tab_index) tab_index--;
         }
         for (auto& i:tabs[tab_index]) i->handle();
     } else m_is_hovered = m_is_pressed = false;

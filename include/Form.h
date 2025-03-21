@@ -4,7 +4,6 @@
 #include "Console.h"
 #include "Controller.h"
 #include "FileDropBox.h"
-#include "HomeButton.h"
 #include "TabBox.h"
 #include "TextureButton.h"
 #include "ProgressBar.h"
@@ -12,6 +11,7 @@
 #include "TextBox.h"
 #include "TextButton.h"
 #include "../raylib/raylib.h"
+#include "ValueScroll.h"
 #include <string>
 #include <vector>
 #include <deque>
@@ -49,15 +49,17 @@ protected:
                     remove_textbox;
 
     TextButton      track_hover;
+
     TextureButton   play_button,
-                    skip_button;
+                    back_button,
+                    skip_button,
+                    home_button;
+    ValueScroll     speed_scroll;
 
     TabBox          option_box;
 
     TextButton      add_button,
-                    remove_button,
-                    back_button;
-    HomeButton      home_button;
+                    remove_button;
     
     DropBox         m_drop_box;
 

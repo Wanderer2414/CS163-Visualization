@@ -1,6 +1,6 @@
 #include "../include/FormStart.h"
+#include "../include/IncludePath.h"
 #include "../include/Colors.h"
-#include "../include/include.h"
 #include <cmath>
 #include <string>
 MenuStart::MenuStart(const Vector2& windowSize) :
@@ -15,13 +15,13 @@ int MenuStart::run() {
         BeginDrawing();
         ColorScheme currentTheme = DarkTheme;
         ClearBackground(currentTheme.background);
-        
+        // Draw Title
         const char* text = "DATA STRUCTURE VISUALIZATION";
         int fontSize = 40;
         // Calculate the position to center the text
-        int textWidth = MeasureText(text, fontSize);
-        int posX = (m_windowSize.x - textWidth) / 2;
-        DrawText(text, posX, 100, fontSize, currentTheme.text);
+        Vector2 textSize = MeasureTextEx(GetFontDefault(), text, fontSize, 2.0f);
+        int posX = (m_windowSize.x - textSize.x) / 2;
+        DrawTextEx(GetFontDefault(), text, {static_cast<float>(posX), 100}, fontSize, 2.0f, currentTheme.text);
 
         draw();
         EndDrawing();
