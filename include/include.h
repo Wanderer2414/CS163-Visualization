@@ -5,5 +5,6 @@
 #define PlayButton "CS163-DSAVisualization/asset/Icon/Play.png"
 #define PauseButton "CS163-DSAVisualization/asset/Icon/Pause.png"
 #define Replay "CS163-DSAVisualization/asset/Icon/Replay.png"
+#define Skip "CS163-DSAVisualization/asset/Icon/Chevrons right.png"
 
 #endif

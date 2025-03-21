@@ -49,7 +49,8 @@ protected:
                     remove_textbox;
 
     TextButton      track_hover;
-    TextureButton   play_button;
+    TextureButton   play_button,
+                    skip_button;
 
     TabBox          option_box;
 

@@ -1,5 +1,6 @@
 #include "../include/FormStart.h"
 #include "../include/Colors.h"
+#include "../include/include.h"
 #include <cmath>
 #include <string>
 MenuStart::MenuStart(const Vector2& windowSize) :
@@ -33,7 +34,7 @@ int MenuStart::run() {
     return 0;
 };
 void MenuStart::init() {
-    form_setting.font = GetFontDefault();
+    form_setting.font = LoadFont(font_link);
     children.push_back(&Start);
     children.push_back(&Setting);
     children.push_back(&Exit);

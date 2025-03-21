@@ -7,7 +7,7 @@ Form::Form(const Vector2& window_size) :m_window_size(window_size) {
     m_workspace_focus = false;
 }
 void Form::init() {
-    form_setting.font = GetFontDefault();
+    form_setting.font = LoadFont(font_link);
     CommandList::init();
     children.push_back(&console);
     // children.push_back(&add_button);
@@ -21,7 +21,7 @@ void Form::init() {
     children.push_back(&back_button);
     children.push_back(&home_button);
 
-    option_box.tabs.push_back({&play_button});
+    option_box.tabs.push_back({&play_button, &skip_button});
     option_box.tabs.push_back({&add_button, &input_textbox, &m_drop_box});
     option_box.tabs.push_back({&remove_button, &remove_textbox});
     option_box.name = {"Replay", "Add","Remove"};
@@ -50,11 +50,16 @@ void Form::init() {
     input_textbox.setAlignText(TextBox::Left | TextBox::Top);
 
     play_button.button_setting = &form_setting;
-    play_button.setPosition(90, 260);
+    play_button.setPosition(100, 260);
     play_button.setSize(30, 30);
     play_button.setButtonStage(0, PlayButton, PlayButton);
     play_button.setButtonStage(1, PauseButton,PauseButton);
     play_button.setButtonStage(2, Replay, Replay);
+
+    skip_button.button_setting = &form_setting;
+    skip_button.setPosition(150, 260);
+    skip_button.setSize(30, 30);
+    skip_button.setButtonStage(0, Skip, Skip);
 
     back_button.button_setting = &form_setting;
     back_button.text_setting  = &form_setting;
@@ -97,6 +102,8 @@ void Form::init() {
     home_button.setPosition(m_window_size.x - 90, 10);
     home_button.setSize(60, 50);
 
+    option_box.button_setting = form_setting;
+    option_box.text_setting = form_setting;
     option_box.setPosition(-option_box.getSize().x, m_window_size.y/2);
     option_box.setSize(200, m_window_size.y/2-30);
     option_box.setVisible(false);
@@ -135,8 +142,6 @@ int Form::run() {
     }
     return 0;
 }
-#include <iostream>
-using namespace std;
 void Form::handle() {
     //Base handle + children handle
     CommandList::handle();
@@ -199,8 +204,11 @@ void Form::handle() {
             }
         } else if (play_button.getStage() == 2) {
             GotoCommandLine(0);
-            play_button.go(0);
         }
+    }
+    //Skip button
+    if (skip_button.isPressed()) {
+        GotoCommandLine(1);
     }
 }
 void Form::draw() {

@@ -3,7 +3,7 @@
 #include "../include/General.h"
 #include "../include/Colors.h"
 #include "../include/Mode.h"
-#include "../include/Form.h"
+#include "../include/include.h"
 #include <cmath>
 #include <string>
 
@@ -13,7 +13,7 @@ Menu::Menu(const Vector2& windowSize) :
 }
 
 void Menu::init() {
-    form_setting.font = GetFontDefault();
+    form_setting.font = LoadFont(font_link);
     children.push_back(&BSTForm);
     children.push_back(&GraphForm);
     children.push_back(&HashTableForm);
