@@ -17,7 +17,7 @@ public:
     ~Application();
 private:
     int     m_width = 1000,
-            m_height = 800;
+            m_height = 700;
     Menu            menu;
     MenuStart       menuStart;
     BinaryTreeForm  BSTForm;

@@ -1,6 +1,5 @@
 #include "../include/CommandLists.h"
 #include <vector>
-#include <iostream>
 CommandList::CommandList() {
 }
 bool CommandList::isEnd() {
@@ -65,9 +64,9 @@ void CommandList::init() {
     current_add = 0;
     m_speed = 1;
     m_is_enable = true;
-    m_is_pause = true;
+    m_is_pause = false;
     main_command_pointer = 0;
-    current_segment = { 0,0 };
+    current_segment = { -10,-10 };
 }
 void CommandList::PushBackMainCommand(const std::vector<float>& code) {
     if (m_is_enable) {
@@ -136,22 +135,22 @@ void CommandList::GotoCommandLine(const float& percent) {
     else {
         current_segment.x = current_segment.y = getProgress();
         if (getProgress() < percent) {
-            while (getProgress() <= percent) {
+            while (getProgress() < percent) {
                 BeforeFetchNext();
                 current_segment.x = current_segment.y;
                 current_segment.y = getProgress();
                 if (!temporary[command_pointer]) update_tail();
             }
-            current_segment.x = percent;
+            current_segment.x = percent+0.1;
         }
         else if (getProgress() > percent) {
-            while (getProgress() >= percent) {
+            while (getProgress() > percent) {
                 BeforeFetchPrev();
                 current_segment.y = current_segment.x;
                 current_segment.x = getProgress();
                 if (!temporary[command_pointer]) update_tail();
             }
-            current_segment.y = percent;
+            current_segment.y = percent-0.1;
         }
     }
 }

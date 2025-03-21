@@ -14,46 +14,57 @@ Menu::Menu(const Vector2& windowSize) :
 }
 
 void Menu::init() {
+    form_setting.font = LoadFont(font_link);
     children.push_back(&BSTForm);
     children.push_back(&GraphForm);
     children.push_back(&HashTableForm);
     children.push_back(&SLLForm);
     for (auto i : children) i->init();
-    Back.init();
+
+    BSTForm.button_setting = &form_setting;
+    BSTForm.text_setting = &form_setting;
     // BSTForm.setPosition(center.x - 0.5f*main_button_width, center.y - main_button_height);
     BSTForm.setSize(main_button_width, main_button_height);
-    BSTForm.setTexture(menu_avltree_normal, menu_avltree_hovered);
-    BSTForm.setRoundness(0.3);
+    BSTForm.setText("BST");
 
+    GraphForm.button_setting = &form_setting;
+    GraphForm.text_setting = &form_setting;
     GraphForm.setSize(main_button_width, main_button_height);
-    GraphForm.setTexture(menu_graph_normal, menu_graph_hovered);
-    GraphForm.setRoundness(0.3);
+    GraphForm.setText("Graph");
 
+    HashTableForm.button_setting = &form_setting;
+    HashTableForm.text_setting = &form_setting;
     HashTableForm.setSize(main_button_width, main_button_height);
-    HashTableForm.setTexture(menu_hash_normal, menu_hash_hoverd);
-    HashTableForm.setRoundness(0.3);
+    HashTableForm.setText("HashTable");
 
+    SLLForm.button_setting = &form_setting;
+    SLLForm.text_setting = &form_setting;
     SLLForm.setSize(main_button_width, main_button_height);
-    SLLForm.setTexture(menu_sll_normal, menu_sll_hovered);
-    SLLForm.setRoundness(0.3);
-
-    Back.setTexture(back_normal, back_hovered);
-    Back.setPosition(10, 10);
-    Back.setSize(20, 20);
-
-    // Define spacing and button size
-    int spacingX = main_button_width + 20;
-    int spacingY = main_button_height + 20;
-    int centerX = m_windowSize.x / 2;
-    int centerY = m_windowSize.y / 2;
-
-    // Position elements properly within bounds
-    BSTForm.setPosition(centerX - spacingX, centerY - spacingY); // Top-left
-    HashTableForm.setPosition(centerX - spacingX, centerY + spacingY); // Bottom-left
-    GraphForm.setPosition(centerX + spacingX, centerY - spacingY); // Top-right
-    SLLForm.setPosition(centerX + spacingX, centerY + spacingY); // Bottom-right
+    SLLForm.setText("Singly Linked List");
+    
+    Back.button_setting = &form_setting;
+    Back.setPosition(30, 30);
+    Back.setButtonStage(0, back_normal, back_hovered);
+    Back.setSize(50, 50);
 
 
+    Vector2 center = m_windowSize / 2;
+    int cols = 2;
+    int rows = (children.size() + cols - 1) / cols;
+    float spacing_x = main_button_width + 50;
+    float spacing_y = main_button_height + 50;
+    float total_width = cols * spacing_x - 50;
+    float total_height = rows * spacing_y - 50;
+    // Corrected origin calculation
+    Vector2 origin = {
+        center.x - total_width / 2, center.y - total_height / 2
+    };
+
+    for (int i = 0; i < children.size(); i++) {
+        int row = i / cols;
+        int col = i % cols;
+        children[i]->setPosition(origin.x + col * spacing_x, origin.y + row * spacing_y);
+    }
 }
 int Menu::run() {
     while (!WindowShouldClose()) {

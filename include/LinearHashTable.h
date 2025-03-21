@@ -32,7 +32,7 @@ namespace HT {
         };
         HashTable(const Vector2& window_size);
         virtual void        init()              override,
-                            add(const std::string& data) override,
+                            add(const vector<std::string>& data) override,
                             remove(const std::string& data) override,
                             draw()              override,
                             handle()            override,

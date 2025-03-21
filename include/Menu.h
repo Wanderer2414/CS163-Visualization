@@ -2,8 +2,10 @@
 #define MENU_H
 
 #include "Console.h"
+#include "SettingPackage.h"
 #include "TextButton.h"
 #include "../raylib/raylib.h"
+#include "TextureButton.h"
 #define main_button_width 350
 #define main_button_height 100
 #define button_count 3
@@ -16,12 +18,13 @@ public:
                     handle()        ,
                     draw()          ,
                     close()         ;
+    FormSetting     form_setting;
 private:
     TextButton      BSTForm,
                     GraphForm,
                     HashTableForm,
-                    SLLForm,
-                    Back;
+                    SLLForm;
+    TextureButton   Back;
     std::vector<Controller*> children;
     Vector2         m_windowSize;
 };

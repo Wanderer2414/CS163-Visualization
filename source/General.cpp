@@ -49,6 +49,18 @@ Rectangle TransToCameraRec(const Camera2D& camera, Rectangle rec) {
 Vector2 TransToGlobalPoint(const Camera2D& camera, const Vector2& point) {
     return (point - camera.offset) / camera.zoom;
 }
+string readFromFile(const string& link) {
+    string ans;
+    ifstream fin(link);
+    char BUFFER[64];
+    while (!fin.eof()) {
+        fin.read(&BUFFER[0], 64);
+        ans+=BUFFER;
+    }
+    ans.pop_back();
+    fin.close();
+    return ans;
+}
 vector<string> readFromFileStr(const string& link) {
     vector<string> ans;
     ifstream fin(link);
@@ -69,5 +81,13 @@ vector<int> readFromFileInt(const string& link) {
     }
     ans.pop_back();
     fin.close();
+    return ans;
+}
+vector<string> split(const string& str) {
+    vector<string> ans = {""};
+    for (char c:str) {
+        if (c==' ' && ans.back().size()) ans.push_back("");
+        else ans.back().push_back(c);
+    }
     return ans;
 }

@@ -45,6 +45,7 @@ void Application::run() {
             form_index = HashTableForm.run();
             HashTableForm.close();
         }
+            break;
         case 6: {
             SLLForm.init();
             form_index = SLLForm.run();
