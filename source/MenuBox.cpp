@@ -35,13 +35,11 @@ void MenuBox::handle() {
 }
 void MenuBox::draw() {
     if (m_is_visible) {
-        DrawRectangleRounded({m_position.x, m_position.y, m_size.x, m_size.y},light_setting.roundness, light_setting.segment, dark_setting.background_color);
-        Color color = light_setting.background_color;
-        color.a *= sun.getPercent();
-        DrawRectangleRounded({m_position.x, m_position.y, m_size.x, m_size.y},dark_setting.roundness, dark_setting.segment, color);
-        // BeginScissorMode(m_position.x, m_position.y, m_size.x, m_size.y);
+        Color color = light_setting.background_color*sun.getPercent() + dark_setting.background_color*(1-sun.getPercent());
+        DrawRectangleRounded({m_position.x, m_position.y, m_size.x, m_size.y},light_setting.roundness, light_setting.segment, color);
+        BeginScissorMode(m_position.x, m_position.y, m_size.x, m_size.y);
         for (auto& i:children) i->draw();
-        // EndScissorMode();
+        EndScissorMode();
     }
 }
 void MenuBox::close() {

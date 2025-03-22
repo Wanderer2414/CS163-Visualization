@@ -39,7 +39,7 @@ void Menu::init() {
     SLLForm.setText("Singly Linked List");
     
     Back.button_setting = &form_setting;
-    Back.setPosition(30, 30);
+    Back.setPosition(20, 20);
     Back.setButtonStage(0, back_normal, back_hovered);
     Back.setSize(30, 30);
 

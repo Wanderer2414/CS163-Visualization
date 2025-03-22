@@ -98,6 +98,11 @@ void ValueScroll::update_text() {
     int n = text_setting->font_size/10;
     n = n*(n-1)/2;
     m_text_position[0].y = m_position.y + m_size.y/2 - text_setting->font_size/2 - int(text_setting->font_size)%10 - n*10;
+    if (pointer+1<n) {
+        float n = text_setting->font_size/10 - pointer;
+        n = (n-1)*n/2;
+        m_text_position[0].y += n*10 + int(text_setting->font_size)%10;
+    }
     for (int i =1; i<m_text_position.size(); i++) {
         m_text_position[i].y = m_text_position[i-1].y + font_size[i-1];
     }

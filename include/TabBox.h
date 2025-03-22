@@ -16,15 +16,16 @@ public:
                     isPressed() const;
     virtual void    init()      override,    
                     draw()      override,
-                    handle()    override;
+                    handle()    override,
+                    close()     override;
 
     virtual void    setVisible(const bool& visible),
                     setPosition(const float& x, const float& y) override,
+                    push_back(const int& index, Controller* controller),
+                    setText(const int& index, const string& name),
                     clear();
-    
+
     Vector2         getPosition() const override;
-    vector<vector<Controller*>> tabs;
-    vector<std::string>         name;
 private:
     bool            is_visible,
                     pos_changed,
@@ -32,6 +33,10 @@ private:
                     m_is_pressed;
     int             tab_index = 0,
                     tab_hover = 0;
+    float           delta;
+    vector<vector<Controller*>> tabs;
+    vector<string>  m_name;
+    vector<float>   m_height;
 };
 
 #endif

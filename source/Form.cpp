@@ -13,32 +13,63 @@ void Form::init() {
     children.push_back(&m_progress);
     children.push_back(&track_hover);
     children.push_back(&option_box);
+    children.push_back(&play_button);
     children.push_back(&back_button);
     children.push_back(&home_button);
 
     console.button_setting              = &form_setting;
     console.text_setting                = &form_setting;
-    add_label.text_setting              = &form_setting;
+
+    insert_label.text_setting           = &form_setting;
+    update_label.text_setting           = &form_setting;
+    search_label.text_setting           = &form_setting;
+    remove_label.text_setting           = &form_setting;
+    create_label.text_setting           = &form_setting;
+    setting_label.text_setting          = &form_setting;
     add_button.text_setting             = &form_setting;
     add_button.button_setting           = &form_setting;
     input_textbox.text_setting          = &form_setting;
     input_textbox.button_setting        = &form_setting;
+
     speed_scroll.text_setting           = &form_setting;
+
     remove_button.button_setting        = &form_setting;
     remove_button.text_setting          = &form_setting;
     remove_textbox.button_setting       = &form_setting;
     remove_textbox.text_setting         = &form_setting;
+
+    create_button.text_setting          = &form_setting;
+    create_button.button_setting        = &form_setting;
+
     m_drop_box.text_setting             = &form_setting;
     m_drop_box.button_setting           = &form_setting;
+
     home_button.button_setting          = &form_setting;
     option_box.form_setting             = &form_setting;
     track_hover.button_setting          = &form_setting;
     track_hover.text_setting            = &form_setting;
 
-    option_box.tabs.push_back({&play_button, &skip_button, &speed_scroll});
-    option_box.tabs.push_back({&add_button, &add_label, &input_textbox, &m_drop_box});
-    option_box.tabs.push_back({&remove_button, &remove_textbox});
-    option_box.name = {"Replay", "Add","Remove"};
+    option_box.push_back(0, &setting_label);
+    option_box.push_back(0, &skip_button);
+    option_box.push_back(0, &speed_scroll);
+    option_box.push_back(0, &restart_button);
+    option_box.push_back(1, &create_button);
+    option_box.push_back(1, &create_label);
+    option_box.push_back(2, &add_button);
+    option_box.push_back(2, &insert_label);
+    option_box.push_back(2, &input_textbox);
+    option_box.push_back(2, &m_drop_box);
+    option_box.push_back(3, &update_label);
+    option_box.push_back(4, &search_label);
+    option_box.push_back(5, &remove_label);
+    option_box.push_back(5, &remove_button);
+    option_box.push_back(5, &remove_textbox);
+    option_box.setText(0,"Settings");
+    option_box.setText(1,"Create");
+    option_box.setText(2,"Insert");
+    option_box.setText(3,"Update");
+    option_box.setText(4,"Search");
+    option_box.setText(5,"Remove");
     option_box.setVisible(false);
     option_box.setDuration(0.25);
 
@@ -49,30 +80,59 @@ void Form::init() {
     console.setSize(230, 150);
     console.setTextOrigin({ 10,10 });
 
-    add_label.setText("Add");
-    add_label.setPosition(40, 15);
-    add_label.setSize(100, 30);
+    insert_label.setText("Insert");
+    insert_label.setPosition(30, 5);
+    insert_label.setSize(170, 30);
 
-    add_button.setPosition(40, 260);
-    add_button.setSize(145,50);
+    create_label.setText("Create");
+    create_label.setPosition(30, 5);
+    create_label.setSize(170, 30);
+
+    remove_label.setText("Remove");
+    remove_label.setPosition(30, 5);
+    remove_label.setSize(170, 30);
+
+    search_label.setText("Search");
+    search_label.setPosition(30, 5);
+    search_label.setSize(170, 30);
+
+    update_label.setText("Update");
+    update_label.setPosition(30, 5);
+    update_label.setSize(170, 30);
+
+    setting_label.setText("Setting");
+    setting_label.setPosition(30, 5);
+    setting_label.setSize(170, 30);
+
+    create_button.setPosition(40, 270);
+    create_button.setSize(145,40);
+    create_button.setText("Create");
+
+    add_button.setPosition(40, 270);
+    add_button.setSize(145,40);
     add_button.setText("Add");
 
     input_textbox.setPosition(40, 50);
     input_textbox.setSize(145,200);
     input_textbox.setAlignText(TextBox::Left | TextBox::Top);
 
-    play_button.setPosition(100, 260);
-    play_button.setSize(30, 30);
+
+    play_button.setPosition(m_window_size.x/2-25, m_window_size.y - 65);
+    play_button.setSize(50, 50);
     play_button.setButtonStage(0, PlayButton, PlayButtonHovered);
     play_button.setButtonStage(1, PauseButton,PauseButtonHovered);
     play_button.setButtonStage(2, Replay, Replayhovered);
 
-    skip_button.setPosition(150, 260);
+    skip_button.setPosition(150, 270);
     skip_button.setSize(30, 30);
     skip_button.setButtonStage(0, Skip, Skip_hover);
 
-    speed_scroll.setPosition(130, 120);
-    speed_scroll.setSize(60, 170);
+    restart_button.setPosition(40, 270);
+    restart_button.setSize(30, 30);
+    restart_button.setButtonStage(0, Skip, Skip_hover);
+    
+    speed_scroll.setPosition(80, 260);
+    speed_scroll.setSize(60, 50);
     stringstream s;
     s << 0.2 << "x";
     for (float i = 0.4; i<=3; i+=0.2) s<<endl<< i<<"x";
@@ -83,8 +143,8 @@ void Form::init() {
     back_button.setSize(30, 30);
     back_button.setButtonStage(0, back_normal, back_hovered);
 
-    remove_button.setPosition(40, 260);
-    remove_button.setSize(145,50);
+    remove_button.setPosition(40, 250);
+    remove_button.setSize(145,40);
     remove_button.setText("Remove");
 
     remove_textbox.setPosition(40, 50);

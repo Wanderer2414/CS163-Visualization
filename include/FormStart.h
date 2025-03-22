@@ -23,7 +23,7 @@ public:
     FormSetting     form_setting;
 private:
     int             old_mode = -1;
-    TextButton      Start, Setting, Exit;
+    TextButton      Start, Setting, Exit, AboutUs;
     MenuBox         setting_box;
     std::vector<Controller*> children;
     Vector2         m_windowSize;

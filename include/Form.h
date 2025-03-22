@@ -16,8 +16,6 @@
 #include <string>
 #include <vector>
 #include <deque>
-#include <initializer_list>
-
 
 class Form : public CommandList {
 public:
@@ -39,7 +37,13 @@ protected:
     std::vector<Controller*> children;
     Vector2         m_window_size;
 
-    Label           add_label;
+    Label           setting_label,
+                    create_label,
+                    insert_label,
+                    search_label,
+                    update_label,
+                    remove_label;
+    
     TextBox         input_textbox,
                     remove_textbox;
 
@@ -48,13 +52,15 @@ protected:
     TextureButton   play_button,
                     back_button,
                     skip_button,
+                    restart_button,
                     home_button;
     ValueScroll     speed_scroll;
 
     TabBox          option_box;
 
     TextButton      add_button,
-                    remove_button;
+                    remove_button,
+                    create_button;
     
     DropBox         m_drop_box;
 

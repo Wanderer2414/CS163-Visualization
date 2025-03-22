@@ -1,5 +1,6 @@
 #include "../include/SunMode.h"
 #include "../include/IncludePath.h"
+#include "../include/General.h"
 SunMode::SunMode() {
 }
 float SunMode::getPercent() const {
@@ -18,13 +19,10 @@ void SunMode::init() {
 }
 void SunMode::draw() {
     if (light_button_setting && dark_button_setting) {
-        DrawRectangleRounded({m_position.x, m_position.y, m_size.x, m_size.y}, 0.5f, 30, light_button_setting->normal_color);
-        Color color = dark_button_setting->normal_color;
-        color.a = percent_alpha;
+        Color color = light_button_setting->normal_color*(1-percent)+dark_button_setting->normal_color*percent;
         DrawRectangleRounded({m_position.x, m_position.y, m_size.x, m_size.y}, 0.5f, 30, color);
 
-        DrawRectangleRounded({m_point.x, m_point.y, m_size.y, m_size.y}, 0.5f, 30, color_start);
-        DrawRectangleRounded({m_point.x, m_point.y, m_size.y, m_size.y}, 0.5f, 30, {color_end.r, color_end.g, color_end.b, percent_alpha});
+        DrawRectangleRounded({m_point.x, m_point.y, m_size.y, m_size.y}, 0.5f, 30, color_start*(1-percent)+color_end*percent);
         
         DrawTexture(sun_light_texture, m_point.x, m_point.y, {255, 255, 255, (unsigned char)(255-percent_alpha)});
         DrawTexture(sun_dark_texture, m_point.x, m_point.y, {255,255,255, percent_alpha});
