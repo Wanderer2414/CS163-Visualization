@@ -9,6 +9,7 @@ public:
     virtual void    init()      ,
                     handle()    ,
                     draw()      ,
+                    close()     ,
                     setPosition(const float& x, const float& y),
                     setSize(const float& width, const float& height);
     virtual Vector2 getSize() const,

@@ -56,6 +56,9 @@ void TabBox::draw() {
 void TabBox::setVisible(const bool& visible) {
     is_visible = visible;
 }
+void TabBox::clear() {
+    tabs.clear();
+}
 void TabBox::setPosition(const float& x, const float& y) {
     for (auto& tab:tabs) {
         for (auto& control:tab) {

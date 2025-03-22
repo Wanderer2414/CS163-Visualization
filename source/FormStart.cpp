@@ -1,40 +1,38 @@
 #include "../include/FormStart.h"
 #include "../include/IncludePath.h"
-#include "../include/Colors.h"
 #include <cmath>
 #include <string>
 MenuStart::MenuStart(const Vector2& windowSize) :
     m_windowSize(windowSize)
 {
+    
 }
-
+int MenuStart::getMode() const {
+    return setting_box.getMode();
+}
 int MenuStart::run() {
     while (!WindowShouldClose()) {
         handle();
         for (auto i : children) i->handle();
         BeginDrawing();
-        ColorScheme currentTheme = DarkTheme;
-        ClearBackground(currentTheme.background);
-        // Draw Title
-        const char* text = "DATA STRUCTURE VISUALIZATION";
-        int fontSize = 40;
-        // Calculate the position to center the text
-        Vector2 textSize = MeasureTextEx(GetFontDefault(), text, fontSize, 2.0f);
-        int posX = (m_windowSize.x - textSize.x) / 2;
-        DrawTextEx(GetFontDefault(), text, {static_cast<float>(posX), 100}, fontSize, 2.0f, currentTheme.text);
+            ClearBackground(form_setting.background_color);
+            // Draw Title
+            const char* text = "DATA STRUCTURE VISUALIZATION";
+            int fontSize = 40;
+            // Calculate the position to center the text
+            Vector2 textSize = MeasureTextEx(GetFontDefault(), text, fontSize, 2.0f);
+            float posX = (m_windowSize.x - textSize.x) / 2;
+            DrawTextEx(GetFontDefault(), text, {posX, 100}, fontSize, 2.0f, form_setting.color);
 
-        draw();
+            draw();
         EndDrawing();
-        if (Start.isPressed()) return 1;
-        if (Setting.isPressed()) {
-            setting_box.open();
-        };
-        if (Exit.isPressed()) return -1;
+        if (!setting_box.isHovered() && Start.isPressed()) return 1;
+        if (!setting_box.isHovered() && Setting.isPressed()) setting_box.open();
+        if (!setting_box.isHovered() && Exit.isPressed()) return -1;
     };
     return 0;
 };
 void MenuStart::init() {
-    form_setting.font = LoadFont(font_link);
     children.push_back(&Start);
     children.push_back(&Setting);
     children.push_back(&Exit);
@@ -54,11 +52,9 @@ void MenuStart::init() {
     Setting.setText("Setting");
     Setting.setPosition(m_windowSize.x / 2 - Setting.getSize().x / 2, m_windowSize.y / 2 - Setting.getSize().y / 2);
 
-    setting_box.button_setting = &form_setting;
     setting_box.setSize(500, 600);
     setting_box.setPosition(m_windowSize.x/2-setting_box.getSize().x/2, m_windowSize.y/2-setting_box.getSize().y/2);
     setting_box.setDuration(0.2);
-    setting_box.setBackgroundColor({255,255,255,240});
     
     Exit.button_setting = &form_setting;
     Exit.text_setting = &form_setting;
@@ -66,18 +62,20 @@ void MenuStart::init() {
     Exit.setText("Exit");
     Exit.setPosition(m_windowSize.x / 2 - Exit.getSize().x / 2, m_windowSize.y / 2 - Exit.getSize().y / 2 + 100);
 }
-void MenuStart::loadAsset() {
-
-}
 void MenuStart::handle() {
-
+    if (old_mode != setting_box.getMode()) {
+        old_mode = setting_box.getMode();
+        if (old_mode) form_setting = DarkTheme;
+        else form_setting = LightTheme;
+    }
 }
 void MenuStart::draw() {
     for (auto i : children) i->draw();
 }
-void MenuStart::unloadAsset() {
-
-}
 void MenuStart::close() {
+    for (auto& i:children) i->close();
     children.clear();
+}
+void MenuStart::setMode(const int& mode) {
+    setting_box.setMode(mode);
 }

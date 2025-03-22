@@ -12,19 +12,21 @@
 class MenuStart {
 public:
     MenuStart(const Vector2& windowSize);
+    int             getMode() const;
     virtual int     run();
     virtual void    init(),
-                    loadAsset(),
                     handle(),
                     draw(),
-                    unloadAsset(),
                     close();
+                    
+    virtual void    setMode(const int& mode);
+    FormSetting     form_setting;
 private:
+    int             old_mode = -1;
     TextButton      Start, Setting, Exit;
     MenuBox         setting_box;
     std::vector<Controller*> children;
     Vector2         m_windowSize;
-    FormSetting     form_setting;
 };
 
 #endif //FORMSTART_H

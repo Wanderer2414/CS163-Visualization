@@ -7,9 +7,6 @@
 Form::Form(const Vector2& window_size) :m_window_size(window_size) {
     m_workspace_focus = false;
 }
-#include <iostream>
-using namespace std;
-
 void Form::init() {
     form_setting.font = LoadFont(font_link);
     CommandList::init();
@@ -48,17 +45,15 @@ void Form::init() {
     input_textbox.setSize(145,200);
     input_textbox.setAlignText(TextBox::Left | TextBox::Top);
 
-    play_button.button_setting = &form_setting;
     play_button.setPosition(100, 260);
     play_button.setSize(30, 30);
     play_button.setButtonStage(0, PlayButton, PlayButtonHovered);
     play_button.setButtonStage(1, PauseButton,PauseButtonHovered);
     play_button.setButtonStage(2, Replay, Replayhovered);
 
-    skip_button.button_setting = &form_setting;
     skip_button.setPosition(150, 260);
     skip_button.setSize(30, 30);
-    skip_button.setButtonStage(0, Skip, Skip);
+    skip_button.setButtonStage(0, Skip, Skip_hover);
 
     speed_scroll.text_setting = &form_setting;
     speed_scroll.setPosition(130, 150);
@@ -68,7 +63,6 @@ void Form::init() {
     for (float i = 0.4; i<=3; i+=0.2) s<<endl<< i<<"x";
     speed_scroll.setText(s.str());
 
-    back_button.button_setting = &form_setting;
     back_button.setPosition(20, 20);
     back_button.setSize(30, 30);
     back_button.setButtonStage(0, back_normal, back_hovered);
@@ -239,6 +233,7 @@ void Form::close() {
     children.clear();
     clear();
     console.clear();
+    option_box.clear();
 }
 Form::~Form() {
 

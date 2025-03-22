@@ -1,7 +1,6 @@
 #include "../include/Menu.h"
 #include "../raylib/raylib.h"
 #include "../include/General.h"
-#include "../include/Colors.h"
 #include "../include/IncludePath.h"
 #include <cmath>
 #include <string>
@@ -67,8 +66,7 @@ int Menu::run() {
     while (!WindowShouldClose()) {
         handle();
         BeginDrawing();
-        ColorScheme currentTheme = DarkTheme;
-        ClearBackground(currentTheme.background);
+        ClearBackground(form_setting.background_color);
 
         draw();
         EndDrawing();

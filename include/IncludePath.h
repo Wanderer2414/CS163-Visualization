@@ -45,6 +45,9 @@
 #define PauseButtonHovered "CS163-DSAVisualization/asset/images/pause-selected.png"
 #define Replay "CS163-DSAVisualization/asset/images/replay-normal.png"
 #define Replayhovered "CS163-DSAVisualization/asset/images/replay-selected.png"
-#define Skip "CS163-DSAVisualization/asset/Icon/Chevrons right.png"
+#define Skip "CS163-DSAVisualization/asset/images/double-arrow-normal.png"
+#define Skip_hover "CS163-DSAVisualization/asset/images/double-arrow-selected.png"
+#define sun_light "CS163-DSAVisualization/asset/Icon/Light.png"
+#define sun_dark "CS163-DSAVisualization/asset/Icon/Dark.png"
 
 #endif

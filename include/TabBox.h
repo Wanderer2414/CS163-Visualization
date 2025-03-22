@@ -20,7 +20,8 @@ public:
                     handle()    override;
 
     virtual void    setVisible(const bool& visible),
-                    setPosition(const float& x, const float& y) override;
+                    setPosition(const float& x, const float& y) override,
+                    clear();
     
     Vector2         getPosition() const override;
     vector<vector<Controller*>> tabs;

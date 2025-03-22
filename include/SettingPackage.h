@@ -5,7 +5,8 @@ class ButtonSetting {
 public:
     float   roundness   = 0.2;
     int     segment     = 30;
-    Color   hover_color     = WHITE,
+    Color   click_color     = WHITE,     
+            hover_color     = WHITE,
             normal_color    = LIGHTGRAY;
 };
 class TextSetting {
@@ -19,4 +20,8 @@ class FormSetting: public ButtonSetting, public TextSetting {
 public:
     Color   background_color = {0, 0, 50, 255};
 };
+
+extern FormSetting LightTheme;
+extern FormSetting DarkTheme;
+extern FormSetting NeonTheme;
 #endif

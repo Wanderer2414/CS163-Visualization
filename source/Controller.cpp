@@ -25,6 +25,9 @@ Vector2 Controller::getSize() const {
 Vector2 Controller::getPosition() const {
     return m_position;
 }
+void Controller::close() {
+    
+}
 Controller::~Controller() {
 
 }
