@@ -15,7 +15,9 @@ void TextButton::init() {
 }
 void TextButton::draw() {
     if (button_setting) {
-        if (m_is_hovered)
+        if (before_press < 3)
+            DrawRectangleRounded({ m_position.x, m_position.y, m_size.x, m_size.y }, button_setting->roundness, button_setting->segment, button_setting->click_color);
+        else if (m_is_hovered)    
             DrawRectangleRounded({ m_position.x, m_position.y, m_size.x, m_size.y }, button_setting->roundness, button_setting->segment, button_setting->hover_color);
         else
             DrawRectangleRounded({ m_position.x, m_position.y, m_size.x, m_size.y }, button_setting->roundness,button_setting->segment, button_setting->normal_color);
@@ -35,8 +37,8 @@ void TextButton::update_text() {
 void TextButton::setText(const std::string& text) {
     m_text = text;
 }
-std::string* TextButton::getText() {
-    return &m_text;
+std::string TextButton::getText() const {
+    return m_text;
 }
 TextButton::~TextButton() {
 

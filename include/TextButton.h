@@ -13,7 +13,7 @@ public:
                     handle()                                            override,
                     draw()                                              override,
                     setText(const std::string& text);
-    std::string     *getText();
+    std::string     getText() const;
     ~TextButton();
 protected:
     bool            is_new_setting;

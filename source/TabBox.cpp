@@ -1,6 +1,5 @@
 #include "../include/TabBox.h"
 #include "../include/General.h"
-#include "../include/IncludePath.h"
 TabBox::TabBox() {
     pos_changed = false;
 }
@@ -9,18 +8,13 @@ bool TabBox::isVisible() const {
 }
 void TabBox::init() {
     Controller::init();
-    text_setting.font = LoadFont(font_link);
+    for (auto& i:tabs)
+        for (auto& j:i) j->init();
     m_size = {300, 400};
     m_position = {0, 0};
 
     m_is_hovered = m_is_pressed = false;
     is_visible = true;
-
-    button_setting.roundness = 0.05;
-    button_setting.hover_color = DARKGRAY;
-
-    for (auto& i:tabs)
-        for (auto& j:i) j->init();
 }
 bool TabBox::isHovered() const {
     return m_is_hovered;
@@ -31,24 +25,24 @@ bool TabBox::isPressed() const {
 void TabBox::draw() {
     if (is_visible) {
         //Draw small box
-        DrawRectangleRounded({m_position.x, m_position.y, 30, m_size.y}, button_setting.roundness, button_setting.segment, WHITE);
+        DrawRectangleRounded({m_position.x, m_position.y, 30, m_size.y}, form_setting->roundness, form_setting->segment, form_setting->middle_color);
         //Draw big box
-        DrawRectangleRounded({m_position.x+30, m_position.y, m_size.x-30, m_size.y}, button_setting.roundness, button_setting.segment, button_setting.hover_color);
+        DrawRectangleRounded({m_position.x+30, m_position.y, m_size.x-30, m_size.y}, form_setting->roundness, form_setting->segment, form_setting->middle_color);
         //Draw option
         for (int i = 0; i<name.size(); i++) {
             Vector2 pos = m_position;
             pos.y += i*102;
             if (tab_index == i) {
-                DrawRectangleRounded({pos.x, pos.y, 30, 100}, button_setting.roundness, button_setting.segment, button_setting.hover_color);
+                DrawRectangleRounded({pos.x, pos.y, 30, 100}, form_setting->roundness, form_setting->segment, form_setting->hover_color);
                 if (i<tabs.size()) {
                     BeginScissorMode(m_position.x+30, m_position.y, m_size.x-30, m_size.y);
                     for (int j = 0; j<tabs[i].size(); j++) tabs[i][j]->draw();
                     EndScissorMode();
                 }
-            } else if (tab_hover != i) DrawRectangleRounded({pos.x, pos.y, 30, 100}, button_setting.roundness, button_setting.segment, button_setting.normal_color);
-            else DrawRectangleRounded({pos.x, pos.y, 30, 100}, button_setting.roundness, button_setting.segment, button_setting.hover_color);
-            Vector2 sz = MeasureTextEx(text_setting.font, name[i].c_str(), text_setting.font_size, text_setting.spacing);
-            DrawTextPro(text_setting.font, name[i].c_str(),pos+Vector2({0, 50+sz.x/2}), {0,0}, -90, text_setting.font_size, text_setting.spacing, text_setting.color);
+            } else if (tab_hover != i) DrawRectangleRounded({pos.x, pos.y, 30, 100}, form_setting->roundness, form_setting->segment, form_setting->normal_color);
+            else DrawRectangleRounded({pos.x, pos.y, 30, 100}, form_setting->roundness, form_setting->segment, form_setting->hover_color);
+            Vector2 sz = MeasureTextEx(form_setting->font, name[i].c_str(), form_setting->font_size, form_setting->spacing);
+            DrawTextPro(form_setting->font, name[i].c_str(),pos+Vector2({0, 50+sz.x/2}), {0,0}, -90, form_setting->font_size, form_setting->spacing, form_setting->color);
         }
         DrawLineEx(m_position + Vector2({31, 0}), m_position + Vector2({31, m_size.y}), 1.5f,GRAY);
     }

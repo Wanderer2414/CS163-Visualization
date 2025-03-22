@@ -10,8 +10,7 @@ using namespace std;
 class TabBox: public Controller, public SlowMotion {
 public:
     TabBox();
-    ButtonSetting   button_setting;
-    TextSetting     text_setting;
+    FormSetting     *form_setting;
     bool            isVisible() const,
                     isHovered() const,
                     isPressed() const;

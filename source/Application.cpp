@@ -12,8 +12,8 @@ Application::Application() :
     InitWindow(m_width, m_height, "Visualization");
     SetTargetFPS(60);
     LightTheme.font = LoadFont(font_link);
-    DarkTheme.font = GetFontDefault();
-    NeonTheme.font = GetFontDefault();
+    DarkTheme.font = LoadFont(font_link);
+    NeonTheme.font = LoadFont(font_link);
 }
 void Application::setMode(const int& index, FormSetting& setting) {
     switch (index) {
@@ -47,36 +47,36 @@ void Application::run() {
         }
               break;
         case 1: {
-            menu.init();
             setMode(mode, menu.form_setting);
+            menu.init();
             form_index = menu.run();
             menu.close();
         }
               break;
         case 3: {
-            BSTForm.init();
             setMode(mode, BSTForm.form_setting);
+            BSTForm.init();
             form_index = BSTForm.run();
             BSTForm.close();
         }
               break;
         case 4: {
-            GraphForm.init();
             setMode(mode, GraphForm.form_setting);
+            GraphForm.init();
             form_index = GraphForm.run();
             GraphForm.close();
         }
               break;
         case 5: {
-            HashTableForm.init();
             setMode(mode, HashTableForm.form_setting);
+            HashTableForm.init();
             form_index = HashTableForm.run();
             HashTableForm.close();
         }
             break;
         case 6: {
-            SLLForm.init();
             setMode(mode, SLLForm.form_setting);
+            SLLForm.init();
             form_index = SLLForm.run();
             SLLForm.close();
         }

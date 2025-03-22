@@ -15,6 +15,7 @@ public:
     virtual void    init()                                              override,
                     handle()                                            override,
                     draw()                                              override,
+                    close()                                             override,
                     setSize(const float& width, const float& height)    override,
                     setButtonStage(const int& index, const string& source, const string& hover_source);
 

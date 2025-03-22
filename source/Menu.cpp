@@ -11,12 +11,12 @@ Menu::Menu(const Vector2& windowSize) :
 }
 
 void Menu::init() {
-    form_setting.font = LoadFont(font_link);
     children.push_back(&BSTForm);
     children.push_back(&GraphForm);
     children.push_back(&HashTableForm);
     children.push_back(&SLLForm);
     for (auto i : children) i->init();
+    Back.init();
 
     BSTForm.button_setting = &form_setting;
     BSTForm.text_setting = &form_setting;
@@ -41,7 +41,7 @@ void Menu::init() {
     Back.button_setting = &form_setting;
     Back.setPosition(30, 30);
     Back.setButtonStage(0, back_normal, back_hovered);
-    Back.setSize(50, 50);
+    Back.setSize(30, 30);
 
 
     Vector2 center = m_windowSize / 2;
@@ -61,6 +61,7 @@ void Menu::init() {
         int col = i % cols;
         children[i]->setPosition(origin.x + col * spacing_x, origin.y + row * spacing_y);
     }
+    children.push_back(&Back);
 }
 int Menu::run() {
     while (!WindowShouldClose()) {
@@ -80,12 +81,11 @@ int Menu::run() {
 };
 void Menu::handle() {
     for (auto i : children) i->handle();
-    Back.handle();
 }
 void Menu::draw() {
     for (auto i : children) i->draw();
-    Back.draw();
 }
 void Menu::close() {
+    for (auto& i:children) i->close();
     children.clear();
 }

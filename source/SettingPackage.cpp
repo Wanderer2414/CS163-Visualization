@@ -6,13 +6,14 @@ FormSetting LightTheme = {
         0.2f, 30, 
         {150, 150, 150, 255},  // Button Pressed (Even Darker Gray)
         {180, 180, 180, 255}, // Button Hover (Darker Gray)
-        {200, 200, 200, 255} // Button (Gray)
+        {130, 130, 130, 255} // Button (Gray)
     },
     {
     {}, 30, 2, 
     {20, 20, 20, 255},    // Text (Dark Gray)
     },
-    {245, 245, 245, 255}, // Background (Light Gray)
+    {100, 100, 100, 255},
+    {150, 150, 150, 255}, // Background (Light Gray)
 };
 FormSetting DarkTheme = {
     {
@@ -25,6 +26,7 @@ FormSetting DarkTheme = {
     {}, 30, 2, 
     {220, 220, 220, 255}, // Text (Light Gray)
     },
+    {100, 100, 100, 255},
     {30, 30, 30, 255},    // Background (Dark Gray)
 };
 

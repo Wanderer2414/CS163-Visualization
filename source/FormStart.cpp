@@ -1,5 +1,4 @@
 #include "../include/FormStart.h"
-#include "../include/IncludePath.h"
 #include <cmath>
 #include <string>
 MenuStart::MenuStart(const Vector2& windowSize) :
