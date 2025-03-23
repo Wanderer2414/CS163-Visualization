@@ -1,6 +1,7 @@
 #include "../include/TextButton.h"
 #include "../include/General.h"
 #include "../raylib/raylib.h"
+#include <iostream>
 
 TextButton::TextButton() {
     button_setting = 0;
@@ -8,10 +9,17 @@ TextButton::TextButton() {
 }
 void TextButton::handle() {
     Button::handle();
-    update_text();
 }
 void TextButton::init() {
     m_text = "";
+}
+void TextButton::setSize(const float& width, const float& height) {
+    Button::setSize(width, height);
+    update_text();
+}
+void TextButton::setPosition(const float& x, const float& y) {
+    Button::setPosition(x, y);
+    update_text();
 }
 void TextButton::draw() {
     if (button_setting) {
@@ -24,6 +32,7 @@ void TextButton::draw() {
     }
     if (text_setting)
         DrawTextEx(text_setting->font, m_text.c_str(), m_text_position, text_setting->font_size, text_setting->spacing,text_setting->color);
+    else cerr<<"[TEXT_SETTING DOES NOT EXIST IN TEXTBUTTON!]" << endl;
 }
 
 void TextButton::update_text() {
@@ -36,6 +45,7 @@ void TextButton::update_text() {
 }
 void TextButton::setText(const std::string& text) {
     m_text = text;
+    update_text();
 }
 std::string TextButton::getText() const {
     return m_text;

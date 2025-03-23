@@ -33,7 +33,8 @@ protected:
     bool                    m_is_hover                      ,
                             m_is_changed                    ;
     int                     m_index                         ;
-    float                   pointer                         ;
+    float                   pointer                         ,
+                            velocity                        ;
     virtual void            update_text()                   ,
                             update_line(const int& line)    ;
     vector<float>           font_size                       ;

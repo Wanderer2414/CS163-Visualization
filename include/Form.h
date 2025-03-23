@@ -2,6 +2,7 @@
 #define FORM_H
 #include "CommandLists.h"
 #include "Console.h"
+#include "Container.h"
 #include "Controller.h"
 #include "FileDropBox.h"
 #include "Label.h"
@@ -37,12 +38,7 @@ protected:
     std::vector<Controller*> children;
     Vector2         m_window_size;
 
-    Label           setting_label,
-                    create_label,
-                    insert_label,
-                    search_label,
-                    update_label,
-                    remove_label;
+    Label           create_label;
     
     TextBox         input_textbox,
                     remove_textbox;
@@ -54,6 +50,7 @@ protected:
                     skip_button,
                     restart_button,
                     home_button;
+
     ValueScroll     speed_scroll;
 
     TabBox          option_box;
@@ -63,6 +60,12 @@ protected:
                     create_button;
     
     DropBox         m_drop_box;
+
+    Container       create_box,
+                    insert_box,
+                    remove_box,
+                    search_box,
+                    update_box;
 
     Console         console;
     Rectangle       m_workspace;

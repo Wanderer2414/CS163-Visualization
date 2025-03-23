@@ -13,6 +13,9 @@ void Form::init() {
     children.push_back(&m_progress);
     children.push_back(&track_hover);
     children.push_back(&option_box);
+    children.push_back(&skip_button);
+    children.push_back(&speed_scroll);
+    children.push_back(&restart_button);
     children.push_back(&play_button);
     children.push_back(&back_button);
     children.push_back(&home_button);
@@ -20,12 +23,13 @@ void Form::init() {
     console.button_setting              = &form_setting;
     console.text_setting                = &form_setting;
 
-    insert_label.text_setting           = &form_setting;
-    update_label.text_setting           = &form_setting;
-    search_label.text_setting           = &form_setting;
-    remove_label.text_setting           = &form_setting;
+    create_box.form_setting             = &form_setting;
+    remove_box.form_setting             = &form_setting;
+    update_box.form_setting             = &form_setting;
+    search_box.form_setting             = &form_setting;
+    insert_box.form_setting             = &form_setting;
+
     create_label.text_setting           = &form_setting;
-    setting_label.text_setting          = &form_setting;
     add_button.text_setting             = &form_setting;
     add_button.button_setting           = &form_setting;
     input_textbox.text_setting          = &form_setting;
@@ -49,29 +53,30 @@ void Form::init() {
     track_hover.button_setting          = &form_setting;
     track_hover.text_setting            = &form_setting;
 
-    option_box.push_back(0, &setting_label);
-    option_box.push_back(0, &skip_button);
-    option_box.push_back(0, &speed_scroll);
-    option_box.push_back(0, &restart_button);
-    option_box.push_back(1, &create_button);
-    option_box.push_back(1, &create_label);
-    option_box.push_back(2, &add_button);
-    option_box.push_back(2, &insert_label);
-    option_box.push_back(2, &input_textbox);
-    option_box.push_back(2, &m_drop_box);
-    option_box.push_back(3, &update_label);
-    option_box.push_back(4, &search_label);
-    option_box.push_back(5, &remove_label);
-    option_box.push_back(5, &remove_button);
-    option_box.push_back(5, &remove_textbox);
-    option_box.setText(0,"Settings");
-    option_box.setText(1,"Create");
-    option_box.setText(2,"Insert");
-    option_box.setText(3,"Update");
-    option_box.setText(4,"Search");
-    option_box.setText(5,"Remove");
+    create_box.push_back(&create_label);
+    create_box.push_back(&create_button);
+    create_box.push_back(&m_drop_box);
+
+    insert_box.push_back(&input_textbox);
+    insert_box.push_back(&add_button);
+
+    // update_box.push_back()
+
+    remove_box.push_back(&remove_button);
+    remove_box.push_back(&remove_textbox);
+
+    option_box.push_back(0, &create_box);
+    option_box.push_back(1, &insert_box);
+    option_box.push_back(2, &update_box);
+    option_box.push_back(3, &search_box);
+    option_box.push_back(4, &remove_box);
+
+    option_box.setText(0,"Create");
+    option_box.setText(1,"Insert");
+    option_box.setText(2,"Update");
+    option_box.setText(3,"Search");
+    option_box.setText(4,"Remove");
     option_box.setVisible(false);
-    option_box.setDuration(0.25);
 
     for (auto i : children) i->init();
     Vector2 center = 0.5f * m_window_size;
@@ -80,42 +85,27 @@ void Form::init() {
     console.setSize(230, 150);
     console.setTextOrigin({ 10,10 });
 
-    insert_label.setText("Insert");
-    insert_label.setPosition(30, 5);
-    insert_label.setSize(170, 30);
-
     create_label.setText("Create");
-    create_label.setPosition(30, 5);
-    create_label.setSize(170, 30);
+    create_label.setPosition(0, 5);
+    create_label.setSize(300, 30);
 
-    remove_label.setText("Remove");
-    remove_label.setPosition(30, 5);
-    remove_label.setSize(170, 30);
-
-    search_label.setText("Search");
-    search_label.setPosition(30, 5);
-    search_label.setSize(170, 30);
-
-    update_label.setText("Update");
-    update_label.setPosition(30, 5);
-    update_label.setSize(170, 30);
-
-    setting_label.setText("Setting");
-    setting_label.setPosition(30, 5);
-    setting_label.setSize(170, 30);
-
-    create_button.setPosition(40, 270);
-    create_button.setSize(145,40);
     create_button.setText("Create");
+    create_button.setPosition(25, 50);
+    create_button.setSize(200,40);
 
-    add_button.setPosition(40, 270);
+    create_box.setPosition(150, 0);
+    create_box.setSize(300, 100);
+
+    add_button.setPosition(10, 270);
     add_button.setSize(145,40);
     add_button.setText("Add");
 
-    input_textbox.setPosition(40, 50);
+    input_textbox.setPosition(10, 50);
     input_textbox.setSize(145,200);
     input_textbox.setAlignText(TextBox::Left | TextBox::Top);
 
+    insert_box.setPosition(150, 0);
+    insert_box.setSize(300, 100);
 
     play_button.setPosition(m_window_size.x/2-25, m_window_size.y - 65);
     play_button.setSize(50, 50);
@@ -123,19 +113,19 @@ void Form::init() {
     play_button.setButtonStage(1, PauseButton,PauseButtonHovered);
     play_button.setButtonStage(2, Replay, Replayhovered);
 
-    skip_button.setPosition(150, 270);
-    skip_button.setSize(30, 30);
+    skip_button.setPosition(play_button.getPosition().x - 50, play_button.getPosition().y + 5);
+    skip_button.setSize(40, 40);
     skip_button.setButtonStage(0, Skip, Skip_hover);
 
-    restart_button.setPosition(40, 270);
-    restart_button.setSize(30, 30);
+    restart_button.setPosition(play_button.getPosition().x + 60, play_button.getPosition().y + 5);
+    restart_button.setSize(40, 40);
     restart_button.setButtonStage(0, Skip, Skip_hover);
     
-    speed_scroll.setPosition(80, 260);
-    speed_scroll.setSize(60, 50);
+    speed_scroll.setPosition(m_window_size.x - 100, 10);
+    speed_scroll.setSize(70, m_window_size.y - 160);
     stringstream s;
     s << 0.2 << "x";
-    for (float i = 0.4; i<=3; i+=0.2) s<<endl<< i<<"x";
+    for (float i = 0.4; i<=5; i+=0.2) s<<endl<< i<<"x";
     speed_scroll.select(4);
     speed_scroll.setText(s.str());
 
@@ -149,6 +139,9 @@ void Form::init() {
 
     remove_textbox.setPosition(40, 50);
     remove_textbox.setSize(145, 200);
+
+    remove_box.setPosition(150, 0);
+    remove_box.setSize(300, 100);
 
     m_workspace.x = 10;
     m_workspace.y = 10;
@@ -173,13 +166,14 @@ void Form::init() {
     home_button.setButtonStage(0, home_normal, home_hovered);
 
     option_box.setPosition(-option_box.getSize().x, m_window_size.y/2);
-    option_box.setSize(200, m_window_size.y/2-30);
+    option_box.add_vertex({-option_box.getSize().x, m_window_size.y/2});
+    option_box.add_vertex({10, m_window_size.y/2});
+    option_box.setSize(400, m_window_size.y/2-30);
     option_box.setVisible(false);
 
     track_hover.setText("");
     track_hover.setPosition(0, option_box.getPosition().y);
     track_hover.setSize(10, option_box.getSize().y);
-
 
     setSpeed(5);
 }
@@ -208,6 +202,9 @@ int Form::run() {
     }
     return 0;
 }
+#include <iostream>
+using namespace std;
+
 void Form::handle() {
     //Base handle + children handle
     CommandList::handle();
@@ -237,17 +234,18 @@ void Form::handle() {
         m_progress.setProgresss(progress);
     }
     //Main box show
-    if (track_hover.isHovered() && !option_box.isVisible()) {
+    if (track_hover.isHovered() && option_box.getVertexDone()==0) {
         option_box.setVisible(true);
-        option_box.setSlowPosition(10, option_box.getPosition().y);
+        option_box.next();
     } else if (!track_hover.isHovered() && !option_box.isHovered()) {
-        if (option_box.getPosition().x == 10) {
-            option_box.setSlowPosition(-option_box.getSize().x, option_box.getPosition().y);
+        if (option_box.getVertexDone() == 1) {
+            option_box.next();
             input_textbox.setFocus(false);
             remove_textbox.setFocus(false);
         }
-        else if (option_box.getPosition().x == -option_box.getSize().x && option_box.isVisible()) 
+        else if (option_box.getVertexDone() == 0) {
             option_box.setVisible(false);
+        }
     }
     //Is file add
     if (m_drop_box.IsFileAdd()) {

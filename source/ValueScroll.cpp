@@ -2,6 +2,7 @@
 #include "../include/General.h"
 #include <algorithm>
 #include <cmath>
+#include <raylib.h>
 
 ValueScroll::ValueScroll() {
     text_setting = 0;
@@ -32,12 +33,16 @@ void ValueScroll::clear() {
     m_text_position = {{0, 0}};
     font_size = {0};
 }
+
 void ValueScroll::draw() {
     if (text_setting) {
         BeginScissorMode(m_position.x, m_position.y, m_size.x, m_size.y);
-        
-        for (int i = 0; i<m_text_position.size(); i++) {
-            DrawTextEx(text_setting->font, m_text[i].c_str(), m_text_position[i], font_size[i], text_setting->spacing,text_setting->color);
+        int range = text_setting->font_size/5;
+        int start = m_index - range;
+        int end = m_index+range;
+        for (int i = start; i<end; i++) {
+            int index = (i+m_text.size())%m_text.size();
+            DrawTextEx(text_setting->font, m_text[index].c_str(), m_text_position[index], font_size[index], text_setting->spacing,text_setting->color);
         }
         EndScissorMode();
     }
@@ -49,19 +54,29 @@ void ValueScroll::handle() {
     m_is_hover = CheckCollisionPointRec(GetMousePosition(), {m_position.x, m_position.y, m_size.x, m_size.y});   
     if (!text_setting) return ;
     if (m_is_hover && GetMouseWheelMove()) {
-        pointer += GetMouseWheelMove()/5;
-        if (pointer>=m_text_position.size()) pointer = m_text_position.size()-1;
-        if (pointer<0) pointer = 0;
+        velocity = GetMouseWheelMove();
+    } 
+    if (m_is_hover && IsMouseButtonDown(MOUSE_BUTTON_LEFT)) {
+        velocity = -GetMouseDelta().y/2;
+    }
+    m_is_changed = false;
+    if (velocity != 0) {
+        pointer += velocity;
+        if (abs(velocity) > 0.1) velocity /= 1.05;
+        else velocity = 0;
+        if (pointer>=m_text_position.size()) pointer -= m_text_position.size();
+        if (pointer<0) pointer += m_text_position.size();
         m_index= round(pointer);
         m_is_changed = true;
         update_text();
-    } else if (!m_is_hover && pointer!=m_index) {
+    }
+    if (!m_is_hover && pointer!=m_index) {
         float delta = pointer - m_index;
         if (abs(delta)>0.1) pointer -= delta/10;
         else pointer = m_index;
         update_text();
         m_is_changed = false;
-    } else m_is_changed = false;
+    }
 }
 void ValueScroll::setText(const std::string& str) {
     m_text.clear();
@@ -92,19 +107,23 @@ void ValueScroll::update_text() {
     if (!text_setting) return;
     font_size.clear();
     for (int i = 0; i<m_text.size(); i++) {
-        font_size.push_back(std::max(text_setting->font_size - abs(i-pointer)*10, 0.f));
+        float size = std::max(text_setting->font_size - abs(i-pointer)*5, 0.f);
+        size = std::max(size, text_setting->font_size - abs(i-pointer + m_text.size())*5);
+        size = std::max(size, text_setting->font_size - abs(pointer - i + m_text.size())*5);
+        font_size.push_back(size);
         update_line(i);
     }
-    int n = text_setting->font_size/10;
+    int range = text_setting->font_size/5;
+    int start = m_index - range;
+    int end = m_index+range;
+    int n = text_setting->font_size/5;
     n = n*(n-1)/2;
-    m_text_position[0].y = m_position.y + m_size.y/2 - text_setting->font_size/2 - int(text_setting->font_size)%10 - n*10;
-    if (pointer+1<n) {
-        float n = text_setting->font_size/10 - pointer;
-        n = (n-1)*n/2;
-        m_text_position[0].y += n*10 + int(text_setting->font_size)%10;
-    }
-    for (int i =1; i<m_text_position.size(); i++) {
-        m_text_position[i].y = m_text_position[i-1].y + font_size[i-1];
+    m_text_position[(start-1+m_text.size())%m_text.size()].y = m_position.y + m_size.y/2 - text_setting->font_size/5 - int(text_setting->font_size)%5 - n*5;
+
+    for (int i =start; i<end; i++) {
+        int cur = (i+m_text.size())%m_text.size();
+        int index = (i+m_text.size()-1)%m_text.size();
+        m_text_position[cur].y = m_text_position[index].y + font_size[index];
     }
 }
 void ValueScroll::update_line(const int& line) {

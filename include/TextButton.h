@@ -12,6 +12,8 @@ public:
     virtual void    init()                                              override,
                     handle()                                            override,
                     draw()                                              override,
+                    setPosition(const float& x, const float& y)         override,
+                    setSize(const float& width, const float& height)    override,
                     setText(const std::string& text);
     std::string     getText() const;
     ~TextButton();

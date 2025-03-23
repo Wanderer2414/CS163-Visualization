@@ -38,8 +38,8 @@ void Application::run() {
     while (!WindowShouldClose()) {
         switch (form_index) {
         case 0: {
-            menuStart.init();
             setMode(mode, menuStart.form_setting);
+            menuStart.init();
             menuStart.setMode(mode);
             form_index = menuStart.run();
             mode = menuStart.getMode();

@@ -2,12 +2,12 @@
 #define TABBOX_H
 #include "Controller.h"
 #include "SettingPackage.h"
-#include "SlowMotion.h"
+#include "Move.h"
 #include <string>
 #include <vector>
 using namespace std;
 
-class TabBox: public Controller, public SlowMotion {
+class TabBox: public Controller, public Move {
 public:
     TabBox();
     FormSetting     *form_setting;
@@ -33,10 +33,12 @@ private:
                     m_is_pressed;
     int             tab_index = 0,
                     tab_hover = 0;
-    float           delta;
+    float           margin = 5;
+    Vector2         max_size;
+    
     vector<vector<Controller*>> tabs;
     vector<string>  m_name;
-    vector<float>   m_height;
+    vector<float> name_widths;
 };
 
 #endif
