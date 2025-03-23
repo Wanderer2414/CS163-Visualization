@@ -50,7 +50,8 @@ protected:
     TextButton      track_hover;
     TextureButton   play_button,
                     back_button,
-                    home_button;
+                    home_button,
+                    skip_button;
 
     TabBox          option_box;
 

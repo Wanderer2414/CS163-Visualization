@@ -24,7 +24,8 @@ private:
                     GraphForm,
                     HashTableForm,
                     SLLForm;
-    TextureButton   Back;
+    TextureButton   Back,
+                    MenuDSA;
     std::vector<Controller*> children;
     Vector2         m_windowSize;
 };

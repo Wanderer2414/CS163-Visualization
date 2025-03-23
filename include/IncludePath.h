@@ -22,4 +22,8 @@
 #define PauseButtonHovered "C:/Users/New/Huy/asset/images/pause-selected.png"
 #define Replay "C:/Users/New/Huy/asset/images/replay-normal.png"
 #define Replayhovered "C:/Users/New/Huy/asset/images/replay-selected.png"
+#define SkipNormal "C:/Users/New/Huy/asset/images/skip_normal.png"
+#define SkipHovered "C:/Users/New/Huy/asset/images/skip_hovered.png"
+
+#define TitleMenu "C:/Users/New/Huy/asset/images/TitleMenu.png"
 #endif

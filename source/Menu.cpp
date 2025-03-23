@@ -45,8 +45,12 @@ void Menu::init() {
     Back.button_setting = &form_setting;
     Back.setPosition(30, 30);
     Back.setButtonStage(0, back_normal, back_hovered);
-    Back.setSize(50, 50);
+    Back.setSize(40, 40);
 
+    MenuDSA.button_setting = &form_setting;
+    MenuDSA.setPosition( m_windowSize.x / 2 - 200 , 30);
+    MenuDSA.setSize(400, 50);
+    MenuDSA.setButtonStage(0, TitleMenu, TitleMenu);
 
     Vector2 center = m_windowSize / 2;
     int cols = 2;
@@ -86,10 +90,12 @@ int Menu::run() {
 void Menu::handle() {
     for (auto i : children) i->handle();
     Back.handle();
+    MenuDSA.handle();
 }
 void Menu::draw() {
     for (auto i : children) i->draw();
     Back.draw();
+    MenuDSA.draw();
 }
 void Menu::close() {
     children.clear();

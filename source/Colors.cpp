@@ -2,20 +2,21 @@
 
 
 ColorScheme LightTheme = {
-    {245, 245, 245, 255}, // Background (Light Gray)
+    {200, 220, 255, 255}, // Background (Pastel Blue)
     {20, 20, 20, 255},    // Text (Dark Gray)
-    {200, 200, 200, 255}, // Button (Gray)
-    {180, 180, 180, 255}, // Button Hover (Darker Gray)
-    {150, 150, 150, 255}  // Button Pressed (Even Darker Gray)
+    {150, 180, 220, 255}, // Button (Muted Blue)
+    {130, 160, 210, 255}, // Button Hover (Darker Muted Blue)
+    {110, 140, 200, 255}  // Button Pressed (Even Darker Muted Blue)
 };
 
 ColorScheme DarkTheme = {
-    {30, 30, 30, 255},    // Background (Dark Gray)
-    {220, 220, 220, 255}, // Text (Light Gray)
-    {60, 60, 60, 255},    // Button (Dark Gray)
-    {80, 80, 80, 255},    // Button Hover (Lighter Dark Gray)
-    {100, 100, 100, 255}  // Button Pressed (Even Lighter Dark Gray)
+    {10, 25, 50, 255},    // Background (Deep Dark Blue)
+    {220, 230, 255, 255}, // Text (Soft Light Blue)
+    {25, 50, 100, 255},   // Button (Dark Blue)
+    {40, 70, 130, 255},   // Button Hover (Lighter Dark Blue)
+    {55, 90, 160, 255}    // Button Pressed (Even Lighter Dark Blue)
 };
+
 
 ColorScheme NeonTheme = {
     {10, 10, 50, 255},    // Background (Dark Blue)

@@ -118,8 +118,10 @@ void CommandList::setSpeed(const float& clock_duration) {
     m_speed = clock_duration;
 }
 void CommandList::update_tail() {
+    //Update currrent_add pointer -> Point to the next main command to insert next main/sub command
     if (command_pointer < temporary.size()) {
         current_add = command_pointer + 1;
+        //Incease current while current_add exist and not a main command
         while (current_add < temporary.size() && temporary[current_add]) current_add++;
     }
     else current_add = temporary.size();
@@ -127,31 +129,34 @@ void CommandList::update_tail() {
 void CommandList::update_range() {
     current_segment.x = current_segment.y;
 }
+
 void CommandList::GotoCommandLine(const float& percent) {
     if (sub_count.empty()) return;
-    if (percent >= current_segment.x && percent <= current_segment.y) return;
+    // if (percent >= current_segment.x && percent <= current_segment.y) return;
     if (percent < 0) GotoCommandLine(0);
     else if (percent > 1) GotoCommandLine(1);
     else {
-        current_segment.x = current_segment.y = getProgress();
-        if (getProgress() < percent) {
-            while (getProgress() < percent) {
-                BeforeFetchNext();
-                current_segment.x = current_segment.y;
-                current_segment.y = getProgress();
-                if (!temporary[command_pointer]) update_tail();
+        float range = 1.0f/sub_count.size();
+        int cur = percent/range;
+        // if (main_command_pointer>=sub_count.size() || !sub_count[cur]) {
+        //     float progress = getProgress();
+            float prev = 1.0f*cur*range;
+            if (percent - prev > prev + range - percent) cur++;
+            //Go to cur
+            if (main_command_pointer>cur) {
+                while (main_command_pointer > cur) {
+                    BeforeFetchPrev();
+                    if (!temporary[command_pointer]) update_tail();
+                }
+            } else if (main_command_pointer < cur) {
+                while (main_command_pointer < cur) {
+                    BeforeFetchNext();
+                    if (!temporary[command_pointer]) update_tail();
+                }
             }
-            current_segment.x = percent+0.1;
-        }
-        else if (getProgress() > percent) {
-            while (getProgress() > percent) {
-                BeforeFetchPrev();
-                current_segment.y = current_segment.x;
-                current_segment.x = getProgress();
-                if (!temporary[command_pointer]) update_tail();
-            }
-            current_segment.y = percent-0.1;
-        }
+        // }
+        // else {
+        // }
     }
 }
 void CommandList::handle() {
@@ -164,13 +169,13 @@ void CommandList::handle() {
 void CommandList::goNext() {
     if (command_pointer >= command_code.size()) return;
     BeforeFetchNext();
-    update_tail();
+    if (!temporary[command_pointer]) update_tail();
     if (!m_clock.getDuration()) goNext();
 }
 void CommandList::goBack() {
     if (!command_pointer) return;
     BeforeFetchPrev();
-    update_tail();
+    if (!temporary[command_pointer]) update_tail();
     if (!m_clock.getDuration()) goBack();
 }
 
