@@ -16,10 +16,15 @@ void Form::init() {
     children.push_back(&play_button);
     children.push_back(&back_button);
     children.push_back(&home_button);
+    children.push_back(&buttonTab);
+
+
 
     console.button_setting              = &form_setting;
     console.text_setting                = &form_setting;
 
+    buttonTab.button_setting            = &form_setting;
+    buttonTab.text_setting              = &form_setting;
     insert_label.text_setting           = &form_setting;
     update_label.text_setting           = &form_setting;
     search_label.text_setting           = &form_setting;
@@ -79,6 +84,13 @@ void Form::init() {
     console.setPosition(m_window_size.x - 240, m_window_size.y - 170);
     console.setSize(230, 150);
     console.setTextOrigin({ 10,10 });
+
+    buttonTab.setPosition(80, 30);
+    buttonTab.setSize(250, 50);
+    buttonTab.push_back("AVL Tree");
+    buttonTab.push_back("Graph");
+    buttonTab.push_back("Hash Table");
+    buttonTab.push_back("Singly Linked List");
 
     insert_label.setText("Insert");
     insert_label.setPosition(30, 5);
@@ -205,6 +217,10 @@ int Form::run() {
         if (home_button.isPressed()) {
             return 0;
         }
+        if (buttonTab.isChanged()) {
+            return 3 + buttonTab.GetSelection();
+        }
+        
     }
     return 0;
 }

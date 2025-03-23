@@ -11,6 +11,7 @@
 #include "SettingPackage.h"
 #include "TextBox.h"
 #include "TextButton.h"
+#include "MenuTab.h"
 #include "../raylib/raylib.h"
 #include "ValueScroll.h"
 #include <string>
@@ -62,7 +63,7 @@ protected:
                     create_button;
     
     DropBox         m_drop_box;
-
+    ButtonTab       buttonTab;
     Console         console;
     Rectangle       m_workspace;
     ProgressBar     m_progress;
