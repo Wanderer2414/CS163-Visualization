@@ -14,6 +14,7 @@ public:
     virtual void        handle()        override;
     ~Button();
 protected:
+    char                before_press;
     bool                m_is_hovered = false,
                         m_is_pressed = false;
 };

@@ -35,16 +35,22 @@ void TextureButton::go(const int& index) {
     if (index >= 0 && index < m_sources.size()) source_pointer = index;
 }
 void TextureButton::draw() {
-    if (source_pointer != -1 && button_setting) {
+    if (source_pointer != -1) {
         if (m_is_hovered) {
-            //DrawEllipse(m_position.x + m_size.x / 2, m_position.y + m_size.y / 2, m_size.x / 2 + 10, m_size.y / 2 + 10, button_setting->hover_color);
             DrawTexture(m_sources_hover[source_pointer], m_position.x, m_position.y, WHITE);
         }
         else {
-            //DrawEllipse(m_position.x + m_size.x / 2, m_position.y + m_size.y / 2, m_size.x / 2 + 10, m_size.y / 2 + 10, button_setting->normal_color);
             DrawTexture(m_sources[source_pointer], m_position.x, m_position.y, WHITE);
         }
     }
+}
+void TextureButton::close() {
+    for (int i = 0; i<m_sources.size(); i++) {
+        UnloadTexture(m_sources[i]);
+        UnloadTexture(m_sources_hover[i]);
+    }
+    m_sources.clear();
+    m_sources_hover.clear();
 }
 void TextureButton::setButtonStage(const int& index, const string& source, const string& hover_source) {
     if (index >= m_sources.size()) {

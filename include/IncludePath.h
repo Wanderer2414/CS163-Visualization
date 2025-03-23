@@ -24,6 +24,8 @@
 #define Replayhovered "C:/Users/New/Huy/asset/images/replay-selected.png"
 #define SkipNormal "C:/Users/New/Huy/asset/images/skip_normal.png"
 #define SkipHovered "C:/Users/New/Huy/asset/images/skip_hovered.png"
+#define sun_light "C:/Users/New/Huy/asset/Icon/Light.png"
+#define sun_dark "C:/Users/New/Huy/asset/Icon/Dark.png"
 
 #define TitleMenu "C:/Users/New/Huy/asset/images/TitleMenu.png"
 #endif

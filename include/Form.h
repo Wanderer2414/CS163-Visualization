@@ -4,6 +4,7 @@
 #include "Console.h"
 #include "Controller.h"
 #include "FileDropBox.h"
+#include "Label.h"
 #include "TabBox.h"
 #include "TextureButton.h"
 #include "ProgressBar.h"
@@ -11,18 +12,10 @@
 #include "TextBox.h"
 #include "TextButton.h"
 #include "../raylib/raylib.h"
+#include "ValueScroll.h"
 #include <string>
 #include <vector>
 #include <deque>
-#include <initializer_list>
-
-#define Home_width  300
-#define Home_height 30
-#define TextInput_Width 150
-#define Console_width 250
-#define Console_height 150
-#define Control_width 80
-#define Control_height 30
 
 class Form : public CommandList {
 public:
@@ -44,19 +37,29 @@ protected:
     std::vector<Controller*> children;
     Vector2         m_window_size;
 
+    Label           setting_label,
+                    create_label,
+                    insert_label,
+                    search_label,
+                    update_label,
+                    remove_label;
+    
     TextBox         input_textbox,
                     remove_textbox;
 
     TextButton      track_hover;
+
     TextureButton   play_button,
                     back_button,
-                    home_button,
-                    skip_button;
-
+                    skip_button,
+                    restart_button,
+                    home_button;
+    ValueScroll     speed_scroll;
     TabBox          option_box;
 
     TextButton      add_button,
-                    remove_button;
+                    remove_button,
+                    create_button;
     
     DropBox         m_drop_box;
 

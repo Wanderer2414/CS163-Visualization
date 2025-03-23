@@ -23,6 +23,22 @@ Vector2 operator*(const float& x, const Vector2& vector) {
 Vector2 operator/(const Vector2& vector, const float& x) {
     return { vector.x / x, vector.y / x };
 }
+Color operator+(const Color& x, const Color& y) {
+    Color ans;
+    ans.a = x.a + y.a*(255-x.a)/255;
+    ans.r = (x.r*x.a + y.r*y.a*(255-x.a)/255)/ans.a;
+    ans.g = (x.g*x.a + y.g*y.a*(255-x.a)/255)/ans.a;
+    ans.b = (x.b*x.a + y.b*y.a*(255-x.a)/255)/ans.a;
+    return ans;
+}
+Color operator*(Color color, const float& x) {
+    color.a*=x;
+    return color;
+}
+Color operator*(const float& x, Color color) {
+    color.a*=x;
+    return color;
+}
 
 bool operator==(const Vector2& a, const Vector2& b) {
     return a.x == b.x && a.y == b.y;

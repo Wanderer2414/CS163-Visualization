@@ -3,20 +3,26 @@
 #include "../raylib/raylib.h"
 class ButtonSetting {
 public:
-    float   roundness   = 0.2;
-    int     segment     = 30;
-    Color   hover_color     = WHITE,
-            normal_color    = LIGHTGRAY;
+    float   roundness;
+    int     segment;
+    Color   click_color ,     
+            hover_color ,
+            normal_color;
 };
 class TextSetting {
 public:
     Font    font;
-    float   font_size   = 30,
-            spacing     = 0.5;
-    Color   color       = BLACK;
+    float   font_size,
+            spacing;
+    Color   color;
 };
 class FormSetting: public ButtonSetting, public TextSetting {
 public:
-    Color   background_color = {0, 0, 50, 255};
+    Color   middle_color;
+    Color   background_color;
 };
+
+extern FormSetting LightTheme;
+extern FormSetting DarkTheme;
+extern FormSetting NeonTheme;
 #endif

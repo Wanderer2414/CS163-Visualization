@@ -1,17 +1,17 @@
-#include "../include/Button.h"
+#include "../include/MenuTab.h"
 
-Button::Button() {
+ButtonTab::ButtonTab() {
     button_setting = 0;
     before_press = 6;
-    m_is_pressed = m_is_hovered = 0;
+    m_is_pressed = m_is_hovered = m_is_clicked = 0;
 }
-bool Button::isHovered() const {
+bool ButtonTab::isHovered() const {
     return m_is_hovered;
 }
-bool Button::isPressed() const {
+bool ButtonTab::isPressed() const {
     return m_is_pressed;
 }
-void Button::handle() {
+void ButtonTab::handle() {
     m_is_hovered = CheckCollisionPointRec(GetMousePosition(), { m_position.x, m_position.y, m_size.x, m_size.y });
     if (m_is_hovered && IsMouseButtonDown(MOUSE_BUTTON_LEFT)) before_press = 0;
     if (before_press < 3) before_press++;
@@ -21,5 +21,7 @@ void Button::handle() {
     }
     else m_is_pressed = false;
 }
-Button::~Button() {
+
+ButtonTab::~ButtonTab()
+{
 }

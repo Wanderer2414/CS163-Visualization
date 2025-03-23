@@ -1,9 +1,6 @@
 #include "../include/Menu.h"
 #include "../raylib/raylib.h"
 #include "../include/General.h"
-#include "../include/Colors.h"
-#include "../include/Mode.h"
-#include "../include/Form.h"
 #include "../include/IncludePath.h"
 #include <cmath>
 #include <string>
@@ -14,16 +11,15 @@ Menu::Menu(const Vector2& windowSize) :
 }
 
 void Menu::init() {
-    form_setting.font = LoadFont(font_link);
     children.push_back(&BSTForm);
     children.push_back(&GraphForm);
     children.push_back(&HashTableForm);
     children.push_back(&SLLForm);
     for (auto i : children) i->init();
+    Back.init();
 
     BSTForm.button_setting = &form_setting;
     BSTForm.text_setting = &form_setting;
-    // BSTForm.setPosition(center.x - 0.5f*main_button_width, center.y - main_button_height);
     BSTForm.setSize(main_button_width, main_button_height);
     BSTForm.setText("BST");
 
@@ -43,8 +39,9 @@ void Menu::init() {
     SLLForm.setText("Singly Linked List");
     
     Back.button_setting = &form_setting;
-    Back.setPosition(30, 30);
+    Back.setPosition(20, 20);
     Back.setButtonStage(0, back_normal, back_hovered);
+    Back.setSize(30, 30);
     Back.setSize(40, 40);
 
     MenuDSA.button_setting = &form_setting;
@@ -74,8 +71,7 @@ int Menu::run() {
     while (!WindowShouldClose()) {
         handle();
         BeginDrawing();
-        ColorScheme currentTheme = DarkTheme;
-        ClearBackground(currentTheme.background);
+        ClearBackground(form_setting.background_color);
 
         draw();
         EndDrawing();
@@ -90,13 +86,12 @@ int Menu::run() {
 void Menu::handle() {
     for (auto i : children) i->handle();
     Back.handle();
-    MenuDSA.handle();
 }
 void Menu::draw() {
     for (auto i : children) i->draw();
     Back.draw();
-    MenuDSA.draw();
 }
 void Menu::close() {
+    for (auto& i:children) i->close();
     children.clear();
 }
