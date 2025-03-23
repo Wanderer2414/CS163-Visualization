@@ -3,15 +3,14 @@
 #include "../raylib/raylib.h"
 #include <iostream>
 
-TextButton::TextButton() {
-    button_setting = 0;
-    text_setting = 0;
+TextButton::TextButton(ButtonSetting* b_setting, TextSetting* t_setting) {
+    button_setting = b_setting;
+    text_setting = t_setting;
+    m_text  = "";
+    m_text_position = {0, 0};
 }
 void TextButton::handle() {
     Button::handle();
-}
-void TextButton::init() {
-    m_text = "";
 }
 void TextButton::setSize(const float& width, const float& height) {
     Button::setSize(width, height);

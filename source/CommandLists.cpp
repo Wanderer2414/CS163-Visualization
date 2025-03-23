@@ -1,6 +1,13 @@
 #include "../include/CommandLists.h"
 #include <vector>
 CommandList::CommandList() {
+    command_pointer = 0;
+    current_add = 0;
+    m_speed = 1;
+    m_is_enable = true;
+    m_is_pause = false;
+    main_command_pointer = 0;
+    current_segment = { -10,-10 };
 }
 bool CommandList::isEnd() {
     return command_pointer == command_code.size();
@@ -58,15 +65,6 @@ bool CommandList::BeforeFetchPrev() {
         return true;
     }
     return false;
-}
-void CommandList::init() {
-    command_pointer = 0;
-    current_add = 0;
-    m_speed = 1;
-    m_is_enable = true;
-    m_is_pause = false;
-    main_command_pointer = 0;
-    current_segment = { -10,-10 };
 }
 void CommandList::PushBackMainCommand(const std::vector<float>& code) {
     if (m_is_enable) {

@@ -1,10 +1,42 @@
 #include "../include/FormStart.h"
 #include <cmath>
 #include <string>
-MenuStart::MenuStart(const Vector2& windowSize) :
-    m_windowSize(windowSize)
+MenuStart::MenuStart(FormSetting f_setting, const Vector2& windowSize) :
+    form_setting(f_setting),
+    m_windowSize(windowSize),
+    Start(&form_setting,&form_setting),
+    Setting(&form_setting, &form_setting),
+    AboutUs(&form_setting ,&form_setting),
+    Exit(&form_setting,&form_setting)
 {
     
+    children.push_back(&Start);
+    children.push_back(&Setting);
+    children.push_back(&Exit);
+    children.push_back(&AboutUs);
+    children.push_back(&setting_box);
+
+    // BSTForm.setPosition(center.x - 0.5f*main_button_width, center.y - main_button_height);
+    Start.setSize(400, 60);
+    Start.setText("Start");
+    Start.setPosition(m_windowSize.x / 2 - Start.getSize().x / 2, m_windowSize.y / 2 - Start.getSize().y / 2 - 120);
+
+    Setting.setSize(400, 60);
+    Setting.setText("Setting");
+    Setting.setPosition(m_windowSize.x / 2 - Setting.getSize().x / 2, m_windowSize.y / 2 - Setting.getSize().y / 2 - 30);
+
+    setting_box.setSize(500, 600);
+    setting_box.setPosition(m_windowSize.x/2-setting_box.getSize().x/2, m_windowSize.y/2-setting_box.getSize().y/2);
+    setting_box.setDuration(0.2);
+    setting_box.setVisible(false);
+
+    AboutUs.setSize(400,60);
+    AboutUs.setText("About Us");
+    AboutUs.setPosition(m_windowSize.x / 2 - Start.getSize().x / 2, m_windowSize.y / 2 - AboutUs.getSize().y / 2 + 60);
+    
+    Exit.setSize(400, 60);
+    Exit.setText("Exit");
+    Exit.setPosition(m_windowSize.x / 2 - Exit.getSize().x / 2, m_windowSize.y / 2 - Exit.getSize().y / 2 + 150);  
 }
 int MenuStart::getMode() const {
     return setting_box.getMode();
@@ -31,45 +63,6 @@ int MenuStart::run() {
     };
     return 0;
 };
-void MenuStart::init() {
-    children.push_back(&Start);
-    children.push_back(&Setting);
-    children.push_back(&Exit);
-    children.push_back(&AboutUs);
-    children.push_back(&setting_box);
-
-    Start.button_setting = &form_setting;
-    Start.text_setting = &form_setting;
-    Setting.button_setting = &form_setting;
-    Setting.text_setting = &form_setting;
-    AboutUs.button_setting = &form_setting;
-    AboutUs.text_setting = &form_setting;
-    Exit.button_setting = &form_setting;
-    Exit.text_setting = &form_setting;
-
-    for (auto i : children) i->init();
-
-    // BSTForm.setPosition(center.x - 0.5f*main_button_width, center.y - main_button_height);
-    Start.setSize(400, 60);
-    Start.setText("Start");
-    Start.setPosition(m_windowSize.x / 2 - Start.getSize().x / 2, m_windowSize.y / 2 - Start.getSize().y / 2 - 120);
-
-    Setting.setSize(400, 60);
-    Setting.setText("Setting");
-    Setting.setPosition(m_windowSize.x / 2 - Setting.getSize().x / 2, m_windowSize.y / 2 - Setting.getSize().y / 2 - 30);
-
-    setting_box.setSize(500, 600);
-    setting_box.setPosition(m_windowSize.x/2-setting_box.getSize().x/2, m_windowSize.y/2-setting_box.getSize().y/2);
-    setting_box.setDuration(0.2);
-
-    AboutUs.setSize(400,60);
-    AboutUs.setText("About Us");
-    AboutUs.setPosition(m_windowSize.x / 2 - Start.getSize().x / 2, m_windowSize.y / 2 - AboutUs.getSize().y / 2 + 60);
-    
-    Exit.setSize(400, 60);
-    Exit.setText("Exit");
-    Exit.setPosition(m_windowSize.x / 2 - Exit.getSize().x / 2, m_windowSize.y / 2 - Exit.getSize().y / 2 + 150);
-}
 void MenuStart::handle() {
     if (old_mode != setting_box.getMode()) {
         old_mode = setting_box.getMode();
@@ -79,10 +72,6 @@ void MenuStart::handle() {
 }
 void MenuStart::draw() {
     for (auto i : children) i->draw();
-}
-void MenuStart::close() {
-    for (auto& i:children) i->close();
-    children.clear();
 }
 void MenuStart::setMode(const int& mode) {
     setting_box.setMode(mode);

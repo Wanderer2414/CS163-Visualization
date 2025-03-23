@@ -7,10 +7,10 @@
 #include <string>
 class TextButton: public Button {
 public:
-    TextButton();
+    TextButton(ButtonSetting* b_setting, TextSetting* t_setting);
+    ButtonSetting   *button_setting;
     TextSetting     *text_setting;
-    virtual void    init()                                              override,
-                    handle()                                            override,
+    virtual void    handle()                                            override,
                     draw()                                              override,
                     setPosition(const float& x, const float& y)         override,
                     setSize(const float& width, const float& height)    override,
@@ -18,7 +18,6 @@ public:
     std::string     getText() const;
     ~TextButton();
 protected:
-    bool            is_new_setting;
     std::string     m_text;
     virtual void    update_text();
     Vector2         m_text_position;

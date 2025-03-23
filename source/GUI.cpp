@@ -2,8 +2,7 @@
 #include "../raylib/raylib.h"
 #include "../include/General.h"
 
-Node::Node(const int& index, const int& val) :m_index(index), m_value(val) {
-    init();
+Node::Node(const int& index, const int& val): TextButton(0, 0), m_index(index), m_value(val) {
     setSize(50, 50);
     setText(std::to_string(val));
     left = right = 0;

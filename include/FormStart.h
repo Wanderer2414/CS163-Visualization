@@ -11,13 +11,11 @@
 #define button_count 3
 class MenuStart {
 public:
-    MenuStart(const Vector2& windowSize);
+    MenuStart(FormSetting form_setting, const Vector2& windowSize);
     int             getMode() const;
     virtual int     run();
-    virtual void    init(),
-                    handle(),
-                    draw(),
-                    close();
+    virtual void    handle(),
+                    draw();
                     
     virtual void    setMode(const int& mode);
     FormSetting     form_setting;

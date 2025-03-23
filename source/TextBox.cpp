@@ -4,24 +4,19 @@
 #include <cstdio>
 #include "../raylib/raylib.h"
 
-TextBox::TextBox() {
+TextBox::TextBox(ButtonSetting* b_setting, TextSetting* text_setting): Label(text_setting) {
     m_size = { 100, 50 };
     m_position = {10, 10};
-    text_setting = 0;
-    button_setting = 0;
+    button_setting = b_setting;
     margin = 5;
+    m_is_enter = m_is_focus = false;
+    m_is_chosen = false;
 }
 bool TextBox::isFocus() {
     return m_is_focus;
 }
 bool TextBox::isEnter() {
     return m_is_enter;
-}
-void TextBox::init() {
-    Label::init();
-    m_is_enter = m_is_focus = false;
-    m_is_chosen = false;
-    clear();
 }
 void TextBox::setFocus(const bool& focus) {
     m_is_focus = focus;

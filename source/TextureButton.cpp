@@ -1,15 +1,12 @@
 #include "../include/TextureButton.h"
 
 TextureButton::TextureButton() {
-
-}
-int TextureButton::getStage() const {
-    return source_pointer;
-}
-void TextureButton::init() {
     source_pointer = -1;
     m_sources.clear();
     m_sources_hover.clear();
+}
+int TextureButton::getStage() const {
+    return source_pointer;
 }
 void TextureButton::setSize(const float& x, const float& y) {
     Controller::setSize(x, y);
@@ -44,14 +41,6 @@ void TextureButton::draw() {
         }
     }
 }
-void TextureButton::close() {
-    for (int i = 0; i<m_sources.size(); i++) {
-        UnloadTexture(m_sources[i]);
-        UnloadTexture(m_sources_hover[i]);
-    }
-    m_sources.clear();
-    m_sources_hover.clear();
-}
 void TextureButton::setButtonStage(const int& index, const string& source, const string& hover_source) {
     if (index >= m_sources.size()) {
         m_sources.push_back(LoadTexture(source.c_str()));
@@ -75,4 +64,8 @@ void TextureButton::setButtonStage(const int& index, const string& source, const
     if (source_pointer == -1) source_pointer = 0;
 }
 TextureButton::~TextureButton() {
+    for (int i = 0; i<m_sources.size(); i++) {
+        UnloadTexture(m_sources[i]);
+        UnloadTexture(m_sources_hover[i]);
+    }
 }

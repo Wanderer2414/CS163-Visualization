@@ -3,12 +3,13 @@
 
 #include "Clock.h"
 #include "Controller.h"
+#include "SettingPackage.h"
 #include "TextButton.h"
 #include <string>
 #include <vector>
 class Console :public TextButton {
 public:
-    Console();
+    Console(ButtonSetting *b_setting, TextSetting* t_setting);
     int             getFillLine() const;
     virtual void    InsertNextSubCommand(const std::string& log),
                     InsertNextMainCommand(const std::string& log),

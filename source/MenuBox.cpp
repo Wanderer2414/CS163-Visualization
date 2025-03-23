@@ -1,27 +1,20 @@
 #include "../include/MenuBox.h"
 #include "../include/General.h"
 #include <cmath>
-MenuBox::MenuBox() {
+MenuBox::MenuBox(): sun(&light_setting, &dark_setting) {
     light_setting = LightTheme;
     dark_setting = DarkTheme;
     light_setting.roundness = dark_setting.roundness = 0.05f;
+    m_position = {0, 0};
+    children.push_back(&sun);
+    sun.setPosition(270, 20);
+    sun.setSize(200, 50);
 }
 bool MenuBox::isHovered() const {
     return m_is_hovered && m_is_visible;
 }
 int MenuBox::getMode() const {
     return round(sun.getPercent());
-}
-void MenuBox::init() {
-    m_position = {0, 0};
-
-    children.push_back(&sun);
-    for (auto& i:children) i->init();
-
-    sun.light_button_setting = &light_setting;
-    sun.dark_button_setting = &dark_setting;
-    sun.setPosition(270, 20);
-    sun.setSize(200, 50);
 }
 void MenuBox::setMode(const int& mode) {
     sun.setMode(mode);
@@ -41,10 +34,6 @@ void MenuBox::draw() {
         for (auto& i:children) i->draw();
         EndScissorMode();
     }
-}
-void MenuBox::close() {
-    for (auto& i:children) i->close();
-    children.clear();
 }
 void MenuBox::setVisible(const bool& visible) {
     m_is_visible = visible;

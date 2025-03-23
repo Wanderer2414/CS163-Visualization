@@ -9,12 +9,11 @@
 #include "../raylib/raylib.h"
 class TextBox: public Label {
 public:
-    TextBox();
+    TextBox(ButtonSetting* button_setting, TextSetting* text_setting);
     ButtonSetting       *button_setting;
     bool                isFocus(),
                         isEnter();
-    virtual void        init()                          override,
-                        handle()                        override,
+    virtual void        handle()                        override,
                         draw()                          override,
                         clear()                         override,
                         setFocus(const bool& focus);

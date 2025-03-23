@@ -9,20 +9,20 @@ using namespace std;
 
 class TabBox: public Controller, public Move {
 public:
-    TabBox();
+    TabBox(FormSetting* form_setting);
     FormSetting     *form_setting;
     bool            isVisible() const,
-                    isHovered() const,
+                    isHovered() const override,
                     isPressed() const;
-    virtual void    init()      override,    
-                    draw()      override,
-                    handle()    override,
-                    close()     override;
+    Vector2         getAutoSize() const;
+    virtual void    draw()      override,
+                    handle()    override;
 
     virtual void    setVisible(const bool& visible),
                     setPosition(const float& x, const float& y) override,
                     push_back(const int& index, Controller* controller),
                     setText(const int& index, const string& name),
+                    select(const int& index),
                     clear();
 
     Vector2         getPosition() const override;

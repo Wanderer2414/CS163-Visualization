@@ -1,7 +1,7 @@
 #include "../include/LinearHashTable.h"
 #include <string>
 #include "../include/General.h"
-HT::Node::Node() {
+HT::Node::Node(): TextButton(0, 0) {
     m_value = 0;
     m_index = 0;
 }
@@ -25,13 +25,10 @@ void HT::Node::handle() {
     TextButton::handle();
 }
 
-HT::HashTable::HashTable(const Vector2& window_size) : Form(window_size) {
-
-}
-void HT::HashTable::init() {
+HT::HashTable::HashTable(const int& index, FormSetting f_setting, const Vector2& window_size) : 
+    Form(index, f_setting, window_size),
+    m_memory_sz_textBox(0, 0) {
     children.push_back(&m_memory_sz_textBox);
-    Form::init();
-
     m_node_size = 50;
     m_node_spacing = 5;
     max_size = 0;
@@ -48,7 +45,6 @@ void HT::HashTable::init() {
 void HT::HashTable::setMemorySize(const int& sz) {
     m_memory.resize(sz);
     for (int i = 0; i < sz; i++) {
-        m_memory[i].init();
         m_memory[i].button_setting = &form_setting;
         m_memory[i].text_setting = &form_setting;
         m_memory[i].setSize(m_node_size, m_node_size);

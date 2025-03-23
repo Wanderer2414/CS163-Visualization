@@ -30,9 +30,8 @@ namespace HT {
             _remove = 4
 
         };
-        HashTable(const Vector2& window_size);
-        virtual void        init()              override,
-                            add(const vector<std::string>& data) override,
+        HashTable(const int& index, FormSetting form_setting, const Vector2& window_size);
+        virtual void        add(const vector<std::string>& data) override,
                             remove(const std::string& data) override,
                             draw()              override,
                             handle()            override,

@@ -6,10 +6,9 @@
 class Controller {
 public:
     Controller();
-    virtual void    init()      ,
-                    handle()    ,
+    virtual bool    isHovered() const;
+    virtual void    handle()    ,
                     draw()      ,
-                    close()     ,
                     setPosition(const float& x, const float& y),
                     setSize(const float& width, const float& height);
     virtual Vector2 getSize() const,

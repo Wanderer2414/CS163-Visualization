@@ -8,12 +8,10 @@ public:
     #define color_start YELLOW
     #define color_end LIGHTGRAY
     ButtonSetting   *light_button_setting, *dark_button_setting;
-    SunMode();
+    SunMode(ButtonSetting* light_setting, ButtonSetting* dark_setting);
     float           getPercent() const;
-    virtual void    init()      override,
-                    draw()      override,
-                    handle()    override,
-                    close()     override;
+    virtual void    draw()      override,
+                    handle()    override;
     
     virtual void    setPosition(const float& x, const float& y) override,
                     setSize(const float& x, const float& y)     override,

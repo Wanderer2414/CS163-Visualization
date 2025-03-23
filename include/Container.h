@@ -5,11 +5,10 @@
 #include <vector>
 class Container: public Controller {
 public:
-    Container();
+    Container(FormSetting* form_setting);
     FormSetting         *form_setting;
     virtual bool        isHovered() const;
-    virtual void        init()      override,
-                        draw()      override,
+    virtual void        draw()      override,
                         handle()    override,
                         setVisible(const bool& visible),
                             

@@ -1,10 +1,12 @@
 #include "../include/Label.h"
 #include "../include/General.h"
 
-Label::Label() {
-    text_setting = 0;
+Label::Label(TextSetting* t_setting) {
+    text_setting = t_setting;
     m_text = {""};
     m_text_position = {{0, 0}};
+    m_align = Center | Middle;
+    update_text();
 }
 bool Label::empty() const {
     return (m_text.size()<=1) && (m_text[0].empty());
@@ -15,10 +17,6 @@ int Label::getLineSize(const int& line) const {
 }
 int Label::getLineCount() const {
     return m_text.size();
-}
-void Label::init() {
-    m_align = Center | Middle;
-    update_text();
 }
 void Label::clear() {
     m_text.clear();

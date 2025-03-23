@@ -1,7 +1,6 @@
 #include "../include/Button.h"
 
 Button::Button() {
-    button_setting = 0;
     before_press = 6;
     m_is_pressed = m_is_hovered = 0;
 }
@@ -10,6 +9,8 @@ bool Button::isHovered() const {
 }
 bool Button::isPressed() const {
     return m_is_pressed;
+}
+void Button::draw() {
 }
 void Button::handle() {
     m_is_hovered = CheckCollisionPointRec(GetMousePosition(), { m_position.x, m_position.y, m_size.x, m_size.y });

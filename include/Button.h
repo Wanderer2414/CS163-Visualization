@@ -8,10 +8,10 @@
 class Button: public Controller {
 public:
     Button();
-    ButtonSetting       *button_setting;
-    bool                isHovered() const,
+    bool                isHovered() const override,
                         isPressed() const;
-    virtual void        handle()        override;
+    virtual void        handle()        override,
+                        draw()          override;
     ~Button();
 protected:
     char                before_press;

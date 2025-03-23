@@ -2,8 +2,7 @@
 #include "../include/General.h"
 
 namespace SLL {
-	Node::Node(const int& index, const int& val) {
-		TextButton::init();
+	Node::Node(const int& index, const int& val): TextButton(0, 0) {
 		m_value = 0;
 		m_index = 0;
 		setSize(50, 50);
@@ -28,7 +27,7 @@ namespace SLL {
 	Node::~Node() {
 
 	}
-	SLLForm::SLLForm(const Vector2& window_size) : Form(window_size) {
+	SLLForm::SLLForm(const int& index, FormSetting f_setting, const Vector2& window_size) : Form(index, f_setting, window_size) {
 		m_head = nullptr;
 		setPause(true);
 	}
@@ -127,10 +126,6 @@ namespace SLL {
 			break;
 		}
 	}
-	void SLLForm::init()
-	{
-		Form::init();
-	}
 	void SLLForm::search(const int& x)
 	{
 	}
@@ -204,11 +199,8 @@ namespace SLL {
 			delete tmp;
 		}
 	}
-	void SLLForm::close() {
-		Form::close();
-		free(m_head);
-	}
 	SLLForm::~SLLForm() {
+		free(m_head);
 		
 	}
 }

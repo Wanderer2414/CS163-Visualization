@@ -4,8 +4,9 @@ Controller::Controller() {
     m_position = { 0, 0 };
     m_size = { 100, 50 };
 }
-void Controller::init() {
 
+bool Controller::isHovered() const {
+    return false;
 }
 void Controller::handle() {
 
@@ -24,9 +25,6 @@ Vector2 Controller::getSize() const {
 }
 Vector2 Controller::getPosition() const {
     return m_position;
-}
-void Controller::close() {
-    
 }
 Controller::~Controller() {
 

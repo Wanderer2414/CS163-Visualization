@@ -7,7 +7,7 @@
 using namespace std;
 class Label: public Controller {
 public:
-    Label();
+    Label(TextSetting* text_setting);
     enum Align {
         Left    = 1,
         Right   = 2,
@@ -20,11 +20,10 @@ public:
     bool                    empty() const;
     int                     getLineSize(const int& line) const,
                             getLineCount()              const;
-    virtual void            init()          override,
-                            draw()          override,
+    virtual void            draw()          override,
                             handle()        override,
                             setSize(const float& width, const float& height) override,
-                            setPosition(const float& x, const float& height) override,
+                            setPosition(const float& x, const float& y) override,
                             setText(const std::string& str),
 
                             setAlignText(const int& align),

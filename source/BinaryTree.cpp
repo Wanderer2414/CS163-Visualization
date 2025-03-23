@@ -1,7 +1,8 @@
 #include "../include/BinaryTree.h"
 #include "../include/General.h"
 #include <cmath>
-BinaryTreeForm::BinaryTreeForm(const Vector2& window_size) :Form(window_size) {
+BinaryTreeForm::BinaryTreeForm(const int& index, FormSetting form_setting, const Vector2& window_size) :
+    Form(index, form_setting, window_size) {
     m_root = 0;
     setPause(true);
 };
@@ -173,9 +174,7 @@ void BinaryTreeForm::free(Node* root) {
     free(root->right);
     delete root;
 }
-void BinaryTreeForm::close() {
-    Form::close();
-    free();
-}
+
 BinaryTreeForm::~BinaryTreeForm() {
+    free();
 }

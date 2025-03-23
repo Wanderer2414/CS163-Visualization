@@ -11,20 +11,19 @@
 #define button_count 3
 class Menu {
 public:
-    Menu(const Vector2& windowSize) ;
+    Menu(FormSetting form_setting, const Vector2& windowSize) ;
     virtual int     run()           ;
     
-    virtual void    init()          ,
-                    handle()        ,
-                    draw()          ,
-                    close()         ;
+    virtual void    handle()        ,
+                    draw()          ;
     FormSetting     form_setting;
 private:
     TextButton      BSTForm,
                     GraphForm,
                     HashTableForm,
                     SLLForm;
-    TextureButton   Back;
+    TextureButton   Back,
+                    MenuDSA;
     std::vector<Controller*> children;
     Vector2         m_windowSize;
 };

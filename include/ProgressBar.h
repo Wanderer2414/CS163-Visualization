@@ -8,8 +8,7 @@ public:
     bool            isFocus(),
                     isChanged();
     float           getProgress() const;
-    virtual void    init()      override,
-                    draw()      override,
+    virtual void    draw()      override,
                     handle()    override,
                     setProgresss(const float& progress),
                     setSize(const float& x, const float& y)     override,

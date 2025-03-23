@@ -2,7 +2,7 @@
 #include "../include/General.h"
 #include <algorithm>
 
-Console::Console() {
+Console::Console(ButtonSetting *b_setting, TextSetting *t_setting): TextButton(b_setting, t_setting) {
     clock.setDuration(0.01);
     line_cursor = 0;
     current_add = 0;

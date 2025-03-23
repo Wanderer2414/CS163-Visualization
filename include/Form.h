@@ -12,6 +12,7 @@
 #include "SettingPackage.h"
 #include "TextBox.h"
 #include "TextButton.h"
+#include "MenuTab.h"
 #include "../raylib/raylib.h"
 #include "ValueScroll.h"
 #include <string>
@@ -20,13 +21,11 @@
 
 class Form : public CommandList {
 public:
-    Form(const Vector2& window_size);
+    Form(const int& index, FormSetting form_setting, const Vector2& window_size);
     FormSetting     form_setting;
     virtual int     run();
-    virtual void    init(),
-                    handle(),
-                    draw(),
-                    close();
+    virtual void    handle(),
+                    draw();
 
     virtual void    add(const vector<string>& str),
                     remove(const std::string& str),
@@ -41,7 +40,9 @@ protected:
     Label           create_label;
     
     TextBox         input_textbox,
-                    remove_textbox;
+                    remove_textbox,
+                    update_textbox,
+                    search_textbox;
 
     TextButton      track_hover;
 
@@ -52,14 +53,16 @@ protected:
                     home_button;
 
     ValueScroll     speed_scroll;
-
     TabBox          option_box;
 
     TextButton      add_button,
                     remove_button,
+                    search_button,
+                    update_button,
                     create_button;
     
     DropBox         m_drop_box;
+    ButtonTab       buttonTab;
 
     Container       create_box,
                     insert_box,

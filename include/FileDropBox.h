@@ -6,7 +6,7 @@
 #include <string>
 #include <vector>
 using namespace std;
-class DropBox:public TextButton {
+class DropBox:public Button {
 public:
     DropBox();
     bool            isVisible() const,

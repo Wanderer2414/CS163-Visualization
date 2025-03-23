@@ -5,44 +5,40 @@
 #include <cmath>
 #include <string>
 
-Menu::Menu(const Vector2& windowSize) :
-    m_windowSize(windowSize)
+Menu::Menu(FormSetting f_setting, const Vector2& windowSize) :
+    form_setting(f_setting),
+    m_windowSize(windowSize),
+    BSTForm(&form_setting, &form_setting),
+    GraphForm(&form_setting, &form_setting),
+    HashTableForm(&form_setting, &form_setting),
+    SLLForm(&form_setting,&form_setting)
 {
-}
 
-void Menu::init() {
     children.push_back(&BSTForm);
     children.push_back(&GraphForm);
     children.push_back(&HashTableForm);
     children.push_back(&SLLForm);
-    for (auto i : children) i->init();
-    Back.init();
 
-    BSTForm.button_setting = &form_setting;
-    BSTForm.text_setting = &form_setting;
     BSTForm.setSize(main_button_width, main_button_height);
     BSTForm.setText("BST");
 
-    GraphForm.button_setting = &form_setting;
-    GraphForm.text_setting = &form_setting;
     GraphForm.setSize(main_button_width, main_button_height);
     GraphForm.setText("Graph");
 
-    HashTableForm.button_setting = &form_setting;
-    HashTableForm.text_setting = &form_setting;
     HashTableForm.setSize(main_button_width, main_button_height);
     HashTableForm.setText("HashTable");
 
-    SLLForm.button_setting = &form_setting;
-    SLLForm.text_setting = &form_setting;
     SLLForm.setSize(main_button_width, main_button_height);
     SLLForm.setText("Singly Linked List");
     
-    Back.button_setting = &form_setting;
     Back.setPosition(20, 20);
     Back.setButtonStage(0, back_normal, back_hovered);
     Back.setSize(30, 30);
+    Back.setSize(40, 40);
 
+    MenuDSA.setPosition( m_windowSize.x / 2 - 200 , 30);
+    MenuDSA.setSize(400, 50);
+    MenuDSA.setButtonStage(0, TitleMenu, TitleMenu);
 
     Vector2 center = m_windowSize / 2;
     int cols = 2;
@@ -61,8 +57,8 @@ void Menu::init() {
         int col = i % cols;
         children[i]->setPosition(origin.x + col * spacing_x, origin.y + row * spacing_y);
     }
-    children.push_back(&Back);
 }
+
 int Menu::run() {
     while (!WindowShouldClose()) {
         handle();
@@ -81,11 +77,9 @@ int Menu::run() {
 };
 void Menu::handle() {
     for (auto i : children) i->handle();
+    Back.handle();
 }
 void Menu::draw() {
     for (auto i : children) i->draw();
-}
-void Menu::close() {
-    for (auto& i:children) i->close();
-    children.clear();
+    Back.draw();
 }

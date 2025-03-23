@@ -24,7 +24,11 @@ void Move::handle() {
     }
 }
 void Move::setPosition(const float& x, const float& y) {
-    
+    if (progress == pointer) {
+        for (int i = 0; i<m_vertices.size(); i++) {
+            m_vertices[i] = m_vertices[i] - getPosition() + Vector2({x, y});
+        }
+    }
 }
 void Move::add_vertex(const Vector2& point) {
     m_vertices.push_back(point);

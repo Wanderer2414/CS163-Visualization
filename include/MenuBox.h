@@ -13,10 +13,8 @@ public:
     int             getMode() const;
     FormSetting     light_setting, dark_setting;
     bool            isHovered() const;
-    virtual void    init()      override,
-                    handle()    override,
-                    draw()      override,
-                    close()     override;
+    virtual void    handle()    override,
+                    draw()      override;
 
     virtual void    setSize(const float& width, const float& heigth) override,
                     setPosition(const float &width, const float &height) override;

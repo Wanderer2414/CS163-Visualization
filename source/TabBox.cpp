@@ -1,25 +1,21 @@
 #include "../include/TabBox.h"
 #include "../include/General.h"
 #include <iostream>
-TabBox::TabBox() {
+
+TabBox::TabBox(FormSetting* f_setting) {
     pos_changed = false;
-    form_setting = 0;
-    tab_index = 0;
+    form_setting = f_setting;
+    tab_hover = -1;
+    tab_index = -1;
     margin = 5;
     max_size = {0, margin};
+    is_visible = true;
+    m_is_hovered = m_is_pressed = false;
+    m_size = {300, 400};
+    m_position = {0, 0};
 }
 bool TabBox::isVisible() const {
     return is_visible;
-}
-void TabBox::init() {
-    Controller::init();
-    for (auto& i:tabs)
-        for (auto& j:i) j->init();
-    m_size = {300, 400};
-    m_position = {0, 0};
-
-    m_is_hovered = m_is_pressed = false;
-    is_visible = true;
 }
 bool TabBox::isHovered() const {
     return m_is_hovered;
@@ -61,11 +57,12 @@ void TabBox::draw() {
         rec.x = m_position.x + margin;
         rec.width = max_size.x;
         rec.height = form_setting->font_size + 2*margin; 
-        BeginScissorMode(m_position.x, m_position.y, m_size.x, m_size.y);
         for (int i = 0; i<m_name.size(); i++) {
             if (tab_index == i) {
                 DrawRectangleRounded(rec, form_setting->roundness, form_setting->segment, form_setting->click_color);
-                for (auto& k:tabs[i]) k->draw();
+                for (auto& k:tabs[i]) {
+                    k->draw();
+                }
             }
             else if (tab_hover == i) 
                 DrawRectangleRounded(rec, form_setting->roundness, form_setting->segment, form_setting->hover_color);
@@ -73,7 +70,6 @@ void TabBox::draw() {
             DrawTextEx(form_setting->font, m_name[i].c_str(), {rec.x+rec.width/2-name_widths[i]/2, rec.y + margin}, form_setting->font_size, form_setting->spacing, form_setting->color);
             rec.y += form_setting->font_size + 3*margin;
         }
-        EndScissorMode();
     } else if (!form_setting) cerr << "[SETTING PACKAGE DOES NOT EXIST IN TABBOX!]";
 }
 void TabBox::setVisible(const bool& visible) {
@@ -84,6 +80,7 @@ void TabBox::clear() {
     m_name.clear();
 }
 void TabBox::setPosition(const float& x, const float& y) {
+    Move::setPosition(x, y);
     for (auto& tab:tabs) {
         for (auto& control:tab) {
             Vector2 tmp = control->getPosition()-getPosition();
@@ -97,6 +94,12 @@ void TabBox::setPosition(const float& x, const float& y) {
             control->setPosition(tmp.x, tmp.y);
         }
     }
+}
+Vector2 TabBox::getAutoSize() const {
+    return max_size;
+}
+void TabBox::select(const int& index) {
+    tab_index = index;
 }
 void TabBox::handle() {
     if (is_visible) {
@@ -115,11 +118,12 @@ void TabBox::handle() {
             else tab_hover = -1;
             if (m_is_pressed && tab_hover>=0 && tab_hover <= m_name.size()) tab_index = tab_hover;
         }
-        for (auto& i:tabs[tab_index]) i->handle();
+        if (tab_index >= 0 && tab_index < tabs.size())
+            for (auto& i:tabs[tab_index]) {
+                i->handle();
+                m_is_hovered = m_is_hovered || i->isHovered();
+            }
     } else m_is_hovered = m_is_pressed = false;
-}
-void TabBox::close() {
-    clear();
 }
 Vector2 TabBox::getPosition() const {
     return m_position;

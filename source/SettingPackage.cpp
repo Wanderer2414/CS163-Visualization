@@ -3,32 +3,33 @@
 
 FormSetting LightTheme = {
     {
-        0.2f, 30, 
-        {150, 150, 150, 255},  // Button Pressed (Even Darker Gray)
-        {180, 180, 180, 255}, // Button Hover (Darker Gray)
-        {130, 130, 130, 255} // Button (Gray)
+        0.2f, 30,
+        {170, 210, 250, 255},  // Button Pressed (Darker Pastel Blue)
+        {190, 220, 255, 255},  // Button Hover (Slightly Darker Pastel Blue)
+        {200, 230, 255, 255}   // Button (Pastel Blue)
     },
     {
-    {}, 30, 2, 
-    {20, 20, 20, 255},    // Text (Dark Gray)
+        {}, 30, 2,
+        {40, 60, 100, 255},    // Text (Dark Blue for contrast)
     },
-    {100, 100, 100, 255},
-    {150, 150, 150, 255}, // Background (Light Gray)
+    {150, 190, 230, 255},     // Border or other UI elements (Muted Pastel Blue)
+    {220, 240, 255, 255},     // Background (Very Light Pastel Blue)
 };
 FormSetting DarkTheme = {
     {
-        0.2f, 30, 
-        {100, 100, 100, 255},  // Button Pressed (Even Lighter Dark Gray)
-        {80, 80, 80, 255},    // Button Hover (Lighter Dark Gray)
-        {60, 60, 60, 255}    // Button (Dark Gray)
+        0.2f, 30,
+        {4, 13, 18, 255},    // Button Pressed (Deepest Green-Blue)
+        {24, 61, 61, 255},   // Button Hover (Muted Dark Teal)
+        {92, 131, 116, 255}  // Button (Soft Desaturated Green)
     },
     {
-    {}, 30, 2, 
-    {220, 220, 220, 255}, // Text (Light Gray)
+        {}, 30, 2,
+        {220, 230, 225, 255}, // Text (Light Grayish Green for readability)
     },
-    {100, 100, 100, 255},
-    {30, 30, 30, 255},    // Background (Dark Gray)
+    {147, 177, 166, 255},    // Border or other UI elements (Muted Greenish-Gray)
+    {4, 13, 18, 255}         // Background (Deep Dark Green-Blue)
 };
+
 
 FormSetting NeonTheme = {
     {

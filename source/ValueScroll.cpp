@@ -4,12 +4,14 @@
 #include <cmath>
 #include <raylib.h>
 
-ValueScroll::ValueScroll() {
-    text_setting = 0;
+ValueScroll::ValueScroll(TextSetting* t_setting) {
+    text_setting = t_setting;
     m_text = {""};
     m_text_position = {{0, 0}};
-    pointer = m_index = 0;
-    m_is_changed = m_is_hover = false;
+    m_is_hover = m_is_changed = false;
+    m_index = 0;
+    pointer = 0;
+    velocity = 0;
 }
 bool ValueScroll::empty() const {
     return (m_text.size()<=1) && (m_text[0].empty());
@@ -22,9 +24,6 @@ bool ValueScroll::isHovered() const {
 }
 int ValueScroll::getChoiceIndex() const {
     return pointer;
-}
-void ValueScroll::init() {
-    update_text();
 }
 void ValueScroll::clear() {
     m_text.clear();

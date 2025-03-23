@@ -1,7 +1,17 @@
 #include "../include/SunMode.h"
 #include "../include/IncludePath.h"
 #include "../include/General.h"
-SunMode::SunMode() {
+
+SunMode::SunMode(ButtonSetting* light_setting, ButtonSetting* dark_setting) {
+    light_button_setting = light_setting;
+    dark_button_setting = dark_setting;
+    m_is_light = false,
+    m_is_pressed = m_is_hovered = false;
+    percent = 1;
+    percent_alpha = 255;
+    m_point = {0,0};
+    sun_light_texture = LoadTexture(sun_light);
+    sun_dark_texture = LoadTexture(sun_dark);
 }
 float SunMode::getPercent() const {
     return percent;
@@ -10,12 +20,6 @@ void SunMode::setMode(const int& mode) {
     m_is_light = !mode;
     percent = mode;
     percent_alpha = percent*255;
-}
-void SunMode::init() {
-    Controller::init();
-    m_point = {0, 0};
-    sun_light_texture = LoadTexture(sun_light);
-    sun_dark_texture = LoadTexture(sun_dark);
 }
 void SunMode::draw() {
     if (light_button_setting && dark_button_setting) {
@@ -46,10 +50,6 @@ void SunMode::handle() {
         percent_alpha = 255*percent;
     }
 }
-void SunMode::close() {
-    UnloadTexture(sun_light_texture);
-    UnloadTexture(sun_dark_texture);
-}
 void SunMode::setPosition(const float& x, const float& y) {
     Controller::setPosition(x,y);
     m_point.x = m_position.x + (m_size.x-m_size.y)*percent;
@@ -63,5 +63,6 @@ void SunMode::setSize(const float& x, const float& y) {
     m_point.y = y;
 }
 SunMode::~SunMode() {
-
+    UnloadTexture(sun_light_texture);
+    UnloadTexture(sun_dark_texture);
 }
