@@ -14,14 +14,20 @@ Vector2 operator*(const Vector2& vector, const float& x);
 Vector2 operator*(const float& x, const Vector2& vector);
 Vector2 operator/(const Vector2& vector, const float& x);
 
+Color operator+(const Color& x, const Color& y);
+Color operator*(Color color, const float& x);
+Color operator*(const float& x, Color color);
+
 bool operator==(const Vector2& a, const Vector2& b);
 bool operator!=(const Vector2& a, const Vector2& b);
 
 int to_int(const std::string& str);
-
 Rectangle TransToCameraRec(const Camera2D& camera, Rectangle rec);
 Vector2 TransToGlobalPoint(const Camera2D& camera, const Vector2& point);
 
+string readFromFile(const string& link);
 vector<string> readFromFileStr(const string& link);
 vector<int> readFromFileInt(const string& link);
+
+vector<string> split(const string& str);
 #endif

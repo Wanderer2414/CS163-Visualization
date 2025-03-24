@@ -32,16 +32,12 @@ namespace SLL {
 			_Choose = 1,
 			_Unchoose = 2,
 		};
-		SLLForm(const Vector2& window_size);
-		virtual void		init()						override,
-							add(const std::string& x, const std::string& index = "-1"),
+		SLLForm(const int& index, FormSetting f_setting, const Vector2& window_size);
+		virtual void		add(const vector<std::string>& x)	override,
 							remove(const std::string& x) override,
 							removeAtIndex(const int& index),
-							update(const int& x) override,
-							search(const int& x) override,
 							draw()				 override,
 							handle()			 override,
-							close()				 override,
 							FetchNextCommand(const std::vector<float>& command) override,
 							FetchPrevCommand(const std::vector<float>& command)	override;
 		~SLLForm();

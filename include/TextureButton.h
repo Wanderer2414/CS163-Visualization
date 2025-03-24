@@ -1,21 +1,28 @@
-#ifndef TEXTUREBUTTON_H
-#define TEXTUREBUTTON_H
+#ifndef TEXTUREBUTTON_H 
+#define TEXTUREBUTTON_H 
 
 #include "Button.h"
-#include <cmath>
 #include "../raylib/raylib.h"
+#include "SettingPackage.h"
+#include <vector>
 #include <string>
-class TextureButton: public Button {
+using namespace std;
+
+class TextureButton : public Button {
 public:
-    TextureButton(const std::string& texture);
-    virtual void    draw()                                              override,
+    TextureButton();
+    int             getStage() const;
+    virtual void    handle()                                            override,
+                    draw()                                              override,
                     setSize(const float& width, const float& height)    override,
-                    setTexture(const std::string& texture);
+                    setButtonStage(const int& index, const string& source, const string& hover_source);
+
+    void            next(), back(), go(const int& index);
     ~TextureButton();
-private:
-    float           m_rotate,
-                    m_scale;
-    Texture2D       m_texture;
+protected:
+    int               source_pointer;
+    vector<Texture2D> m_sources;
+    vector<Texture2D> m_sources_hover;
 };
 
-#endif //TEXTUREBUTTON_H
+#endif

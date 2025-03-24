@@ -4,20 +4,15 @@ Controller::Controller() {
     m_position = { 0, 0 };
     m_size = { 100, 50 };
 }
-void Controller::init() {
 
+bool Controller::isHovered() const {
+    return false;
 }
 void Controller::handle() {
 
 }
 void Controller::draw() {
 
-}
-void Controller::setRoundness(const float& roundness) {
-    m_roundness = roundness;
-}
-void Controller::setSegment(const int& segment) {
-    m_segment = segment;
 }
 void Controller::setPosition(const float& x, const float& y) {
     m_position = { x,y };

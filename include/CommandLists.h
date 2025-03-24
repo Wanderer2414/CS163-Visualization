@@ -31,7 +31,6 @@ public:
                         goNext(),
                         goBack(),
 
-                        init(),
                         handle(),
                         setEnable(const bool& isEnable),
                         clear(),

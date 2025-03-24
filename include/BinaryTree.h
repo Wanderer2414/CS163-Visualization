@@ -15,16 +15,13 @@ enum CommandCode {
 };
 class BinaryTreeForm :public Form {
 public:
-    BinaryTreeForm(const Vector2& window_size);
-    void            add(const std::string& x)   override,
+    BinaryTreeForm(const int& index, FormSetting form_setting, const Vector2& window_size);
+    void            add(const vector<std::string>& x)   override,
                     remove(const std::string& x)override,
-                    update(const int& x)        override,
-                    search(const int& x)        override,
                     FetchNextCommand(const std::vector<float>& codes)  override,
                     FetchPrevCommand(const std::vector<float>& codes)  override,
                     draw()                      override,
-                    handle()                    override,
-                    close()                     override;
+                    handle()                    override;
     ~BinaryTreeForm();
 private:
     Node*           m_root;

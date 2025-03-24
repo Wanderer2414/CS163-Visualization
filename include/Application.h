@@ -16,14 +16,8 @@ public:
     void    run();
     ~Application();
 private:
-    int     m_width = 1400,
-            m_height = 1000;
-    Menu            menu;
-    MenuStart       menuStart;
-    BinaryTreeForm  BSTForm;
-    Graph           GraphForm;
-    SLL::SLLForm    SLLForm;
-    HT::HashTable   HashTableForm;
+    float   m_width = 1366,
+            m_height = 700;
 };
 
 #endif

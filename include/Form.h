@@ -2,68 +2,91 @@
 #define FORM_H
 #include "CommandLists.h"
 #include "Console.h"
+#include "Container.h"
 #include "Controller.h"
 #include "FileDropBox.h"
+#include "Label.h"
+#include "TabBox.h"
+#include "TextureButton.h"
 #include "ProgressBar.h"
+#include "SettingPackage.h"
 #include "TextBox.h"
 #include "TextButton.h"
+#include "MenuTab.h"
 #include "../raylib/raylib.h"
+#include "ValueScroll.h"
 #include <string>
 #include <vector>
 #include <deque>
-#include <initializer_list>
-
-#define Home_width  300
-#define Home_height 30
-#define Console_x 10
-#define Console_y 50
-#define TextInput_Width 150
-#define Console_width 250
-#define Console_height 300
-#define Control_width 80
-#define Control_height 30
 
 class Form : public CommandList {
 public:
-    Form(const Vector2& window_size);
+    Form(const int& index, FormSetting form_setting, const Vector2& window_size);
+    FormSetting     form_setting;
     virtual int     run();
-    virtual void    init(),
-                    handle(),
-                    draw(),
-                    close();
+    virtual void    handle(),
+                    draw();
 
-    virtual void    add(const std::string& str),
-                    add_from_file(const std::string& source),
+    virtual void    add(const vector<string>& str),
                     remove(const std::string& str),
-                    update(const int& x),
-                    search(const int& x);
+                    update(const std::string& old_value, const std::string& new_value),
+                    search(const std::string& x);
 
-    void            setButtonRoundness(const float& roundness),
-                    setBackgroundImage(const std::string& str),
-                    setBackgroundColor(const Color&),
-                    setFont(const Font& font),
-                    setFontSize(const int& size);
+    virtual string  RandomCreate() const,
+                    RandomInsert() const,
+                    RandomRemove() const,
+                    RandomSearch() const,
+                    RandomOldValue() const,
+                    RandomNewValue() const;
     ~Form();
 protected:
     bool            m_workspace_focus;
-    float           m_roundness = 0,
-                    m_font_size = 30;
-    int             m_segment = 30;
     std::vector<Controller*> children;
-    Texture2D       m_background_image;
-    Color           m_background_color,
-                    m_text_color;
-    Font            m_font;
     Vector2         m_window_size;
-    TextBox         input_textbox,
-                    remove_textbox;
 
-    TextButton      add_button,
-                    home_button,
+    Label           create_label,
+                    update_old_value_label,
+                    update_new_value_label;
+    
+    TextBox         create_textbox,
+                    insert_textbox,
+                    remove_textbox,
+                    update_textbox_choice,
+                    update_textbox_value,
+                    search_textbox;
+
+    TextButton      track_hover;
+
+    TextureButton   play_button,
+                    back_button,
+                    skip_button,
+                    restart_button,
+                    home_button;
+
+    TextureButton   random_create,
+                    random_insert,
+                    random_remove,
+                    random_search,
+                    random_update_choice,
+                    random_update_value;
+
+    ValueScroll     speed_scroll;
+    TabBox          option_box;
+
+    TextButton      insert_button,
                     remove_button,
-                    back_button;
-
+                    search_button,
+                    update_button,
+                    create_button;
+    
     DropBox         m_drop_box;
+    ButtonTab       buttonTab;
+
+    Container       create_box,
+                    insert_box,
+                    remove_box,
+                    search_box,
+                    update_box;
 
     Console         console;
     Rectangle       m_workspace;

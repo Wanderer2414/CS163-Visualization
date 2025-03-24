@@ -3,16 +3,18 @@
 
 #include "Controller.h"
 #include "../raylib/raylib.h"
+#include "SettingPackage.h"
+#include "SlowMotion.h"
 class Button: public Controller {
 public:
     Button();
-    bool                isHovered(),
-                        isPressed();
-    virtual void        handle()        override;
-    Color               m_normal_color  = WHITE,
-                        m_hover_color   = {200, 200, 200, 255};
+    bool                isHovered() const override,
+                        isPressed() const;
+    virtual void        handle()        override,
+                        draw()          override;
     ~Button();
 protected:
+    char                before_press;
     bool                m_is_hovered = false,
                         m_is_pressed = false;
 };

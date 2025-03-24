@@ -1,17 +1,6 @@
 #include "../include/ProgressBar.h"
 
 ProgressBar::ProgressBar() {
-}
-bool ProgressBar::isFocus() {
-    return m_is_focus;
-}
-bool ProgressBar::isChanged() {
-    return m_is_changed;
-}
-float ProgressBar::getProgress() const {
-    return m_progress;
-}
-void ProgressBar::init() {
     m_progress = 0;
     m_thick = 1.0f,
         m_radius = 5;
@@ -24,6 +13,15 @@ void ProgressBar::init() {
     uncomplete_color = { 100, 100, 100, 200 };
     complete_color = { 255, 255, 255, 255 };
     cursor_color = BLUE;
+}
+bool ProgressBar::isFocus() {
+    return m_is_focus;
+}
+bool ProgressBar::isChanged() {
+    return m_is_changed;
+}
+float ProgressBar::getProgress() const {
+    return m_progress;
 }
 void ProgressBar::draw() {
     Vector2 start = getPosition();

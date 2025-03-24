@@ -4,6 +4,8 @@
 
 class SlowMotion {
 public:
+    SlowMotion();
+    bool            isComplete() const;
     float           getDuration() const;
     virtual void    setSlowPosition(const float& x, const float& y),
                     setDuration(const float& duration),
@@ -12,6 +14,7 @@ public:
     virtual Vector2 getPosition() const,
                     getEndPoint() const;
 private:
+    bool                is_end;
     float               m_duration = 0,
                         m_start_time = 0,
                         m_speed = 0;

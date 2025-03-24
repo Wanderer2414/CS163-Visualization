@@ -8,7 +8,7 @@
 
 class Graph: public Form {
 public:
-    Graph(const Vector2& window_size);
+    Graph(const int& index, FormSetting form_setting, const Vector2& window_size);
     ~Graph();
 private:
 };

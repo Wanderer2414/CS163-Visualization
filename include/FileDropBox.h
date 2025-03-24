@@ -6,16 +6,19 @@
 #include <string>
 #include <vector>
 using namespace std;
-class DropBox:public TextButton {
+class DropBox:public Button {
 public:
     DropBox();
-    bool            IsFileAdd() const;
+    bool            isVisible() const,
+                    IsFileAdd() const;
     virtual void    handle() override,
-                    draw() override;
+                    draw() override,
+                    setVisible(const bool& visible);
     vector<string>  getFiles();
     ~DropBox();
 private:
-    bool            m_file_add;
+    bool            m_file_add,
+                    m_is_visible;
     int             m_file_count;
     vector<string>  files;
     Vector2         m_textfile_position;
