@@ -1,5 +1,6 @@
 #include "../include/CommandLists.h"
 #include <vector>
+
 CommandList::CommandList() {
     command_pointer = 0;
     current_add = 0;
@@ -152,9 +153,6 @@ void CommandList::GotoCommandLine(const float& percent) {
                     if (!temporary[command_pointer]) update_tail();
                 }
             }
-        // }
-        // else {
-        // }
     }
 }
 void CommandList::handle() {

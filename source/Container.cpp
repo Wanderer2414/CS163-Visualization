@@ -23,8 +23,17 @@ void Container::setPosition(const float& x, const float& y) {
     }
     Controller::setPosition(x, y);
 }
+void Container::reLocate(Controller* i) {
+    i->setPosition(m_position.x, m_position.y);
+}
+void Container::pop(Controller* control) {
+    for (int i =0; i<children.size(); i++) {
+        if (control == children[i]) children.erase(children.begin() + i);
+    }
+}
 void Container::push_back(Controller* i) {
     children.push_back(i);
+    reLocate(i);
 }
 void Container::handle() {
     if (m_is_visible) {

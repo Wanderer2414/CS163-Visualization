@@ -24,6 +24,7 @@
 #define Replayhovered "CS163-DSAVisualization/asset/images/replay-selected.png"
 #define SkipNormal "CS163-DSAVisualization/asset/images/skip_normal.png"
 #define SkipHovered "CS163-DSAVisualization/asset/images/skip_hovered.png"
+#define Rand "CS163-DSAVisualization/asset/images/Rand.png"
 #define sun_light "CS163-DSAVisualization/asset/Icon/Light.png"
 #define sun_dark "CS163-DSAVisualization/asset/Icon/Dark.png"
 
