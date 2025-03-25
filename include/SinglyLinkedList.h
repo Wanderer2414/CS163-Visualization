@@ -36,8 +36,6 @@ namespace SLL {
 		virtual void		add(const vector<std::string>& x)	override,
 							remove(const std::string& x) override,
 							removeAtIndex(const int& index),
-							update(const int& x) override,
-							search(const int& x) override,
 							draw()				 override,
 							handle()			 override,
 							FetchNextCommand(const std::vector<float>& command) override,

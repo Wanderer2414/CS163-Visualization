@@ -4,7 +4,6 @@
 BinaryTreeForm::BinaryTreeForm(const int& index, FormSetting form_setting, const Vector2& window_size) :
     Form(index, form_setting, window_size) {
     m_root = 0;
-    setPause(true);
 };
 void BinaryTreeForm::add(const vector<std::string>& vec) {
     for (int i = vec.size()-1; i>=0; i--) {
@@ -43,12 +42,6 @@ void BinaryTreeForm::remove(Node*& root, const int& x) {
 }
 void BinaryTreeForm::remove(const std::string& str) {
     InsertNextMainCommand({ CommandCode::erase,1.0f * to_int(str) });
-}
-void BinaryTreeForm::update(const int& x) {
-
-}
-void BinaryTreeForm::search(const int& x) {
-
 }
 
 void BinaryTreeForm::FetchNextCommand(const std::vector<float>& command) {

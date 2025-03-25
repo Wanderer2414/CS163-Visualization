@@ -55,6 +55,6 @@
 #define SkipHovered "C:/Users/New/Huy/asset/images/skip_hovered.png"
 #define sun_light "C:/Users/New/Huy/asset/Icon/Light.png"
 #define sun_dark "C:/Users/New/Huy/asset/Icon/Dark.png"
-
+#define Rand "C:/Users/New/Huy/asset/images/Rand.png"
 #define TitleMenu "C:/Users/New/Huy/asset/images/TitleMenu.png"
 #endif

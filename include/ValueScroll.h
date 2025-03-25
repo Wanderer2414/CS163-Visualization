@@ -12,16 +12,17 @@ public:
     TextSetting             *text_setting                                                   ;
     bool                    empty() const                                                   ,
                             isChanged() const                                               ,
-                            isHovered() const                                               ;
+                            isHovered() const                                      override ;
 
     int                     getChoiceIndex() const                                          ;
+    float                   getValue() const;
     virtual void            draw()          override                                        ,
                             handle()        override                                        , 
 
                             setSize(const float& width, const float& height) override       ,
                             setPosition(const float& x, const float& y) override            ,
 
-                            setText(const std::string& str)                                 ,
+                            push_back(const float& value, const std::string& str)           ,
                             select(const int& pointer)                                      ,
                             clear()                                                         ;
 
@@ -38,6 +39,7 @@ protected:
                             update_line(const int& line)    ;
     vector<float>           font_size                       ;
     vector<string>          m_text                          ;
+    vector<float>           m_values;
     vector<Vector2>         m_text_position                 ;
 };
 #endif

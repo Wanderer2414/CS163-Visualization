@@ -6,6 +6,7 @@ Label::Label(TextSetting* t_setting) {
     m_text = {""};
     m_text_position = {{0, 0}};
     m_align = Center | Middle;
+    margin = 5;
     update_text();
 }
 bool Label::empty() const {
