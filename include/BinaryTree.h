@@ -4,14 +4,8 @@
 #include "Form.h"
 #include "GUI.h"
 #include "Global.h"
+#include "CommandCode.h"
 
-enum CommandCode {
-    add = 0,
-    choose = 1,
-    unchoose = 2,
-    redraw = 3,
-    erase = 4
-};
 class BinaryTreeForm :public Form {
 public:
     BinaryTreeForm(const int& index, FormSetting form_setting, const Vector2& window_size);
