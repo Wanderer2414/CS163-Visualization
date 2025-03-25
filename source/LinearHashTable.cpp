@@ -1,6 +1,6 @@
 #include "../include/LinearHashTable.h"
-#include <string>
 #include "../include/General.h"
+
 HT::Node::Node(): TextButton(0, 0) {
     m_value = 0;
     m_index = 0;

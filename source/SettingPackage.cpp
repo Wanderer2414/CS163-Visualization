@@ -1,6 +1,5 @@
 ﻿#include "../include/SettingPackage.h"
 
-
 FormSetting LightTheme = {
     {
         0.2f, 30,

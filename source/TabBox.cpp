@@ -1,6 +1,5 @@
 #include "../include/TabBox.h"
 #include "../include/General.h"
-#include <iostream>
 
 TabBox::TabBox(FormSetting* f_setting) {
     pos_changed = false;

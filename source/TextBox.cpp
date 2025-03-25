@@ -1,8 +1,5 @@
 #include "../include/TextBox.h"
 #include "../include/General.h"
-#include <cmath>
-#include <cstdio>
-#include "../raylib/raylib.h"
 
 TextBox::TextBox(ButtonSetting* b_setting, TextSetting* text_setting): Label(text_setting) {
     m_size = { 100, 50 };

@@ -1,9 +1,6 @@
 #include "../include/Menu.h"
-#include "../raylib/raylib.h"
 #include "../include/General.h"
 #include "../include/IncludePath.h"
-#include <cmath>
-#include <string>
 
 Menu::Menu(FormSetting f_setting, const Vector2& windowSize) :
     form_setting(f_setting),

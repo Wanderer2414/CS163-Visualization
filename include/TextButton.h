@@ -2,9 +2,9 @@
 #define TEXTBUTTON_H
 
 #include "Button.h"
-#include "../raylib/raylib.h"
 #include "SettingPackage.h"
-#include <string>
+#include "Global.h"
+
 class TextButton: public Button {
 public:
     TextButton(ButtonSetting* b_setting, TextSetting* t_setting);

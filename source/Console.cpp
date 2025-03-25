@@ -1,6 +1,5 @@
 #include "../include/Console.h"
 #include "../include/General.h"
-#include <algorithm>
 
 Console::Console(ButtonSetting *b_setting, TextSetting *t_setting): TextButton(b_setting, t_setting) {
     clock.setDuration(0.01);

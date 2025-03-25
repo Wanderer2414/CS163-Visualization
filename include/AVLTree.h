@@ -3,9 +3,6 @@
 
 #include "Form.h"
 #include "GUI.h"
-#include <vector>
-#include <map>
-
-
+#include "Global.h"
 
 #endif

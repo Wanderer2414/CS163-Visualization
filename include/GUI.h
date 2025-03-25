@@ -1,6 +1,7 @@
 #ifndef GUI_H
 #define GUI_H
-#include "../raylib/raylib.h"
+
+#include "Global.h"
 #include "SlowMotion.h"
 #include "TextButton.h"
 

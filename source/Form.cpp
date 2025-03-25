@@ -6,6 +6,7 @@
 #include <sstream>
 #include <iostream>
 
+
 Form::Form(const int& index, FormSetting f_setting, const Vector2& window_size) :
     m_window_size(window_size),
     form_setting(f_setting),
@@ -282,6 +283,8 @@ int Form::run() {
     }
     return 0;
 }
+
+
 void Form::handle() {
     //Base handle + children handle
     CommandList::handle();
