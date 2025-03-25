@@ -1,9 +1,5 @@
 #include "../include/General.h"
-#include <cctype>
-#include <cmath>
-#include <string>
-#include <fstream>
-using namespace std;
+
 float abs(const Vector2& vector) {
     return sqrt(vector.x * vector.x + vector.y * vector.y);
 };

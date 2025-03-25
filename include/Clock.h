@@ -1,8 +1,8 @@
 #ifndef CLOCK_H
 #define CLOCK_H
 
-#include "../raylib/raylib.h"
-#include <cstddef>
+#include "Global.h"
+
 class Clock {
 public:
     Clock();

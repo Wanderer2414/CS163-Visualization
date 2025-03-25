@@ -3,8 +3,7 @@
 
 #include "Form.h"
 #include "GUI.h"
-#include <vector>
-#include <map>
+#include "Global.h"
 
 enum CommandCode {
     add = 0,

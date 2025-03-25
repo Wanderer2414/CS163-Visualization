@@ -1,6 +1,6 @@
 #include "../include/Edge.h"
 #include "../include/General.h"
-#include <cmath>
+
 Edge::Edge(Vertex* start, Vertex* end) {
     m_start = start;
     m_end = end;

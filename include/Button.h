@@ -2,9 +2,10 @@
 #define BUTTON_H
 
 #include "Controller.h"
-#include "../raylib/raylib.h"
 #include "SettingPackage.h"
 #include "SlowMotion.h"
+#include "Global.h"
+
 class Button: public Controller {
 public:
     Button();

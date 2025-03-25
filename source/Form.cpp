@@ -1,10 +1,6 @@
 #include "../include/Form.h"
-#include "../raylib/raylib.h"
 #include "../include/General.h"
-#include <string>
 #include "../include/IncludePath.h"
-#include <sstream>
-#include <iostream>
 
 Form::Form(const int& index, FormSetting f_setting, const Vector2& window_size) :
     m_window_size(window_size),

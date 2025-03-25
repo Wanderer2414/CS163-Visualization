@@ -1,7 +1,6 @@
 #include "../include/Vertex.h"
 #include "../include/General.h"
-#include <cstdlib>
-#include <ctime>
+
 Vertex::Vertex(FormSetting* f_setting) {
     form_setting = f_setting;
     velocity = {0, 0};

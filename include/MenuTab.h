@@ -2,10 +2,9 @@
 #define MENUTAB_H
 
 #include "Controller.h"
-#include "../include/raylib.h"
 #include "SettingPackage.h"
-#include <vector>
-#include <string>
+#include "Global.h"
+
 class ButtonTab : public Controller {
 public:
     ButtonTab(ButtonSetting* button_setting, TextSetting* text_setting);

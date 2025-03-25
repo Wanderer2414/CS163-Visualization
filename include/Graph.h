@@ -7,10 +7,7 @@
 #include "GUI.h"
 #include "Vertex.h"
 #include "OptionBox.h"
-#include <string>
-#include <vector>
-#include <map>
-#include <vector>
+#include "Global.h"
 
 class Graph: public Form {
 public:

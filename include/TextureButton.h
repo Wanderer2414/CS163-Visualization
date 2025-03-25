@@ -2,11 +2,8 @@
 #define TEXTUREBUTTON_H 
 
 #include "Button.h"
-#include "../raylib/raylib.h"
 #include "SettingPackage.h"
-#include <vector>
-#include <string>
-using namespace std;
+#include "Global.h"
 
 class TextureButton : public Button {
 public:

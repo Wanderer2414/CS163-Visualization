@@ -1,7 +1,6 @@
 #ifndef SHORTESTPATH_H
 #define SHORTESTPATH_H
 
-#include "../raylib/raylib.h"
 #include "Global.h"
 #include "ProgressBar.h"
 #include "Button.h"

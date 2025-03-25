@@ -1,11 +1,10 @@
 #ifndef TABBOX_H
 #define TABBOX_H
+
 #include "Controller.h"
 #include "SettingPackage.h"
 #include "Move.h"
-#include <string>
-#include <vector>
-using namespace std;
+#include "Global.h"
 
 class TabBox: public Controller, public Move {
 public:

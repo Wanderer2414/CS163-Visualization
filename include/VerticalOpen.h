@@ -1,6 +1,7 @@
 #ifndef VERTICAL_OPEN_H
 #define VERTICAL_OPEN_H
-#include "../raylib/raylib.h"
+
+#include "Global.h"
 
 class VerticalOpen {
 public:

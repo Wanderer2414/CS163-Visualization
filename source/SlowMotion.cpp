@@ -1,5 +1,6 @@
 #include "../include/SlowMotion.h"
 #include "../include/General.h"
+
 SlowMotion::SlowMotion() {
     is_end = true;
 }

@@ -1,5 +1,6 @@
 #ifndef FORM_H
 #define FORM_H
+
 #include "CommandLists.h"
 #include "Console.h"
 #include "Container.h"
@@ -13,11 +14,8 @@
 #include "TextBox.h"
 #include "TextButton.h"
 #include "MenuTab.h"
-#include "../raylib/raylib.h"
 #include "ValueScroll.h"
-#include <string>
-#include <vector>
-#include <deque>
+#include "Global.h"
 
 class Form : public CommandList {
 public:
@@ -93,4 +91,5 @@ protected:
     ProgressBar     m_progress;
     Camera2D        m_camera;
 };
-#endif
+
+#endif //FORM_H

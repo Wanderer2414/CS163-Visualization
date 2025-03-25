@@ -1,8 +1,10 @@
 #ifndef CONTAINER_H
 #define CONTAINER_H
-#include "../include/Controller.h"
+
+#include "Controller.h"
 #include "SettingPackage.h"
-#include <vector>
+#include "Global.h"
+
 class Container: public Controller {
 public:
     Container(FormSetting* form_setting);

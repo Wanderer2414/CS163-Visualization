@@ -1,6 +1,6 @@
 #ifndef SETTING_PACKAGE_H
 #define SETTING_PACKAGE_H
-#include "../raylib/raylib.h"
+#include "Global.h"
 class ButtonSetting {
 public:
     float   roundness;

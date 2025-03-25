@@ -3,9 +3,7 @@
 
 #include "Button.h"
 #include "TextButton.h"
-#include <string>
-#include <vector>
-using namespace std;
+#include "Global.h"
 class DropBox:public Button {
 public:
     DropBox();

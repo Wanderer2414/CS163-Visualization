@@ -1,6 +1,6 @@
 #include "../include/BinaryTree.h"
 #include "../include/General.h"
-#include <cmath>
+
 using namespace BST;
 BinaryTreeForm::BinaryTreeForm(const int& index, FormSetting form_setting, const Vector2& window_size) :
     Form(index, form_setting, window_size) {
