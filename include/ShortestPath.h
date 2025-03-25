@@ -29,11 +29,10 @@ class Graph {
     void addVertex();
     int addEdge(int from, int to, int weight);
     void random(int vertexCount, int maxX, int maxY);
-    void startFromFile(const string filename);
-    void drawGraph(Font font, vector<Color> color = {});
+    void startFromFile(const std::string filename);
+    void drawGraph(Font font, std::vector<Color> color = {});
     void updatePosition();
     void resetHighlight();
-    void drawGraph(Font font, std::vector<Color> color = {});
 
     ~Graph();
     private:
@@ -46,10 +45,9 @@ class GraphVisual {
     public:
     GraphVisual(Font font = {});
     void random();
-    int loadFile();
+    int loadFile(const std::string filename);
     void drawGraph();
     void drawButton();
-
 
     private:
     Graph graph;
@@ -60,9 +58,8 @@ class GraphVisual {
     Button randomButton;
     Button loadFileButton;
     bool isChosen;
-
     Font font;
-    
+
 };
 
 #endif //SHORTESTPATH_H

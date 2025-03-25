@@ -240,6 +240,14 @@ void Graph::updatePosition() {
     }
 }
 
+GraphVisual::GraphVisual(Font font) {
+
+}
+
+void GraphVisual::random() {
+    
+}
+
 void GraphVisual::drawButton() {
     this->createButton.draw();
 
@@ -254,6 +262,11 @@ void GraphVisual::drawGraph() {
     return this->graph.drawGraph(this->font, this->colorComponent);
 }
 
-int GraphVisual::loadFile() {
-    
+int GraphVisual::loadFile(const std::string filename) {
+    std::ifstream inputFile("");
+    if (!inputFile) {
+        cerr << "Error: Cannot open file!";
+        exit(1);
+    }
+
 }
