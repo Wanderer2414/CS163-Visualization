@@ -1,7 +1,7 @@
 #include "../include/ValueScroll.h"
 #include "../include/General.h"
 #include <cmath>
-#include <raylib.h>
+#include "../include/raylib.h"
 
 ValueScroll::ValueScroll(TextSetting* t_setting) {
     text_setting = t_setting;
@@ -65,6 +65,7 @@ void ValueScroll::handle() {
         if (pointer>=m_text_position.size()) pointer -= m_text_position.size();
         if (pointer<0) pointer += m_text_position.size();
         m_index= round(pointer);
+        if (m_index>=m_text_position.size()) m_index = m_text_position.size()-1;
         m_is_changed = true;
         update_text();
     }

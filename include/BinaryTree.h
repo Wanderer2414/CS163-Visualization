@@ -24,15 +24,15 @@ public:
                     handle()                    override;
     ~BinaryTreeForm();
 private:
-    Node*           m_root;
-    void            insert(Node*& root, const Vector2& par, const int& x),
-                    remove(Node*& root, const int& x),
+    BST::Node*      m_root;
+    void            insert(BST::Node*& root, const Vector2& par, const int& x),
+                    remove(BST::Node*& root, const int& x),
                     rePosition(),
-                    draw(Node* root),
-                    handle(Node* root),
+                    draw(BST::Node* root),
+                    handle(BST::Node* root),
                     free(),
-                    free(Node* root);
-    int             rePosition(Node* root, const int& level, float index, std::map<std::pair<float, int>, bool>& board);
-    std::vector<Node*> m_list;
+                    free(BST::Node* root);
+    int             rePosition(BST::Node* root, const int& level, float index, std::map<std::pair<float, int>, bool>& board);
+    std::vector<BST::Node*> m_list;
 };
 #endif

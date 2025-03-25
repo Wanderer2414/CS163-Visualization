@@ -145,12 +145,12 @@ void CommandList::GotoCommandLine(const float& percent) {
             if (main_command_pointer>cur) {
                 while (main_command_pointer > cur) {
                     BeforeFetchPrev();
-                    if (!temporary[command_pointer]) update_tail();
+                    if (command_pointer>=0 && !temporary[command_pointer]) update_tail();
                 }
             } else if (main_command_pointer < cur) {
                 while (main_command_pointer < cur) {
                     BeforeFetchNext();
-                    if (!temporary[command_pointer]) update_tail();
+                    if (command_pointer<temporary.size() && !temporary[command_pointer]) update_tail();
                 }
             }
     }

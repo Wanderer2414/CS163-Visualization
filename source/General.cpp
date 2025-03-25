@@ -46,6 +46,21 @@ bool operator==(const Vector2& a, const Vector2& b) {
 bool operator!=(const Vector2& a, const Vector2& b) {
     return a.x != b.x || a.y != b.y;
 }
+bool operator==(const Color& a, const Color& b) {
+    return a.r != b.r || a.b!=b.b || a.g != b.g || a.a != b.a;
+}
+bool operator!=(const Color& a, const Color& b) {
+    return a.r == b.r && a.g == b.g && a.b==b.g && a.a==b.a;
+}
+
+float arctan(const Vector2 &vector) {
+    float ans = atan(vector.y/vector.x);
+    if (vector.x < 0) ans+=M_PI;
+    return ans;
+}
+float to_degree(const float& radian) {
+    return radian/M_PI*180;
+}
 
 int to_int(const std::string& str) {
     int ans = 0;
@@ -68,12 +83,11 @@ Vector2 TransToGlobalPoint(const Camera2D& camera, const Vector2& point) {
 string readFromFile(const string& link) {
     string ans;
     ifstream fin(link);
-    char BUFFER[64];
+    string line;
     while (!fin.eof()) {
-        fin.read(&BUFFER[0], 64);
-        ans+=BUFFER;
+        getline(fin, line);
+        ans += line + '\n';
     }
-    ans.pop_back();
     fin.close();
     return ans;
 }
@@ -102,7 +116,7 @@ vector<int> readFromFileInt(const string& link) {
 vector<string> split(const string& str) {
     vector<string> ans = {""};
     for (char c:str) {
-        if (c==' ' && ans.back().size()) ans.push_back("");
+        if ((c==' ' || c=='\n') && ans.back().size()) ans.push_back("");
         else ans.back().push_back(c);
     }
     return ans;

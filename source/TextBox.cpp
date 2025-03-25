@@ -61,7 +61,7 @@ void TextBox::update_cursor() {
         m_cursor_pos.x-=delta;
     } else  if (m_cursor_pos.x<m_position.x) {
         for (int i = 0; i<m_text_position.size(); i++) {
-            m_text_position[i].x -= m_cursor_pos.x-m_position.x;
+            m_text_position[i].x -= -margin + m_cursor_pos.x-m_position.x;
         }
         m_cursor_pos.x = m_position.x;
     }
@@ -74,7 +74,7 @@ void TextBox::update_cursor() {
         m_cursor_pos.y-=delta;
     } else if (m_cursor_pos.y < m_position.y) {
         for (int i = 0; i<m_text_position.size(); i++) {
-            m_text_position[i].y -= m_position.y-m_cursor_pos.y;
+            m_text_position[i].y += margin + m_position.y-m_cursor_pos.y;
         }
         m_cursor_pos.y = m_position.y;
     }

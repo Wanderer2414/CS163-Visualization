@@ -148,7 +148,7 @@ void Label::setAlignText(const int& align) {
 }
 std::string Label::getText() {
     string ans;
-    for (auto& i:m_text) ans+=i;
+    for (auto& i:m_text) ans+=i+'\n';
     return ans;
 }
 std::string Label::getText(const Vector2& start, const Vector2& end) {
@@ -159,8 +159,8 @@ std::string Label::getText(const Vector2& start, const Vector2& end) {
     if (start.y == end.y) return m_text[start.y].substr(start.x, end.x-start.x);
     else {
         string ans;    
-        ans += m_text[start.y].substr(start.x);
-        for (int i = start.y+1; i<end.y;i++) ans += m_text[i];
+        ans += m_text[start.y].substr(start.x) + '\n';
+        for (int i = start.y+1; i<end.y;i++) ans += m_text[i] + '\n';
         ans += m_text[end.y].substr(0, end.x);
         return ans;
     }

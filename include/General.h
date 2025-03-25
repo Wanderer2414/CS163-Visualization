@@ -21,6 +21,12 @@ Color operator*(const float& x, Color color);
 bool operator==(const Vector2& a, const Vector2& b);
 bool operator!=(const Vector2& a, const Vector2& b);
 
+bool operator==(const Color& a, const Color& b);
+bool operator!=(const Color& a, const Color& b);
+
+float arctan(const Vector2& vector);
+float to_degree(const float& radian);
+
 int to_int(const std::string& str);
 Rectangle TransToCameraRec(const Camera2D& camera, Rectangle rec);
 Vector2 TransToGlobalPoint(const Camera2D& camera, const Vector2& point);
