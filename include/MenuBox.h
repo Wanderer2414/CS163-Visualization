@@ -1,12 +1,13 @@
-#ifndef MENU_BOX_H
-#define MENU_BOX_H
-#include "../include/Controller.h"
+#ifndef MENUBOX_H
+#define MENUBOX_H
+
+#include "Controller.h"
 #include "SettingPackage.h"
 #include "SunMode.h"
 #include "TextureButton.h"
 #include "VerticalOpen.h"
-#include <vector>
-using namespace std;
+#include "Global.h"
+
 class MenuBox: public Controller, public VerticalOpen {
 public:
     MenuBox();

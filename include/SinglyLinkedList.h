@@ -2,9 +2,9 @@
 #define SLL_H
 
 #include "Form.h"
-#include "vector"
 #include "TextBox.h"
 #include "TextButton.h"
+#include "Global.h"
 
 namespace SLL {
 	class Node : public TextButton {

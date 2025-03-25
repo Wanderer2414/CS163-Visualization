@@ -1,10 +1,10 @@
 #ifndef LABEL_H
 #define LABEL_H
+
 #include "Controller.h"
 #include "SettingPackage.h"
-#include <string>
-#include <vector>
-using namespace std;
+#include "Global.h"
+
 class Label: public Controller {
 public:
     Label(TextSetting* text_setting);

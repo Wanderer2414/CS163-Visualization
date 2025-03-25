@@ -3,8 +3,7 @@
 
 #include "Form.h"
 #include "GUI.h"
-#include <vector>
-#include <map>
+#include "Global.h"
 
 class Graph: public Form {
 public:
@@ -12,4 +11,4 @@ public:
     ~Graph();
 private:
 };
-#endif
+#endif //GRAPH_H

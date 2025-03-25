@@ -1,8 +1,8 @@
 #include "../include/ValueScroll.h"
 #include "../include/General.h"
+#include "../raylib/raylib.h"
 #include <algorithm>
 #include <cmath>
-#include <raylib.h>
 
 ValueScroll::ValueScroll(TextSetting* t_setting) {
     text_setting = t_setting;

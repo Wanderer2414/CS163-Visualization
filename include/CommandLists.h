@@ -1,9 +1,9 @@
 #ifndef COMMANDLIST_H
 #define COMMANDLIST_H
 
-#include <ctime>
-#include <vector>
+#include "Global.h"
 #include "Clock.h"
+
 class CommandList {
 public:
     CommandList();

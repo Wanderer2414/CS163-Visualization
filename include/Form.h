@@ -13,11 +13,8 @@
 #include "TextBox.h"
 #include "TextButton.h"
 #include "MenuTab.h"
-#include "../raylib/raylib.h"
+#include "Global.h"
 #include "ValueScroll.h"
-#include <string>
-#include <vector>
-#include <deque>
 
 class Form : public CommandList {
 public:
