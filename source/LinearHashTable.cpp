@@ -165,7 +165,7 @@ void HT::HashTable::FetchNextCommand(const std::vector<float>& command) {
     }
                 break;
     case _choose: {
-        // m_memory[(int)command[1]].m_normal_color = RED;
+        //m_memory[(int)command[1]].m_normal_color = RED;
         setDuration(command[2]);
     }
                 break;

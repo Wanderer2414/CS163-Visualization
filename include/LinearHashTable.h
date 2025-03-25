@@ -51,8 +51,6 @@ namespace HT {
 
         TextBox     m_memory_sz_textBox;
         std::vector<Node> m_memory;
-
     };
-
 }
 #endif

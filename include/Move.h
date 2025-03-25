@@ -1,6 +1,6 @@
 #ifndef MOVE_H
 #define MOVE_H
-#include "../include/raylib.h"
+#include "../raylib/include/raylib.h"
 #include <vector>
 class Move {
 public:

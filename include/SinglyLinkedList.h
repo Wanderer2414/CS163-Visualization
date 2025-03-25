@@ -7,50 +7,47 @@
 #include "TextButton.h"
 
 namespace SLL {
-	class Node : public TextButton {
+	class ListNode : public TextButton {
 	public:
-		Node(const int& index, const int& val);
-		int getIndex() const;
+		ListNode(const int& value,const int& index);
 		int getValue() const;
-		virtual void	draw()		override,
-						handle()	override,
-						setPosition(const float& x, const float& y) override;
-		Vector2 getCenter() const,
-				getPosition() const override;
-		~Node();
-		Node* next = nullptr;
+		int getIndex() const;
+		void setValue(const int& value);
+		void setIndex(const int& index);
+		ListNode* m_next;
+		virtual void draw() override;
+		virtual void handle() override;
 	private:
-		int m_index;
 		int m_value;
-		Vector2 m_center;
+		int m_index;
 	};
 	class SLLForm : public Form {
-	public: 
+	public:
 		enum CommandCode {
-			_Insert = 0,
-			_Delete = 3,
-			_Choose = 1,
-			_Unchoose = 2,
+			_insert = 0,
+			_delete = 5,
+			_choose = 1,
+			_unchoose = 2,
+			_add = 3,
+			_remove = 4
 		};
-		SLLForm(const int& index, FormSetting f_setting, const Vector2& window_size);
-		virtual void		add(const vector<std::string>& x)	override,
-							remove(const std::string& x) override,
-							removeAtIndex(const int& index),
-							draw()				 override,
-							handle()			 override,
-							FetchNextCommand(const std::vector<float>& command) override,
-							FetchPrevCommand(const std::vector<float>& command)	override;
+		SLLForm(const int& index, FormSetting form_setting, const Vector2& window_size);
+		virtual void    add(const vector<string>& str) override,
+						remove(const std::string& str) override,
+						draw() override,
+						update(const std::string& old_value, const std::string& new_value) override,
+						search(const std::string& x) override,
+						FetchNextCommand(const std::vector<float>& command) override,
+                        FetchPrevCommand(const std::vector<float>& command) override,
+						handle() override;
 		~SLLForm();
 	private:
-		Node*		m_head;
-		void		insert(Node*& head, const int& x, const int& index),
-					remove(Node*& head, const int& x),
-					removeAtIndex(Node*& head, const int& index),
-					draw(Node* head),
-					handle(Node* head),
-					free(Node* head),
-					rePosition();
-		std::vector<Node*> m_list;
+		int m_node_size;
+		int m_node_spacing;
+		int size = 0;
+		ListNode* m_head = nullptr;
+		void insert(const int& value,const int& index);
+		void remove(const int& value);
 	};
 }
 
