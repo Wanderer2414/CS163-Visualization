@@ -1,5 +1,4 @@
 #include "../include/GUI.h"
-#include "../raylib/raylib.h"
 #include "../include/General.h"
 
 Node::Node(const int& index, const int& val): TextButton(0, 0), m_index(index), m_value(val) {

@@ -1,6 +1,6 @@
 #include "../include/Container.h"
 #include "../include/General.h"
-#include <iostream>
+
 Container::Container(FormSetting* f_setting) {
     m_is_hover = false;
     form_setting = f_setting;

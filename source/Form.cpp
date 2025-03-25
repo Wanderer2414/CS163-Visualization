@@ -1,10 +1,7 @@
 #include "../include/Form.h"
-#include "../raylib/raylib.h"
 #include "../include/General.h"
-#include <string>
 #include "../include/IncludePath.h"
-#include <sstream>
-#include <iostream>
+
 Form::Form(const int& index, FormSetting f_setting, const Vector2& window_size) :
     m_window_size(window_size),
     form_setting(f_setting),
@@ -237,8 +234,6 @@ int Form::run() {
     }
     return 0;
 }
-#include <iostream>
-using namespace std;
 
 void Form::handle() {
     //Base handle + children handle

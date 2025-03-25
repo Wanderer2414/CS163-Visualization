@@ -1,5 +1,5 @@
 #include "../include/VerticalOpen.h"
-#include <algorithm>
+
 VerticalOpen::VerticalOpen() {
     m_start = 0;
     m_duration = 1;
