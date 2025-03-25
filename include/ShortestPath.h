@@ -18,13 +18,10 @@ struct Vertex {
 
 class Graph {
     public:
-    Graph() {};
 
     int findParent(vector<int>& parent, int node);
     void unionNode(vector<int>& parent, vector<int>& rank, int u, int v);
     int getVertexIndex(Vertex* node);
-
-    void clearGraph();
     void addVertex(Vertex* node);
     void addVertex();
     int addEdge(int from, int to, int weight);
@@ -34,7 +31,6 @@ class Graph {
     void updatePosition();
     void resetHighlight();
 
-    ~Graph();
     private:
     vector<Vertex*> nodes;
     int frameCount = 0;

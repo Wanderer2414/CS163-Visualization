@@ -65,18 +65,6 @@ void dfs(const vector<vector<int>>& matrix, vector<bool>& visited, int vertex, v
     for (int neighbor = 0; neighbor < matrix.size(); ++neighbor) if (matrix[vertex][neighbor] == 1 && !visited[neighbor]) dfs(matrix, visited, neighbor, component);
 }
 
-void Graph::clearGraph() {
-    for (int i = 0; i < int(nodes.size()); ++i) {
-        delete nodes[i];
-    }
-    this->nodes.clear();
-    this->frameCount = 0;
-}
-
-Graph::~Graph() {
-    clearGraph();
-}
-
 int Graph::findParent(vector<int>& parent, int node) {
     if (parent[node] != node) {
         findParent(parent, parent[node]);
@@ -142,12 +130,10 @@ int Graph::addEdge(int from, int to, int weight) {
 }
 
 void Graph::random(int vertexCount, int maxX, int maxY) {
-    clearGraph();
 
 }
 
 void Graph::startFromFile(const string filename) {
-    clearGraph();
     ifstream file(filename);
     int n;
     file >> n;
@@ -183,7 +169,7 @@ void Graph::drawGraph(Font font, std::vector<Color> color) {
                 DrawTextEx(font, TextFormat("%d", edge.weight), {mid.x, mid.y}, 15, 2, NeonTheme.color);
             }
         }
-        for(int i = 0; i < nodes.size(); ++i) {
+        for (int i = 0; i < nodes.size(); ++i) {
             Vector2 size = MeasureTextEx(font, TextFormat("%d", i), 15, 2);
             DrawCircleV(nodes[i]->pos, 15, color[nodes[i]->color]);
             printf("Color: (%d, %d, %d, %d)\n", color[nodes[i]->color].r, color[nodes[i]->color].g, color[nodes[i]->color].b, color[nodes[i]->color].a);
@@ -197,7 +183,7 @@ void Graph::drawGraph(Font font, std::vector<Color> color) {
                 DrawTextEx(font, TextFormat("%d", edge.weight), {mid.x, mid.y}, 15, 2, NeonTheme.color);
             }
         }
-        for(int i = 0; i < nodes.size(); i++) {
+        for (int i = 0; i < nodes.size(); ++i) {
             Vector2 size = MeasureTextEx(font, TextFormat("%d", i), 15, 2);
             DrawCircleV(nodes[i]->pos, 15, nodes[i]->color ? RED : NeonTheme.color);
             DrawTextEx(font, TextFormat("%d", i), {nodes[i]->pos.x - size.x/2, nodes[i]->pos.y - size.y/2}, 15, 2, BLACK);
@@ -245,12 +231,11 @@ GraphVisual::GraphVisual(Font font) {
 }
 
 void GraphVisual::random() {
-    
+
 }
 
 void GraphVisual::drawButton() {
     this->createButton.draw();
-
     if(this->isChosen) {
         DrawLineEx({126, 501}, {297, 501}, 1.3, NeonTheme.color);
         this->randomButton.draw();
@@ -262,11 +247,12 @@ void GraphVisual::drawGraph() {
     return this->graph.drawGraph(this->font, this->colorComponent);
 }
 
-int GraphVisual::loadFile(const std::string filename) {
+/*int GraphVisual::loadFile(const std::string filename) {
     std::ifstream inputFile("");
     if (!inputFile) {
         cerr << "Error: Cannot open file!";
         exit(1);
     }
-
-}
+    
+    inputFile.close();
+}*/
