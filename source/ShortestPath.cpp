@@ -1,4 +1,3 @@
-#include "../raylib/raylib.h"
 #include "../include/ShortestPath.h"
 #include "../include/Global.h"
 
@@ -60,49 +59,10 @@ void localDijsktra(vector<vector<pair<int, int>>>& graph, vector<int>& distance,
     }
 }
 
-void ConnectedSubgraph(int** a, int n) {
-    vector<vector<int>> res;
-    queue<int> q;
-    int cnt = 0;
-    bool* visited = new bool[n]{0};
-    for (int i = 0; i < n; ++i) {
-        vector<int> sub;
-        if(visited[i]) continue;
-        q.push(i);
-        sub.push_back(i);
-        visited[i] = 1;
-        
-        while(!q.empty()) {
-            int u = q.front();
-            q.pop();
-            for (int j = 0; j < n; ++j) {
-                if(visited[j] || !a[u][j]) continue;
-                sub.push_back(j);
-                visited[j] = 1;
-                q.push(j);
-            }
-        }
-        res.push_back(sub);
-        ++cnt;
-    }
-}
-
 void dfs(const vector<vector<int>>& matrix, vector<bool>& visited, int vertex, vector<int>& component) {
     visited[vertex] = true;
     component.push_back(vertex);
     for (int neighbor = 0; neighbor < matrix.size(); ++neighbor) if (matrix[vertex][neighbor] == 1 && !visited[neighbor]) dfs(matrix, visited, neighbor, component);
-}
-
-void GraphVisual::findConnectedComponents(const vector<vector<int>>& matrix, vector<vector<int>>& components) {
-    int numVertices = matrix.size();
-    vector<bool> visited(numVertices, false);
-    for (int vertex = 0; vertex < numVertices; ++vertex) {
-        if (!visited[vertex]) {
-            vector<int> component;
-            dfs(matrix, visited, vertex, component);
-            components.push_back(component);
-        }
-    }
 }
 
 void Graph::clearGraph() {
@@ -203,4 +163,97 @@ void Graph::startFromFile(const string filename) {
         }
     }
     file.close();
+}
+
+void Graph::resetHighlight() {
+    for (auto node : nodes) {
+        for (auto& edge : node->neighbor) {
+            edge.highlight = false;
+        }
+        node->color = false;
+    }
+}
+
+void Graph::drawGraph(Font font, std::vector<Color> color) {
+    if(!color.empty()) {
+        for (auto node : nodes) {
+            for (auto edge : node->neighbor) {
+                DrawLineEx(node->pos, edge.nearVertex->pos, 2, color[node->color]);
+                Vector2 mid = { (node->pos.x + edge.nearVertex->pos.x) / 2, (node->pos.y + edge.nearVertex->pos.y) / 2 };
+                DrawTextEx(font, TextFormat("%d", edge.weight), {mid.x, mid.y}, 15, 2, NeonTheme.color);
+            }
+        }
+        for(int i = 0; i < nodes.size(); ++i) {
+            Vector2 size = MeasureTextEx(font, TextFormat("%d", i), 15, 2);
+            DrawCircleV(nodes[i]->pos, 15, color[nodes[i]->color]);
+            printf("Color: (%d, %d, %d, %d)\n", color[nodes[i]->color].r, color[nodes[i]->color].g, color[nodes[i]->color].b, color[nodes[i]->color].a);
+            DrawTextEx(font, TextFormat("%d", i), {nodes[i]->pos.x - size.x/2, nodes[i]->pos.y - size.y/2}, 15, 2, BLACK);
+        }
+    } else {
+        for (auto node : nodes) {
+            for (auto edge : node->neighbor) {
+                DrawLineEx(node->pos, edge.nearVertex->pos, 2, edge.highlight ? RED : NeonTheme.color);
+                Vector2 mid = { (node->pos.x + edge.nearVertex->pos.x) / 2, (node->pos.y + edge.nearVertex->pos.y) / 2 };
+                DrawTextEx(font, TextFormat("%d", edge.weight), {mid.x, mid.y}, 15, 2, NeonTheme.color);
+            }
+        }
+        for(int i = 0; i < nodes.size(); i++) {
+            Vector2 size = MeasureTextEx(font, TextFormat("%d", i), 15, 2);
+            DrawCircleV(nodes[i]->pos, 15, nodes[i]->color ? RED : NeonTheme.color);
+            DrawTextEx(font, TextFormat("%d", i), {nodes[i]->pos.x - size.x/2, nodes[i]->pos.y - size.y/2}, 15, 2, BLACK);
+        }
+    }
+}
+
+void Graph::updatePosition() {
+    for (auto node : nodes) {
+        Vector2 force = {0, 0};
+        for (auto other : nodes) {
+            if (node != other) {
+                float dx = node->pos.x - other->pos.x;
+                float dy = node->pos.y - other->pos.y;
+                float distance = sqrt(dx * dx + dy * dy);
+                if (distance > 0) {
+                    float repulsion = 500000.0f / (distance * distance);
+                    force.x += repulsion * dx / distance;
+                    force.y += repulsion * dy / distance;
+                }
+            }
+        }
+        //Spring Force
+        for (auto edge : node->neighbor) {
+            float dx = node->pos.x - edge.nearVertex->pos.x;
+            float dy = node->pos.y - edge.nearVertex->pos.y;
+            float distance = sqrt(dx * dx + dy * dy);
+            if (distance > 0) {
+                float attraction = 0.1f * (distance - edge.weight);
+                force.x -= attraction * dx / distance;
+                force.y -= attraction * dy / distance;
+            }
+        }
+        if(this->frameCount > 2000) continue;
+        node->pos.x += force.x;
+        node->pos.y += force.y;
+        node->pos.x = std::max(std::min(1200.f, node->pos.x), 380.f);
+        node->pos.y = std::max(std::min(650.f, node->pos.y), 150.f);
+        frameCount++;
+    }
+}
+
+void GraphVisual::drawButton() {
+    this->createButton.draw();
+
+    if(this->isChosen) {
+        DrawLineEx({126, 501}, {297, 501}, 1.3, NeonTheme.color);
+        this->randomButton.draw();
+        this->loadFileButton.draw();
+    }
+}
+
+void GraphVisual::drawGraph() {
+    return this->graph.drawGraph(this->font, this->colorComponent);
+}
+
+int GraphVisual::loadFile() {
+    
 }

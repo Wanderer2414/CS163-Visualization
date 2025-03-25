@@ -20,8 +20,6 @@ class Graph {
     public:
     Graph() {};
 
-
-
     int findParent(vector<int>& parent, int node);
     void unionNode(vector<int>& parent, vector<int>& rank, int u, int v);
     int getVertexIndex(Vertex* node);
@@ -34,6 +32,8 @@ class Graph {
     void startFromFile(const string filename);
     void drawGraph(Font font, vector<Color> color = {});
     void updatePosition();
+    void resetHighlight();
+    void drawGraph(Font font, std::vector<Color> color = {});
 
     ~Graph();
     private:
@@ -47,7 +47,6 @@ class GraphVisual {
     GraphVisual(Font font = {});
     void random();
     int loadFile();
-    void findConnectedComponents(const vector<vector<int>>& matrix, vector<vector<int>>& components);
     void drawGraph();
     void drawButton();
 
