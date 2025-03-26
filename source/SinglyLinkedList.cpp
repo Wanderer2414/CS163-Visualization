@@ -1,7 +1,6 @@
 #include "../include/SinglyLinkedList.h"
 #include <math.h>
 #include <string.h>
-#include "SinglyLinkedList.h"
 #include <random>
 
 int getRandom(int min, int max) {
@@ -379,13 +378,15 @@ void SLL::SLLForm::remove(const int &value,const int& index)
 	int count = 0;
 	if (!cur) return;
 	if (index == -1) {
+		size--;
 		InsertNextSubCommand({_removeNext,float(value),float(index)});
+		return;
 	}
 	if (cur->getValue() == value) {
 		size--;
 		InsertNextSubCommand({_choose,float(count),1});
 		console.InsertNextSubCommand("Head is " + to_string(value));
-		InsertNextSubCommand({_removeNext,float(value)});
+		InsertNextSubCommand({_removeNext,float(value),0});
 		console.goDown();
 		return;
 	}
@@ -409,11 +410,17 @@ void SLL::SLLForm::remove(const int &value,const int& index)
 void SLL::SLLForm::removeNext(const int &value,const int& index)
 {
 	if (index == -1) {
+		if (!m_head) return;
+		if (!m_head->m_next) {
+			delete m_head;
+			m_head = nullptr;
+			return;
+		}
 		ListNode* pre = m_head;
-		while (pre->m_next->m_next) pre=pre->m_next;
+		while (pre->m_next->m_next) pre = pre->m_next;
 		ListNode* del = pre->m_next;
-		pre->m_next = nullptr;
 		delete del;
+		pre->m_next = nullptr;
 		return;
 	}
 	if (index == 0) {
