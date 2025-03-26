@@ -4,7 +4,7 @@
 Node::Node(const int& index, const int& val): TextButton(0, 0), m_index(index), m_value(val) {
     setSize(50, 50);
     setText(std::to_string(val));
-    left = right = 0;
+    left = right = parent = nullptr;
     m_height = 1; // M
 }
 int Node::getIndex() const {

@@ -16,8 +16,9 @@ public:
                         handle() override,
                         setPosition(const float& x, const float& y) override,
                         updateHeight();
-    Node                *left = 0,
-                        *right = 0;
+    Node                *left = nullptr,
+                        *right = nullptr,
+                        *parent = nullptr;
     virtual Vector2     getCenter() const,
                         getPosition() const override;
     void                setValue(int x);
