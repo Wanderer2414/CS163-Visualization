@@ -1,9 +1,5 @@
 #include "../include/General.h"
-#include <cctype>
-#include <cmath>
-#include <string>
-#include <fstream>
-using namespace std;
+
 float abs(const Vector2& vector) {
     return sqrt(vector.x * vector.x + vector.y * vector.y);
 };
@@ -46,10 +42,10 @@ bool operator==(const Vector2& a, const Vector2& b) {
 bool operator!=(const Vector2& a, const Vector2& b) {
     return a.x != b.x || a.y != b.y;
 }
-bool operator==(const Color& a, const Color& b) {
+bool operator!=(const Color& a, const Color& b) {
     return a.r != b.r || a.b!=b.b || a.g != b.g || a.a != b.a;
 }
-bool operator!=(const Color& a, const Color& b) {
+bool operator==(const Color& a, const Color& b) {
     return a.r == b.r && a.g == b.g && a.b==b.g && a.a==b.a;
 }
 
@@ -68,6 +64,15 @@ int to_int(const std::string& str) {
         if (std::isdigit(str[i])) ans = ans * 10 + str[i] - '0';
     }
     return ans;
+}
+
+Vector2 getCenter(const Vector2& a, const Vector2& b, const float& angular) {
+    Vector2 middle = (a+b)/2;
+    Vector2 u = {middle.y, -middle.x};
+    float radius = abs(b-a)/angular;
+    float side = abs(b-a)/2;
+    side = sqrt(radius*radius - side*side);
+    return middle + u/side*radius;
 }
 
 Rectangle TransToCameraRec(const Camera2D& camera, Rectangle rec) {

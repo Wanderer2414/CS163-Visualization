@@ -1,7 +1,5 @@
 #include "../include/TextButton.h"
 #include "../include/General.h"
-#include "../raylib/raylib.h"
-#include <iostream>
 
 TextButton::TextButton(ButtonSetting* b_setting, TextSetting* t_setting) {
     button_setting = b_setting;

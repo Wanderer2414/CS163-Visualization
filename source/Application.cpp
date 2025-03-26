@@ -1,6 +1,6 @@
 #include "../include/Application.h"
-#include "../raylib/raylib.h"
 #include "../include/IncludePath.h"
+
 Application::Application()
 {
     InitWindow(m_width, m_height, "Visualization");

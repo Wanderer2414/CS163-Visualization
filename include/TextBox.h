@@ -1,12 +1,11 @@
 #ifndef TEXTBOX_H
 #define TEXTBOX_H
 
-#include <cstddef>
-#include <string>
 #include "Label.h"
 #include "SettingPackage.h"
 #include "TextButton.h"
-#include "../raylib/raylib.h"
+#include "Global.h"
+
 class TextBox: public Label {
 public:
     TextBox(ButtonSetting* button_setting, TextSetting* text_setting);

@@ -1,7 +1,8 @@
 #ifndef MOVE_H
 #define MOVE_H
-#include "../include/raylib.h"
-#include <vector>
+
+#include "Global.h"
+
 class Move {
 public:
     Move();

@@ -7,11 +7,13 @@
 
 class Vertex: public Controller, public DynamicColorCircle {
     public:
-        Vertex(FormSetting* form_setting);
+        Vertex(FormSetting* form_setting, const int& index);
         FormSetting         *form_setting;
         bool                isPressed() const,
-                            isHovered() const override;
-        int                 getValue() const;
+                            isHovered() const override,
+                            isFocused() const;
+        int                 getValue() const,
+                            getIndex() const;
         float               getRadius() const;
         virtual void        draw()                                          override,
                             handle()                                        override,
@@ -31,12 +33,15 @@ class Vertex: public Controller, public DynamicColorCircle {
         ~Vertex();
     private:
         bool                m_is_pressed,
+                            m_is_focus,
                             m_is_hovered,
                             m_is_hold,
                             m_is_fixed,
                             m_dragable;
-        int                 m_value;
+        int                 m_value,
+                            m_index;
         Vector2             velocity,
+                            m_acceleration,
                             m_text_position;
         string              m_text;
 

@@ -1,8 +1,9 @@
 #ifndef CONTROLLER_H
 #define CONTROLLER_H
 
-#include "../raylib/raylib.h"
+#include "Global.h"
 #include "SettingPackage.h"
+
 class Controller {
 public:
     Controller();

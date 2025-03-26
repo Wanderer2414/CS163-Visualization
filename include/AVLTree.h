@@ -1,6 +1,8 @@
 #ifndef AVLTREE_H
 #define AVLTREE_H
 
-#include "../raylib/raylib.h"
+#include "Form.h"
+#include "GUI.h"
+#include "Global.h"
 
-#endif //AVLTREE_H
+#endif

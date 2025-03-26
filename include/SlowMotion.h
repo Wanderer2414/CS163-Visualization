@@ -1,6 +1,7 @@
 #ifndef SLOWMOTION_H
 #define SLOWMOTION_H
-#include "../raylib/raylib.h"
+
+#include "Global.h"
 
 class SlowMotion {
 public:

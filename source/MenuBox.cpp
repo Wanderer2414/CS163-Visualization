@@ -1,6 +1,6 @@
 #include "../include/MenuBox.h"
 #include "../include/General.h"
-#include <cmath>
+
 MenuBox::MenuBox(): sun(&light_setting, &dark_setting) {
     light_setting = LightTheme;
     dark_setting = DarkTheme;

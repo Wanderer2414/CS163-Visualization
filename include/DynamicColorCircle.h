@@ -8,7 +8,9 @@ public:
     virtual void        setRadius(const float& radius),
                         handle(),
                         draw(),
-                        start(const float& start_angle, const Color& start, const Color& end, const float& speed);
+                        start(const float& start_angle, const Color& start, const Color& end),
+                        setColor(const Color& color);
+    Color               getColor() const;
     virtual Vector2     getCenter() const;
 private:
     bool                m_is_color_change;

@@ -27,6 +27,9 @@
 #define Rand "CS163-DSAVisualization/asset/images/Rand.png"
 #define sun_light "CS163-DSAVisualization/asset/Icon/Light.png"
 #define sun_dark "CS163-DSAVisualization/asset/Icon/Dark.png"
+#define match_icon "CS163-DSAVisualization/asset/Icon/pepicons-pencil--pen-circle.png"
+#define match_cursor_icon "CS163-DSAVisualization/asset/Icon/pepicons-pencil--pen.png"
+#define match_filled_icon "CS163-DSAVisualization/asset/Icon/pepicons-pencil--pen-circle-filled.png"
 
 #define TitleMenu "CS163-DSAVisualization/asset/images/TitleMenu.png"
 #endif
