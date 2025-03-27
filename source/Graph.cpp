@@ -2,6 +2,7 @@
 #include "../include/Vertex.h"
 #include "../include/General.h"
 #include "../include/IncludePath.h"
+#include <algorithm>
 
 Graph::Graph(const int& index, FormSetting f_setting, const Vector2& window_size):
     Form(index, f_setting, window_size),
@@ -15,6 +16,9 @@ Graph::Graph(const int& index, FormSetting f_setting, const Vector2& window_size
     unweight_choice(&form_setting, 1,m_weight),
     direct_choice(&form_setting, 0, m_type),
     undirect_choice(&form_setting, 1, m_type),
+
+    dfs_choice(&form_setting, 0, search_type),
+    bfs_choice(&form_setting, 1, search_type),
 
     search_graph_box(&form_setting),
     tools_box(&form_setting)
@@ -91,21 +95,38 @@ Graph::Graph(const int& index, FormSetting f_setting, const Vector2& window_size
     track_graph_hover.setPosition(0, 100);
     track_graph_hover.setText("");
 
-    search_graph_box.setPosition(option_box.getAutoSize().x + 15, 20);
-    search_graph_box.setSize(145, 100);
+    search_graph_box.push_back(&dfs_choice);
+    search_graph_box.push_back(&bfs_choice);
+
+    dfs_choice.setSize(100, 30);
+    dfs_choice.setPosition(15, 5);
+    dfs_choice.setText("Depth first search");
+
+    bfs_choice.setSize(200, 30);
+    bfs_choice.setPosition(15, 50);
+    bfs_choice.setText("Breath first search");
+
+    search_graph_box.setPosition(option_box.getAutoSize().x + 15, 30);
+    search_graph_box.setSize(search_box.getSize().x, 100);
     option_box.push_back(3, &search_graph_box);
 
-    is_spread_color = true;
+    console_setting.font = LoadFont(font_link);
+    console_setting.font_size = 20;
+    console_setting.spacing = 2;
+    console_setting.color = BLACK;
+    console.text_setting = &console_setting;
 
     chosen = -1;
     m_mode = 2;
     m_weight = 1;
     m_type = 1;
     m_tool = -1;
+    m_is_lock = false;
+    search_type = 0;
 };
 string Graph::RandomCreate() const {
     srand(time(0));
-    int n = rand()%20;
+    int n = rand()%20 + 1;
     string ans = to_string(n) + '\n';
     vector<vector<bool>> matrix(n, vector<bool>(n, 0));
     for (int i = rand()%20; i>=0; i--) {
@@ -122,6 +143,17 @@ string Graph::RandomCreate() const {
     }
     return ans;
 }
+void Graph::search(const string& val) {
+    int value = to_int(val);
+    float i = 0;
+    while (i<vertices.size() && vertices[i]->getValue() != value) i++;
+    if (i<vertices.size()) {
+        if (search_type == 0)
+            console.PushBackMainCommand("Search " + to_string(value) + " with DFS");
+        else console.PushBackMainCommand("Search " + to_string(value) + " with BFS");
+        InsertNextMainCommand({search_code, 1.0f*search_type, i, 0});
+    }
+}
 void Graph::add(const vector<std::string>& str) {
     if (str.size()>1) {
         free();
@@ -133,18 +165,29 @@ void Graph::add(const vector<std::string>& str) {
             vertices.back()->setPosition(x, y);
             vertices.back()->setSize(50, 50);;
             vertices.back()->setValue(i);
-            vertices.back()->setColor(colors[rand()%6]);
-        
         }
         matrix = vector<vector<int>>(n, vector<int>(n, -1));
         for (int i = 0; i<n; i++) {
             for (int j = 0; j<n; j++) {
                 int weight = to_int(str[i*n+j+1]);
                 if (weight && i != j) {
-                    add_edge(i, j, weight);
+                    if (i<j) {
+                        matrix[i][j] = true_edges.size();
+                        true_edges.push_back(new Edge(vertices[i], vertices[j], &form_setting));
+                        true_edges.back()->setWeight(weight);
+                        true_edges.back()->setType(m_type == 0);
+                    } else {
+                        matrix[i][j] = reverse_edge.size();
+                        reverse_edge.push_back(new Edge(vertices[i], vertices[j], &form_setting));
+                        reverse_edge.back()->setWeight(weight);
+                        reverse_edge.back()->setType(true);
+                    }
                 }
             }
         }
+        random_subGraphColor();
+        for (int i = 0; i<true_edges.size(); i++) true_edges[i]->start(false);
+        for (int i = 0; i<reverse_edge.size(); i++) reverse_edge[i]->start(false);
     } else {
         vertices.push_back(new Vertex(&form_setting, vertices.size()));
         vertices.back()->setPosition(m_workspace.width/2, m_workspace.height/2);
@@ -155,8 +198,148 @@ void Graph::add(const vector<std::string>& str) {
         matrix.push_back(vector<int>(matrix.size()+1, -1));
     }
 }
+
+void Graph::dfs(vector<bool>& visited, const int& vertex) {
+    InsertNextSubCommand({goDown, 1});
+    visited[vertex] = true;
+    // InsertNextSubCommand({goDown, 1});
+    for (int neighbor = 0; neighbor < matrix.size(); ++neighbor) {
+        if (matrix[vertex][neighbor]==-1) continue;
+        InsertNextSubCommand({goDown, 1});
+        if (matrix[vertex][neighbor]!=-1 && !visited[neighbor]) {
+            InsertNextSubCommand({goDown, 1});
+            InsertNextSubCommand({choose_edge, 1.0f*vertex , 1.0f*neighbor, 1});
+            InsertNextSubCommand({goUp, 3});
+            InsertNextSubCommand({choose_vertex, 1.0f*vertex, 1.0f*neighbor, 1});
+            dfs(visited, neighbor);
+            InsertNextSubCommand({choosev2_vertex, 1.0f*vertex, 1.0f*neighbor, 1});
+            InsertNextSubCommand({choosev2_edge, 1.0f*neighbor,1.0f*vertex ,  1});
+            InsertNextSubCommand({goUp, 1});
+        }
+        InsertNextSubCommand({goUp, 1});
+    }
+    InsertNextSubCommand({goDown, 3});
+    InsertNextSubCommand({goUp, 1});
+}
+void Graph::dfs(const int& vertex) {
+    vector<bool> visited(matrix.size(), 0);
+    dfs(visited, vertex);
+}
+void Graph::FetchNextCommand(const vector<float>& codes) {
+    int code = codes[0];
+    switch (code) {
+        case search_code: {
+            int index = codes[2];
+            int mode = codes[1];
+            int value = vertices[index]->getValue();
+            InsertNextSubCommand({reset_color, 1.0f*index, 1});
+            console.goDown();
+            console.InsertNextSubCommand("Create visited[n]");
+            console.InsertNextSubCommand("vertex = " + to_string(value));
+            console.InsertNextSubCommand("f(vertex) {");
+            console.InsertNextSubCommand("   visited[vertex] = true ");
+            console.InsertNextSubCommand("   for i = first_des to last_des ");
+            console.InsertNextSubCommand("      if this des didn't visited");
+            console.InsertNextSubCommand("          f(i)");
+            console.InsertNextSubCommand("}");
+            console.goDown();
+            InsertNextSubCommand({check, 1.0f*value, 1});
+            InsertNextSubCommand({uncheck, 1.0f*value, 1});
+            InsertNextSubCommand({fill_vertex, 1.0f*index, 1});
+
+            InsertNextSubCommand({goDown, 1});
+            
+            m_is_lock = true;
+            if (mode==0) dfs(index);
+            InsertNextSubCommand({choosev2_vertex, 1.0f*index, 1.0f*index, 1});
+            InsertNextSubCommand({goDown, 2});
+            InsertNextSubCommand({unlock});
+            setDuration(0);
+        }
+        break;
+        case reset_color: {
+            int n = codes[1];
+            setSubGraphColor(n, WHITE);
+            setDuration(2);
+        }
+        break;
+        case goUp: {
+            int n = codes[1];
+            for (int i = 0; i<n; i++) console.goUp();;
+            setDuration(0.3);
+        }
+        break;
+        case goDown: {
+            int n = codes[1];
+            for (int i = 0; i<n; i++) console.goDown();
+            setDuration(0.3);
+        }
+        break;
+        case choose_edge: {
+            int start = codes[1], end = codes[2];
+            if (start<end) {
+                true_edges[matrix[start][end]]->start(false, false);
+            }
+            else {
+                true_edges[matrix[end][start]]->start(true, false);
+            }
+            setDuration(1);
+        }
+        break;
+        case choose_vertex: {
+            int start = codes[1], end = codes[2];
+            Vector2 delta = vertices[start]->getCenter()-vertices[end]->getCenter();
+            if (start == end) delta = vertices[start]->getCenter();
+            vertices[end]->start(arctan(delta),vertices[start]->getColor() ,vertices[end]->getColor());
+            setDuration(1);
+        }
+        break;
+        case fill_vertex: {
+            int index = codes[1];
+            vertices[index]->setColor(ORANGE);
+            setDuration(0);
+        }
+        break;
+        case choosev2_edge: {
+            int start = codes[1], end = codes[2];
+            if (start<end) true_edges[matrix[start][end]]->start(false, false);
+            else true_edges[matrix[end][start]]->start(true, false);
+            setDuration(1);
+        }
+        break;
+        case choosev2_vertex: {
+            int start = codes[1], end = codes[2];
+            Vector2 delta = vertices[start]->getCenter()-vertices[end]->getCenter();
+            if (start == end) delta = vertices[start]->getCenter();
+            vertices[end]->start(-arctan(delta), BROWN ,vertices[end]->getColor());
+            setDuration(1);
+        }
+        break;
+        case check: {
+            console.goDown();
+            int vertex = codes[1];
+            tmp_color = vertices[vertex]->getColor();
+            vertices[vertex]->setColor(WHITE);
+            setDuration(0.25);
+        }
+        break;
+        case uncheck: {
+            int vertex = codes[1];
+            vertices[vertex]->setColor(tmp_color);
+            setDuration(0.25);
+        }
+        break;
+        case unlock: {
+            m_is_lock = false;
+            setDuration(0);
+        }
+        break;
+    }
+}
 void Graph::draw() {
-    for (int i = 0; i<true_edges.size(); i++) true_edges[i]->draw();
+    for (int i = 0; i<true_edges.size(); i++) {
+        true_edges[i]->draw();
+    }
     if (m_type == 0) {
         for (int i = 0; i<reverse_edge.size(); i++) reverse_edge[i]->draw();
     }
@@ -172,7 +355,7 @@ void Graph::handle() {
         true_edges[i]->handle();
         true_edges[i]->setMode(m_weight == 0);
         //Check edge color change 
-        if (true_edges[i]->IsColorChange() && is_spread_color) {
+        if (true_edges[i]->IsColorChange() && !m_is_lock) {
             if (!true_edges[i]->IsReverse()) {
                 float angular = arctan(true_edges[i]->m_start->getCenter() - true_edges[i]->m_end->getCenter());
                 true_edges[i]->m_end->start(angular, true_edges[i]->start_color, true_edges[i]->m_end->getColor());
@@ -182,11 +365,11 @@ void Graph::handle() {
             }
         }
         //Vertex color change
-        if (is_spread_color && true_edges[i]->m_start->IsColorChange() && (true_edges[i]->m_start->getColor() != true_edges[i]->start_color)) {
+        if (!m_is_lock && true_edges[i]->m_start->IsColorChange() && (true_edges[i]->m_start->getColor() != true_edges[i]->start_color)) {
             true_edges[i]->start(false, false);
         }
         if (m_type == 1) {
-            if (is_spread_color && true_edges[i]->m_end->IsColorChange() && (true_edges[i]->m_end->getColor() != true_edges[i]->start_color)) {
+            if (!m_is_lock && true_edges[i]->m_end->IsColorChange() && (true_edges[i]->m_end->getColor() != true_edges[i]->start_color)) {
                 true_edges[i]->start(true, false);
             }
         }
@@ -196,14 +379,14 @@ void Graph::handle() {
         for (int i = 0; i<reverse_edge.size(); i++) {
             reverse_edge[i]->handle();
             reverse_edge[i]->setMode(m_weight == 0);
-            if (is_spread_color && reverse_edge[i]->IsColorChange()) {
+            if (!m_is_lock && reverse_edge[i]->IsColorChange()) {
                 if (!reverse_edge[i]->IsReverse()) {
                     float angular = arctan(reverse_edge[i]->m_start->getCenter() - reverse_edge[i]->m_end->getCenter());
                     reverse_edge[i]->m_end->start(angular, reverse_edge[i]->start_color, reverse_edge[i]->m_end->getColor());
                 }
             }
             //Check vertex change color
-            if (is_spread_color && reverse_edge[i]->m_start->IsColorChange() && (reverse_edge[i]->m_start->getColor() != reverse_edge[i]->start_color)) {
+            if (!m_is_lock && reverse_edge[i]->m_start->IsColorChange() && (reverse_edge[i]->m_start->getColor() != reverse_edge[i]->start_color)) {
                 reverse_edge[i]->start(false, false);
             }
         }
@@ -213,23 +396,6 @@ void Graph::handle() {
         vertices[i]->handle();
         vertices[i]->setFixed(m_mode == 0);
         vertices[i]->setDragable(m_mode == 1);
-        //Change type
-        if (direct_choice.isChanged() && direct_choice.isPressed()) {
-            for (int i = 0; i<true_edges.size(); i++) 
-                true_edges[i]->setType(true);
-            for (int i = 0; i<reverse_edge.size(); i++) {
-                int row = reverse_edge[i]->m_start->getIndex();
-                int col = reverse_edge[i]->m_end->getIndex();
-                if (matrix[col][row]!=-1)
-                    reverse_edge[i]->setColor(true_edges[matrix[col][row]]->start_color);
-            }
-        } else if (undirect_choice.isChanged() && undirect_choice.isPressed()) {
-            for (int i = 0; i<true_edges.size(); i++) {
-                true_edges[i]->setType(false);
-                if (is_spread_color && true_edges[i]->start_color != true_edges[i]->m_end->getColor()) 
-                    true_edges[i]->start(true, false);
-            }
-        }
 
         //Match vertex
         if (vertices[i]->isFocused()) {
@@ -283,6 +449,24 @@ void Graph::handle() {
         }
     }
 
+    //Change type
+    if (direct_choice.isChanged() && direct_choice.isPressed()) {
+        for (int i = 0; i<true_edges.size(); i++) {
+            true_edges[i]->setType(true);
+        }
+        for (int i = 0; i<reverse_edge.size(); i++) {
+            int row = reverse_edge[i]->m_start->getIndex();
+            int col = reverse_edge[i]->m_end->getIndex();
+            if (matrix[col][row]!=-1)
+                reverse_edge[i]->setColor(true_edges[matrix[col][row]]->start_color);
+        }
+    } else if (undirect_choice.isChanged() && undirect_choice.isPressed()) {
+        for (int i = 0; i<true_edges.size(); i++) {
+            true_edges[i]->setType(false);
+            if (true_edges[i]->start_color != true_edges[i]->m_end->getColor()) 
+                true_edges[i]->start(true, false);
+        }
+    }
     if (!isFocus) chosen = -1;
     //Graph box show
     if (track_graph_hover.isHovered()) {
@@ -325,8 +509,10 @@ void Graph::handle() {
 void Graph::free() {
     for (int i = 0; i<vertices.size(); i++) delete vertices[i];
     for (int i = 0; i<true_edges.size(); i++) delete true_edges[i];
+    for (int i = 0; i<reverse_edge.size(); i++) delete reverse_edge[i];
     vertices.clear();
     true_edges.clear();
+    reverse_edge.clear();
     matrix.clear();
 }
 void Graph::add_edge(const int& start, const int& end, const int& weight) {
@@ -354,7 +540,7 @@ void Graph::add_edge(const int& start, const int& end, const int& weight) {
                 true_edges.push_back(new Edge(vertices[end], vertices[start], &form_setting));
                 true_edges.back()->start(true);
                 true_edges.back()->setWeight(weight);
-                true_edges.back()->setType(m_type == 0);
+                true_edges.back()->setType(false);
             } else {
                 matrix[end][start] = reverse_edge.size();
                 reverse_edge.push_back(new Edge(vertices[end], vertices[start], &form_setting));
@@ -362,6 +548,36 @@ void Graph::add_edge(const int& start, const int& end, const int& weight) {
                 reverse_edge.back()->setType(true);
                 reverse_edge.back()->setWeight(weight);
             }
+        }
+    }
+}
+void Graph::random_subGraphColor() {
+    vector<bool> visited(matrix.size(), 0);
+    int color = 0;
+    for (int i = 0; i<visited.size(); i++) {
+        if (!visited[i]) {
+            setSubGraphColor(i, visited, colors[color]);
+            color = (color+1)%6;
+        }
+    }
+}
+void Graph::setSubGraphColor(const int& row, const Color& color) {
+    vector<bool> visited(matrix.size(), 0);
+    setSubGraphColor(row, visited, color);
+}
+void Graph::setSubGraphColor(const int& row, vector<bool>& visited, const Color& color) {
+    visited[row] = true;
+    vertices[row]->setColor(color);
+    for (int i = 0; i<matrix.size(); i++) {
+        if (matrix[row][i] != -1) {
+            if (row<i) true_edges[matrix[row][i]]->setColor(color);
+            else {
+                reverse_edge[matrix[i][row]]->setColor(color);
+                if (m_type == 1) true_edges[matrix[i][row]]->setColor(color);
+            }
+        }
+        if (matrix[row][i]!=-1 && !visited[i]) {
+            setSubGraphColor(i, visited, color);
         }
     }
 }

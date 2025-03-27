@@ -10,6 +10,7 @@ DynamicColorCircle::DynamicColorCircle() {
     start_angle = 0,
     delta_angle = M_PI;
     start_color = end_color = WHITE;
+    m_speed = 10;
 }
 bool DynamicColorCircle::IsColorChange() const {
     return m_is_color_change;
@@ -17,10 +18,13 @@ bool DynamicColorCircle::IsColorChange() const {
 void DynamicColorCircle::setRadius(const float& radius) {
     m_radius = radius;
 }
+void DynamicColorCircle::setSpeed(const float& speed) {
+    if (speed) m_speed = 10/speed;
+}
 void DynamicColorCircle::handle() {
     if (percent < 1 || end_color != start_color) {
         float delta = 1 - percent;
-        if (delta > 0.1) percent += delta/m_scale;
+        if (delta > 0.1 && m_speed>1) percent += delta/m_scale;
         else {
             percent = 1;
             end_color = start_color;

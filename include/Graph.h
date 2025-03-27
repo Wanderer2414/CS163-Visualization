@@ -8,26 +8,50 @@
 #include "Label.h"
 #include "OptionBox.h"
 #include "Global.h"
+#include "SettingPackage.h"
 #include "TextBox.h"
+#include <vector>
 
 class Graph: public Form {
 public:
+    enum CommandCode {
+        search_code = 0,
+        choose_vertex = 1,
+        choose_edge = 3,
+        unchoose = 2,
+        check = 4,
+        uncheck = 5,
+        goUp = 6,
+        goDown = 7,
+        choosev2_vertex = 8,
+        choosev2_edge = 9,
+        reset_color = 10,
+        fill_edge = 11,
+        fill_vertex = 12,
+        unlock = 13
+    };
     Graph(const int& index, FormSetting form_setting, const Vector2& window_size);
     
     virtual void        add(const vector<std::string>& value) override,
                         handle()                              override,
-                        draw()                                override;
+                        draw()                                override,
+
+                        search(const std::string& val)        override,
+                        
+                        FetchNextCommand(const vector<float>& codes) override;
     virtual string      RandomCreate() const override;
     ~Graph();
 private:
-    bool                m_is_physics;
+    bool                m_is_physics,
+                        m_is_lock;
     int                 chosen,
                         m_mode,
                         m_type,
                         m_weight,
                         m_tool,
-                        is_spread_color;
+                        search_type;
 
+    OptionBox           bfs_choice, dfs_choice;
     TextButton          track_graph_hover;
     TabBox              graph_setting;
 
@@ -43,10 +67,17 @@ private:
                         direct_choice, undirect_choice;
 
     Color               colors[6] = {RED, GREEN, BLUE, YELLOW, BROWN, GRAY};
-
+    Color               tmp_color;
     vector<vector<int>> matrix;
     void                free(),
                         add_edge(const int& start, const int& end, const int& weight);
     Texture2D           cursor_icon;
+    TextSetting         console_setting;
+    void                dfs(const int& vertex),
+                        dfs(vector<bool>& visited, const int& vertex);
+
+    void                random_subGraphColor(),
+                        setSubGraphColor(const int& row, const Color& color),
+                        setSubGraphColor(const int& row, vector<bool>& visited, const Color& color);
 };
 #endif //GRAPH_H

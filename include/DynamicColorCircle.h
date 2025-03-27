@@ -9,7 +9,8 @@ public:
                         handle(),
                         draw(),
                         start(const float& start_angle, const Color& start, const Color& end),
-                        setColor(const Color& color);
+                        setColor(const Color& color),
+                        setSpeed(const float& speed);
     Color               getColor() const;
     virtual Vector2     getCenter() const;
 private:
@@ -18,7 +19,8 @@ private:
                         percent,
                         m_scale,
                         start_angle,
-                        delta_angle;
+                        delta_angle,
+                        m_speed;
     Color               start_color,
                         end_color;
 };

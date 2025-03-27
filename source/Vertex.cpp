@@ -31,7 +31,7 @@ int Vertex::getValue() const {
 }
 float Vertex::getRadius() const {
     return max(m_size.x, m_size.y)/2;
-}   
+}
 void Vertex::draw() {
     DynamicColorCircle::draw();
     if (!m_is_focus) {

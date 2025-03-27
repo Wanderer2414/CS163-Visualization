@@ -90,7 +90,8 @@ void ConnectedSubgraph(int** a, int n) {
 void dfs(const vector<vector<int>>& matrix, vector<bool>& visited, int vertex, vector<int>& component) {
     visited[vertex] = true;
     component.push_back(vertex);
-    for (int neighbor = 0; neighbor < matrix.size(); ++neighbor) if (matrix[vertex][neighbor] == 1 && !visited[neighbor]) dfs(matrix, visited, neighbor, component);
+    for (int neighbor = 0; neighbor < matrix.size(); ++neighbor) 
+        if (matrix[vertex][neighbor] && !visited[neighbor]) dfs(matrix, visited, neighbor, component);
 }
 
 void GraphVisual::findConnectedComponents(const vector<vector<int>>& matrix, vector<vector<int>>& components) {

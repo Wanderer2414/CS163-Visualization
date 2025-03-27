@@ -17,7 +17,9 @@ public:
                     setWeight(const int& weight),
                     setMode(const bool& is_weight),
                     setColor(const Color& color),
+                    setSpeed(const float& speed),
                     start(const bool& reverse, const bool& transparent = true);
+
     Vertex          *m_start, *m_end;
     Color           start_color, end_color;
 private:
@@ -25,7 +27,8 @@ private:
                     m_is_direct,
                     m_is_weight,
                     is_reverse;
-    float           percent;
+    float           percent,
+                    m_speed;
     int             weight;
     Vector2         m_point;
 };

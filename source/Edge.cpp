@@ -87,6 +87,7 @@ Edge::Edge(Vertex* start, Vertex* end, TextSetting* t_setting) {
     m_is_direct = false;
     m_is_weight = false;
     is_reverse = false;
+    m_speed = 10;
 }
 bool Edge::IsColorChange() const {
     return m_is_color_changed;
@@ -96,6 +97,9 @@ bool Edge::IsReverse() const {
 }
 void Edge::setType(const bool& direct) {
     m_is_direct = direct;
+}
+void Edge::setSpeed(const float& speed) {
+    if (speed) m_speed = 10/speed;
 }
 void Edge::setColor(const Color& color) {
     start_color = end_color = color;
@@ -107,6 +111,7 @@ void Edge::setWeight(const int& w) {
     weight = w;
 }
 void Edge::draw() {
+    cout << m_is_direct << endl;
     if (m_is_direct) {
         DrawArc(m_start->getCenter(), m_point, M_PI/6*percent, start_color);
         DrawArc(m_point, m_end->getCenter(),  M_PI/6*(1-percent), end_color);
@@ -128,6 +133,7 @@ void Edge::draw() {
     }
 }
 void Edge::handle() {
+    cout << m_is_direct << endl;
     m_is_color_changed = false;
     Vector2 delta = m_end->getCenter() - m_start->getCenter();
     float dis = abs(delta);
@@ -145,12 +151,11 @@ void Edge::handle() {
     }
     if (percent < 1) {
         float p_delta = 1 - percent;
-        if (abs(p_delta)>0.1) percent += p_delta/20;
+        if (abs(p_delta)>0.1 && m_speed>=1) percent += p_delta/m_speed;
         else {
             percent += p_delta;
             m_is_color_changed = true;
-            if (!is_reverse)
-                end_color = start_color;
+            if (!is_reverse) end_color = start_color;
             else start_color = end_color;
         }
         if (!m_is_direct) {
