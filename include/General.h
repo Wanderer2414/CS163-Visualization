@@ -14,6 +14,9 @@ Vector2 operator/(const Vector2& vector, const float& x);
 Color operator+(const Color& x, const Color& y);
 Color operator*(Color color, const float& x);
 Color operator*(const float& x, Color color);
+Color to_color(const float& x);
+
+float to_float(const Color& color);
 
 bool operator==(const Vector2& a, const Vector2& b);
 bool operator!=(const Vector2& a, const Vector2& b);

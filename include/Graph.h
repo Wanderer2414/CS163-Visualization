@@ -10,6 +10,7 @@
 #include "Global.h"
 #include "SettingPackage.h"
 #include "TextBox.h"
+#include "TextureButton.h"
 #include <vector>
 
 class Graph: public Form {
@@ -28,7 +29,9 @@ public:
         reset_color = 10,
         fill_edge = 11,
         fill_vertex = 12,
-        unlock = 13
+        unlock = 13,
+        fill = 14,
+        add_code = 15
     };
     Graph(const int& index, FormSetting form_setting, const Vector2& window_size);
     
@@ -51,14 +54,20 @@ private:
                         m_tool,
                         search_type;
 
+    Label               edge_label, vertex_label;
+    TextBox             edge_textbox, vertex_textbox;
+    TextureButton       random_edge_button, random_vertex_button;
     OptionBox           bfs_choice, dfs_choice;
-    TextButton          track_graph_hover;
+    TextButton          track_graph_hover,
+                        pull_matrix_button;
     TabBox              graph_setting;
 
     vector<Vertex*>     vertices;
     vector<Edge*>       true_edges, reverse_edge;
 
-    Container           setting_box, tools_box;
+    Container           setting_box, tools_box, extract_box;
+
+    TextBox             extract_text_bx;
 
     Container           search_graph_box;
     TextureButton       match_tool;
@@ -66,6 +75,7 @@ private:
                         weight_choice, unweight_choice, 
                         direct_choice, undirect_choice;
 
+    int                 color_pointer;
     Color               colors[6] = {RED, GREEN, BLUE, YELLOW, BROWN, GRAY};
     Color               tmp_color;
     vector<vector<int>> matrix;
@@ -73,11 +83,18 @@ private:
                         add_edge(const int& start, const int& end, const int& weight);
     Texture2D           cursor_icon;
     TextSetting         console_setting;
-    void                dfs(const int& vertex),
+
+
+    void                insert(const int& value),
+                        dfs(const int& vertex),
                         dfs(vector<bool>& visited, const int& vertex);
 
-    void                random_subGraphColor(),
+    void                pull_matrix(),
+                        random_subGraphColor(),
                         setSubGraphColor(const int& row, const Color& color),
                         setSubGraphColor(const int& row, vector<bool>& visited, const Color& color);
 };
+string to_string(const vector<vector<int>>& matrix);
+vector<vector<int>> to_matrix(const vector<string>& str);
+vector<vector<int>> create_graph(const int& vertex, const int& edge, const bool& is_direct, const bool& is_weight);
 #endif //GRAPH_H

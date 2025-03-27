@@ -11,6 +11,7 @@ public:
     TextSetting*    text_setting;
     bool            IsColorChange() const,
                     IsReverse() const;
+    int             getWeight() const;
     virtual void    draw()      override,
                     handle()    override,
                     setType(const bool& is_direct),

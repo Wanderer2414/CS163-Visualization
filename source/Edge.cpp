@@ -95,6 +95,9 @@ bool Edge::IsColorChange() const {
 bool Edge::IsReverse() const {
     return is_reverse;
 }
+int Edge::getWeight() const {
+    return weight;
+}
 void Edge::setType(const bool& direct) {
     m_is_direct = direct;
 }
@@ -111,7 +114,6 @@ void Edge::setWeight(const int& w) {
     weight = w;
 }
 void Edge::draw() {
-    cout << m_is_direct << endl;
     if (m_is_direct) {
         DrawArc(m_start->getCenter(), m_point, M_PI/6*percent, start_color);
         DrawArc(m_point, m_end->getCenter(),  M_PI/6*(1-percent), end_color);
@@ -133,7 +135,6 @@ void Edge::draw() {
     }
 }
 void Edge::handle() {
-    cout << m_is_direct << endl;
     m_is_color_changed = false;
     Vector2 delta = m_end->getCenter() - m_start->getCenter();
     float dis = abs(delta);

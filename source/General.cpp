@@ -1,4 +1,5 @@
 #include "../include/General.h"
+#include <cstring>
 
 float abs(const Vector2& vector) {
     return sqrt(vector.x * vector.x + vector.y * vector.y);
@@ -35,7 +36,11 @@ Color operator*(const float& x, Color color) {
     color.a*=x;
     return color;
 }
-
+Color to_color(const float &x) {
+    Color color;
+    memcpy(&color,&x, 4);
+    return color;
+}
 bool operator==(const Vector2& a, const Vector2& b) {
     return a.x == b.x && a.y == b.y;
 }
@@ -57,7 +62,11 @@ float arctan(const Vector2 &vector) {
 float to_degree(const float& radian) {
     return radian/M_PI*180;
 }
-
+float to_float(const Color& color) {
+    float x;
+    memcpy(&x, &color, 4);
+    return x;
+}
 int to_int(const std::string& str) {
     int ans = 0;
     for (int i = 0; i < str.size(); i++) {
