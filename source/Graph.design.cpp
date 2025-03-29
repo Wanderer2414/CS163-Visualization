@@ -237,6 +237,22 @@ void Graph::draw() {
         DrawTexture(cursor_icon, GetMousePosition().x - cursor_icon.width, GetMousePosition().y, WHITE);
 }
 void Graph::handle() {
+    //Random create
+    if (random_create.isPressed()) {
+        int vertex = to_int(vertex_textbox.getText());
+        int edge = to_int(edge_textbox.getText());
+        if (vertex == 0) vertex_textbox.setText(RandomVertex());
+        vertex = to_int(vertex_textbox.getText());
+        if (edge < vertex - 1 || edge > vertex*(vertex-1)/2) 
+            edge_textbox.setText(RandomEdge());
+        create_textbox.setText(RandomCreate());
+    }
+    if (random_edge_button.isPressed()) {
+        edge_textbox.setText(RandomEdge());
+    }
+    if (random_vertex_button.isPressed()) {
+        vertex_textbox.setText(RandomVertex());
+    }
     Form::handle();
     for (int i = 0; i<edges.size(); i++) {
         if (m_type == 1) {
@@ -419,13 +435,6 @@ void Graph::handle() {
             UnloadTexture(cursor_icon);
             m_tool = -1;
         }
-    }
-    //Random create
-    if (random_edge_button.isPressed()) {
-        edge_textbox.setText(to_string(rand()%20));
-    }
-    if (random_vertex_button.isPressed()) {
-        vertex_textbox.setText(to_string(rand()%20));
     }
     //Matrix pull
     if (pull_matrix_button.isPressed()) {

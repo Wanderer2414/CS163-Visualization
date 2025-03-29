@@ -22,8 +22,7 @@ public:
         choose_vertex = 1,
         choose_edge = 3,
         unchoose = 2,
-        check = 4,
-        uncheck = 5,
+        lock = 4,
         goUp = 6,
         goDown = 7,
         choosev2_vertex = 8,
@@ -45,8 +44,10 @@ public:
 
                         search(const std::string& val)        override,
                         
-                        FetchNextCommand(const vector<float>& codes) override;
-    virtual string      RandomCreate() const override;
+                        FetchNextCommand(const vector<float>& codes) override,
+                        FetchPrevCommand(const vector<float>& codes) override;
+    virtual string      RandomCreate() const override,
+                        RandomSearch() const override;
     ~Graph();
 private:
     bool                m_is_physics,
@@ -89,9 +90,11 @@ private:
     TextSetting         console_setting;
 
     ColorPointer        color_box;
+    string              RandomVertex() const, RandomEdge() const;
     void                insert(const int& value),
                         dfs(const int& vertex),
-                        dfs(vector<bool>& visited, const int& vertex);
+                        dfs(vector<bool>& visited, const int& vertex),
+                        bfs(const int& vertex);
 
     void                pull_matrix(),
                         random_subGraphColor(),

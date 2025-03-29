@@ -1,5 +1,6 @@
 #include "../include/Graph.h"
 #include "../include/General.h"
+#include <ctime>
 
 string Graph::RandomCreate() const {
     srand(time(0));
@@ -11,7 +12,20 @@ string Graph::RandomCreate() const {
     }
     return "";
 }
-
+string Graph::RandomSearch() const {
+    srand(clock());
+    int index = rand()%vertices.size();
+    return to_string(vertices[index]->getValue());
+}
+string Graph::RandomEdge() const {
+    srand(clock());
+    int vertex = to_int(vertex_textbox.getText());
+    return to_string(rand()%(vertex*(vertex-1)/2 - vertex + 1) + vertex - 1);
+}
+string Graph::RandomVertex() const {
+    srand(clock());
+    return to_string(rand()%20+5);
+}
 void Graph::free() {
     for (int i = 0; i<vertices.size(); i++) delete vertices[i];
     for (int i = 0; i<edges.size(); i++) delete edges[i];
