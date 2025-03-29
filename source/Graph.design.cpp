@@ -20,7 +20,9 @@ Graph::Graph(const int& index, FormSetting f_setting, const Vector2& window_size
 
     search_graph_box(&form_setting),
     tools_box(&form_setting),
-    
+
+    algorithms_box(&form_setting),
+
     extract_box(&form_setting),
     extract_text_bx(&form_setting, &form_setting),
     pull_matrix_button(&form_setting, &form_setting),
@@ -29,6 +31,8 @@ Graph::Graph(const int& index, FormSetting f_setting, const Vector2& window_size
     edge_label(&form_setting),
     vertex_textbox(&form_setting, &form_setting),
     edge_textbox(&form_setting, &form_setting),
+
+    color_box(&form_setting),
 
     color_pointer(0)
 {
@@ -46,6 +50,7 @@ Graph::Graph(const int& index, FormSetting f_setting, const Vector2& window_size
     setting_box.push_back(&undirect_choice);
 
     tools_box.push_back(&match_tool);
+    tools_box.push_back(&filled_tool);
 
     extract_box.push_back(&extract_text_bx);
     extract_box.push_back(&pull_matrix_button);
@@ -87,6 +92,14 @@ Graph::Graph(const int& index, FormSetting f_setting, const Vector2& window_size
     match_tool.setPosition(5, 5);
     match_tool.setSize(40, 40);
 
+    filled_tool.setButtonStage(0, fill_icon, fill_filled_icon);
+    filled_tool.setPosition(50, 5);
+    filled_tool.setSize(40, 40);
+    //Algorithms
+    algorithms_box.setText(0, "Dijikstra");
+    algorithms_box.setText(1, "Kruskal");
+    algorithms_box.setText(2, "Prim");
+    algorithms_box.setText(3, "Euler tour");
     //Extract controller
     extract_text_bx.setPosition(5, 5);
     extract_text_bx.setSize(290, 145);
@@ -114,11 +127,15 @@ Graph::Graph(const int& index, FormSetting f_setting, const Vector2& window_size
     tools_box.setSize(200, 50);
     tools_box.setPosition(graph_setting.getAutoSize().x + 15, 45);
 
+    algorithms_box.setPosition(graph_setting.getAutoSize().x + 15, 0);
+    algorithms_box.setSize(300, 200);
+
     extract_box.setPosition(graph_setting.getAutoSize().x+15, 5);
     extract_box.setSize(300, 200);
     
     graph_setting.push_back(0, &setting_box);   
     graph_setting.push_back(1, &tools_box);
+    graph_setting.push_back(2, &algorithms_box);
     graph_setting.push_back(3, &extract_box);
 
     track_graph_hover.setSize(10, graph_setting.getAutoSize().y);
@@ -184,6 +201,14 @@ Graph::Graph(const int& index, FormSetting f_setting, const Vector2& window_size
     create_box.reLocate(&create_textbox);
     create_box.reLocate(&create_button);
 
+    color_box.setPosition(window_size.x - 500,100);
+    color_box.setSize(120, 105);
+    color_box.setVisible(false);
+
+    children.push_back(&color_box);
+
+    srand(time(0));
+
     chosen = -1;
     m_mode = 2;
     m_weight = 1;
@@ -194,57 +219,63 @@ Graph::Graph(const int& index, FormSetting f_setting, const Vector2& window_size
 };
 
 void Graph::draw() {
-    for (int i = 0; i<true_edges.size(); i++) {
-        true_edges[i]->draw();
-    }
-    if (m_type == 0) {
-        for (int i = 0; i<reverse_edge.size(); i++) reverse_edge[i]->draw();
+    for (int i = 0; i<edges.size(); i++) {
+        if (m_type == 1) {
+            int start = edges[i]->m_start->getIndex();
+            int end = edges[i]->m_end->getIndex();
+            if (matrix[end][start] != -1 && start<end) edges[i]->draw();
+        } 
+        else if (m_type == 0) edges[i]->draw();
     }
     for (int i =0 ;i <vertices.size(); i++) vertices[i]->draw();
     Form::draw();
 
-    if (m_tool!=-1) 
+    if (m_tool==0) 
         DrawTexture(cursor_icon, GetMousePosition().x, GetMousePosition().y-cursor_icon.height, WHITE);
+    else 
+    if (m_tool==1) 
+        DrawTexture(cursor_icon, GetMousePosition().x - cursor_icon.width, GetMousePosition().y, WHITE);
 }
 void Graph::handle() {
     Form::handle();
-    for (int i = 0; i<true_edges.size(); i++) {
-        true_edges[i]->handle();
-        true_edges[i]->setMode(m_weight == 0);
-        //Check edge color change 
-        if (true_edges[i]->IsColorChange() && !m_is_lock) {
-            if (!true_edges[i]->IsReverse()) {
-                float angular = arctan(true_edges[i]->m_start->getCenter() - true_edges[i]->m_end->getCenter());
-                true_edges[i]->m_end->start(angular, true_edges[i]->start_color, true_edges[i]->m_end->getColor());
-            } else {
-                float angular = arctan(true_edges[i]->m_end->getCenter() - true_edges[i]->m_start->getCenter());
-                true_edges[i]->m_start->start(angular, true_edges[i]->end_color, true_edges[i]->m_start->getColor());
-            }
-        }
-        //Vertex color change
-        if (!m_is_lock && true_edges[i]->m_start->IsColorChange() && (true_edges[i]->m_start->getColor() != true_edges[i]->start_color)) {
-            true_edges[i]->start(false, false);
-        }
+    for (int i = 0; i<edges.size(); i++) {
         if (m_type == 1) {
-            if (!m_is_lock && true_edges[i]->m_end->IsColorChange() && (true_edges[i]->m_end->getColor() != true_edges[i]->start_color)) {
-                true_edges[i]->start(true, false);
-            }
-        }
-    }
-    //Check reverse color change
-    if (m_type == 0) {
-        for (int i = 0; i<reverse_edge.size(); i++) {
-            reverse_edge[i]->handle();
-            reverse_edge[i]->setMode(m_weight == 0);
-            if (!m_is_lock && reverse_edge[i]->IsColorChange()) {
-                if (!reverse_edge[i]->IsReverse()) {
-                    float angular = arctan(reverse_edge[i]->m_start->getCenter() - reverse_edge[i]->m_end->getCenter());
-                    reverse_edge[i]->m_end->start(angular, reverse_edge[i]->start_color, reverse_edge[i]->m_end->getColor());
+            int start = edges[i]->m_start->getIndex();
+            int end = edges[i]->m_end->getIndex();
+            if (matrix[start][end]==-1 || matrix[end][start] == -1) continue;
+        } 
+        edges[i]->handle();
+        edges[i]->setMode(m_weight == 0);
+
+        //Vertex color change
+        if (!m_is_lock && edges[i]->m_start->IsColorChange() && (edges[i]->m_start->getColor() != edges[i]->start_color)) {
+            int start = edges[i]->m_start->getIndex();
+            int end = edges[i]->m_end->getIndex();
+            if (m_type == 1) {
+                if (start<end) {
+                    edges[i]->setDuration(getSpeed());
+                    edges[i]->start(false, false);
+                }
+                else {
+                    edges[i]->setDuration(getSpeed());
+                    edges[matrix[end][start]]->start(true, false);
                 }
             }
-            //Check vertex change color
-            if (!m_is_lock && reverse_edge[i]->m_start->IsColorChange() && (reverse_edge[i]->m_start->getColor() != reverse_edge[i]->start_color)) {
-                reverse_edge[i]->start(false, false);
+            else {
+                edges[i]->setDuration(getSpeed());
+                edges[i]->start(false, false);
+            }
+        }
+        //Check edge color change 
+        if (edges[i]->IsColorChange() && !m_is_lock) {
+            if (!edges[i]->IsReverse()) {
+                float angular = arctan(edges[i]->m_start->getCenter() - edges[i]->m_end->getCenter());
+                edges[i]->m_end->setDuration(getSpeed());
+                edges[i]->m_end->start(angular, edges[i]->start_color, edges[i]->m_end->getColor());
+            } else {
+                float angular = arctan(edges[i]->m_end->getCenter() - edges[i]->m_start->getCenter());
+                edges[i]->m_start->setDuration(getSpeed());
+                edges[i]->m_start->start(angular, edges[i]->end_color, edges[i]->m_start->getColor());
             }
         }
     }
@@ -257,6 +288,10 @@ void Graph::handle() {
         //Match vertex
         if (vertices[i]->isFocused()) {
             isFocus = true;
+            if (m_tool == 1 && i!=chosen) {
+                vertices[i]->setDuration(getSpeed());
+                vertices[i]->start(0, color_box.getColor(), vertices[i]->getColor());
+            }
             if (chosen == -1) chosen = i;
             else if (chosen != i) {
                 if (m_tool == 0) add_edge(chosen, i, 1);
@@ -305,23 +340,31 @@ void Graph::handle() {
             }
         }
     }
-
+    //Open Color pointer
+    if (IsMouseButtonPressed(MOUSE_BUTTON_RIGHT) && m_tool == 1) {
+        color_box.setVisible(true);
+        color_box.setPosition(GetMousePosition().x, GetMousePosition().y);
+    }
+    if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT) && m_tool == 1 && !color_box.isHovered()) {
+        color_box.setVisible(false);
+    }
     //Change type
     if (direct_choice.isChanged() && direct_choice.isPressed()) {
-        for (int i = 0; i<true_edges.size(); i++) {
-            true_edges[i]->setType(true);
+        for (int i = 0; i<edges.size(); i++) {
+            int start = edges[i]->m_start->getIndex();
+            int end = edges[i]->m_end->getIndex();
+            if (start>end) edges[i]->setColor(edges[matrix[end][start]]->start_color);
         }
-        for (int i = 0; i<reverse_edge.size(); i++) {
-            int row = reverse_edge[i]->m_start->getIndex();
-            int col = reverse_edge[i]->m_end->getIndex();
-            if (matrix[col][row]!=-1)
-                reverse_edge[i]->setColor(true_edges[matrix[col][row]]->start_color);
+        for (int i = 0; i<edges.size(); i++) {
+            edges[i]->setType(true);
         }
     } else if (undirect_choice.isChanged() && undirect_choice.isPressed()) {
-        for (int i = 0; i<true_edges.size(); i++) {
-            true_edges[i]->setType(false);
-            if (true_edges[i]->start_color != true_edges[i]->m_end->getColor()) 
-                true_edges[i]->start(true, false);
+        for (int i = 0; i<edges.size(); i++) {
+            edges[i]->setType(false);
+            if (edges[i]->m_start->getColor() != edges[i]->m_end->getColor()) {
+                edges[i]->setDuration(getSpeed());
+                edges[i]->start(false, false);
+            }
         }
     }
     if (!isFocus) chosen = -1;
@@ -350,10 +393,25 @@ void Graph::handle() {
     }
     //Insert edge/ Match tool press
     if (match_tool.isPressed()) {
-        if (m_tool == -1) {
+        if (m_tool != 0) {
+            if (m_tool!=-1) UnloadTexture(cursor_icon);
+            else HideCursor();
             m_tool = 0;
-            HideCursor();
             cursor_icon = LoadTexture(match_cursor_icon);
+            cursor_icon.width = cursor_icon.height = 30;
+        }
+        else {
+            ShowCursor();
+            UnloadTexture(cursor_icon);
+            m_tool = -1;
+        }
+    }
+    if (filled_tool.isPressed()) {
+        if (m_tool != 1) {
+            if (m_tool!=-1) UnloadTexture(cursor_icon);
+            else HideCursor();
+            m_tool = 1;
+            cursor_icon = LoadTexture(fill_cursor_icon);
             cursor_icon.width = cursor_icon.height = 30;
         }
         else {

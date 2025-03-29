@@ -31,5 +31,9 @@
 #define match_cursor_icon "CS163-DSAVisualization/asset/Icon/pepicons-pencil--pen.png"
 #define match_filled_icon "CS163-DSAVisualization/asset/Icon/pepicons-pencil--pen-circle-filled.png"
 
+#define fill_icon "CS163-DSAVisualization/asset/Icon/paint-pallet-circle.png"
+#define fill_cursor_icon "CS163-DSAVisualization/asset/Icon/paint-pallet.png"
+#define fill_filled_icon "CS163-DSAVisualization/asset/Icon/paint-pallet-circle-filled.png"
+
 #define TitleMenu "CS163-DSAVisualization/asset/images/TitleMenu.png"
 #endif

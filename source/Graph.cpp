@@ -34,23 +34,15 @@ void Graph::add(const vector<std::string>& str) {
             for (int j = delta; j<n+delta; j++) {
                 int weight = to_int(str[(i-delta)*n+(j-delta)+1]);
                 if (weight && i != j) {
-                    if (i<j) {
-                        matrix[i][j] = true_edges.size();
-                        true_edges.push_back(new Edge(vertices[i], vertices[j], &form_setting));
-                        true_edges.back()->setWeight(weight);
-                        true_edges.back()->setType(m_type == 0);
-                    } else {
-                        matrix[i][j] = reverse_edge.size();
-                        reverse_edge.push_back(new Edge(vertices[i], vertices[j], &form_setting));
-                        reverse_edge.back()->setWeight(weight);
-                        reverse_edge.back()->setType(true);
-                    }
+                    matrix[i][j] = edges.size();
+                    edges.push_back(new Edge(vertices[i], vertices[j], &form_setting));
+                    edges.back()->setWeight(weight);
+                    if (i<j) edges.back()->setType(m_type == 0);
                 }
             }
         }
         setSubGraphColor(delta, colors[(++color_pointer)%6]);
-        for (int i = 0; i<true_edges.size(); i++) true_edges[i]->start(false);
-        for (int i = 0; i<reverse_edge.size(); i++) reverse_edge[i]->start(false);
+        for (int i = 0; i<edges.size(); i++) edges[i]->start(false);
     } else {
         InsertNextMainCommand({add_code, 1.0f*to_int(str[0])});
     }
@@ -105,7 +97,7 @@ void Graph::FetchNextCommand(const vector<float>& codes) {
             int mode = codes[1];
             int value = vertices[index]->getValue();
             if (!mode) {
-                InsertNextSubCommand({reset_color, 1.0f*index, 1});
+                InsertNextSubCommand({reset_color, 1.0f*index, to_float(WHITE), 1});
                 console.goDown();
                 console.InsertNextSubCommand("Create visited[n]");
                 console.InsertNextSubCommand("vertex = " + to_string(value));
@@ -127,7 +119,8 @@ void Graph::FetchNextCommand(const vector<float>& codes) {
                 InsertNextSubCommand({choosev2_vertex, 1.0f*index, 1.0f*index, 1});
                 InsertNextSubCommand({goDown, 2, 2});
                 InsertNextSubCommand({unlock, 0});
-                InsertNextSubCommand({fill,1.0f* index, to_float(vertices[index]->getColor()), 1});
+                InsertNextSubCommand({complete_color, 0});
+                InsertNextSubCommand({fill, 1.0f*index, to_float(vertices[index]->getColor()), 1});
                 setDuration(0);
             }
             else {
@@ -137,7 +130,7 @@ void Graph::FetchNextCommand(const vector<float>& codes) {
         break;
         case reset_color: {
             int n = codes[1];
-            setSubGraphColor(n, WHITE);
+            setSubGraphColor(n, to_color(codes[2]));
             setDuration(codes.back());
         }
         break;
@@ -156,10 +149,12 @@ void Graph::FetchNextCommand(const vector<float>& codes) {
         case choose_edge: {
             int start = codes[1], end = codes[2];
             if (start<end) {
-                true_edges[matrix[start][end]]->start(false, false);
+                edges[matrix[start][end]]->setDuration(codes.back()*getSpeed());
+                edges[matrix[start][end]]->start(false, false);
             }
             else {
-                true_edges[matrix[end][start]]->start(true, false);
+                edges[matrix[end][start]]->setDuration(codes.back()*getSpeed());
+                edges[matrix[end][start]]->start(true, false);
             }
             setDuration(codes.back());
         }
@@ -168,6 +163,7 @@ void Graph::FetchNextCommand(const vector<float>& codes) {
             int start = codes[1], end = codes[2];
             Vector2 delta = vertices[start]->getCenter()-vertices[end]->getCenter();
             if (start == end) delta = vertices[start]->getCenter();
+            vertices[end]->setDuration(codes.back()*getSpeed());
             vertices[end]->start(arctan(delta),vertices[start]->getColor() ,vertices[end]->getColor());
             setDuration(codes.back());
         }
@@ -180,8 +176,14 @@ void Graph::FetchNextCommand(const vector<float>& codes) {
         break;
         case choosev2_edge: {
             int start = codes[1], end = codes[2];
-            if (start<end) true_edges[matrix[start][end]]->start(false, false);
-            else true_edges[matrix[end][start]]->start(true, false);
+            if (start<end) {
+                edges[matrix[start][end]]->setDuration(codes.back()*getSpeed());
+                edges[matrix[start][end]]->start(false, false);
+            }
+            else {
+                edges[matrix[end][start]]->setDuration(codes.back()*getSpeed());
+                edges[matrix[end][start]]->start(true, false);
+            }
             setDuration(codes.back());
         }
         break;
@@ -214,7 +216,25 @@ void Graph::FetchNextCommand(const vector<float>& codes) {
         break;
         case fill: {
             int index = codes[1];
+            vertices[index]->setDuration(codes.back()*getSpeed());
             vertices[index]->start(0, to_color(codes[2]), vertices[index]->getColor());
+            setDuration(codes.back());
+        }
+        break;
+        case spread_color: {
+            int index = codes[1];
+            for (int i = 0; i<edges.size(); i++) {
+                if (edges[i]->m_start->getIndex() == index) {
+                    edges[i]->setDuration(getSpeed()*codes.back());
+                    edges[i]->start(false, false);
+                } else edges[i]->setDuration(0);
+            }
+            setDuration(codes.back());
+        }
+        break;
+        case complete_color: {
+            for (int i = 0; i<vertices.size(); i++) vertices[i]->complete();
+            for (int i = 0; i<edges.size(); i++) edges[i]->complete();
             setDuration(codes.back());
         }
         break;

@@ -87,7 +87,8 @@ Edge::Edge(Vertex* start, Vertex* end, TextSetting* t_setting) {
     m_is_direct = false;
     m_is_weight = false;
     is_reverse = false;
-    m_speed = 10;
+    m_duration = 0.5;
+    m_start_time = 0;
 }
 bool Edge::IsColorChange() const {
     return m_is_color_changed;
@@ -101,8 +102,8 @@ int Edge::getWeight() const {
 void Edge::setType(const bool& direct) {
     m_is_direct = direct;
 }
-void Edge::setSpeed(const float& speed) {
-    if (speed) m_speed = 10/speed;
+void Edge::setDuration(const float& duration) {
+    m_duration = duration;
 }
 void Edge::setColor(const Color& color) {
     start_color = end_color = color;
@@ -112,6 +113,11 @@ void Edge::setMode(const bool& is_weight) {
 }
 void Edge::setWeight(const int& w) {
     weight = w;
+}
+void Edge::complete() {
+    percent = 1;
+    if (!is_reverse) end_color = start_color;
+    else start_color = end_color;
 }
 void Edge::draw() {
     if (m_is_direct) {
@@ -151,10 +157,10 @@ void Edge::handle() {
         }
     }
     if (percent < 1) {
-        float p_delta = 1 - percent;
-        if (abs(p_delta)>0.1 && m_speed>=1) percent += p_delta/m_speed;
-        else {
-            percent += p_delta;
+        if (m_duration) percent = (GetTime()-m_start_time)/m_duration;
+        else percent = 1;
+        if (percent >= 1) {
+            percent = 1;
             m_is_color_changed = true;
             if (!is_reverse) end_color = start_color;
             else start_color = end_color;
@@ -176,6 +182,7 @@ void Edge::handle() {
 
 void Edge::start(const bool& reverse, const bool& transparent) {
     is_reverse = reverse;
+    m_start_time = GetTime();
     if (!reverse) {
         m_point = m_start->getCenter();
         start_color = m_start->getColor();

@@ -10,7 +10,8 @@ DynamicColorCircle::DynamicColorCircle() {
     start_angle = 0,
     delta_angle = M_PI;
     start_color = end_color = WHITE;
-    m_speed = 10;
+    m_duration = 0.5;
+    m_start_time = 0;
 }
 bool DynamicColorCircle::IsColorChange() const {
     return m_is_color_change;
@@ -18,14 +19,14 @@ bool DynamicColorCircle::IsColorChange() const {
 void DynamicColorCircle::setRadius(const float& radius) {
     m_radius = radius;
 }
-void DynamicColorCircle::setSpeed(const float& speed) {
-    if (speed) m_speed = 10/speed;
+void DynamicColorCircle::setDuration(const float& duration) {
+    m_duration = duration;
 }
 void DynamicColorCircle::handle() {
     if (percent < 1 || end_color != start_color) {
-        float delta = 1 - percent;
-        if (delta > 0.1 && m_speed>1) percent += delta/m_scale;
-        else {
+        if (m_duration) percent = (GetTime()-m_start_time)/m_duration;
+        else percent = 1;
+        if (percent >= 1) {
             percent = 1;
             end_color = start_color;
             m_is_color_change = true;
@@ -41,11 +42,16 @@ void DynamicColorCircle::draw() {
     DrawCircleSector(getCenter(), m_radius, to_degree(start_angle-delta_angle), to_degree(start_angle+delta_angle), 30, start_color);
     DrawCircleSector(getCenter(), m_radius,to_degree(start_angle+delta_angle), to_degree(start_angle-delta_angle+2*M_PI), 30, end_color);
 }
+void DynamicColorCircle::complete() {
+    percent = 1;
+    end_color = start_color;
+}
 void DynamicColorCircle::start(const float& angle, const Color& start, const Color& end) {
     start_angle = angle;
     delta_angle = 0;
     m_scale = 10;
     percent = 0;
+    m_start_time = GetTime();
     start_color = start;
     end_color = end;
 }

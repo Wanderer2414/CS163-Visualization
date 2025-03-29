@@ -1,6 +1,8 @@
 #ifndef GRAPH_H
 #define GRAPH_H
 
+#include "ColorBox.h"
+#include "ColorPointer.h"
 #include "Container.h"
 #include "Edge.h"
 #include "Form.h"
@@ -31,7 +33,9 @@ public:
         fill_vertex = 12,
         unlock = 13,
         fill = 14,
-        add_code = 15
+        add_code = 15,
+        spread_color = 16,
+        complete_color = 17
     };
     Graph(const int& index, FormSetting form_setting, const Vector2& window_size);
     
@@ -60,17 +64,17 @@ private:
     OptionBox           bfs_choice, dfs_choice;
     TextButton          track_graph_hover,
                         pull_matrix_button;
-    TabBox              graph_setting;
+    TabBox              graph_setting, algorithms_box;
 
     vector<Vertex*>     vertices;
-    vector<Edge*>       true_edges, reverse_edge;
+    vector<Edge*>       edges;
 
     Container           setting_box, tools_box, extract_box;
 
     TextBox             extract_text_bx;
 
     Container           search_graph_box;
-    TextureButton       match_tool;
+    TextureButton       match_tool, filled_tool;
     OptionBox           fixed_choice, drag_choice, collision_choice, 
                         weight_choice, unweight_choice, 
                         direct_choice, undirect_choice;
@@ -84,7 +88,7 @@ private:
     Texture2D           cursor_icon;
     TextSetting         console_setting;
 
-
+    ColorPointer        color_box;
     void                insert(const int& value),
                         dfs(const int& vertex),
                         dfs(vector<bool>& visited, const int& vertex);

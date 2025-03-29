@@ -14,11 +14,9 @@ string Graph::RandomCreate() const {
 
 void Graph::free() {
     for (int i = 0; i<vertices.size(); i++) delete vertices[i];
-    for (int i = 0; i<true_edges.size(); i++) delete true_edges[i];
-    for (int i = 0; i<reverse_edge.size(); i++) delete reverse_edge[i];
+    for (int i = 0; i<edges.size(); i++) delete edges[i];
     vertices.clear();
-    true_edges.clear();
-    reverse_edge.clear();
+    edges.clear();
     matrix.clear();
     console.clear();
     clear();
@@ -26,36 +24,19 @@ void Graph::free() {
 void Graph::add_edge(const int& start, const int& end, const int& weight) {
     if (start == end) return;
     if (matrix[start][end]==-1) {
-        if (start<end) {
-            matrix[start][end] = true_edges.size();
-            true_edges.push_back(new Edge(vertices[start], vertices[end], &form_setting));
-            true_edges.back()->start(false);
-            true_edges.back()->setWeight(weight);
-            true_edges.back()->setType(m_type == 0);
-        } else {
-            matrix[start][end] = reverse_edge.size();
-            reverse_edge.push_back(new Edge(vertices[start], vertices[end], &form_setting));
-            reverse_edge.back()->setType(true);
-            reverse_edge.back()->setWeight(weight);
-            if (m_type==0) reverse_edge.back()->start(false);
-            else reverse_edge.back()->setColor(vertices[start]->getColor());
-        }
+        matrix[start][end] = edges.size();
+        edges.push_back(new Edge(vertices[start], vertices[end], &form_setting));
+        edges.back()->start(false);
+        edges.back()->setWeight(weight);
+        edges.back()->setType(m_type == 0);
     }
     if (m_type == 1) {
         if (matrix[end][start]==-1) {
-            if (start>end) {
-                matrix[end][start] = true_edges.size();
-                true_edges.push_back(new Edge(vertices[end], vertices[start], &form_setting));
-                true_edges.back()->start(true);
-                true_edges.back()->setWeight(weight);
-                true_edges.back()->setType(false);
-            } else {
-                matrix[end][start] = reverse_edge.size();
-                reverse_edge.push_back(new Edge(vertices[end], vertices[start], &form_setting));
-                reverse_edge.back()->setColor(vertices[start]->getColor());
-                reverse_edge.back()->setType(true);
-                reverse_edge.back()->setWeight(weight);
-            }
+            matrix[end][start] = edges.size();
+            edges.push_back(new Edge(vertices[end], vertices[start], &form_setting));
+            edges.back()->start(true);
+            edges.back()->setWeight(weight);
+            edges.back()->setType(m_type == 0);
         }
     }
 }
@@ -77,11 +58,8 @@ void Graph::setSubGraphColor(const int& row, vector<bool>& visited, const Color&
     vertices[row]->setColor(color);
     for (int i = 0; i<matrix.size(); i++) {
         if (matrix[row][i] != -1) {
-            if (row<i) true_edges[matrix[row][i]]->setColor(color);
-            else {
-                reverse_edge[matrix[i][row]]->setColor(color);
-                if (m_type == 1 && matrix[i][row]!=-1) true_edges[matrix[i][row]]->setColor(color);
-            }
+            edges[matrix[row][i]]->setColor(color);
+            if (m_type == 1 && matrix[i][row]!=-1) edges[matrix[i][row]]->setColor(color);
         }
         if (matrix[row][i]!=-1 && !visited[i]) {
             setSubGraphColor(i, visited, color);
@@ -93,9 +71,7 @@ void Graph::pull_matrix() {
     for (int i = 0; i<matrix.size(); i++) {
         for (int j = 0; j<matrix.size(); j++) {
             if (matrix[i][j]!=-1) {
-                if (i<j) ans += to_string(true_edges[matrix[i][j]]->getWeight());
-                else if (i>j) ans += to_string(reverse_edge[matrix[i][j]]->getWeight());
-                ans += " ";
+                ans += to_string(edges[matrix[i][j]]->getWeight()) + " ";
             } else ans += "0 ";
         }
         ans += '\n';
