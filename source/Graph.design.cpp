@@ -4,6 +4,7 @@
 
 Graph::Graph(const int& index, FormSetting f_setting, const Vector2& window_size):
     Form(index, f_setting, window_size),
+    heap(&form_setting),
     track_graph_hover(&form_setting, &form_setting),
     graph_setting(&form_setting),
     setting_box(&form_setting),
@@ -20,11 +21,14 @@ Graph::Graph(const int& index, FormSetting f_setting, const Vector2& window_size
 
     search_graph_box(&form_setting),
     tools_box(&form_setting),
+    prim_button(&form_setting, &form_setting),
 
     algorithms_box(&form_setting),
-
+    prim_box(&form_setting),
     extract_box(&form_setting),
+
     extract_text_bx(&form_setting, &form_setting),
+    prim_textbox(&form_setting, &form_setting),
     pull_matrix_button(&form_setting, &form_setting),
 
     vertex_label(&form_setting),
@@ -48,6 +52,11 @@ Graph::Graph(const int& index, FormSetting f_setting, const Vector2& window_size
 
     setting_box.push_back(&direct_choice);
     setting_box.push_back(&undirect_choice);
+
+    algorithms_box.push_back(1, &prim_box);
+    prim_box.push_back(&prim_textbox);
+    prim_box.push_back(&random_prim_button);
+    prim_box.push_back(&prim_button);
 
     tools_box.push_back(&match_tool);
     tools_box.push_back(&filled_tool);
@@ -96,10 +105,24 @@ Graph::Graph(const int& index, FormSetting f_setting, const Vector2& window_size
     filled_tool.setPosition(50, 5);
     filled_tool.setSize(40, 40);
     //Algorithms
+    prim_textbox.setPosition(5, 5);
+    prim_textbox.setSize(100, 40);
+
+    random_prim_button.setPosition(110, 5);
+    random_prim_button.setSize(40, 40);
+    random_prim_button.setButtonStage(0, Rand, Rand);
+
+    prim_button.setPosition(155, 5);
+    prim_button.setSize(100, 40);
+    prim_button.setText("Start");
+
     algorithms_box.setText(0, "Dijikstra");
-    algorithms_box.setText(1, "Kruskal");
-    algorithms_box.setText(2, "Prim");
+    algorithms_box.setText(1, "Prim");
+    algorithms_box.setText(2, "Kruskal");
     algorithms_box.setText(3, "Euler tour");
+
+    prim_box.setPosition(algorithms_box.getAutoSize().x + 15, 45);
+    prim_box.setSize(260, 50);
     //Extract controller
     extract_text_bx.setPosition(5, 5);
     extract_text_bx.setSize(290, 145);
@@ -205,6 +228,10 @@ Graph::Graph(const int& index, FormSetting f_setting, const Vector2& window_size
     color_box.setSize(120, 105);
     color_box.setVisible(false);
 
+    heap.setPosition(15, 100);
+    heap.setSize(100, 500);
+    heap.setVisible(false);
+
     children.push_back(&color_box);
 
     srand(time(0));
@@ -220,14 +247,18 @@ Graph::Graph(const int& index, FormSetting f_setting, const Vector2& window_size
 
 void Graph::draw() {
     for (int i = 0; i<edges.size(); i++) {
-        if (m_type == 1) {
-            int start = edges[i]->m_start->getIndex();
-            int end = edges[i]->m_end->getIndex();
-            if (matrix[end][start] != -1 && start<end) edges[i]->draw();
-        } 
-        else if (m_type == 0) edges[i]->draw();
+        if (edges[i]) {
+            if (m_type == 1) {
+                int start = edges[i]->m_start->getIndex();
+                int end = edges[i]->m_end->getIndex();
+                if (matrix[end][start] != -1 && start<end) edges[i]->draw();
+            } 
+            else if (m_type == 0) edges[i]->draw();
+        }
     }
-    for (int i =0 ;i <vertices.size(); i++) vertices[i]->draw();
+    for (int i =0 ;i <vertices.size(); i++) 
+        if (vertices[i]) vertices[i]->draw();
+    heap.draw();
     Form::draw();
 
     if (m_tool==0) 
@@ -237,6 +268,7 @@ void Graph::draw() {
         DrawTexture(cursor_icon, GetMousePosition().x - cursor_icon.width, GetMousePosition().y, WHITE);
 }
 void Graph::handle() {
+    heap.handle();
     //Random create
     if (random_create.isPressed()) {
         int vertex = to_int(vertex_textbox.getText());
@@ -255,102 +287,108 @@ void Graph::handle() {
     }
     Form::handle();
     for (int i = 0; i<edges.size(); i++) {
-        if (m_type == 1) {
-            int start = edges[i]->m_start->getIndex();
-            int end = edges[i]->m_end->getIndex();
-            if (matrix[start][end]==-1 || matrix[end][start] == -1) continue;
-        } 
-        edges[i]->handle();
-        edges[i]->setMode(m_weight == 0);
-
-        //Vertex color change
-        if (!m_is_lock && edges[i]->m_start->IsColorChange() && (edges[i]->m_start->getColor() != edges[i]->start_color)) {
-            int start = edges[i]->m_start->getIndex();
-            int end = edges[i]->m_end->getIndex();
+        if (edges[i]) {
             if (m_type == 1) {
-                if (start<end) {
-                    edges[i]->setDuration(getSpeed());
-                    edges[i]->start(false, false);
+                int start = edges[i]->m_start->getIndex();
+                int end = edges[i]->m_end->getIndex();
+                if (matrix[start][end]==-1 || matrix[end][start] == -1) continue;
+            } 
+            edges[i]->handle();
+            edges[i]->setMode(m_weight == 0);
+
+            //Vertex color change
+            if (!m_is_lock && edges[i]->m_start->IsColorChange() && (edges[i]->m_start->getColor() != edges[i]->start_color)) {
+                int start = edges[i]->m_start->getIndex();
+                int end = edges[i]->m_end->getIndex();
+                if (m_type == 1) {
+                    if (start<end) {
+                        edges[i]->setDuration(getSpeed());
+                        edges[i]->start(false, false);
+                    }
+                    else {
+                        edges[i]->setDuration(getSpeed());
+                        edges[matrix[end][start]]->start(true, false);
+                    }
                 }
                 else {
                     edges[i]->setDuration(getSpeed());
-                    edges[matrix[end][start]]->start(true, false);
+                    edges[i]->start(false, false);
                 }
             }
-            else {
-                edges[i]->setDuration(getSpeed());
-                edges[i]->start(false, false);
-            }
-        }
-        //Check edge color change 
-        if (edges[i]->IsColorChange() && !m_is_lock) {
-            if (!edges[i]->IsReverse()) {
-                float angular = arctan(edges[i]->m_start->getCenter() - edges[i]->m_end->getCenter());
-                edges[i]->m_end->setDuration(getSpeed());
-                edges[i]->m_end->start(angular, edges[i]->start_color, edges[i]->m_end->getColor());
-            } else {
-                float angular = arctan(edges[i]->m_end->getCenter() - edges[i]->m_start->getCenter());
-                edges[i]->m_start->setDuration(getSpeed());
-                edges[i]->m_start->start(angular, edges[i]->end_color, edges[i]->m_start->getColor());
+            //Check edge color change 
+            if (edges[i]->IsColorChange() && !m_is_lock) {
+                if (!edges[i]->IsReverse()) {
+                    float angular = arctan(edges[i]->m_start->getCenter() - edges[i]->m_end->getCenter());
+                    edges[i]->m_end->setDuration(getSpeed());
+                    edges[i]->m_end->start(angular, edges[i]->start_color, edges[i]->m_end->getColor());
+                } else {
+                    float angular = arctan(edges[i]->m_end->getCenter() - edges[i]->m_start->getCenter());
+                    edges[i]->m_start->setDuration(getSpeed());
+                    edges[i]->m_start->start(angular, edges[i]->end_color, edges[i]->m_start->getColor());
+                }
             }
         }
     }
     bool isFocus = false;
     for (int i = 0; i<vertices.size(); i++) {
-        vertices[i]->handle();
-        vertices[i]->setFixed(m_mode == 0);
-        vertices[i]->setDragable(m_mode == 1);
+        if (vertices[i]) {
+            vertices[i]->handle();
+            vertices[i]->setFixed(m_mode == 0);
+            vertices[i]->setDragable(m_mode == 1);
 
-        //Match vertex
-        if (vertices[i]->isFocused()) {
-            isFocus = true;
-            if (m_tool == 1 && i!=chosen) {
-                vertices[i]->setDuration(getSpeed());
-                vertices[i]->start(0, color_box.getColor(), vertices[i]->getColor());
+            //Match vertex
+            if (vertices[i]->isFocused()) {
+                isFocus = true;
+                if (m_tool == 1 && i!=chosen) {
+                    vertices[i]->setDuration(getSpeed());
+                    vertices[i]->start(0, color_box.getColor(), vertices[i]->getColor());
+                }
+                if (chosen == -1) chosen = i;
+                else if (chosen != i) {
+                    if (m_tool == 0) add_edge(chosen, i, 1);
+                    chosen = i;
+                }
             }
-            if (chosen == -1) chosen = i;
-            else if (chosen != i) {
-                if (m_tool == 0) add_edge(chosen, i, 1);
-                chosen = i;
-            }
-        }
-        //Check out window
-        if (m_mode != 0) {
-            Vector2 pos = vertices[i]->getCenter();
-            float radius = vertices[i]->getRadius();
-            Vector2 velocity = {0, 0}, acceleration = {0, 0};
-            if (pos.x-radius<m_workspace.x)                             {
-                acceleration.x = -vertices[i]->getVelocity().x*1.8;
-                vertices[i]->setPosition(m_workspace.x + radius, pos.y);
-            }
-            else if (pos.x+radius>m_workspace.x + m_workspace.width)    {
-                acceleration.x = - vertices[i]->getVelocity().x*1.8;
-                vertices[i]->setPosition(m_workspace.x + m_workspace.width - radius, pos.y);
-            }
-            if (pos.y - radius<m_workspace.y)                           {
-                acceleration.y = -vertices[i]->getVelocity().y*1.8;
-                vertices[i]->setPosition(pos.x, m_workspace.y + radius);
-            }
-            else if (pos.y+radius > m_workspace.y + m_workspace.height) {
-                acceleration.y = -vertices[i]->getVelocity().y*1.8;
-                vertices[i]->setPosition(pos.x, m_workspace.y + m_workspace.height - radius);
-            }
-            vertices[i]->add_acceleration(acceleration);
-            //Check collision
-            for (int j = i+1; j<vertices.size(); j++) {
-                if (abs(vertices[i]->getCenter()-vertices[j]->getCenter()) < vertices[i]->getRadius() + vertices[j]->getRadius()) {
-                    Vector2 delta = vertices[j]->getCenter() - vertices[i]->getCenter();
-                    delta = delta/abs(delta)*(vertices[i]->getRadius() + vertices[j]->getRadius() - abs(delta));
-                    if (m_mode == 2) {
-                        Vector2 velocityA = vertices[i]->getVelocity();
-                        Vector2 velocityB = vertices[j]->getVelocity();
-                        vertices[i]->setVelocity(velocityB - delta/10);
-                        vertices[j]->setVelocity(velocityA + delta/10);
-                    } else {
-                        Vector2 posA = vertices[i]->getPosition() - delta*1.1;
-                        Vector2 posB = vertices[j]->getPosition() + delta*1.1;
-                        vertices[i]->setPosition(posA.x, posA.y);
-                        vertices[j]->setPosition(posB.x, posB.y);
+            //Check out window
+            if (m_mode != 0) {
+                Vector2 pos = vertices[i]->getCenter();
+                float radius = vertices[i]->getRadius();
+                Vector2 velocity = {0, 0}, acceleration = {0, 0};
+                if (pos.x-radius<m_workspace.x)                             {
+                    acceleration.x = -vertices[i]->getVelocity().x*1.8;
+                    vertices[i]->setPosition(m_workspace.x + radius, pos.y);
+                }
+                else if (pos.x+radius>m_workspace.x + m_workspace.width)    {
+                    acceleration.x = - vertices[i]->getVelocity().x*1.8;
+                    vertices[i]->setPosition(m_workspace.x + m_workspace.width - radius, pos.y);
+                }
+                if (pos.y - radius<m_workspace.y)                           {
+                    acceleration.y = -vertices[i]->getVelocity().y*1.8;
+                    vertices[i]->setPosition(pos.x, m_workspace.y + radius);
+                }
+                else if (pos.y+radius > m_workspace.y + m_workspace.height) {
+                    acceleration.y = -vertices[i]->getVelocity().y*1.8;
+                    vertices[i]->setPosition(pos.x, m_workspace.y + m_workspace.height - radius);
+                }
+                vertices[i]->add_acceleration(acceleration);
+                //Check collision
+                for (int j = i+1; j<vertices.size(); j++) {
+                    if (vertices[j]) {
+                        if (abs(vertices[i]->getCenter()-vertices[j]->getCenter()) < vertices[i]->getRadius() + vertices[j]->getRadius()) {
+                            Vector2 delta = vertices[j]->getCenter() - vertices[i]->getCenter();
+                            delta = delta/abs(delta)*(vertices[i]->getRadius() + vertices[j]->getRadius() - abs(delta));
+                            if (m_mode == 2) {
+                                Vector2 velocityA = vertices[i]->getVelocity();
+                                Vector2 velocityB = vertices[j]->getVelocity();
+                                vertices[i]->setVelocity(velocityB - delta/10);
+                                vertices[j]->setVelocity(velocityA + delta/10);
+                            } else {
+                                Vector2 posA = vertices[i]->getPosition() - delta*1.1;
+                                Vector2 posB = vertices[j]->getPosition() + delta*1.1;
+                                vertices[i]->setPosition(posA.x, posA.y);
+                                vertices[j]->setPosition(posB.x, posB.y);
+                            }
+                        }
                     }
                 }
             }
@@ -367,19 +405,21 @@ void Graph::handle() {
     //Change type
     if (direct_choice.isChanged() && direct_choice.isPressed()) {
         for (int i = 0; i<edges.size(); i++) {
-            int start = edges[i]->m_start->getIndex();
-            int end = edges[i]->m_end->getIndex();
-            if (start>end) edges[i]->setColor(edges[matrix[end][start]]->start_color);
-        }
-        for (int i = 0; i<edges.size(); i++) {
-            edges[i]->setType(true);
+            if (edges[i]) {
+                int start = edges[i]->m_start->getIndex();
+                int end = edges[i]->m_end->getIndex();
+                if (start>end && matrix[end][start] != -1) edges[i]->setColor(edges[matrix[end][start]]->start_color);
+                edges[i]->setType(true);
+            }
         }
     } else if (undirect_choice.isChanged() && undirect_choice.isPressed()) {
         for (int i = 0; i<edges.size(); i++) {
-            edges[i]->setType(false);
-            if (edges[i]->m_start->getColor() != edges[i]->m_end->getColor()) {
-                edges[i]->setDuration(getSpeed());
-                edges[i]->start(false, false);
+            if (edges[i]) {
+                edges[i]->setType(false);
+                if (edges[i]->m_start->getColor() != edges[i]->m_end->getColor()) {
+                    edges[i]->setDuration(getSpeed());
+                    edges[i]->start(false, false);
+                }
             }
         }
     }
@@ -439,5 +479,9 @@ void Graph::handle() {
     //Matrix pull
     if (pull_matrix_button.isPressed()) {
         pull_matrix();
+    }
+    //Alogoritm check 
+    if (prim_button.isPressed()) {
+        prim(prim_textbox.getText());
     }
 }

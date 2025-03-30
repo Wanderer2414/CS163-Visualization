@@ -7,6 +7,7 @@
 #include "Edge.h"
 #include "Form.h"
 #include "GUI.h"
+#include "HeapVisual.h"
 #include "Label.h"
 #include "OptionBox.h"
 #include "Global.h"
@@ -34,16 +35,24 @@ public:
         fill = 14,
         add_code = 15,
         spread_color = 16,
-        complete_color = 17
+        complete_color = 17,
+        remove_edge = 18,
+        remove_vertex = 19,
+        prim_code = 20,
+        add_heap = 21,
+        pop_heap = 22,
+        show_heap = 23,
+        hide_heap = 24
     };
     Graph(const int& index, FormSetting form_setting, const Vector2& window_size);
     
     virtual void        add(const vector<std::string>& value) override,
+                        remove(const std::string &str)        override,
                         handle()                              override,
                         draw()                                override,
 
                         search(const std::string& val)        override,
-                        
+                        prim(const std::string& val),
                         FetchNextCommand(const vector<float>& codes) override,
                         FetchPrevCommand(const vector<float>& codes) override;
     virtual string      RandomCreate() const override,
@@ -61,18 +70,19 @@ private:
 
     Label               edge_label, vertex_label;
     TextBox             edge_textbox, vertex_textbox;
-    TextureButton       random_edge_button, random_vertex_button;
+    TextureButton       random_edge_button, random_vertex_button, random_prim_button;
     OptionBox           bfs_choice, dfs_choice;
     TextButton          track_graph_hover,
-                        pull_matrix_button;
+                        pull_matrix_button,
+                        prim_button;
     TabBox              graph_setting, algorithms_box;
 
     vector<Vertex*>     vertices;
     vector<Edge*>       edges;
 
-    Container           setting_box, tools_box, extract_box;
+    Container           setting_box, tools_box, extract_box, prim_box;
 
-    TextBox             extract_text_bx;
+    TextBox             extract_text_bx, prim_textbox;
 
     Container           search_graph_box;
     TextureButton       match_tool, filled_tool;
@@ -90,6 +100,7 @@ private:
     TextSetting         console_setting;
 
     ColorPointer        color_box;
+    HeapVisual          heap;
     string              RandomVertex() const, RandomEdge() const;
     void                insert(const int& value),
                         dfs(const int& vertex),
@@ -100,6 +111,10 @@ private:
                         random_subGraphColor(),
                         setSubGraphColor(const int& row, const Color& color),
                         setSubGraphColor(const int& row, vector<bool>& visited, const Color& color);
+
+    void                prim_algorithms(const int& vertex),
+                        prim_algorithms(vector<bool>& visited, MinHeap& q, const int& vertex);
+
 };
 string to_string(const vector<vector<int>>& matrix);
 vector<vector<int>> to_matrix(const vector<string>& str);

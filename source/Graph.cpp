@@ -1,12 +1,13 @@
 #include "../include/Graph.h"
 #include "../include/Vertex.h"
 #include "../include/General.h"
+#include <algorithm>
 #include <queue>
 
 void Graph::search(const string& val) {
     int value = to_int(val);
     float i = 0;
-    while (i<vertices.size() && vertices[i]->getValue() != value) i++;
+    while (i<vertices.size() && (!vertices[i] || vertices[i]->getValue() != value)) i++;
     if (i<vertices.size()) {
         if (search_type == 0)
             console.PushBackMainCommand("Search " + to_string(value) + " with DFS");
@@ -43,7 +44,8 @@ void Graph::add(const vector<std::string>& str) {
             }
         }
         setSubGraphColor(delta, colors[(++color_pointer)%6]);
-        for (int i = 0; i<edges.size(); i++) edges[i]->start(false);
+        for (int i = 0; i<edges.size(); i++) 
+            if (edges[i]) edges[i]->start(false);
     } else {
         InsertNextMainCommand({add_code, 1.0f*to_int(str[0]),1});
     }
@@ -108,6 +110,33 @@ void Graph::insert(const int& value) {
     color_pointer = (color_pointer+1)%6;
     for (int i =0; i<matrix.size() ;i++) matrix[i].push_back(-1);
     matrix.push_back(vector<int>(matrix.size()+1, -1));
+}
+void Graph::remove(const std::string& str) {
+    int val = to_int(str);
+    int i  =0;
+    while (i<vertices.size() && (!vertices[i] || vertices[i]->getValue() != val)) i++;
+    if (i<vertices.size() && vertices[i] && vertices[i]->getValue() == val) {
+        InsertNextMainCommand({remove_vertex, 1.0f*i, 1.0f*vertices[i]->getValue(), to_float(vertices[i]->getColor()), 1});
+        for (int j = 0; j<edges.size(); j++) {
+            if (edges[j]) {
+                int start = edges[j]->m_start->getIndex();
+                int end = edges[j]->m_end->getIndex();
+                if (start == i || end == i) {
+                    InsertNextMainCommand({remove_edge,1.0f*j, 1.0f*start, 1.f*end, 1.0f*edges[j]->getWeight(), 1});
+                }
+            }
+        }
+    }
+
+}
+void Graph::prim(const std::string& str) {
+    int val = to_int(str);
+    float i = 0;
+    while (i<vertices.size() && (!vertices[i] || vertices[i]->getValue() != val)) i++;
+    if (i<vertices.size() && vertices[i]) {
+        console.InsertNextMainCommand("Prim: start at vertex = " + to_string(vertices[i]->getValue()));
+        InsertNextMainCommand({prim_code, i, 1});
+    }
 }
 void Graph::FetchNextCommand(const vector<float>& codes) {
     int code = codes[0];
@@ -256,18 +285,85 @@ void Graph::FetchNextCommand(const vector<float>& codes) {
         case spread_color: {
             int index = codes[1];
             for (int i = 0; i<edges.size(); i++) {
-                if (edges[i]->m_start->getIndex() == index) {
-                    edges[i]->setDuration(getSpeed()*codes.back());
-                    edges[i]->start(false, false);
-                } else edges[i]->setDuration(0);
+                if (edges[i]) {
+                    if (edges[i]->m_start->getIndex() == index) {
+                        edges[i]->setDuration(getSpeed()*codes.back());
+                        edges[i]->start(false, false);
+                    } else edges[i]->setDuration(0);
+                }
             }
             setDuration(codes.back());
         }
         break;
         case complete_color: {
-            for (int i = 0; i<vertices.size(); i++) vertices[i]->complete();
-            for (int i = 0; i<edges.size(); i++) edges[i]->complete();
+            for (int i = 0; i<vertices.size(); i++) 
+                if (vertices[i]) vertices[i]->complete();
+            for (int i = 0; i<edges.size(); i++) 
+                if (edges[i]) edges[i]->complete();
             setDuration(codes.back());
+        }
+        break;
+        case remove_edge: {
+            int index = codes[1];
+            int start = codes[2], end = codes[3];
+            int weight = codes[4];
+            delete edges[index];
+            edges[index] = 0;
+            matrix[start][end] = -1;
+            setDuration(0);
+        }
+        break;
+        case remove_vertex: {
+            int index = codes[1];
+            delete vertices[index];
+            vertices[index] = 0;
+            setDuration(0.1);
+        }
+        break;
+        case prim_code: {
+            int index = codes[1];
+            console.goDown();
+            console.InsertNextSubCommand("f(vertex)");
+            console.InsertNextSubCommand("  Add all edge start at vertex to heap");
+            console.InsertNextSubCommand("  Pop all edges with used end vertex from heap");
+            console.InsertNextSubCommand("  if heap have element ");
+            console.InsertNextSubCommand("      vertex = top heap -> end");
+            console.InsertNextSubCommand("      Pop top heap");
+            console.InsertNextSubCommand("      f(vertex)");
+            InsertNextSubCommand({show_heap});
+            InsertNextSubCommand({lock, 1});
+            InsertNextSubCommand({reset_color, 1.0f*index, to_float(vertices[index]->getColor()), 1});
+            InsertNextSubCommand({fill_vertex, 1.0f*index, to_float(vertices[index]->getColor()), 1});
+            prim_algorithms(index);
+            InsertNextSubCommand({unlock, 0});
+            InsertNextSubCommand({complete_color, 0});
+            InsertNextSubCommand({hide_heap});
+            InsertNextSubCommand({goDown, 4, 0});
+            InsertNextSubCommand({fill, 1.0f*index, to_float(vertices[index]->getColor()), 1});
+            setDuration(0);
+        }
+        break;
+        case add_heap: {
+            int start = codes[1], end = codes[2], weight = codes[3];
+            cout << "ADD: "<<  start << " " << end << " " <<weight << endl;
+            heap.Insert({start, end, weight});
+            setDuration(0);
+        }
+        break;
+        case pop_heap: {
+            cout << "POP: " <<codes[1] << " " <<codes[2] << " " <<codes[3] << endl;
+            heap.pop();
+            setDuration(0);
+        }
+        break;
+        case show_heap: {
+            heap.setVisible(true);
+            setDuration(0);
+        }
+        break;
+        case hide_heap: {
+            heap.setVisible(false);
+            setDuration(0);
         }
         break;
     }
@@ -370,8 +466,104 @@ void Graph::FetchPrevCommand(const vector<float>& codes) {
             setDuration(codes.back());
         }
         break;
+        case remove_edge: {
+            int index = codes[1];
+            int start = codes[2], end = codes[3];
+            int weight = codes[4];
+            edges[index] = new Edge(vertices[start], vertices[end], &form_setting);
+            edges[index]->setDuration(0.5);
+            edges[index]->start(false);
+            edges[index]->setWeight(weight);
+            matrix[start][end] = index;
+            setDuration(0.1);
+        }
+        break;
+        case remove_vertex: {
+            int index = codes[1];
+            vertices[index] = new Vertex(&form_setting, index);
+            vertices[index]->setValue(codes[2]);
+            vertices[index]->setColor(to_color(codes[3]));
+            vertices[index]->setSize(50, 50);
+            setDuration(0.1);
+        }
+        break;
+        case prim_code: {
+            console.goUp();
+        }
+        break;
+        case add_heap: {
+            Path path;
+            path.start = codes[1];
+            path.end = codes[2];
+            path.weight = codes[3];
+            cout << "REM: "<<path.start << " " << path.end << " " << path.weight << endl;
+            for (int i = 0; i<heap.size(); i++)
+                if (heap[i] == path) {
+                    heap.erase(i);
+                    break;
+                }
+            setDuration(0);
+        }
+        break;
+        case pop_heap: {
+            Path path;
+            path.start = codes[1];
+            path.end = codes[2];
+            path.weight = codes[3];
+            heap.Insert(path);
+            setDuration(0);
+        }
+        break;
+        case show_heap: {
+            heap.setVisible(false);
+            setDuration(0);
+        }
+        break;
+        case hide_heap: {
+            heap.setVisible(true);
+            setDuration(0);
+        }
+        break;
     }
 }
+void Graph::prim_algorithms(const int& vertex) {
+    vector<bool> visited(matrix.size(), 0);
+    visited[vertex] =true;
+    MinHeap q;
+    prim_algorithms(visited, q, vertex);
+}
+
+void Graph::prim_algorithms(vector<bool>& visited, MinHeap& q, const int& vertex) {
+    InsertNextSubCommand({goDown, 1, 0.5});
+    for (int i = 0; i<matrix.size(); i++) {
+        if (matrix[vertex][i] != -1 && !visited[i]) { 
+            int weight = edges[matrix[vertex][i]]->getWeight();
+            InsertNextSubCommand({add_heap, 1.0f*vertex, 1.0f*i, 1.0f*weight, 0});
+            q.Insert({vertex, i, weight});
+        }
+    }
+    InsertNextSubCommand({goDown, 1, 0.5});
+    while (q.size() && visited[q.front().end]) {
+        InsertNextSubCommand({pop_heap, 1.0f*q.front().start, 1.0f*q.front().end, 1.0f*q.front().weight});
+        q.pop();
+    }
+    InsertNextSubCommand({goDown, 1, 0.5});
+    if (q.size()) {
+        InsertNextSubCommand({goDown, 1, 0});
+        visited[q.front().end] = true;
+        InsertNextSubCommand({choose_edge, 1.0f*q.front().start, 1.0f*q.front().end, 1});
+        InsertNextSubCommand({choose_vertex, 1.0f*q.front().start, 1.0f*q.front().end, 1});
+        InsertNextSubCommand({pop_heap, 1.0f*q.front().start, 1.0f*q.front().end, 1.0f*q.front().weight});
+        int end = q.front().end;
+        InsertNextSubCommand({goDown, 1, 0.5});
+        q.pop();
+        // InsertNextSubCommand({goUp, 4, 0.5});
+        InsertNextSubCommand({goDown, 1, 0.5});
+        InsertNextSubCommand({goUp, 6, 0.5});
+        prim_algorithms(visited, q, end);
+    }
+}
+
 Graph::~Graph() {
     free();
 }
