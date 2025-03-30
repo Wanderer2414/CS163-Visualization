@@ -1,13 +1,12 @@
 cmake_minimum_required(VERSION 3.8)
 
-project(DSAVisualization)
+project(DSAVisual)
 
 # Set C++ standard
 set(CMAKE_CXX_STANDARD 17)
 
 # Set the path to Raylib (change this to where you have Raylib installed)
-set(RAYLIB_INCLUDE_DIR "C:/Users/MY\ PC/ProjectDSA/CS163-DSAVisualization/raylib")
-
+set(RAYLIB_INCLUDE_DIR "C:/Users/Dell/Downloads/CS163-DSAVisual/raylib")
 
 # Include directories (Raylib headers)
 include_directories(${RAYLIB_INCLUDE_DIR})
@@ -28,16 +27,10 @@ set(SOURCES
     source/TextureButton.cpp
 )
 
-# Create executable
-add_executable(DSAVisualization ${SOURCES} "include/Colors.h" "source/Colors.cpp" "include/Mode.h" "source/Mode.cpp")
+#Add Executables
 
-# Link libraries
-target_link_libraries(DSAVisualization
-    -lraylib
-    -lopengl32                      
-    -lgdi32                         
-    -lwinmm                         
-)
+#Target Link Libraries
+
 # Only have to rerun the cmake when we change this file (CMakeLists.txt)
 # cmake -G "Visual Studio 17 2022" -A x64 ..
 
