@@ -1,19 +1,20 @@
-#include "../include/SettingPackage.h"
+﻿#include "../include/SettingPackage.h"
 
 FormSetting LightTheme = {
     {
         0.2f, 30,
-        {170, 210, 250, 255},  // Button Pressed (Darker Pastel Blue)
-        {190, 220, 255, 255},  // Button Hover (Slightly Darker Pastel Blue)
-        {200, 230, 255, 255}   // Button (Pastel Blue)
+        {100, 160, 220, 255},  // Button Pressed 
+        {130, 180, 230, 255},  // Button Hover 
+        {160, 200, 250, 255}   // Button 
     },
     {
         {}, 30, 2,
-        {40, 60, 100, 255},    // Text (Dark Blue for contrast)
+        {20, 40, 80, 255},     // Text 
     },
-    {150, 190, 230, 255},     // Border or other UI elements (Muted Pastel Blue)
-    {220, 240, 255, 255},     // Background (Very Light Pastel Blue)
+    {120, 170, 220, 255},     // Border or other UI elements
+    {240, 250, 255, 255},     // Background 
 };
+
 FormSetting DarkTheme = {
     {
         0.2f, 30,

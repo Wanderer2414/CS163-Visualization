@@ -126,12 +126,6 @@ namespace SLL {
 			break;
 		}
 	}
-	void SLLForm::search(const int& x)
-	{
-	}
-	void SLLForm::update(const int& x)
-	{
-	}
 	void SLLForm::FetchPrevCommand(const std::vector<float>& command) {
 		if (command.empty()) return;
 		switch ((int)command[0]) {

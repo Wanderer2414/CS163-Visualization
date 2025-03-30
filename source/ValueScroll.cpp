@@ -1,10 +1,12 @@
 #include "../include/ValueScroll.h"
 #include "../include/General.h"
+#include <cmath>
+#include <raylib.h>
 
 ValueScroll::ValueScroll(TextSetting* t_setting) {
     text_setting = t_setting;
-    m_text = {""};
-    m_text_position = {{0, 0}};
+    m_text.clear();
+    m_text_position.clear();
     m_is_hover = m_is_changed = false;
     m_index = 0;
     pointer = 0;
@@ -22,12 +24,12 @@ bool ValueScroll::isHovered() const {
 int ValueScroll::getChoiceIndex() const {
     return pointer;
 }
+float ValueScroll::getValue() const {
+    return m_values[m_index];
+}
 void ValueScroll::clear() {
     m_text.clear();
     m_text_position.clear();
-    m_text = {""};
-    m_text_position = {{0, 0}};
-    font_size = {0};
 }
 
 void ValueScroll::draw() {
@@ -60,9 +62,12 @@ void ValueScroll::handle() {
         pointer += velocity;
         if (abs(velocity) > 0.1) velocity /= 1.05;
         else velocity = 0;
-        if (pointer>=m_text_position.size()) pointer -= m_text_position.size();
-        if (pointer<0) pointer += m_text_position.size();
+        if (pointer>=m_text_position.size()) 
+            pointer -= m_text_position.size();
+        if (pointer<0) 
+            pointer += m_text_position.size();
         m_index= round(pointer);
+        if (m_index >= m_text_position.size()) m_index = m_text_position.size() - 1;
         m_is_changed = true;
         update_text();
     }
@@ -74,18 +79,11 @@ void ValueScroll::handle() {
         m_is_changed = false;
     }
 }
-void ValueScroll::setText(const std::string& str) {
-    m_text.clear();
-    m_text.push_back("");
-    m_text_position.clear();
+void ValueScroll::push_back(const float& value, const std::string& str) {
+    m_text.push_back(str);
     m_text_position.push_back({0, 0});
-    for (int i = 0; i<str.size(); i++) {
-        if (str[i]=='\n') {
-            m_text_position.push_back({0, 0});
-            m_text.push_back("");
-        }
-        else m_text.back().push_back(str[i]);
-    }
+    font_size.push_back(0);
+    m_values.push_back(value);
     update_text();
 }
 void ValueScroll::setSize(const float& width, const float& height) {
@@ -100,26 +98,23 @@ void ValueScroll::setPosition(const float& x, const float& y) {
 }
 
 void ValueScroll::update_text() {
-    if (!text_setting) return;
-    font_size.clear();
-    for (int i = 0; i<m_text.size(); i++) {
-        float size = std::max(text_setting->font_size - abs(i-pointer)*5, 0.f);
-        size = std::max(size, text_setting->font_size - abs(i-pointer + m_text.size())*5);
-        size = std::max(size, text_setting->font_size - abs(pointer - i + m_text.size())*5);
-        font_size.push_back(size);
-        update_line(i);
-    }
+    if (!text_setting || m_text.empty()) return;
     int range = text_setting->font_size/5;
     int start = m_index - range;
     int end = m_index+range;
     int n = text_setting->font_size/5;
     n = n*(n-1)/2;
-    m_text_position[(start-1+m_text.size())%m_text.size()].y = m_position.y + m_size.y/2 - text_setting->font_size/5 - int(text_setting->font_size)%5 - n*5;
+    //Align middle
+    int prev = (start-1+m_text.size())%m_text.size();
+    m_text_position[prev].y = m_position.y + m_size.y/2 - text_setting->font_size/5 - int(text_setting->font_size)%5 - n*5;
 
-    for (int i =start; i<end; i++) {
-        int cur = (i+m_text.size())%m_text.size();
-        int index = (i+m_text.size()-1)%m_text.size();
-        m_text_position[cur].y = m_text_position[index].y + font_size[index];
+    for (int i = start; i<end; i++) {
+        int index = (i+m_text.size())%m_text.size();
+        prev = (i-1+m_text.size())%m_text.size();
+        float size = text_setting->font_size - abs(i-pointer)*5;
+        font_size[index] = size;
+        m_text_position[index].y = m_text_position[prev].y + font_size[prev];
+        update_line(index);
     }
 }
 void ValueScroll::update_line(const int& line) {

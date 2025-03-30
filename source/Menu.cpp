@@ -17,7 +17,7 @@ Menu::Menu(FormSetting f_setting, const Vector2& windowSize) :
     children.push_back(&SLLForm);
 
     BSTForm.setSize(main_button_width, main_button_height);
-    BSTForm.setText("BST");
+    BSTForm.setText("AVL Tree");
 
     GraphForm.setSize(main_button_width, main_button_height);
     GraphForm.setText("Graph");
@@ -28,7 +28,7 @@ Menu::Menu(FormSetting f_setting, const Vector2& windowSize) :
     SLLForm.setSize(main_button_width, main_button_height);
     SLLForm.setText("Singly Linked List");
     
-    Back.setPosition(20, 20);
+    Back.setPosition(10, 10);
     Back.setButtonStage(0, back_normal, back_hovered);
     Back.setSize(30, 30);
     Back.setSize(40, 40);

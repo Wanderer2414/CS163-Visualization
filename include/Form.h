@@ -26,19 +26,30 @@ public:
 
     virtual void    add(const vector<string>& str),
                     remove(const std::string& str),
-                    update(const int& x),
-                    search(const int& x);
+                    update(const std::string& old_value, const std::string& new_value),
+                    search(const std::string& x);
+
+    virtual string  RandomCreate() const,
+                    RandomInsert() const,
+                    RandomRemove() const,
+                    RandomSearch() const,
+                    RandomOldValue() const,
+                    RandomNewValue() const;
     ~Form();
 protected:
     bool            m_workspace_focus;
     std::vector<Controller*> children;
     Vector2         m_window_size;
 
-    Label           create_label;
+    Label           create_label,
+                    update_old_value_label,
+                    update_new_value_label;
     
-    TextBox         input_textbox,
+    TextBox         create_textbox,
+                    insert_textbox,
                     remove_textbox,
-                    update_textbox,
+                    update_textbox_choice,
+                    update_textbox_value,
                     search_textbox;
 
     TextButton      track_hover;
@@ -49,10 +60,17 @@ protected:
                     restart_button,
                     home_button;
 
+    TextureButton   random_create,
+                    random_insert,
+                    random_remove,
+                    random_search,
+                    random_update_choice,
+                    random_update_value;
+
     ValueScroll     speed_scroll;
     TabBox          option_box;
 
-    TextButton      add_button,
+    TextButton      insert_button,
                     remove_button,
                     search_button,
                     update_button,

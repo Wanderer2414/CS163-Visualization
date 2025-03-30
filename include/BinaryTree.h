@@ -4,21 +4,13 @@
 #include "Form.h"
 #include "GUI.h"
 #include "Global.h"
+#include "CommandCode.h"
 
-enum CommandCode {
-    add = 0,
-    choose = 1,
-    unchoose = 2,
-    redraw = 3,
-    erase = 4
-};
 class BinaryTreeForm :public Form {
 public:
     BinaryTreeForm(const int& index, FormSetting form_setting, const Vector2& window_size);
     void            add(const vector<std::string>& x)   override,
                     remove(const std::string& x)override,
-                    update(const int& x)        override,
-                    search(const int& x)        override,
                     FetchNextCommand(const std::vector<float>& codes)  override,
                     FetchPrevCommand(const std::vector<float>& codes)  override,
                     draw()                      override,

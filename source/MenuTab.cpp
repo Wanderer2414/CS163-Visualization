@@ -5,7 +5,7 @@ ButtonTab::ButtonTab(ButtonSetting* b_setting, TextSetting *t_setting) {
     text_setting = t_setting;
     m_is_pressed = m_is_hovered = m_is_showed = 0;
     m_hover_selection = -1;
-    m_selection = 0;
+    m_selection = -1;
 }
 bool ButtonTab::isHovered() const {
     return m_is_hovered;
