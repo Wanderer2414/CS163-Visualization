@@ -1,8 +1,6 @@
 #include "../include/ShortestPath.h"
 #include "../include/Global.h"
 
-const int INF = numeric_limits<int>::max();
-
 vector<int> dijkstra(vector<vector<pair<int, int>>>& graph, int start, int end) {
     priority_queue<pair<int, int>, vector<pair<int, int>>, greater<pair<int, int>>> minHeap;
     vector<int> distance(graph.size(), numeric_limits<int>::max());
@@ -37,9 +35,8 @@ vector<int> dijkstra(vector<vector<pair<int, int>>>& graph, int start, int end) 
 }
 
 void localDijsktra(vector<vector<pair<int, int>>>& graph, vector<int>& distance, vector<int>& previous, int start, int radius) {
-    int n = graph.size();
-    distance.resize(n, INF);
-    previous.resize(n, -1);
+    distance.resize(graph.size(), numeric_limits<int>::max());
+    previous.resize(graph.size(), -1);
     priority_queue<pair<int, int>, vector<pair<int, int>>, greater<pair<int, int>>> minHeap;
     minHeap.push({0, start});
     distance[start] = 0;
@@ -59,10 +56,14 @@ void localDijsktra(vector<vector<pair<int, int>>>& graph, vector<int>& distance,
     }
 }
 
-void dfs(const vector<vector<int>>& matrix, vector<bool>& visited, int vertex, vector<int>& component) {
+void dfs(const vector<vector<int>>& matrix, vector<bool>& visited, vector<int>& component, int vertex) {
     visited[vertex] = true;
     component.push_back(vertex);
-    for (int neighbor = 0; neighbor < matrix.size(); ++neighbor) if (matrix[vertex][neighbor] == 1 && !visited[neighbor]) dfs(matrix, visited, neighbor, component);
+    for (int neighbor = 0; neighbor < matrix.size(); ++neighbor) {
+        if (matrix[vertex][neighbor] == 1 && !visited[neighbor]) {
+            dfs(matrix, visited, component, neighbor);
+        }
+    }
 }
 
 int Graph::findParent(vector<int>& parent, int node) {
@@ -255,4 +256,5 @@ int GraphVisual::loadFile(const std::string filename) {
     }
     
     inputFile.close();*/
+    return 1;
 }
