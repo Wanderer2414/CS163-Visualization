@@ -22,13 +22,16 @@ Graph::Graph(const int& index, FormSetting f_setting, const Vector2& window_size
     search_graph_box(&form_setting),
     tools_box(&form_setting),
     prim_button(&form_setting, &form_setting),
+    kruskal_button(&form_setting, &form_setting),
 
     algorithms_box(&form_setting),
     prim_box(&form_setting),
+    kruskal_box(&form_setting),
     extract_box(&form_setting),
 
     extract_text_bx(&form_setting, &form_setting),
     prim_textbox(&form_setting, &form_setting),
+    kruskal_textbox(&form_setting, &form_setting),
     pull_matrix_button(&form_setting, &form_setting),
 
     vertex_label(&form_setting),
@@ -57,6 +60,11 @@ Graph::Graph(const int& index, FormSetting f_setting, const Vector2& window_size
     prim_box.push_back(&prim_textbox);
     prim_box.push_back(&random_prim_button);
     prim_box.push_back(&prim_button);
+
+    algorithms_box.push_back(2, &kruskal_box);
+    kruskal_box.push_back(&kruskal_textbox);
+    kruskal_box.push_back(&random_kruskal_button);
+    kruskal_box.push_back(&kruskal_button);
 
     tools_box.push_back(&match_tool);
     tools_box.push_back(&filled_tool);
@@ -116,6 +124,17 @@ Graph::Graph(const int& index, FormSetting f_setting, const Vector2& window_size
     prim_button.setSize(100, 40);
     prim_button.setText("Start");
 
+    kruskal_textbox.setPosition(5, 5);
+    kruskal_textbox.setSize(100, 40);
+
+    random_kruskal_button.setPosition(110, 5);
+    random_kruskal_button.setSize(40, 40);
+    random_kruskal_button.setButtonStage(0, Rand, Rand);
+
+    kruskal_button.setPosition(155, 5);
+    kruskal_button.setSize(100, 40);
+    kruskal_button.setText("Start");
+
     algorithms_box.setText(0, "Dijikstra");
     algorithms_box.setText(1, "Prim");
     algorithms_box.setText(2, "Kruskal");
@@ -123,6 +142,9 @@ Graph::Graph(const int& index, FormSetting f_setting, const Vector2& window_size
 
     prim_box.setPosition(algorithms_box.getAutoSize().x + 15, 45);
     prim_box.setSize(260, 50);
+
+    kruskal_box.setPosition(algorithms_box.getAutoSize().x + 15, 90);
+    kruskal_box.setSize(260, 50);
     //Extract controller
     extract_text_bx.setPosition(5, 5);
     extract_text_bx.setSize(290, 145);
@@ -348,6 +370,10 @@ void Graph::handle() {
                     if (m_tool == 0) add_edge(chosen, i, 1);
                     chosen = i;
                 }
+                if (IsKeyPressed(KEY_DELETE)) {
+                    remove(i);
+                    chosen = -1;
+                }
             }
             //Check out window
             if (m_mode != 0) {
@@ -483,5 +509,8 @@ void Graph::handle() {
     //Alogoritm check 
     if (prim_button.isPressed()) {
         prim(prim_textbox.getText());
+    }
+    if (kruskal_button.isPressed()) {
+        kruskal(kruskal_textbox.getText());
     }
 }

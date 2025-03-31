@@ -116,6 +116,35 @@ vector<vector<int>> to_matrix(const vector<string>& str){
     }
     return ans;
 }
+vector<int> Graph::getEdge(const int& graph) {
+    int vertex = graph;
+    vector<bool> visited(matrix.size(), 0);
+    vector<int> ans;
+    getVertex(graph, visited);
+    for (int i = 0; i<edges.size(); i++) {
+        int start = edges[i]->m_start->getIndex();
+        int end = edges[i]->m_end->getIndex();
+        if (start < end && visited[start]) {
+            ans.push_back(i);
+        }
+    }
+    return ans;
+}
+vector<int> Graph::getVertex(const int& graph) {
+    vector<bool> visited(matrix.size(), 0);
+    getVertex(graph, visited);
+    vector<int> ans;
+    for (int i = 0; i<visited.size(); i++) 
+        if (visited[i]) ans.push_back(i);
+    return ans;
+}
+void Graph::getVertex(const int& graph, vector<bool>& visited) {
+    visited[graph] = true;
+    for (int i = 0; i<matrix.size(); i++)
+        if (matrix[graph][i]!=-1 && !visited[i]) {
+            getVertex(i, visited);
+        }
+}
 vector<vector<int>> create_graph_undir(const int& vertex, const int& edge) {
     srand(clock());
     vector<vector<int>> matrix(vertex, vector<int>(vertex, 0));

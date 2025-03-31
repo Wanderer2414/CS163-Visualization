@@ -1,6 +1,7 @@
 #include "../include/Graph.h"
 #include "../include/Vertex.h"
 #include "../include/General.h"
+#include "../include/DSU.h"
 #include <algorithm>
 #include <queue>
 
@@ -111,21 +112,24 @@ void Graph::insert(const int& value) {
     for (int i =0; i<matrix.size() ;i++) matrix[i].push_back(-1);
     matrix.push_back(vector<int>(matrix.size()+1, -1));
 }
+void Graph::remove(const int& i) {
+    InsertNextMainCommand({remove_vertex, 1.0f*i, 1.0f*vertices[i]->getValue(), to_float(vertices[i]->getColor()), 1});
+    for (int j = 0; j<edges.size(); j++) {
+        if (edges[j]) {
+            int start = edges[j]->m_start->getIndex();
+            int end = edges[j]->m_end->getIndex();
+            if (start == i || end == i) {
+                InsertNextMainCommand({remove_edge,1.0f*j, 1.0f*start, 1.f*end, 1.0f*edges[j]->getWeight(), 1});
+            }
+        }
+    }
+}
 void Graph::remove(const std::string& str) {
     int val = to_int(str);
     int i  =0;
     while (i<vertices.size() && (!vertices[i] || vertices[i]->getValue() != val)) i++;
     if (i<vertices.size() && vertices[i] && vertices[i]->getValue() == val) {
-        InsertNextMainCommand({remove_vertex, 1.0f*i, 1.0f*vertices[i]->getValue(), to_float(vertices[i]->getColor()), 1});
-        for (int j = 0; j<edges.size(); j++) {
-            if (edges[j]) {
-                int start = edges[j]->m_start->getIndex();
-                int end = edges[j]->m_end->getIndex();
-                if (start == i || end == i) {
-                    InsertNextMainCommand({remove_edge,1.0f*j, 1.0f*start, 1.f*end, 1.0f*edges[j]->getWeight(), 1});
-                }
-            }
-        }
+        remove(i);
     }
 
 }
@@ -136,6 +140,15 @@ void Graph::prim(const std::string& str) {
     if (i<vertices.size() && vertices[i]) {
         console.InsertNextMainCommand("Prim: start at vertex = " + to_string(vertices[i]->getValue()));
         InsertNextMainCommand({prim_code, i, 1});
+    }
+}
+void Graph::kruskal(const string& str) {
+    int val = to_int(str);
+    float i = 0;
+    while (i<vertices.size() && (!vertices[i] || vertices[i]->getValue() != val)) i++;
+    if (i<vertices.size() && vertices[i]) {
+        console.InsertNextMainCommand("Kruskal");
+        InsertNextMainCommand({kruskal_code, i, 1});
     }
 }
 void Graph::FetchNextCommand(const vector<float>& codes) {
@@ -322,14 +335,15 @@ void Graph::FetchNextCommand(const vector<float>& codes) {
         break;
         case prim_code: {
             int index = codes[1];
-            console.goDown();
+            heap.clear();
             console.InsertNextSubCommand("f(vertex)");
             console.InsertNextSubCommand("  Add all edge start at vertex to heap");
             console.InsertNextSubCommand("  Pop all edges with used end vertex from heap");
-            console.InsertNextSubCommand("  if heap have element ");
+            console.InsertNextSubCommand("  while heap have element ");
             console.InsertNextSubCommand("      vertex = top heap -> end");
             console.InsertNextSubCommand("      Pop top heap");
             console.InsertNextSubCommand("      f(vertex)");
+            console.goDown();
             InsertNextSubCommand({show_heap});
             InsertNextSubCommand({lock, 1});
             InsertNextSubCommand({reset_color, 1.0f*index, to_float(vertices[index]->getColor()), 1});
@@ -343,15 +357,35 @@ void Graph::FetchNextCommand(const vector<float>& codes) {
             setDuration(0);
         }
         break;
+        case kruskal_code: {
+            int index = codes[1];
+            heap.clear();
+            console.InsertNextSubCommand("f(vertex)");
+            console.InsertNextSubCommand("  Add all edge to heap");
+            console.InsertNextSubCommand("  while heap has element");
+            console.InsertNextSubCommand("      Pop all next edge make cycle");
+            console.InsertNextSubCommand("      Add top edges to DSU");
+            console.InsertNextSubCommand("      Pop top edge");
+            console.goDown();
+            InsertNextSubCommand({show_heap, 1});
+            InsertNextSubCommand({lock, 1});
+            InsertNextSubCommand({reset_color, 1.0f*index, to_float(vertices[index]->getColor()), 1});
+            kruskal_algorithms(index);
+            InsertNextSubCommand({unlock, 0});
+            InsertNextSubCommand({complete_color, 0});
+            InsertNextSubCommand({hide_heap});
+            InsertNextSubCommand({goDown, 3, 0});
+            InsertNextSubCommand({fill, 1.0f*index, to_float(vertices[index]->getColor()), 1});
+            setDuration(0);
+        }
+        break;
         case add_heap: {
-            int start = codes[1], end = codes[2], weight = codes[3];
-            cout << "ADD: "<<  start << " " << end << " " <<weight << endl;
+            int start = vertices[codes[1]]->getValue(), end = vertices[codes[2]]->getValue(), weight = codes[3];
             heap.Insert({start, end, weight});
             setDuration(0);
         }
         break;
         case pop_heap: {
-            cout << "POP: " <<codes[1] << " " <<codes[2] << " " <<codes[3] << endl;
             heap.pop();
             setDuration(0);
         }
@@ -489,14 +523,19 @@ void Graph::FetchPrevCommand(const vector<float>& codes) {
         break;
         case prim_code: {
             console.goUp();
+            setDuration(0.5);
+        }
+        break;
+        case kruskal_code: {
+            console.goUp();
+            setDuration(0.5);
         }
         break;
         case add_heap: {
             Path path;
-            path.start = codes[1];
-            path.end = codes[2];
+            path.start = vertices[codes[1]]->getValue();
+            path.end = vertices[codes[2]]->getValue();
             path.weight = codes[3];
-            cout << "REM: "<<path.start << " " << path.end << " " << path.weight << endl;
             for (int i = 0; i<heap.size(); i++)
                 if (heap[i] == path) {
                     heap.erase(i);
@@ -507,8 +546,8 @@ void Graph::FetchPrevCommand(const vector<float>& codes) {
         break;
         case pop_heap: {
             Path path;
-            path.start = codes[1];
-            path.end = codes[2];
+            path.start = vertices[codes[1]]->getValue();
+            path.end = vertices[codes[2]]->getValue();
             path.weight = codes[3];
             heap.Insert(path);
             setDuration(0);
@@ -553,14 +592,47 @@ void Graph::prim_algorithms(vector<bool>& visited, MinHeap& q, const int& vertex
         visited[q.front().end] = true;
         InsertNextSubCommand({choose_edge, 1.0f*q.front().start, 1.0f*q.front().end, 1});
         InsertNextSubCommand({choose_vertex, 1.0f*q.front().start, 1.0f*q.front().end, 1});
+        InsertNextSubCommand({goDown, 1, 0.5});
         InsertNextSubCommand({pop_heap, 1.0f*q.front().start, 1.0f*q.front().end, 1.0f*q.front().weight});
         int end = q.front().end;
-        InsertNextSubCommand({goDown, 1, 0.5});
         q.pop();
-        // InsertNextSubCommand({goUp, 4, 0.5});
         InsertNextSubCommand({goDown, 1, 0.5});
         InsertNextSubCommand({goUp, 6, 0.5});
         prim_algorithms(visited, q, end);
+    }
+}
+
+void Graph::kruskal_algorithms(const int& index) {
+    MinHeap q;
+    DSU dsu(matrix.size());
+    vector<int> edges_index = getEdge(index);
+    InsertNextSubCommand({goDown, 1, 0.5});
+    for (int i = 0; i<edges_index.size(); i++) {
+        int index = edges_index[i];
+        Path path = {edges[index]->m_start->getIndex(), edges[index]->m_end->getIndex(), edges[index]->getWeight()};
+        if (path.start < path.end) {
+            q.Insert(path);
+            InsertNextSubCommand({add_heap, 1.0f*path.start, 1.0f*path.end, 1.0f*path.weight, 1});
+        }
+    }
+    InsertNextSubCommand({goDown, 1, 0.5});
+    InsertNextSubCommand({goDown, 1, 0.5});
+    while (q.size()) {
+        if (dsu.check(q.front().start, q.front().end)) {
+            q.pop();
+            InsertNextSubCommand({pop_heap, 1.0f*q.front().start, 1.0f*q.front().end, 1.0f*q.front().weight, 0});
+        } else {
+            InsertNextSubCommand({goDown, 1, 0.5});
+            InsertNextSubCommand({fill_vertex, 1.0f*q.front().start, to_float(vertices[q.front().start]->getColor()),  1});
+            InsertNextSubCommand({choose_edge, 1.0f*q.front().start, 1.0f*q.front().end, 1.0f*q.front().weight, 1});
+            InsertNextSubCommand({choose_vertex, 1.0f*q.front().start, 1.0f*q.front().end,  1});
+            dsu.join(q.front().start, q.front().end);
+            InsertNextSubCommand({pop_heap, 0});
+            InsertNextSubCommand({goDown, 1, 0.5});
+            q.pop();
+            InsertNextSubCommand({goUp, 3, 0.5});
+            InsertNextSubCommand({goDown, 1, 0.5});
+        }
     }
 }
 

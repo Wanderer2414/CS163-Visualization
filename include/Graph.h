@@ -42,7 +42,8 @@ public:
         add_heap = 21,
         pop_heap = 22,
         show_heap = 23,
-        hide_heap = 24
+        hide_heap = 24,
+        kruskal_code = 25
     };
     Graph(const int& index, FormSetting form_setting, const Vector2& window_size);
     
@@ -53,6 +54,7 @@ public:
 
                         search(const std::string& val)        override,
                         prim(const std::string& val),
+                        kruskal(const string& str),
                         FetchNextCommand(const vector<float>& codes) override,
                         FetchPrevCommand(const vector<float>& codes) override;
     virtual string      RandomCreate() const override,
@@ -70,19 +72,19 @@ private:
 
     Label               edge_label, vertex_label;
     TextBox             edge_textbox, vertex_textbox;
-    TextureButton       random_edge_button, random_vertex_button, random_prim_button;
+    TextureButton       random_edge_button, random_vertex_button, random_prim_button, random_kruskal_button;
     OptionBox           bfs_choice, dfs_choice;
     TextButton          track_graph_hover,
                         pull_matrix_button,
-                        prim_button;
+                        prim_button, kruskal_button;
     TabBox              graph_setting, algorithms_box;
 
     vector<Vertex*>     vertices;
     vector<Edge*>       edges;
 
-    Container           setting_box, tools_box, extract_box, prim_box;
+    Container           setting_box, tools_box, extract_box, prim_box, kruskal_box;
 
-    TextBox             extract_text_bx, prim_textbox;
+    TextBox             extract_text_bx, prim_textbox, kruskal_textbox;
 
     Container           search_graph_box;
     TextureButton       match_tool, filled_tool;
@@ -103,6 +105,7 @@ private:
     HeapVisual          heap;
     string              RandomVertex() const, RandomEdge() const;
     void                insert(const int& value),
+                        remove(const int& index),
                         dfs(const int& vertex),
                         dfs(vector<bool>& visited, const int& vertex),
                         bfs(const int& vertex);
@@ -113,7 +116,14 @@ private:
                         setSubGraphColor(const int& row, vector<bool>& visited, const Color& color);
 
     void                prim_algorithms(const int& vertex),
-                        prim_algorithms(vector<bool>& visited, MinHeap& q, const int& vertex);
+                        prim_algorithms(vector<bool>& visited, MinHeap& q, const int& vertex),
+                        
+                        kruskal_algorithms(const int& index);
+                        
+    vector<vector<int>> pull(const int& index);
+    vector<int>         getEdge(const int& graph),
+                        getVertex(const int& graph);
+    void                getVertex(const int& graph, vector<bool>& visited);
 
 };
 string to_string(const vector<vector<int>>& matrix);

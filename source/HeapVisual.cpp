@@ -60,7 +60,12 @@ void HeapVisual::handle() {
 void HeapVisual::draw() {
     if (!m_visible) return ;
     BeginScissorMode(m_position.x, m_position.y, m_size.x, m_size.y);
-    for (int i = 0; i<heap.size(); i++) heap[i].draw();
+    DrawRectangleRounded({m_position.x, m_position.y, m_size.x, m_size.y}, 0.1, form_setting->segment, form_setting->middle_color);
+    if (heap.size()) for (int i = 0; i<heap.size(); i++) heap[i].draw();
+    else {
+        Vector2 sz = MeasureTextEx(form_setting->font, "(Empty)", form_setting->font_size, form_setting->spacing);
+        DrawTextEx(form_setting->font, "(Empty)", m_position + m_size/2 - sz/2, form_setting->font_size, form_setting->spacing, form_setting->color);
+    }
     EndScissorMode();
 }
 void HeapVisual::Insert(const Path& path) {
@@ -68,10 +73,14 @@ void HeapVisual::Insert(const Path& path) {
     if (heap.size()) {
         pos = heap.back().getEndPoint();
         pos.y += heap.back().getSize().y + 5;
-    } else pos = m_position;
+    } else {
+        pos = m_position;
+        pos.x += 2;
+        pos.y += 2;
+    }
     heap.push_back(HeapBlock(form_setting, form_setting));
     heap.back().setValue(path.start, path.end, path.weight);
-    heap.back().setSize(m_size.x, 65);
+    heap.back().setSize(m_size.x-4, 65);
     heap.back().setPosition(pos.x, pos.y);
     MinHeap::Insert(path);
 }

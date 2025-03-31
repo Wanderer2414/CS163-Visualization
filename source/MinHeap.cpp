@@ -57,10 +57,20 @@ Path MinHeap::operator[](const int& index) const {
     return data[index];
 }
 bool Path::operator<(const Path& a) {
-    return weight<a.weight;
+    if (weight<a.weight) return true;
+    else if (weight > a.weight) return false;
+    else if (start < a.start) return true;
+    else if (start > a.start) return false;
+    else if (end < a.end) return true;
+    else return false;
 }
 bool Path::operator>(const Path& a) {
-    return weight>a.weight;
+    if (weight > a.weight) return true;
+    else if (weight < a.weight) return false;
+    else if (start > a.start) return true;
+    else if (start < a.start) return false;
+    else if (end > a.end) return true;
+    else return false;
 }
 bool Path::operator==(const Path& a) {
     return weight==a.weight && start == a.start && end == a.end;
