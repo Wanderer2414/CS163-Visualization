@@ -89,5 +89,6 @@ protected:
     Rectangle       m_workspace;
     ProgressBar     m_progress;
     Camera2D        m_camera;
+    void main_box_show(), main_box_hide();
 };
 #endif

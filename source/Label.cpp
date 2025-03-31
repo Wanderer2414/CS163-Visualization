@@ -24,6 +24,7 @@ void Label::clear() {
     m_text_position.clear();
     m_text = {""};
     m_text_position = {{0, 0}};
+    update_line(0);
 }
 void Label::draw() {
     if (text_setting) {

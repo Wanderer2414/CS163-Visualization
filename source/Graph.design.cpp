@@ -21,15 +21,18 @@ Graph::Graph(const int& index, FormSetting f_setting, const Vector2& window_size
 
     search_graph_box(&form_setting),
     tools_box(&form_setting),
+    dijikstra_button(&form_setting, &form_setting),
     prim_button(&form_setting, &form_setting),
     kruskal_button(&form_setting, &form_setting),
 
     algorithms_box(&form_setting),
     prim_box(&form_setting),
     kruskal_box(&form_setting),
+    dijikstra_box(&form_setting),
     extract_box(&form_setting),
 
     extract_text_bx(&form_setting, &form_setting),
+    dijikstra_textbox(&form_setting, &form_setting),
     prim_textbox(&form_setting, &form_setting),
     kruskal_textbox(&form_setting, &form_setting),
     pull_matrix_button(&form_setting, &form_setting),
@@ -41,7 +44,7 @@ Graph::Graph(const int& index, FormSetting f_setting, const Vector2& window_size
 
     color_box(&form_setting),
 
-    color_pointer(0)
+    color_pointer(-1)
 {
     children.push_back(&track_graph_hover);
     children.push_back(&graph_setting); 
@@ -55,6 +58,11 @@ Graph::Graph(const int& index, FormSetting f_setting, const Vector2& window_size
 
     setting_box.push_back(&direct_choice);
     setting_box.push_back(&undirect_choice);
+
+    algorithms_box.push_back(0, &dijikstra_box);
+    dijikstra_box.push_back(&dijikstra_textbox);
+    dijikstra_box.push_back(&random_dijikstra_button);
+    dijikstra_box.push_back(&dijikstra_button);
 
     algorithms_box.push_back(1, &prim_box);
     prim_box.push_back(&prim_textbox);
@@ -113,6 +121,17 @@ Graph::Graph(const int& index, FormSetting f_setting, const Vector2& window_size
     filled_tool.setPosition(50, 5);
     filled_tool.setSize(40, 40);
     //Algorithms
+    dijikstra_textbox.setPosition(5, 5);
+    dijikstra_textbox.setSize(100, 40);
+
+    random_dijikstra_button.setPosition(110, 5);
+    random_dijikstra_button.setSize(40, 40);
+    random_dijikstra_button.setButtonStage(0, Rand, Rand);
+
+    dijikstra_button.setPosition(155, 5);
+    dijikstra_button.setSize(100, 40);
+    dijikstra_button.setText("Start");
+
     prim_textbox.setPosition(5, 5);
     prim_textbox.setSize(100, 40);
 
@@ -139,6 +158,9 @@ Graph::Graph(const int& index, FormSetting f_setting, const Vector2& window_size
     algorithms_box.setText(1, "Prim");
     algorithms_box.setText(2, "Kruskal");
     algorithms_box.setText(3, "Euler tour");
+
+    dijikstra_box.setPosition(algorithms_box.getAutoSize().x + 15, 0);
+    dijikstra_box.setSize(260, 50);
 
     prim_box.setPosition(algorithms_box.getAutoSize().x + 15, 45);
     prim_box.setSize(260, 50);
@@ -280,6 +302,7 @@ void Graph::draw() {
     }
     for (int i =0 ;i <vertices.size(); i++) 
         if (vertices[i]) vertices[i]->draw();
+    for (int i = 0; i<DMargins.size(); i++) DMargins[i]->draw();
     heap.draw();
     Form::draw();
 
@@ -362,6 +385,10 @@ void Graph::handle() {
             if (vertices[i]->isFocused()) {
                 isFocus = true;
                 if (m_tool == 1 && i!=chosen) {
+                    for (int i = 0; i<edges.size(); i++)
+                        if (edges[i]) edges[i]->complete();
+                    for (int i = 0; i<vertices.size(); i++)
+                        if (vertices[i]) vertices[i]->complete();
                     vertices[i]->setDuration(getSpeed());
                     vertices[i]->start(0, color_box.getColor(), vertices[i]->getColor());
                 }
@@ -373,6 +400,11 @@ void Graph::handle() {
                 if (IsKeyPressed(KEY_DELETE)) {
                     remove(i);
                     chosen = -1;
+                } else if (IsKeyPressed(KEY_F2)) {
+                    main_box_show();
+                    option_box.select(2);
+                    update_textbox_choice.setText(to_string(vertices[i]->getValue()));
+                    update_textbox_value.setFocus(true);
                 }
             }
             //Check out window
@@ -512,5 +544,8 @@ void Graph::handle() {
     }
     if (kruskal_button.isPressed()) {
         kruskal(kruskal_textbox.getText());
+    }
+    if (dijikstra_button.isPressed()) {
+        dijikstra(dijikstra_textbox.getText());
     }
 }

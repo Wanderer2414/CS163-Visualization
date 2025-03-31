@@ -146,12 +146,12 @@ void Edge::handle() {
     float dis = abs(delta);
     if (percent == 1) {
         if (dis < 200) {
-            delta = delta/dis*((200-dis)/max(100.f, 200-dis)*10);
+            delta = delta/dis*sqrt(200-dis)/3;
             m_start->add_acceleration(-1*delta);
             m_end->add_acceleration(delta);
         } 
         else if (dis > 400) {
-            delta = delta/dis*log(dis - 400);
+            delta = delta/dis*sqrt(dis - 400)/3;
             m_start->add_acceleration(delta);
             m_end->add_acceleration(-1*delta);
         }
@@ -181,6 +181,7 @@ void Edge::handle() {
 }
 
 void Edge::start(const bool& reverse, const bool& transparent) {
+    if (!transparent && m_start->getColor() == m_end->getColor()) return;
     is_reverse = reverse;
     m_start_time = GetTime();
     if (!reverse) {

@@ -4,6 +4,7 @@
 #include "ColorBox.h"
 #include "ColorPointer.h"
 #include "Container.h"
+#include "Dijikstra_margin.h"
 #include "Edge.h"
 #include "Form.h"
 #include "GUI.h"
@@ -43,7 +44,11 @@ public:
         pop_heap = 22,
         show_heap = 23,
         hide_heap = 24,
-        kruskal_code = 25
+        kruskal_code = 25,
+        dijikstra_code = 26,
+        prepare_dijikstra = 27,
+        free_dijikstra = 28,
+        set_cost = 29
     };
     Graph(const int& index, FormSetting form_setting, const Vector2& window_size);
     
@@ -55,6 +60,7 @@ public:
                         search(const std::string& val)        override,
                         prim(const std::string& val),
                         kruskal(const string& str),
+                        dijikstra(const string& str),
                         FetchNextCommand(const vector<float>& codes) override,
                         FetchPrevCommand(const vector<float>& codes) override;
     virtual string      RandomCreate() const override,
@@ -68,41 +74,49 @@ private:
                         m_type,
                         m_weight,
                         m_tool,
-                        search_type;
+                        search_type,
+                        color_pointer;
 
     Label               edge_label, vertex_label;
-    TextBox             edge_textbox, vertex_textbox;
-    TextureButton       random_edge_button, random_vertex_button, random_prim_button, random_kruskal_button;
+    TextBox             edge_textbox, vertex_textbox, extract_text_bx, prim_textbox, kruskal_textbox,
+                        dijikstra_textbox;
+
+    TextureButton       random_edge_button, random_vertex_button, random_prim_button, random_kruskal_button,
+                        random_dijikstra_button;
+
     OptionBox           bfs_choice, dfs_choice;
+
     TextButton          track_graph_hover,
                         pull_matrix_button,
-                        prim_button, kruskal_button;
+                        prim_button, kruskal_button,
+                        dijikstra_button;
     TabBox              graph_setting, algorithms_box;
 
     vector<Vertex*>     vertices;
     vector<Edge*>       edges;
 
-    Container           setting_box, tools_box, extract_box, prim_box, kruskal_box;
-
-    TextBox             extract_text_bx, prim_textbox, kruskal_textbox;
+    Container           setting_box, tools_box, extract_box, prim_box, kruskal_box, dijikstra_box;
 
     Container           search_graph_box;
+
     TextureButton       match_tool, filled_tool;
+    
     OptionBox           fixed_choice, drag_choice, collision_choice, 
                         weight_choice, unweight_choice, 
                         direct_choice, undirect_choice;
 
-    int                 color_pointer;
     Color               colors[6] = {RED, GREEN, BLUE, YELLOW, BROWN, GRAY};
     Color               tmp_color;
     vector<vector<int>> matrix;
     void                free(),
                         add_edge(const int& start, const int& end, const int& weight);
+
     Texture2D           cursor_icon;
     TextSetting         console_setting;
 
     ColorPointer        color_box;
     HeapVisual          heap;
+
     string              RandomVertex() const, RandomEdge() const;
     void                insert(const int& value),
                         remove(const int& index),
@@ -118,12 +132,20 @@ private:
     void                prim_algorithms(const int& vertex),
                         prim_algorithms(vector<bool>& visited, MinHeap& q, const int& vertex),
                         
-                        kruskal_algorithms(const int& index);
+                        kruskal_algorithms(const int& index),
+                        
+                        dijikstra_algorithms(const int& index),
+                        dijikstra_algorithms(const int& index, MinHeap& heap, vector<bool>& visited, vector<int>& board),
+
+                        create_Dmargin(),
+                        free_Dmargin();
                         
     vector<vector<int>> pull(const int& index);
     vector<int>         getEdge(const int& graph),
                         getVertex(const int& graph);
     void                getVertex(const int& graph, vector<bool>& visited);
+
+    vector<Dijikstra_Margin*> DMargins;
 
 };
 string to_string(const vector<vector<int>>& matrix);
