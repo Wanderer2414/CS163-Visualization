@@ -36,7 +36,7 @@ void Node::updateHeight()
     int rightHeight = right ? right->getHeight() : 0;
     m_height = 1 + std::max(leftHeight, rightHeight);
 }
-;
+
 Vector2 Node::getCenter() const {
     return m_center;
 }

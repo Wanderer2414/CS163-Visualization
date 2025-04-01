@@ -144,10 +144,12 @@ void AVLTreeForm::FetchNextCommand(const std::vector<float>& codes)
 	case CommandCode::choose: {
 		console.goDown();
 		setDuration((int)codes[2]);
+		//m_list[codes[1]]->button_setting->normal_color = RED;
 		break;
 	}
 	case CommandCode::unchoose: {
 		setDuration((int)codes[2]);
+		//m_list[codes[1]]->button_setting->normal_color = WHITE;
 		break;
 	}
 	case CommandCode::erase: {
@@ -256,10 +258,11 @@ void AVLTreeForm::remove(Node*& root, const int& x)
 				if (root->parent->left == root) root->parent->left = tmp;
 				else root->parent->right = tmp;
 			}
-			auto it = std::find(m_list.begin(), m_list.end(), root);
-			if (it != m_list.end()) m_list.erase(it);
+			//auto it = std::find(m_list.begin(), m_list.end(), root);
+			//if (it != m_list.end()) m_list.erase(it);
 			delete root;
 			root = tmp;
+			//if (!root) return;
 		}
 		else {
 			Node* tmp = root->right;
@@ -274,13 +277,20 @@ void AVLTreeForm::remove(Node*& root, const int& x)
 
 			if (tmp->right) tmp->right->parent = parentTmp;
 
-			auto it = std::find(m_list.begin(), m_list.end(), tmp);
-			if (it != m_list.end()) m_list.erase(it);
+			//auto it = std::find(m_list.begin(), m_list.end(), tmp);
+			//if (it != m_list.end()) m_list.erase(it);
+
+			if (root == tmp) root = tmp->right ? tmp->right : tmp->left;
 
 			delete tmp;
+			tmp = nullptr; // M
 		}
 	}
-	if (!root) return;
+	if (!root) {
+		std::cout << "Root is NULL before updateHeight()" << std::endl;
+		return;
+	}
+	//if (root) std::cout << "Updating height of: " << root->getValue() << std::endl;
 	root->updateHeight();
 	int balance = getBalanceFactor(root);
 
