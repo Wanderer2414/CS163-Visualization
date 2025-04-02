@@ -10,6 +10,7 @@
 #include "GUI.h"
 #include "HeapVisual.h"
 #include "Label.h"
+#include "NotationBox.h"
 #include "OptionBox.h"
 #include "Global.h"
 #include "SettingPackage.h"
@@ -48,7 +49,9 @@ public:
         dijikstra_code = 26,
         prepare_dijikstra = 27,
         free_dijikstra = 28,
-        set_cost = 29
+        set_cost = 29,
+        update_code = 30,
+        match_code = 31
     };
     Graph(const int& index, FormSetting form_setting, const Vector2& window_size);
     
@@ -58,6 +61,7 @@ public:
                         draw()                                override,
 
                         search(const std::string& val)        override,
+                        update(const std::string &old_value, const std::string &new_value) override,
                         prim(const std::string& val),
                         kruskal(const string& str),
                         dijikstra(const string& str),
@@ -80,7 +84,7 @@ private:
                         color_pointer;
 
     Label               edge_label, vertex_label;
-    TextBox             edge_textbox, vertex_textbox, extract_text_bx, prim_textbox, kruskal_textbox,
+    TextBox             edge_textbox, vertex_textbox, extract_text_bx, prim_textbox, kruskal_textbox, pull_input_textbox,
                         dijikstra_textbox;
 
     TextureButton       random_edge_button, random_vertex_button, random_prim_button, random_kruskal_button,
@@ -101,7 +105,7 @@ private:
 
     Container           search_graph_box;
 
-    TextureButton       match_tool, filled_tool;
+    TextureButton       match_tool, filled_tool, scissors_tool;
     
     OptionBox           fixed_choice, drag_choice, collision_choice, 
                         weight_choice, unweight_choice, 
@@ -111,14 +115,15 @@ private:
     Color               tmp_color;
     vector<vector<int>> matrix;
     void                free(),
-                        add_edge(const int& start, const int& end, const int& weight);
+                        add_edge(const int& start, const int& end, const int& weight),
+                        update(const int& index, const int& value);
 
     Texture2D           cursor_icon;
     TextSetting         console_setting;
 
     ColorPointer        color_box;
     HeapVisual          heap;
-
+    NotationBox         notation_box;
     string              RandomVertex() const, RandomEdge() const;
     void                insert(const int& value),
                         remove(const int& index),
@@ -126,7 +131,7 @@ private:
                         dfs(vector<bool>& visited, const int& vertex),
                         bfs(const int& vertex);
 
-    void                pull_matrix(),
+    void                pull_matrix(const int& graph),
                         random_subGraphColor(),
                         setSubGraphColor(const int& row, const Color& color),
                         setSubGraphColor(const int& row, vector<bool>& visited, const Color& color);

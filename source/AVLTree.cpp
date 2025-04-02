@@ -166,12 +166,10 @@ void AVLTreeForm::FetchNextCommand(const std::vector<float>& codes)
 		setDuration((int)codes[2]);
 		int nodeIndex = (int)codes[1];
 		m_list[nodeIndex]->anim_color = RED;
-
-
 		m_list[nodeIndex]->is_animating = true;
 		break;
 	}
-	case CommandCode::unchoose: {
+	case CommandCode::unchoose: {	
 		setDuration((int)codes[2]);
 		int nodeIndex = (int)codes[1];
 		m_list[nodeIndex]->is_animating = false;
