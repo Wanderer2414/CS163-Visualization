@@ -18,9 +18,6 @@ public:
     virtual void        FetchNextCommand(const vector<float>& codes),
                         FetchPrevCommand(const vector<float>& codes),
 
-                        PushBackMainCommand(const vector<float>& code),
-                        PushBackSubCommand(const vector<float>& code),
-
                         InsertNextMainCommand(const vector<float>& code),
                         InsertNextSubCommand(const vector<float>& code),
 
@@ -28,6 +25,8 @@ public:
                         setDuration(const float& clock_count),
 
                         GotoCommandLine(const float& index),
+                        goMainNext(),
+                        goMainPrev(),
                         goNext(),
                         goBack(),
 

@@ -59,21 +59,33 @@ bool CommandList::BeforeFetchPrev() {
             sub_command.clear();
             sub_command.push_back(command_code[command_pointer]);
         }
+        FetchPrevCommand(sub_command[sub_command_pointer]);
     }
     else {
         command_pointer--;
         sub_command.clear();
         sub_command.push_back(command_code[command_pointer]);
+        FetchPrevCommand(sub_command[sub_command_pointer]);
+        BeforeFetchNext();
+        if (sub_command.size()==1) BeforeFetchPrev();
+        else {
+            while (sub_command_pointer<sub_command.size()-1) BeforeFetchNext();
+        }
     }
-    FetchPrevCommand(sub_command[sub_command_pointer]);
     return false;
 }
-void CommandList::PushBackMainCommand(const std::vector<float>& code) {
-    if (m_is_enable) {
-    }
+void CommandList::goMainNext() {
+    if (command_pointer==command_code.size()) return;
+    int next = command_pointer+1;
+    while (command_pointer<next) BeforeFetchNext();
 }
-void CommandList::PushBackSubCommand(const std::vector<float>& code) {
-    if (m_is_enable) {
+void CommandList::goMainPrev() {
+    if (!command_pointer && !sub_command_pointer) return;
+    if (sub_command_pointer) {
+        while (sub_command_pointer) BeforeFetchPrev();
+    } else {
+        int prev = command_pointer--;
+        while (command_pointer>prev) BeforeFetchPrev();
     }
 }
 void CommandList::InsertNextMainCommand(const std::vector<float>& code) {
@@ -142,12 +154,12 @@ void CommandList::handle() {
 void CommandList::goNext() {
     if (sub_command_pointer == sub_command.size()) return;
     BeforeFetchNext();
-    if (!m_clock.getDuration()) goNext();
+    if (!m_clock.getDuration() && sub_command_pointer) goNext();
 }
 void CommandList::goBack() {
     if (!command_pointer && !sub_command_pointer) return;
     BeforeFetchPrev();
-    if (!m_clock.getDuration()) goBack();
+    if (!m_clock.getDuration() && sub_command_pointer) goBack();
 }
 
 void CommandList::setEnable(const bool& isEnable) {
