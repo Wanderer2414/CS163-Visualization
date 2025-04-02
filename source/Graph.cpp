@@ -207,7 +207,7 @@ void Graph::dijikstra_algorithms(const int& index, MinHeap& heap, vector<bool>& 
     if (heap.size()) {
         Path q = heap.front();
         InsertNextSubCommand({goDown, 1, 0.2});
-        InsertNextSubCommand({fill_vertex, 1.0f*q.start, to_float(vertices[q.end]->getColor()), 1});
+        InsertNextSubCommand({choose_vertex, 1.0f*q.start, to_float(vertices[q.end]->getColor()), 1});
         InsertNextSubCommand({choosev2_vertex, 1.0f*q.start, 1.0f*q.end,1});
         InsertNextSubCommand({choose_edge, 1.0f*q.start, 1.0f*q.end, 1});
         InsertNextSubCommand({pop_heap, 1.0f*q.start, 1.0f*q.end, 1.0f*q.weight, 1});
@@ -494,6 +494,7 @@ void Graph::FetchNextCommand(const vector<float>& codes) {
             console.InsertNextSubCommand("         vertex = heap.pop()[end] ");
             console.InsertNextSubCommand("         f(vertex) ");
             InsertNextSubCommand({goDown, 1, 0.2});
+            InsertNextSubCommand({fill_vertex, 1.0f*index, to_float(vertices[index]->getColor()), 1});
             dijikstra_algorithms(index);
             InsertNextSubCommand({goDown, 2, 0.2});
             InsertNextSubCommand({unlock, 1});
@@ -573,6 +574,11 @@ void Graph::FetchPrevCommand(const vector<float>& codes) {
         case goDown: {
             int n = codes[1];
             for (int i = 0; i<n; i++) console.goUp();
+            setDuration(codes.back());
+        }
+        break;
+        case prepare_dijikstra: {
+            free_Dmargin();
             setDuration(codes.back());
         }
         break;
