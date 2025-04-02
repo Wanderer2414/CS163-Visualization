@@ -4,6 +4,7 @@
 
 Graph::Graph(const int& index, FormSetting f_setting, const Vector2& window_size):
     Form(index, f_setting, window_size),
+    notation_box(&form_setting),
     heap(&form_setting),
     track_graph_hover(&form_setting, &form_setting),
     graph_setting(&form_setting),
@@ -36,6 +37,7 @@ Graph::Graph(const int& index, FormSetting f_setting, const Vector2& window_size
     prim_textbox(&form_setting, &form_setting),
     kruskal_textbox(&form_setting, &form_setting),
     pull_matrix_button(&form_setting, &form_setting),
+    pull_input_textbox(&form_setting, &form_setting),
 
     vertex_label(&form_setting),
     edge_label(&form_setting),
@@ -79,6 +81,7 @@ Graph::Graph(const int& index, FormSetting f_setting, const Vector2& window_size
 
     extract_box.push_back(&extract_text_bx);
     extract_box.push_back(&pull_matrix_button);
+    extract_box.push_back(&pull_input_textbox);
 
     search_graph_box.push_back(&dfs_choice);
     search_graph_box.push_back(&bfs_choice);
@@ -157,7 +160,6 @@ Graph::Graph(const int& index, FormSetting f_setting, const Vector2& window_size
     algorithms_box.setText(0, "Dijikstra");
     algorithms_box.setText(1, "Prim");
     algorithms_box.setText(2, "Kruskal");
-    algorithms_box.setText(3, "Euler tour");
 
     dijikstra_box.setPosition(algorithms_box.getAutoSize().x + 15, 0);
     dijikstra_box.setSize(260, 50);
@@ -172,9 +174,12 @@ Graph::Graph(const int& index, FormSetting f_setting, const Vector2& window_size
     extract_text_bx.setSize(290, 145);
     extract_text_bx.setAlignText(TextBox::Top | TextBox::Left);
 
-    pull_matrix_button.setPosition(5, 155);
-    pull_matrix_button.setSize(290, 40);
+    pull_matrix_button.setPosition(60, 155);
+    pull_matrix_button.setSize(235, 40);
     pull_matrix_button.setText("Pull");
+
+    pull_input_textbox.setPosition(5, 155);
+    pull_input_textbox.setSize(50, 40);
 
     //Graph setting
     graph_setting.setPosition(-300, 100);
@@ -276,7 +281,10 @@ Graph::Graph(const int& index, FormSetting f_setting, const Vector2& window_size
     heap.setSize(100, 500);
     heap.setVisible(false);
 
+    update_old_value_label.setText("Index: ");
+
     children.push_back(&color_box);
+    children.push_back(&notation_box);
 
     srand(time(0));
 
@@ -375,6 +383,7 @@ void Graph::handle() {
         }
     }
     bool isFocus = false;
+    notation_box.hide();
     for (int i = 0; i<vertices.size(); i++) {
         if (vertices[i]) {
             vertices[i]->handle();
@@ -394,7 +403,16 @@ void Graph::handle() {
                 }
                 if (chosen == -1) chosen = i;
                 else if (chosen != i) {
-                    if (m_tool == 0) add_edge(chosen, i, 1);
+                    if (m_tool == 0) {
+                        console.InsertNextMainCommand("Match " + to_string(vertices[chosen]->getValue()) + " to " + to_string(vertices[i]->getValue()));
+                        InsertNextMainCommand({match_code, 1.0f*edges.size(), 1.0f*chosen, 1.0f*i, 1, 0.1});
+                        edges.push_back(0);
+                        if (m_type == 1) {
+                            console.InsertNextMainCommand("Match " + to_string(vertices[i]->getValue()) + " to " + to_string(vertices[chosen]->getValue()));
+                            InsertNextMainCommand({match_code, 1.0f*edges.size(), 1.0f*i, 1.0f*chosen, 1, 0.1});
+                            edges.push_back(0);
+                        }
+                    }
                     chosen = i;
                 }
                 if (IsKeyPressed(KEY_DELETE)) {
@@ -403,8 +421,13 @@ void Graph::handle() {
                 } else if (IsKeyPressed(KEY_F2)) {
                     main_box_show();
                     option_box.select(2);
-                    update_textbox_choice.setText(to_string(vertices[i]->getValue()));
+                    update_textbox_choice.setText(to_string(vertices[i]->getIndex()));
                     update_textbox_value.setFocus(true);
+                }
+                if (m_tool == -1) {
+                    notation_box.vertex = vertices[i];
+                    notation_box.setPosition(vertices[i]->getPosition().x + vertices[i]->getSize().x/2, vertices[i]->getPosition().y-vertices[i]->getSize().y/2-notation_box.getSize().y);
+                    notation_box.show();
                 }
             }
             //Check out window
@@ -449,6 +472,12 @@ void Graph::handle() {
                         }
                     }
                 }
+            }
+            //Check hover 
+            if (vertices[i]->isHovered() && m_tool == -1) {
+                notation_box.vertex = vertices[i];
+                notation_box.setPosition(GetMousePosition().x,GetMousePosition().y-notation_box.getSize().y);
+                notation_box.show();
             }
         }
     }
@@ -534,9 +563,10 @@ void Graph::handle() {
             m_tool = -1;
         }
     }
+    //Update check
     //Matrix pull
     if (pull_matrix_button.isPressed()) {
-        pull_matrix();
+        pull_matrix(to_int(pull_input_textbox.getText()));
     }
     //Alogoritm check 
     if (prim_button.isPressed()) {

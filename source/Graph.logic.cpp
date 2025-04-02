@@ -84,10 +84,11 @@ void Graph::setSubGraphColor(const int& row, vector<bool>& visited, const Color&
         }
     }
 }
-void Graph::pull_matrix() {
-    string ans = to_string(matrix.size()) + '\n';
-    for (int i = 0; i<matrix.size(); i++) {
-        for (int j = 0; j<matrix.size(); j++) {
+void Graph::pull_matrix(const int& graph) {
+    auto vertices = getVertex(graph);
+    string ans = to_string(vertices.size()) + '\n';
+    for (auto i: vertices) {
+        for (int j: vertices) {
             if (matrix[i][j]!=-1) {
                 ans += to_string(edges[matrix[i][j]]->getWeight()) + " ";
             } else ans += "0 ";

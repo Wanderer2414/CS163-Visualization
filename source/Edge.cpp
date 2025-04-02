@@ -1,6 +1,5 @@
 #include "../include/Edge.h"
 #include "../include/General.h"
-#include <algorithm>
 #include <cmath>
 #include <string>
 
@@ -96,6 +95,12 @@ bool Edge::IsColorChange() const {
 bool Edge::IsReverse() const {
     return is_reverse;
 }
+bool Edge::isHovered() const {
+    return m_is_hovered;
+}
+bool Edge::isPressed() const {
+    return m_is_pressed;
+}
 int Edge::getWeight() const {
     return weight;
 }
@@ -141,6 +146,8 @@ void Edge::draw() {
     }
 }
 void Edge::handle() {
+    m_is_hovered = CheckCollisionPointLine(GetMousePosition(), m_start->getCenter(), m_end->getCenter(), 5);
+    m_is_pressed = m_is_hovered && IsMouseButtonPressed(MOUSE_BUTTON_LEFT);
     m_is_color_changed = false;
     Vector2 delta = m_end->getCenter() - m_start->getCenter();
     float dis = abs(delta);

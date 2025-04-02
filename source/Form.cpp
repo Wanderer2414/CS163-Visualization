@@ -346,6 +346,7 @@ void Form::handle() {
                 setPause(false);
             }
         } else if (play_button.getStage() == 2) {
+            setPause(true);
             GotoCommandLine(0);
         }
     } 
@@ -354,7 +355,10 @@ void Form::handle() {
     else play_button.go(2);
     //Skip button
     if (skip_button.isPressed()) GotoCommandLine(1);
-    if (restart_button.isPressed()) GotoCommandLine(0);
+    if (restart_button.isPressed()) {
+        setPause(true);
+        GotoCommandLine(0);
+    }
     //Speed
     if (speed_scroll.isChanged())
         setSpeed(1.0f/(speed_scroll.getValue()));

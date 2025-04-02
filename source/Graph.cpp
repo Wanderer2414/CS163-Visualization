@@ -6,10 +6,9 @@
 #include <queue>
 
 void Graph::search(const string& val) {
-    int value = to_int(val);
-    float i = 0;
-    while (i<vertices.size() && (!vertices[i] || vertices[i]->getValue() != value)) i++;
+    float i = to_int(val);
     if (i<vertices.size()) {
+        int value = vertices[i]->getValue();
         if (search_type == 0)
             console.InsertNextMainCommand("Search " + to_string(value) + " with DFS");
         else console.InsertNextMainCommand("Search " + to_string(value) + " with BFS");
@@ -124,37 +123,38 @@ void Graph::remove(const int& i) {
     }
 }
 void Graph::remove(const std::string& str) {
-    int val = to_int(str);
-    int i  =0;
-    while (i<vertices.size() && (!vertices[i] || vertices[i]->getValue() != val)) i++;
-    if (i<vertices.size() && vertices[i] && vertices[i]->getValue() == val) {
+    int i = to_int(str);
+    if (i<vertices.size()) {
         remove(i);
     }
 
 }
+void Graph::update(const int& index, const int& value) {
+    vertices[index]->setValue(value);
+}
+void Graph::update(const std::string &old_value, const std::string &new_value) {
+    int i = to_int(old_value);
+    if (i<vertices.size()) {
+        InsertNextMainCommand({update_code, 1.0f*i, 1.0f*vertices[i]->getValue(), 1.0f*to_int(new_value), 0.1});
+    }
+}
 void Graph::prim(const std::string& str) {
-    int val = to_int(str);
-    float i = 0;
-    while (i<vertices.size() && (!vertices[i] || vertices[i]->getValue() != val)) i++;
-    if (i<vertices.size() && vertices[i]) {
+    float i = to_int(str);
+    if (i<vertices.size()) {
         console.InsertNextMainCommand("Prim: start at vertex = " + to_string(vertices[i]->getValue()));
         InsertNextMainCommand({prim_code, i, 1});
     }
 }
 void Graph::kruskal(const string& str) {
-    int val = to_int(str);
-    float i = 0;
-    while (i<vertices.size() && (!vertices[i] || vertices[i]->getValue() != val)) i++;
-    if (i<vertices.size() && vertices[i]) {
+    float i = to_int(str);
+    if (i<vertices.size()) {
         console.InsertNextMainCommand("Kruskal");
         InsertNextMainCommand({kruskal_code, i, 1});
     }
 }
 void Graph::dijikstra(const string& str) {
-    int val = to_int(str);
-    float i = 0;
-    while (i<vertices.size() && (!vertices[i] || vertices[i]->getValue() != val)) i++;
-    if (i<vertices.size() && vertices[i]) {
+    float i = to_int(str);
+    if (i<vertices.size()) {
         console.InsertNextMainCommand("Dijikstra at " + str);
         InsertNextMainCommand({dijikstra_code, i, 1});
     }
@@ -519,6 +519,24 @@ void Graph::FetchNextCommand(const vector<float>& codes) {
             setDuration(codes.back());
         }
         break;
+        case update_code: {
+            update(codes[1], codes[3]);
+            setDuration(codes.back());
+        }
+        break;
+        case match_code: {
+            console.goDown();
+            int index = codes[1];
+            int start = codes[2], end = codes[3];
+            edges[index] = new Edge(vertices[start], vertices[end], &form_setting);
+            edges[index]->start(false);
+            edges[index]->setType(m_type == 0);
+            edges[index]->setDuration(codes.back()*getSpeed());
+            edges[index]->setWeight(codes[4]);
+            matrix[start][end] = index;
+            setDuration(codes.back());
+        }
+        break;
     }
 }
 void Graph::FetchPrevCommand(const vector<float>& codes) {
@@ -687,6 +705,21 @@ void Graph::FetchPrevCommand(const vector<float>& codes) {
         case hide_heap: {
             heap.setVisible(true);
             setDuration(0);
+        }
+        break;
+        case update_code: {
+            update(codes[1], codes[2]);
+            setDuration(codes.back());
+        }
+        break;
+        case match_code: {
+            int index = codes[1];
+            int start = codes[2], end = codes[3];
+            delete edges[index];
+            edges[index] = 0;
+            matrix[start][end] = -1;
+            console.goUp();
+            setDuration(codes.back());
         }
         break;
     }

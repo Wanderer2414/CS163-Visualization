@@ -30,7 +30,7 @@ int Vertex::getValue() const {
     return m_value;
 }
 float Vertex::getRadius() const {
-    return max(m_size.x, m_size.y)/2;
+    return max(m_size.x, m_size.y)/2 + 5;
 }
 void Vertex::draw() {
     DynamicColorCircle::draw();
@@ -89,7 +89,7 @@ void Vertex::setVelocity(const Vector2& v) {
 }
 void Vertex::setSize(const float& width, const float& height) {
     Controller::setSize(width, height);
-    DynamicColorCircle::setRadius(getRadius()+5);
+    DynamicColorCircle::setRadius(getRadius());
 }
 void Vertex::setPosition(const float& x, const float& y) {
     m_text_position = m_text_position - m_position + Vector2({x,y});
