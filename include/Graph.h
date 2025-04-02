@@ -21,37 +21,44 @@
 class Graph: public Form {
 public:
     enum CommandCode {
-        search_code = 0,
-        choose_vertex = 1,
-        choose_edge = 3,
-        unchoose = 2,
-        lock = 4,
-        goUp = 6,
-        goDown = 7,
-        choosev2_vertex = 8,
-        choosev2_edge = 9,
-        reset_color = 10,
-        fill_edge = 11,
-        fill_vertex = 12,
-        unlock = 13,
-        fill = 14,
-        add_code = 15,
-        spread_color = 16,
-        complete_color = 17,
-        remove_edge = 18,
-        remove_vertex = 19,
-        prim_code = 20,
-        add_heap = 21,
-        pop_heap = 22,
-        show_heap = 23,
-        hide_heap = 24,
-        kruskal_code = 25,
-        dijikstra_code = 26,
-        prepare_dijikstra = 27,
-        free_dijikstra = 28,
-        set_cost = 29,
-        update_code = 30,
-        match_code = 31
+        search_code,
+        search_end_code,
+
+        choose_vertex,
+        choose_edge,
+        unchoose,
+
+        goUp,
+        goDown,
+        choosev2_vertex,
+        choosev2_edge,
+        reset_color,
+        fill_edge,
+        fill_vertex,
+        
+        fill,
+        add_code,
+        
+        remove_edge,
+        remove_vertex,
+
+        add_heap,
+        pop_heap,
+
+        prim_code,
+        prim_end_code,
+
+        kruskal_code,
+        kruskal_end_code,
+
+        dijikstra_code,
+        dijkstra_end_code,
+
+        set_cost,
+        update_code,
+        match_code,
+        
+        wait
     };
     Graph(const int& index, FormSetting form_setting, const Vector2& window_size);
     
@@ -127,18 +134,23 @@ private:
                         remove(const int& index),
                         dfs(const int& vertex),
                         dfs(vector<bool>& visited, const int& vertex),
-                        bfs(const int& vertex);
+                        bfs(const int& vertex),
+                        search_console_add(const int& vertex, const int& mode);
 
     void                pull_matrix(const int& graph),
+                        complete_color(),
                         random_subGraphColor(),
                         setSubGraphColor(const int& row, const Color& color),
                         setSubGraphColor(const int& row, vector<bool>& visited, const Color& color);
 
-    void                prim_algorithms(const int& vertex),
+    void                prim_console_add(),
+                        prim_algorithms(const int& vertex),
                         prim_algorithms(vector<bool>& visited, MinHeap& q, const int& vertex),
                         
+                        kruskal_console_add(),
                         kruskal_algorithms(const int& index),
                         
+                        dijikstra_console_add(const int& val),
                         dijikstra_algorithms(const int& index),
                         dijikstra_algorithms(const int& index, MinHeap& heap, vector<bool>& visited, vector<int>& board),
 
@@ -151,6 +163,7 @@ private:
     void                getVertex(const int& graph, vector<bool>& visited);
 
     vector<Dijikstra_Margin*> DMargins;
+    vector<Color>             true_color;
 
 };
 string to_string(const vector<vector<int>>& matrix);
