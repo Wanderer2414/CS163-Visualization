@@ -8,7 +8,8 @@ enum CommandCode {
     redraw = 3,
     erase = 4,
     rotateLeft = 5,
-    rotateRight = 6
+    rotateRight = 6,
+    insert = 7
 };
 
 #endif

@@ -2,36 +2,38 @@
 #define AVLTREE_H
 
 #include "Form.h"
-#include "GUI.h"
+#include "AVLNode.h"
 #include <map>
 #include "Global.h"
 #include "CommandCode.h"
+#include "Form.h"
 
 class AVLTreeForm : public Form {
 public:
     AVLTreeForm(const int& index, FormSetting form_setting, const Vector2& window_size);
     void            add(const vector<std::string>& x)   override,
-                    remove(const std::string& x)override,
-                    FetchNextCommand(const std::vector<float>& codes)  override,
-                    FetchPrevCommand(const std::vector<float>& codes)  override,
-                    draw()                      override,
-                    handle()                    override;
+        remove(const std::string& x)override,
+        FetchNextCommand(const std::vector<float>& codes)  override,
+        FetchPrevCommand(const std::vector<float>& codes)  override,
+        draw()                      override,
+        handle()                    override;
+    bool isAnimationDone = false;
     ~AVLTreeForm();
 private:
-    Node* m_root;
-    Node* rotateRight(Node* root);
-    Node* rotateLeft(Node* root);
-    Node* insert(Node*& root, const Vector2& par, const int& x);
-    Node*& findNode(Node*& root, int value);
-    void            remove(Node*& root, const int& x),
-                    rePosition(),
-                    draw(Node* root),
-                    handle(Node* root),
-                    free(),
-                    free(Node* root);
-    int             rePosition(Node* root, const int& level, float index, std::map<std::pair<float, int>, bool>& board);
-    int             getHeight(Node* root), getBalanceFactor(Node* root);
-    std::vector<Node*> m_list;
+    AVLNode* m_root;
+    AVLNode* rotateRight(AVLNode* root);
+    AVLNode* rotateLeft(AVLNode* root);
+    AVLNode* insert(AVLNode*& root, const Vector2& par, const int& x);
+    AVLNode*& findNode(AVLNode*& root, int value);
+    void            remove(AVLNode*& root, const int& x),
+        rePosition(),
+        draw(AVLNode* root),
+        handle(AVLNode* root),
+        free(),
+        free(AVLNode* root);
+    int             rePosition(AVLNode* root, const int& level, float index, std::map<std::pair<float, int>, bool>& board);
+    int             getHeight(AVLNode* root), getBalanceFactor(AVLNode* root);
+    std::vector<AVLNode*> m_list;
 };
 
 #endif
