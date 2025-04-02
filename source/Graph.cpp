@@ -396,7 +396,7 @@ void Graph::FetchNextCommand(const vector<float>& codes) {
             delete edges[index];
             edges[index] = 0;
             matrix[start][end] = -1;
-            setDuration(0);
+            setDuration(codes.back());
         }
         break;
         case remove_vertex: {
@@ -652,6 +652,7 @@ void Graph::FetchPrevCommand(const vector<float>& codes) {
             edges[index]->setDuration(0.5);
             edges[index]->start(false);
             edges[index]->setWeight(weight);
+            edges[index]->setType(m_type == 0);
             matrix[start][end] = index;
             setDuration(0.1);
         }

@@ -35,5 +35,9 @@
 #define fill_cursor_icon "CS163-DSAVisualization/asset/Icon/paint-pallet.png"
 #define fill_filled_icon "CS163-DSAVisualization/asset/Icon/paint-pallet-circle-filled.png"
 
+#define scissor_icon "CS163-DSAVisualization/asset/Icon/scissors-circle.png"
+#define scissor_cursor_icon "CS163-DSAVisualization/asset/Icon/scissors.png"
+#define scissor_filled_icon "CS163-DSAVisualization/asset/Icon/scissors-circle-filled.png"
+
 #define TitleMenu "CS163-DSAVisualization/asset/images/TitleMenu.png"
 #endif

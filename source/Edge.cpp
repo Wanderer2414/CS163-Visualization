@@ -146,7 +146,7 @@ void Edge::draw() {
     }
 }
 void Edge::handle() {
-    m_is_hovered = CheckCollisionPointLine(GetMousePosition(), m_start->getCenter(), m_end->getCenter(), 5);
+    m_is_hovered = CheckCollisionPointLine(GetMousePosition(), m_start->getCenter(), m_end->getCenter(), 10);
     m_is_pressed = m_is_hovered && IsMouseButtonPressed(MOUSE_BUTTON_LEFT);
     m_is_color_changed = false;
     Vector2 delta = m_end->getCenter() - m_start->getCenter();

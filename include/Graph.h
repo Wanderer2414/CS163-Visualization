@@ -103,7 +103,7 @@ private:
 
     Container           search_graph_box;
 
-    TextureButton       match_tool, filled_tool;
+    TextureButton       match_tool, filled_tool, scissors_tool;
     
     OptionBox           fixed_choice, drag_choice, collision_choice, 
                         weight_choice, unweight_choice, 

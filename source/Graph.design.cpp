@@ -78,6 +78,7 @@ Graph::Graph(const int& index, FormSetting f_setting, const Vector2& window_size
 
     tools_box.push_back(&match_tool);
     tools_box.push_back(&filled_tool);
+    tools_box.push_back(&scissors_tool);
 
     extract_box.push_back(&extract_text_bx);
     extract_box.push_back(&pull_matrix_button);
@@ -123,6 +124,10 @@ Graph::Graph(const int& index, FormSetting f_setting, const Vector2& window_size
     filled_tool.setButtonStage(0, fill_icon, fill_filled_icon);
     filled_tool.setPosition(50, 5);
     filled_tool.setSize(40, 40);
+
+    scissors_tool.setButtonStage(0, scissor_icon, scissor_filled_icon);
+    scissors_tool.setPosition(95, 5);
+    scissors_tool.setSize(40, 40);
     //Algorithms
     dijikstra_textbox.setPosition(5, 5);
     dijikstra_textbox.setSize(100, 40);
@@ -319,6 +324,8 @@ void Graph::draw() {
     else 
     if (m_tool==1) 
         DrawTexture(cursor_icon, GetMousePosition().x - cursor_icon.width, GetMousePosition().y, WHITE);
+    else if (m_tool == 2) 
+        DrawTexture(cursor_icon, GetMousePosition().x - cursor_icon.width/2, GetMousePosition().y-cursor_icon.height/2, WHITE);
 }
 void Graph::handle() {
     heap.handle();
@@ -366,6 +373,14 @@ void Graph::handle() {
                 else {
                     edges[i]->setDuration(getSpeed());
                     edges[i]->start(false, false);
+                }
+            }
+            //Check press delete
+            if (edges[i]->isPressed()) {
+                if (m_tool == 2) {
+                    int start = edges[i]->m_start->getIndex(), end = edges[i]->m_end->getIndex();
+                    cout << i << endl;
+                    InsertNextMainCommand({remove_edge,1.0f*i, 1.0f*start, 1.f*end, 1.0f*edges[i]->getWeight(), 1});
                 }
             }
             //Check edge color change 
@@ -555,6 +570,20 @@ void Graph::handle() {
             else HideCursor();
             m_tool = 1;
             cursor_icon = LoadTexture(fill_cursor_icon);
+            cursor_icon.width = cursor_icon.height = 30;
+        }
+        else {
+            ShowCursor();
+            UnloadTexture(cursor_icon);
+            m_tool = -1;
+        }
+    }
+    if (scissors_tool.isPressed()) {
+        if (m_tool != 2) {
+            if (m_tool!=-1) UnloadTexture(cursor_icon);
+            else HideCursor();
+            m_tool = 2;
+            cursor_icon = LoadTexture(scissor_cursor_icon);
             cursor_icon.width = cursor_icon.height = 30;
         }
         else {
