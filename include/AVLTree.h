@@ -23,14 +23,12 @@ private:
     Node* rotateLeft(Node* root);
     Node* insert(Node*& root, const Vector2& par, const int& x);
     Node*& findNode(Node*& root, int value);
-    Node* getRoot();
     void            remove(Node*& root, const int& x),
                     rePosition(),
                     draw(Node* root),
                     handle(Node* root),
                     free(),
-                    free(Node* root),
-                    adjustPositions();
+                    free(Node* root);
     int             rePosition(Node* root, const int& level, float index, std::map<std::pair<float, int>, bool>& board);
     int             getHeight(Node* root), getBalanceFactor(Node* root);
     std::vector<Node*> m_list;

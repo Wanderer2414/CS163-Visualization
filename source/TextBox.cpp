@@ -58,7 +58,7 @@ void TextBox::update_cursor() {
         m_cursor_pos.x-=delta;
     } else  if (m_cursor_pos.x<m_position.x) {
         for (int i = 0; i<m_text_position.size(); i++) {
-            m_text_position[i].x -= m_cursor_pos.x-m_position.x;
+            m_text_position[i].x -= -margin + m_cursor_pos.x-m_position.x;
         }
         m_cursor_pos.x = m_position.x;
     }
@@ -71,7 +71,7 @@ void TextBox::update_cursor() {
         m_cursor_pos.y-=delta;
     } else if (m_cursor_pos.y < m_position.y) {
         for (int i = 0; i<m_text_position.size(); i++) {
-            m_text_position[i].y -= m_position.y-m_cursor_pos.y;
+            m_text_position[i].y += margin + m_position.y-m_cursor_pos.y;
         }
         m_cursor_pos.y = m_position.y;
     }
@@ -79,6 +79,16 @@ void TextBox::update_cursor() {
 void TextBox::clear() {
     Label::clear();
     m_cursor_col = m_cursor_row = 0;
+    update_cursor();
+}
+void TextBox::setPosition(const float& x, const float& y) {
+    m_cursor_pos.x += x - m_position.x;
+    m_cursor_pos.y += y - m_position.y;
+    Label::setPosition(x, y);
+}
+void TextBox::setText(const string& str) {
+    Label::setText(str);
+    update_cursor();
 }
 void TextBox::handle() {
     m_is_hovered = CheckCollisionPointRec(GetMousePosition(), { m_position.x, m_position.y, m_size.x, m_size.y });
@@ -270,7 +280,6 @@ void TextBox::handle() {
                 update_cursor();
             } else {
                 m_is_enter = true;
-                m_is_focus = false;
             }
         }
     }

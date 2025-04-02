@@ -238,7 +238,7 @@ Form::Form(const int& index, FormSetting f_setting, const Vector2& window_size) 
 
     m_workspace.x = 10;
     m_workspace.y = 70;
-    m_workspace.width = m_window_size.x - m_workspace.x;
+    m_workspace.width = m_window_size.x - m_workspace.x - 120;
     m_workspace.height = m_window_size.y - m_workspace.y - 50;
 
     m_camera.offset = { m_window_size.x / 2, 100 };
@@ -325,16 +325,10 @@ void Form::handle() {
             track_hover.setPosition(pos.x, pos.y);
             option_box.setPosition(option_box.getPosition().x, pos.y);
         } 
-        if (option_box.getVertexDone()==0) {
-            option_box.setVisible(true);
-            option_box.next();
-        }
+        main_box_show();
     } else if (!track_hover.isHovered() && !option_box.isHovered()) {
-        if (option_box.getVertexDone() == 1) {
-            option_box.next();
-            option_box.select(-1);
-            insert_textbox.setFocus(false);
-            remove_textbox.setFocus(false);
+        if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) {
+            main_box_hide();
         }
         else if (option_box.getVertexDone() == 0) {
             option_box.setVisible(false);
@@ -411,6 +405,20 @@ void Form::update(const std::string& oldValue, const std::string& newValue) {
 }
 void Form::search(const std::string& x) {
 
+}
+void Form::main_box_show() {
+    if (option_box.getVertexDone()==0) {
+        option_box.setVisible(true);
+        option_box.next();
+    }
+}
+void Form::main_box_hide() {
+    if (option_box.getVertexDone() == 1) {
+        option_box.next();
+        option_box.select(-1);
+        insert_textbox.setFocus(false);
+        remove_textbox.setFocus(false);
+    }
 }
 string Form::RandomCreate() const {
     string ans;

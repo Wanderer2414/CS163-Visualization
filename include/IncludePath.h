@@ -56,5 +56,13 @@
 #define sun_light "C:/Users/New/Huy/asset/Icon/Light.png"
 #define sun_dark "C:/Users/New/Huy/asset/Icon/Dark.png"
 #define Rand "C:/Users/New/Huy/asset/images/Rand.png"
-#define TitleMenu "C:/Users/New/Huy/asset/images/TitleMenu.png"
+
+#define TitleMenu "D:/Huy/asset/images/TitleMenu.png"
+#define match_cursor_icon "D:/Huy/asset/Icon/pepicons-pencil--pen.png"
+#define match_filled_icon "D:/Huy/asset/Icon/pepicons-pencil--pen-circle-filled.png"
+#define match_icon "D:/Huy/asset/Icon/pepicons-pencil--pen-circle.png"
+#define fill_icon "D:/Huy/asset/Icon/paint-pallet-circle.png"
+#define fill_cursor_icon "D:/Huy/asset/Icon/paint-pallet.png"
+#define fill_filled_icon "D:/Huy/asset/Icon/paint-pallet-circle-filled.png"
+
 #endif

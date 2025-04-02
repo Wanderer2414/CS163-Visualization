@@ -1,0 +1,24 @@
+#ifndef COLORPOINTER_H
+#define COLORPOINTER_H
+#include "ColorBox.h"
+#include "Controller.h"
+class ColorPointer: public Controller {
+public:
+    ColorPointer(ButtonSetting* button_setting);
+    ButtonSetting       *button_setting;
+    bool                isVisible() const,
+                        isHovered() const override;
+    virtual void        draw()      override,
+                        handle()    override,
+
+                        setPosition(const float& x, const float& y) override,
+                        setSize(const float& width, const float& height) override,
+                        setColor(const Color& color),
+                        setVisible(const bool& visible);
+    Color               getColor() const;
+private:
+    bool                m_is_visible, m_is_hovered;
+    ColorBox            red, green, blue, alpha;
+};
+
+#endif

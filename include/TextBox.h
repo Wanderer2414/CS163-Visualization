@@ -14,7 +14,9 @@ public:
                         isEnter();
     virtual void        handle()                        override,
                         draw()                          override,
+                        setPosition(const float& x, const float& y) override,
                         clear()                         override,
+                        setText(const string& str)      override,
                         setFocus(const bool& focus);
     
     ~TextBox();

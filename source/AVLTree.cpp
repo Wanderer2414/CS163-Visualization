@@ -24,10 +24,7 @@ Node* AVLTreeForm::insert(Node*& root, const Vector2& par, const int& x)
 		root->button_setting = &form_setting;
 		root->text_setting = &form_setting;
 		root->setPosition(par.x, par.y);
-		root->setSize(40, 40);
-		root->setValue(x);
 		m_list.push_back(root);
-
 		InsertNextSubCommand({ CommandCode::redraw, 1.0f });
 		return root;
 	}
@@ -73,7 +70,6 @@ Node* AVLTreeForm::insert(Node*& root, const Vector2& par, const int& x)
 	if (root->parent == nullptr) m_root = root;
 	std::map<std::pair<float, int>, bool> board;
 	rePosition(root, 0, 0, board);
-	adjustPositions();
 	return root;
 }
 void AVLTreeForm::handle()
@@ -142,7 +138,18 @@ void AVLTreeForm::FetchNextCommand(const std::vector<float>& codes)
 		insert(m_root, { 400, 100 }, (int)codes[1]);
 		rePosition();
 		setDuration(0);
+		//console.goDown();
+		break;
+	}
+	case CommandCode::choose: {
 		console.goDown();
+		setDuration((int)codes[2]);
+		//m_list[codes[1]]->button_setting->normal_color = RED;
+		break;
+	}
+	case CommandCode::unchoose: {
+		setDuration((int)codes[2]);
+		//m_list[codes[1]]->button_setting->normal_color = WHITE;
 		break;
 	}
 	case CommandCode::erase: {
@@ -207,9 +214,7 @@ Node* AVLTreeForm::rotateLeft(Node* root)
 	}
 	root->updateHeight();
 	newRoot->updateHeight();
-
-	//InsertNextSubCommand({ CommandCode::rotateLeft, 1.0f * root->getValue() });
-	//rePosition();
+	
 	return newRoot;
 }
 
@@ -237,9 +242,6 @@ Node* AVLTreeForm::rotateRight(Node* root)
 	root->updateHeight();
 	newRoot->updateHeight();
 
-	//InsertNextSubCommand({ CommandCode::rotateRight, 1.0f * root->getValue() });
-	//rePosition();
-
 	return newRoot;
 }
 
@@ -252,20 +254,43 @@ void AVLTreeForm::remove(Node*& root, const int& x)
 		if (!root->left || !root->right) {
 			Node* tmp = root->left ? root->left : root->right;
 			if (tmp) tmp->parent = root->parent;
-			/*auto it = std::find(m_list.begin(), m_list.end(), root);
-			if (it != m_list.end()) m_list.erase(it);*/
+			if (root->parent) {
+				if (root->parent->left == root) root->parent->left = tmp;
+				else root->parent->right = tmp;
+			}
+			//auto it = std::find(m_list.begin(), m_list.end(), root);
+			//if (it != m_list.end()) m_list.erase(it);
 			delete root;
 			root = tmp;
+			//if (!root) return;
 		}
 		else {
 			Node* tmp = root->right;
-			while (tmp->left) tmp = tmp->left;
+			Node* parentTmp = root;
+			while (tmp->left) {
+				parentTmp = tmp;
+				tmp = tmp->left;
+			}
 			root->setValue(tmp->getValue());
-			remove(root->right, tmp->getValue());
-			if (root->right) root->right->parent = root;
+			if (parentTmp->left == tmp) parentTmp->left = tmp->right;
+			else parentTmp->right = tmp->right;
+
+			if (tmp->right) tmp->right->parent = parentTmp;
+
+			//auto it = std::find(m_list.begin(), m_list.end(), tmp);
+			//if (it != m_list.end()) m_list.erase(it);
+
+			if (root == tmp) root = tmp->right ? tmp->right : tmp->left;
+
+			delete tmp;
+			tmp = nullptr; // M
 		}
 	}
-	if (!root) return;
+	if (!root) {
+		std::cout << "Root is NULL before updateHeight()" << std::endl;
+		return;
+	}
+	//if (root) std::cout << "Updating height of: " << root->getValue() << std::endl;
 	root->updateHeight();
 	int balance = getBalanceFactor(root);
 
@@ -289,58 +314,8 @@ void AVLTreeForm::remove(Node*& root, const int& x)
 			root = rotateLeft(root);
 		}
 	}
-}
-
-void AVLTreeForm::adjustPositions()
-{
-	if (m_list.empty()) return;
-
-	// Collect all current positions to find bounds
-	float min_x = INFINITY, max_x = -INFINITY;
-	float min_y = INFINITY, max_y = -INFINITY;
-	for (auto* node : m_list)
-	{
-		float x = node->getCenter().x;
-		float y = node->getCenter().y;
-		if (x < min_x) min_x = x;
-		if (x > max_x) max_x = x;
-		if (y < min_y) min_y = y;
-		if (y > max_y) max_y = y;
-	}
-
-	// Calculate total width and height needed, considering node size (50x50)
-	float total_width = max_x - min_x;
-	float total_height = max_y - min_y;
-
-	// Calculate scaling factors to fit within workspace, leaving space for node size
-	float scaling_factor_x = 1.0f;
-	if (total_width > 0)
-	{
-		scaling_factor_x = (m_workspace.width - 50) / total_width;
-	}
-	float scaling_factor_y = 1.0f;
-	if (total_height > 0)
-	{
-		scaling_factor_y = (m_workspace.height - 50) / total_height;
-	}
-	float scaling_factor = std::min(scaling_factor_x, scaling_factor_y);
-	if (scaling_factor > 1.0f) scaling_factor = 1.0f; // No scaling up
-
-	// Calculate starting positions to center the scaled tree
-	float scaled_width = total_width * scaling_factor;
-	float scaled_height = total_height * scaling_factor;
-	float starting_x = (m_workspace.width - scaled_width) / 2;
-	float starting_y = (m_workspace.height - scaled_height) / 2;
-
-	// Adjust each node's position
-	for (auto* node : m_list)
-	{
-		float original_x = node->getCenter().x;
-		float original_y = node->getCenter().y;
-		float new_x = starting_x + (original_x - min_x) * scaling_factor;
-		float new_y = starting_y + (original_y - min_y) * scaling_factor;
-		node->setSlowPosition(new_x, new_y);
-	}
+	if (root->left) root->left->parent = root;
+	if (root->right) root->right->parent = root;
 }
 
 Node*& AVLTreeForm::findNode(Node*& root, int value)
