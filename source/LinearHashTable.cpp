@@ -106,6 +106,10 @@ void HT::HashTable::add(const vector<std::string>& data) {
         cnt++;
     }
 }
+void HT::HashTable::update(const std::string& old_value, const std::string& new_value)
+{
+    InsertNextMainCommand({ _update, (float)to_int(old_value), (float)to_int(new_value) });
+}
 void HT::HashTable::search(const std::string& x)
 {
     InsertNextMainCommand({ _search, (float)to_int(x) });
@@ -142,10 +146,54 @@ void HT::HashTable::insert(const int& value) {
         }
         if (!m_memory[cur].getValue()) {
             InsertNextSubCommand({ _choose, (float)cur, 1 });
-            InsertNextSubCommand({ _unchoose, (float)cur, 1 });
             InsertNextSubCommand({ _add, (float)cur, (float)value, 1 });
+            InsertNextSubCommand({ _unchoose, (float)cur, 1 });
             console.InsertNextSubCommand("Insert value at new index " + std::to_string(cur)); // Show insertion at new index
             console.goDown(); // Move to the next step
+        }
+    }
+}
+
+void HT::HashTable::update(const int& oldvalue, const int& newvalue)
+{
+    int pos = index(oldvalue);
+    
+    if (m_memory[pos].getValue() == oldvalue) {
+        InsertNextSubCommand({ _choose, (float)pos, 1 });
+        InsertNextSubCommand({ _remove, (float)pos, (float)oldvalue, 1 });
+        InsertNextSubCommand({ _add, (float)pos, (float)newvalue, 1 });
+        InsertNextSubCommand({ _unchoose, (float)pos, 1 });
+        console.InsertNextSubCommand("Update value at index " + std::to_string(pos));
+        console.goDown();
+    }
+    else {
+        InsertNextSubCommand({ _choose, (float)pos, 1 });
+        InsertNextSubCommand({ _unchoose, (float)pos, 1 });
+
+        int cur = pos + 1;
+
+
+        if (cur == m_memory.size()) cur = 0;
+
+        while (cur != pos && m_memory[cur].getValue() && m_memory[cur].getValue() != oldvalue) {
+            InsertNextSubCommand({ _choose, (float)cur, 1 });
+            InsertNextSubCommand({ _unchoose, (float)cur, 1 });
+            cur++;
+            if (cur == m_memory.size()) cur = 0;
+        }
+
+        if (m_memory[cur].getValue() == oldvalue) {
+            InsertNextSubCommand({ _choose, (float)cur, 1 });
+            InsertNextSubCommand({ _remove, (float)cur, (float)oldvalue, 1 });
+            InsertNextSubCommand({ _add, (float)cur, (float)newvalue, 1 });
+            InsertNextSubCommand({ _unchoose, (float)cur, 1 });
+
+            console.InsertNextSubCommand("Updated value at index " + std::to_string(cur));
+            console.goDown();
+        }
+        else {
+            console.InsertNextSubCommand("Value not found to update");
+            console.goDown();
         }
     }
 }
@@ -154,6 +202,7 @@ void HT::HashTable::search(const int& value)
     int pos = index(value);
     console.InsertNextSubCommand( "Index = value % table_size" );
     console.InsertNextSubCommand("if (table[index] == value) return");
+
     InsertNextSubCommand({ _choose, (float)pos, 1 });
     InsertNextSubCommand({ _unchoose, (float)pos, 1 });
 
@@ -183,35 +232,32 @@ void HT::HashTable::search(const int& value)
         console.goDown();  // Move to the next step
     }
 }
-void HT::HashTable::remove(const int& value, const bool& isShow) {
+void HT::HashTable::remove(const int& value) {
     int pos = index(value);
-    if (isShow) {
-        InsertNextSubCommand({ _choose, (float)pos, 1 });
-        InsertNextSubCommand({ _unchoose, (float)pos, 1 });
-    }
+
+    
     if (m_memory[pos].getValue() == value) {
-        if (isShow)
-            InsertNextSubCommand({ _remove, (float)pos, (float)value, 1 });
-        else m_memory[pos].setValue(0);
+        InsertNextSubCommand({ _choose, (float)pos, 1 });  
+        InsertNextSubCommand({ _remove, (float)pos, (float)value, 1 });
+        InsertNextSubCommand({ _unchoose, (float)pos, 1 });
+        console.goDown();
     }
     else {
+        InsertNextSubCommand({ _choose, (float)pos, 1 });
+        InsertNextSubCommand({ _unchoose, (float)pos, 1 });
+
         int cur = pos + 1;
         if (cur == m_memory.size()) cur = 0;
         while (cur != pos && m_memory[cur].getValue() != value) {
-            if (isShow) {
-                InsertNextSubCommand({ _choose, (float)cur, 1 });
-                InsertNextSubCommand({ _unchoose, (float)cur, 1 });
-            }
+            InsertNextSubCommand({ _choose, (float)cur, 1 });
+            InsertNextSubCommand({ _unchoose, (float)cur, 1 });
             cur++;
             if (cur == m_memory.size()) cur = 0;
         }
         if (m_memory[cur].getValue() == value) {
-            if (isShow) {
-                InsertNextSubCommand({ _choose, (float)cur, 1 });
-                InsertNextSubCommand({ _unchoose, (float)cur, 1 });
-                InsertNextSubCommand({ _remove, (float)cur, (float)value, 1 });
-            }
-            else m_memory[cur].setValue(0);
+            InsertNextSubCommand({ _choose, (float)cur, 1 });
+            InsertNextSubCommand({ _remove, (float)cur, (float)value, 1 });
+            InsertNextSubCommand({ _unchoose, (float)cur, 1 });
         }
     }
 }
@@ -261,13 +307,20 @@ void HT::HashTable::FetchNextCommand(const std::vector<float>& command) {
         setDuration(command[3]);
     }
                 break;
+    case _update: {
+        int oldvalue = (int)command[1];
+        int newvalue = (int)command[2];
+        update(oldvalue, newvalue);
+        console.goDown();
+    }
+                break;
     }
 }
 void HT::HashTable::FetchPrevCommand(const std::vector<float>& command) {
     if (command.empty()) return;
     switch ((int)command[0]) {
     case _insert: {
-        remove(int(command[1]), false);
+        remove(int(command[1]));
         setDuration(1);
     }
                 break;

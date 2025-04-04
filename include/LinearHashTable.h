@@ -31,12 +31,14 @@ namespace HT {
             _unchoose = 2,
             _add = 3,
             _remove = 4,
-            _search = 6
+            _search = 6,
+            _update = 7
         };
         HashTable(const int& index, FormSetting form_setting, const Vector2& window_size);
         virtual void        add(const vector<std::string>& data) override,
                             remove(const std::string& data) override,
                             search(const std::string& x) override,
+                            update(const std::string& old_value, const std::string& new_value),
                                 
                             draw()              override,
                             handle()            override,
@@ -52,8 +54,9 @@ namespace HT {
 
         int         index(const int& value);
         void        insert(const int& value),
-                    remove(const int& value, const bool& isShow = true),
-                    search(const int& value);
+                    remove(const int& value),
+                    search(const int& value),
+                    update(const int& oldvalue, const int& newvalue);
         TextBox     m_memory_sz_textBox;
         std::vector<Node> m_memory;
 
