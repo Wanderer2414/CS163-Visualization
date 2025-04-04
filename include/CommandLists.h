@@ -15,19 +15,18 @@ public:
     float               getSpeed() const,
                         getProgress();
 
-    virtual void        FetchNextCommand(const std::vector<float>& codes),
-                        FetchPrevCommand(const std::vector<float>& codes),
+    virtual void        FetchNextCommand(const vector<float>& codes),
+                        FetchPrevCommand(const vector<float>& codes),
 
-                        PushBackMainCommand(const std::vector<float>& code),
-                        PushBackSubCommand(const std::vector<float>& code),
-
-                        InsertNextMainCommand(const std::vector<float>& code),
-                        InsertNextSubCommand(const std::vector<float>& code),
+                        InsertNextMainCommand(const vector<float>& code),
+                        InsertNextSubCommand(const vector<float>& code),
 
                         setSpeed(const float& clock_duration),
                         setDuration(const float& clock_count),
 
                         GotoCommandLine(const float& index),
+                        goMainNext(),
+                        goMainPrev(),
                         goNext(),
                         goBack(),
 
@@ -35,7 +34,7 @@ public:
                         setEnable(const bool& isEnable),
                         clear(),
                         setPause(const bool& isPause);
-    std::vector<float>  get(const int& index);
+    vector<float>  get(const int& index);
     ~CommandList();
 private:
     bool                m_is_enable,
@@ -43,15 +42,10 @@ private:
     bool                BeforeFetchNext(),
                         BeforeFetchPrev();
     int                 command_pointer,
-                        current_add,
-                        main_command_pointer;
-    float               m_speed;
-    void                update_tail(),
-                        update_range();
-    std::vector<std::vector<float>>     command_code;
-    std::vector<bool>                   temporary;
-    std::vector<int>                    sub_count;
-    Vector2                             current_segment;
+                        sub_command_pointer;
+    float               m_speed, cur_time;
+    vector<vector<float>>     command_code;
+    vector<vector<vector<float>>>       sub_command;
     Clock               m_clock;
 };
 

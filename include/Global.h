@@ -1,6 +1,10 @@
 #ifndef GLOBAL_H
 #define GLOBAL_H
 
+
+#define _USE_MATH_DEFINES
+#include <cmath>
+
 #include "../raylib/raylib.h"
 #include <iostream>
 #include <fstream>
@@ -11,6 +15,13 @@
 #include <stack>
 #include <map>
 #include <deque>
+#include <algorithm>
+#include <cstdio>
+#include <cstddef>
+#include <ctime>
+#include <cmath>
+#include <cctype>
+#include <new>
 #include <algorithm>
 #include <cstdlib>
 #include <cstddef>

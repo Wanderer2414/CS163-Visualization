@@ -2,6 +2,7 @@
 #define PROGRESSBAR_H
 
 #include "Controller.h"
+
 class ProgressBar : public Controller {
 public:
     ProgressBar();

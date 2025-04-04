@@ -14,6 +14,7 @@ public:
                 isChanged() const;
     virtual void    draw()      override,
                     handle()    override,
+                    select(const int& index),
                     setText(const std::string& text);
 protected:
     bool        m_is_hovered,

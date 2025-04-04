@@ -1,5 +1,5 @@
-#ifndef MENU_BOX_H
-#define MENU_BOX_H
+#ifndef MENUBOX_H
+#define MENUBOX_H
 
 #include "Controller.h"
 #include "SettingPackage.h"

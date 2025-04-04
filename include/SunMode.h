@@ -1,5 +1,6 @@
 #ifndef SUNMODE_H
 #define SUNMODE_H
+
 #include "Controller.h"
 #include "SettingPackage.h"
 

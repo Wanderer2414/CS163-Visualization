@@ -32,6 +32,9 @@ void OptionBox::handle() {
         m_is_changed = true;
     }
 }
+void OptionBox::select(const int& index) {
+    option = m_index;
+}
 void OptionBox::setText(const std::string& text) {
     m_text = text;
 }

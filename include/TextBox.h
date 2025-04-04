@@ -1,10 +1,10 @@
 #ifndef TEXTBOX_H
 #define TEXTBOX_H
 
-#include "Global.h"
 #include "Label.h"
 #include "SettingPackage.h"
 #include "TextButton.h"
+#include "Global.h"
 
 class TextBox: public Label {
 public:
@@ -14,7 +14,9 @@ public:
                         isEnter();
     virtual void        handle()                        override,
                         draw()                          override,
+                        setPosition(const float& x, const float& y) override,
                         clear()                         override,
+                        setText(const string& str)      override,
                         setFocus(const bool& focus);
     
     ~TextBox();

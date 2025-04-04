@@ -9,6 +9,9 @@ int Move::getVertexDone() const {
     if (progress == pointer) return pointer;
     else return -1;
 }
+int Move::size() const {
+    return m_vertices.size();
+}
 void Move::handle() {
     if (progress != pointer) {
         Vector2 delta = m_vertices[pointer] - getPosition();

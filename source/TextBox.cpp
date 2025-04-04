@@ -79,6 +79,16 @@ void TextBox::update_cursor() {
 void TextBox::clear() {
     Label::clear();
     m_cursor_col = m_cursor_row = 0;
+    update_cursor();
+}
+void TextBox::setPosition(const float& x, const float& y) {
+    m_cursor_pos.x += x - m_position.x;
+    m_cursor_pos.y += y - m_position.y;
+    Label::setPosition(x, y);
+}
+void TextBox::setText(const string& str) {
+    Label::setText(str);
+    update_cursor();
 }
 void TextBox::handle() {
     m_is_hovered = CheckCollisionPointRec(GetMousePosition(), { m_position.x, m_position.y, m_size.x, m_size.y });
@@ -270,7 +280,6 @@ void TextBox::handle() {
                 update_cursor();
             } else {
                 m_is_enter = true;
-                m_is_focus = false;
             }
         }
     }

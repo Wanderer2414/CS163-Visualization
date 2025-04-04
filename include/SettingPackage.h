@@ -1,6 +1,8 @@
-#ifndef SETTING_PACKAGE_H
-#define SETTING_PACKAGE_H
+#ifndef SETTINGPACKAGE_H
+#define SETTINGPACKAGE_H
+
 #include "Global.h"
+
 class ButtonSetting {
 public:
     float   roundness;

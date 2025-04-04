@@ -4,6 +4,7 @@
 #include "Form.h"
 #include "TextBox.h"
 #include "TextButton.h"
+#include "Global.h"
 
 namespace SLL {
 	class Node : public TextButton {
