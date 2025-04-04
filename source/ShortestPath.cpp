@@ -251,7 +251,7 @@ Graph::~Graph() {
     nodes.clear();
 }
 
-GraphVisual::GraphVisual(Font font) : font(font), isChosen(false), numComponent(0), graph() {
+GraphVisual::GraphVisual(Font font) : font(font), isChosen(false), numComponent(0), graph(Graph()) {
     
 }
 
