@@ -1,6 +1,5 @@
-#include "../include/AVLTree.h"
+﻿#include "../include/AVLTree.h"
 #include "../include/General.h"
-#include "../include/Global.h"
 
 AVLTreeForm::AVLTreeForm(const int& index, FormSetting form_setting, const Vector2& window_size) :
 	Form(index, form_setting, window_size) {

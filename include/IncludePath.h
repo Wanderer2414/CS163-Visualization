@@ -74,5 +74,4 @@
 #define scissor_icon "CS163-DSAVisualization/asset/Icon/scissors-circle.png"
 #define scissor_cursor_icon "CS163-DSAVisualization/asset/Icon/scissors.png"
 #define scissor_filled_icon "CS163-DSAVisualization/asset/Icon/scissors-circle-filled.png"
-
 #endif

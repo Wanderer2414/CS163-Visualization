@@ -89,8 +89,8 @@ Form::Form(const int& index, FormSetting f_setting, const Vector2& window_size) 
     option_box.setText(4,"Remove");
     option_box.setVisible(false);
 
-    console.setPosition(m_window_size.x - 240, m_window_size.y - 170);
-    console.setSize(230, 150);
+    console.setPosition(m_window_size.x - 510, m_window_size.y - 220);
+    console.setSize(500, 200);
     console.setTextOrigin({ 10,10 });
 
     buttonTab.setSize(400, 40);
