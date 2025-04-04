@@ -244,13 +244,6 @@ void Graph::updatePosition() {
     }
 }
 
-Graph::~Graph() {
-    for (auto node : nodes) {
-        delete node;
-    }
-    nodes.clear();
-}
-
 GraphVisual::GraphVisual(Font font) : font(font), isChosen(false), numComponent(0), graph(Graph()) {
     
 }

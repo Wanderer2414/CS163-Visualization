@@ -754,7 +754,3 @@ void Graph::kruskal_algorithms(const int& index) {
         }
     }
 }
-
-Graph::~Graph() {
-    free();
-}

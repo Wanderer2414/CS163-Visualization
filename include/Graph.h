@@ -77,7 +77,9 @@ public:
     virtual string      RandomCreate() const override,
                         RandomSearch() const override;
     void clearGraph();
-    ~Graph();
+    ~Graph() {
+        free();
+    }
   
 private:
     bool                m_is_physics,

@@ -30,7 +30,6 @@ class Graph {
     void drawGraph(Font font, std::vector<Color> color = {});
     void updatePosition();
     void resetHighlight();
-    ~Graph();
 
     private:
     vector<Vertex*> nodes;
