@@ -54,7 +54,8 @@ namespace SLL {
 			_update = 6,
 			_remove = 4,
 			_insertNext = 7,
-			_removeNext = 8
+			_removeNext = 8,
+			_updateSilent = 9
 		};
 		SLLForm(const int& index, FormSetting form_setting, const Vector2& window_size);
 		virtual void    add(const vector<string>& str) override,
@@ -75,8 +76,9 @@ namespace SLL {
 		void insert(const int& value,const int& index);
 		void insertNext(const int& value,const int& index);
 		void remove(const int& value,const int& index);
-		void update(const int& old_value, const int& new_value);
 		void removeNext(const int& value,const int& index);
+		void update(const int& old_value, const int& new_value);
+		void updateSilent(const int& value,const int& index);
 	};
 }
 
