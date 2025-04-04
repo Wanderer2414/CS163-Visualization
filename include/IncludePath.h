@@ -53,6 +53,12 @@
 #define Replayhovered "C:/Users/New/Huy/asset/images/replay-selected.png"
 #define SkipNormal "C:/Users/New/Huy/asset/images/skip_normal.png"
 #define SkipHovered "C:/Users/New/Huy/asset/images/skip_hovered.png"
+#define SkipBackNormal "D:/Huy/asset/images/skipback.png"
+#define SkipBackHovered "D:/Huy/asset/images/skipback-hoverd.png"
+#define DoubleArrowRight "D:/Huy/asset/images/double-arrow-right-normal.png"
+#define DoubleArrowRight_Hovered "D:/Huy/asset/images/double-arrow-right-hovered.png"
+#define DoubleArrowLeft "D:/Huy/asset/images/double-arrow-left.png"
+#define DoubleArrowLeft_Hovered "D:/Huy/asset/images/double-arrow-left-hoverd.png"
 #define sun_light "C:/Users/New/Huy/asset/Icon/Light.png"
 #define sun_dark "C:/Users/New/Huy/asset/Icon/Dark.png"
 #define Rand "C:/Users/New/Huy/asset/images/Rand.png"
@@ -64,5 +70,8 @@
 #define fill_icon "D:/Huy/asset/Icon/paint-pallet-circle.png"
 #define fill_cursor_icon "D:/Huy/asset/Icon/paint-pallet.png"
 #define fill_filled_icon "D:/Huy/asset/Icon/paint-pallet-circle-filled.png"
+#define scissor_icon "D:/Huy/asset/Icon/scissors-circle.png"
+#define scissor_cursor_icon "D:/Huy/asset/Icon/scissors.png"
+#define scissor_filled_icon "D:/Huy/asset/Icon/scissors-circle-filled.png"
 
 #endif

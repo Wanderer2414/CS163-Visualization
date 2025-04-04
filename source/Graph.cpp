@@ -6,10 +6,9 @@
 #include <queue>
 
 void Graph::search(const string& val) {
-    int value = to_int(val);
-    float i = 0;
-    while (i<vertices.size() && (!vertices[i] || vertices[i]->getValue() != value)) i++;
+    float i = to_int(val);
     if (i<vertices.size()) {
+        int value = vertices[i]->getValue();
         if (search_type == 0)
             console.InsertNextMainCommand("Search " + to_string(value) + " with DFS");
         else console.InsertNextMainCommand("Search " + to_string(value) + " with BFS");
@@ -124,37 +123,38 @@ void Graph::remove(const int& i) {
     }
 }
 void Graph::remove(const std::string& str) {
-    int val = to_int(str);
-    int i  =0;
-    while (i<vertices.size() && (!vertices[i] || vertices[i]->getValue() != val)) i++;
-    if (i<vertices.size() && vertices[i] && vertices[i]->getValue() == val) {
+    int i = to_int(str);
+    if (i<vertices.size()) {
         remove(i);
     }
 
 }
+void Graph::update(const int& index, const int& value) {
+    vertices[index]->setValue(value);
+}
+void Graph::update(const std::string &old_value, const std::string &new_value) {
+    int i = to_int(old_value);
+    if (i<vertices.size()) {
+        InsertNextMainCommand({update_code, 1.0f*i, 1.0f*vertices[i]->getValue(), 1.0f*to_int(new_value), 0.1});
+    }
+}
 void Graph::prim(const std::string& str) {
-    int val = to_int(str);
-    float i = 0;
-    while (i<vertices.size() && (!vertices[i] || vertices[i]->getValue() != val)) i++;
-    if (i<vertices.size() && vertices[i]) {
+    float i = to_int(str);
+    if (i<vertices.size()) {
         console.InsertNextMainCommand("Prim: start at vertex = " + to_string(vertices[i]->getValue()));
         InsertNextMainCommand({prim_code, i, 1});
     }
 }
 void Graph::kruskal(const string& str) {
-    int val = to_int(str);
-    float i = 0;
-    while (i<vertices.size() && (!vertices[i] || vertices[i]->getValue() != val)) i++;
-    if (i<vertices.size() && vertices[i]) {
+    float i = to_int(str);
+    if (i<vertices.size()) {
         console.InsertNextMainCommand("Kruskal");
         InsertNextMainCommand({kruskal_code, i, 1});
     }
 }
 void Graph::dijikstra(const string& str) {
-    int val = to_int(str);
-    float i = 0;
-    while (i<vertices.size() && (!vertices[i] || vertices[i]->getValue() != val)) i++;
-    if (i<vertices.size() && vertices[i]) {
+    float i = to_int(str);
+    if (i<vertices.size()) {
         console.InsertNextMainCommand("Dijikstra at " + str);
         InsertNextMainCommand({dijikstra_code, i, 1});
     }
@@ -207,7 +207,7 @@ void Graph::dijikstra_algorithms(const int& index, MinHeap& heap, vector<bool>& 
     if (heap.size()) {
         Path q = heap.front();
         InsertNextSubCommand({goDown, 1, 0.2});
-        InsertNextSubCommand({fill_vertex, 1.0f*q.start, to_float(vertices[q.end]->getColor()), 1});
+        InsertNextSubCommand({choose_vertex, 1.0f*q.start, to_float(vertices[q.end]->getColor()), 1});
         InsertNextSubCommand({choosev2_vertex, 1.0f*q.start, 1.0f*q.end,1});
         InsertNextSubCommand({choose_edge, 1.0f*q.start, 1.0f*q.end, 1});
         InsertNextSubCommand({pop_heap, 1.0f*q.start, 1.0f*q.end, 1.0f*q.weight, 1});
@@ -396,7 +396,7 @@ void Graph::FetchNextCommand(const vector<float>& codes) {
             delete edges[index];
             edges[index] = 0;
             matrix[start][end] = -1;
-            setDuration(0);
+            setDuration(codes.back());
         }
         break;
         case remove_vertex: {
@@ -494,6 +494,7 @@ void Graph::FetchNextCommand(const vector<float>& codes) {
             console.InsertNextSubCommand("         vertex = heap.pop()[end] ");
             console.InsertNextSubCommand("         f(vertex) ");
             InsertNextSubCommand({goDown, 1, 0.2});
+            InsertNextSubCommand({fill_vertex, 1.0f*index, to_float(vertices[index]->getColor()), 1});
             dijikstra_algorithms(index);
             InsertNextSubCommand({goDown, 2, 0.2});
             InsertNextSubCommand({unlock, 1});
@@ -516,6 +517,24 @@ void Graph::FetchNextCommand(const vector<float>& codes) {
         break;
         case set_cost: {
             DMargins[codes[1]]->setValue(codes[2]);
+            setDuration(codes.back());
+        }
+        break;
+        case update_code: {
+            update(codes[1], codes[3]);
+            setDuration(codes.back());
+        }
+        break;
+        case match_code: {
+            console.goDown();
+            int index = codes[1];
+            int start = codes[2], end = codes[3];
+            edges[index] = new Edge(vertices[start], vertices[end], &form_setting);
+            edges[index]->start(false);
+            edges[index]->setType(m_type == 0);
+            edges[index]->setDuration(codes.back()*getSpeed());
+            edges[index]->setWeight(codes[4]);
+            matrix[start][end] = index;
             setDuration(codes.back());
         }
         break;
@@ -555,6 +574,11 @@ void Graph::FetchPrevCommand(const vector<float>& codes) {
         case goDown: {
             int n = codes[1];
             for (int i = 0; i<n; i++) console.goUp();
+            setDuration(codes.back());
+        }
+        break;
+        case prepare_dijikstra: {
+            free_Dmargin();
             setDuration(codes.back());
         }
         break;
@@ -634,6 +658,7 @@ void Graph::FetchPrevCommand(const vector<float>& codes) {
             edges[index]->setDuration(0.5);
             edges[index]->start(false);
             edges[index]->setWeight(weight);
+            edges[index]->setType(m_type == 0);
             matrix[start][end] = index;
             setDuration(0.1);
         }
@@ -687,6 +712,21 @@ void Graph::FetchPrevCommand(const vector<float>& codes) {
         case hide_heap: {
             heap.setVisible(true);
             setDuration(0);
+        }
+        break;
+        case update_code: {
+            update(codes[1], codes[2]);
+            setDuration(codes.back());
+        }
+        break;
+        case match_code: {
+            int index = codes[1];
+            int start = codes[2], end = codes[3];
+            delete edges[index];
+            edges[index] = 0;
+            matrix[start][end] = -1;
+            console.goUp();
+            setDuration(codes.back());
         }
         break;
     }

@@ -12,24 +12,33 @@ void AVLTreeForm::add(const vector<std::string>& x)
 {
 	for (int i = x.size() - 1; i >= 0; i--) {
 		console.InsertNextMainCommand("Add " + x[i]);
-		InsertNextMainCommand({ CommandCode::add, 1.0f * to_int(x[i]), 1 });
+		//InsertNextMainCommand({ CommandCode::add, 1.0f * to_int(x[i]), 1 });
+		/*InsertNextMainCommand({ CommandCode::choose, 1.0f * to_int(x[i]), 1 });
+		InsertNextMainCommand({ CommandCode::unchoose, 1.0f * to_int(x[i]), 1 });
+		*/
+		InsertNextMainCommand({ CommandCode::insert, 1.0f * to_int(x[i])});
 		rePosition();
-		console.goDown();
+		//console.goDown();
 	}
 }
-Node* AVLTreeForm::insert(Node*& root, const Vector2& par, const int& x)
+AVLNode* AVLTreeForm::insert(AVLNode*& root, const Vector2& par, const int& x)
 {
 	if (!root) {
-		root = new Node(m_list.size(), x);
+		InsertNextSubCommand({ CommandCode::choose, 1.0f * m_list.size(), 1 });
+		InsertNextSubCommand({ CommandCode::redraw, 1.0f });
+
+		console.InsertNextSubCommand("Insert " + std::to_string(x));
+		root = new AVLNode(m_list.size(), x);
 		root->button_setting = &form_setting;
 		root->text_setting = &form_setting;
 		root->setPosition(par.x, par.y);
 		m_list.push_back(root);
-		InsertNextSubCommand({ CommandCode::redraw, 1.0f });
+
+		InsertNextSubCommand({ CommandCode::unchoose, 1.0f * root->getIndex(), 0 });
 		return root;
 	}
-	console.InsertNextSubCommand("Compare with " + std::to_string(root->getValue()));
 	InsertNextSubCommand({ CommandCode::choose, 1.0f * root->getIndex(), 1 });
+	console.InsertNextSubCommand("Compare with " + std::to_string(root->getValue()));
 	InsertNextSubCommand({ CommandCode::unchoose, 1.0f * root->getIndex(), 0 });
 
 	if (x < root->getValue()) {
@@ -47,18 +56,22 @@ Node* AVLTreeForm::insert(Node*& root, const Vector2& par, const int& x)
 	// Left heavy
 	if (balance > 1) {
 		if (x < root->left->getValue()) {
+			console.InsertNextSubCommand("LL Case: Rotate Right ");
 			return rotateRight(root); // LL case
 		}
 		else {
+			console.InsertNextSubCommand("LR Case: Rotate Left ");
 			root->left = rotateLeft(root->left); // LR case
 			return rotateRight(root);
 		}
 	} // Right Heavy
 	else if (balance < -1) {
 		if (x > root->right->getValue()) {
+			console.InsertNextSubCommand("RR Case: Rotate Left ");
 			return rotateLeft(root); // RR case
 		}
 		else {
+			console.InsertNextSubCommand("RL Case: Rotate Right ");
 			root->right = rotateRight(root->right); // RL case
 			return rotateLeft(root);
 		}
@@ -110,7 +123,7 @@ void AVLTreeForm::FetchPrevCommand(const std::vector<float>& codes)
 		break;
 	}
 	case CommandCode::rotateLeft: {
-		Node*& node = findNode(m_root, (int)codes[1]);
+		AVLNode*& node = findNode(m_root, (int)codes[1]);
 		if (node) {
 			node = rotateRight(node);
 			rePosition();
@@ -118,7 +131,7 @@ void AVLTreeForm::FetchPrevCommand(const std::vector<float>& codes)
 		break;
 	}
 	case CommandCode::rotateRight: {
-		Node*& node = findNode(m_root, (int)codes[1]);
+		AVLNode*& node = findNode(m_root, (int)codes[1]);
 		if (node) {
 			node = rotateLeft(node);
 			rePosition();
@@ -134,22 +147,32 @@ void AVLTreeForm::FetchNextCommand(const std::vector<float>& codes)
 {
 	if (codes.empty()) return;
 	switch ((int)codes[0]) {
-	case CommandCode::add: {
+	case CommandCode::insert: {
 		insert(m_root, { 400, 100 }, (int)codes[1]);
 		rePosition();
 		setDuration(0);
-		//console.goDown();
+		console.goDown();
+		break;
+	}
+	case CommandCode::add: {
+		insert(m_root, { 400, 100 }, (int)codes[1]);
+		rePosition();
+		setDuration((int)codes[1]);
+		console.goDown();
 		break;
 	}
 	case CommandCode::choose: {
 		console.goDown();
 		setDuration((int)codes[2]);
-		//m_list[codes[1]]->button_setting->normal_color = RED;
+		int nodeIndex = (int)codes[1];
+		m_list[nodeIndex]->anim_color = RED;
+		m_list[nodeIndex]->is_animating = true;
 		break;
 	}
-	case CommandCode::unchoose: {
+	case CommandCode::unchoose: {	
 		setDuration((int)codes[2]);
-		//m_list[codes[1]]->button_setting->normal_color = WHITE;
+		int nodeIndex = (int)codes[1];
+		m_list[nodeIndex]->is_animating = false;
 		break;
 	}
 	case CommandCode::erase: {
@@ -158,17 +181,19 @@ void AVLTreeForm::FetchNextCommand(const std::vector<float>& codes)
 		break;
 	}
 	case CommandCode::rotateLeft: {
-		Node*& node = findNode(m_root, (int)codes[1]);
+		AVLNode*& node = findNode(m_root, (int)codes[1]);
 		if (node) {
 			node = rotateLeft(node);
+			setDuration((int)codes[1]);
 			rePosition();
 		}
 		break;
 	}
 	case CommandCode::rotateRight: {
-		Node*& node = findNode(m_root, (int)codes[1]);
+		AVLNode*& node = findNode(m_root, (int)codes[1]);
 		if (node) {
 			node = rotateRight(node);
+			setDuration((int)codes[1]);
 			rePosition();
 		}
 		break;
@@ -192,18 +217,17 @@ void AVLTreeForm::remove(const std::string& x)
 	rePosition();
 }
 
-Node* AVLTreeForm::rotateLeft(Node* root)
+AVLNode* AVLTreeForm::rotateLeft(AVLNode* root)
 {
 	if (!root || !root->right) return root;
-	
-	Node* newRoot = root->right;
+
+	AVLNode* newRoot = root->right;
 	root->right = newRoot->left;
 	if (newRoot->left) newRoot->left->parent = root;
 
 	newRoot->left = root;
 	newRoot->parent = root->parent;
 	root->parent = newRoot;
-	std::cout << "Rotate Left at " << root->getValue() << ", New Root: " << newRoot->getValue() << std::endl;
 
 	if (newRoot->parent == nullptr) this->m_root = newRoot;
 	else {
@@ -214,15 +238,15 @@ Node* AVLTreeForm::rotateLeft(Node* root)
 	}
 	root->updateHeight();
 	newRoot->updateHeight();
-	
+
 	return newRoot;
 }
 
-Node* AVLTreeForm::rotateRight(Node* root)
+AVLNode* AVLTreeForm::rotateRight(AVLNode* root)
 {
 	if (!root || !root->left) return root;
 
-	Node* newRoot = root->left;
+	AVLNode* newRoot = root->left;
 	root->left = newRoot->right;
 	if (newRoot->right) newRoot->right->parent = root;
 
@@ -245,28 +269,25 @@ Node* AVLTreeForm::rotateRight(Node* root)
 	return newRoot;
 }
 
-void AVLTreeForm::remove(Node*& root, const int& x)
+void AVLTreeForm::remove(AVLNode*& root, const int& x)
 {
 	if (!root) return;
 	if (x < root->getValue()) remove(root->left, x);
 	else if (x > root->getValue()) remove(root->right, x);
 	else {
 		if (!root->left || !root->right) {
-			Node* tmp = root->left ? root->left : root->right;
+			AVLNode* tmp = root->left ? root->left : root->right;
 			if (tmp) tmp->parent = root->parent;
 			if (root->parent) {
 				if (root->parent->left == root) root->parent->left = tmp;
 				else root->parent->right = tmp;
 			}
-			//auto it = std::find(m_list.begin(), m_list.end(), root);
-			//if (it != m_list.end()) m_list.erase(it);
 			delete root;
 			root = tmp;
-			//if (!root) return;
 		}
 		else {
-			Node* tmp = root->right;
-			Node* parentTmp = root;
+			AVLNode* tmp = root->right;
+			AVLNode* parentTmp = root;
 			while (tmp->left) {
 				parentTmp = tmp;
 				tmp = tmp->left;
@@ -276,21 +297,12 @@ void AVLTreeForm::remove(Node*& root, const int& x)
 			else parentTmp->right = tmp->right;
 
 			if (tmp->right) tmp->right->parent = parentTmp;
-
-			//auto it = std::find(m_list.begin(), m_list.end(), tmp);
-			//if (it != m_list.end()) m_list.erase(it);
-
 			if (root == tmp) root = tmp->right ? tmp->right : tmp->left;
 
 			delete tmp;
 			tmp = nullptr; // M
 		}
 	}
-	if (!root) {
-		std::cout << "Root is NULL before updateHeight()" << std::endl;
-		return;
-	}
-	//if (root) std::cout << "Updating height of: " << root->getValue() << std::endl;
 	root->updateHeight();
 	int balance = getBalanceFactor(root);
 
@@ -318,7 +330,7 @@ void AVLTreeForm::remove(Node*& root, const int& x)
 	if (root->right) root->right->parent = root;
 }
 
-Node*& AVLTreeForm::findNode(Node*& root, int value)
+AVLNode*& AVLTreeForm::findNode(AVLNode*& root, int value)
 {
 	if (!root) return root; // Return reference
 	if (root->getValue() == value) return root;
@@ -326,7 +338,7 @@ Node*& AVLTreeForm::findNode(Node*& root, int value)
 	return findNode(root->right, value);
 }
 
-int AVLTreeForm::rePosition(Node* root, const int& level, float index, std::map<std::pair<float, int>, bool>& board)
+int AVLTreeForm::rePosition(AVLNode* root, const int& level, float index, std::map<std::pair<float, int>, bool>& board)
 {
 	if (!root) return index;
 	// set parent references
@@ -350,12 +362,12 @@ int AVLTreeForm::rePosition(Node* root, const int& level, float index, std::map<
 	return right;
 }
 
-int AVLTreeForm::getHeight(Node* root)
+int AVLTreeForm::getHeight(AVLNode* root)
 {
 	return root ? root->getHeight() : 0;
 }
 
-int AVLTreeForm::getBalanceFactor(Node* root)
+int AVLTreeForm::getBalanceFactor(AVLNode* root)
 {
 	if (!root) return 0;
 	int leftHeight = root->left ? root->left->getHeight() : 0;
@@ -364,7 +376,7 @@ int AVLTreeForm::getBalanceFactor(Node* root)
 }
 
 
-void AVLTreeForm::free(Node* root)
+void AVLTreeForm::free(AVLNode* root)
 {
 	if (!root) return;
 	free(root->left);
@@ -379,7 +391,7 @@ void AVLTreeForm::free()
 	m_list.clear();
 }
 
-void AVLTreeForm::handle(Node* root)
+void AVLTreeForm::handle(AVLNode* root)
 {
 	if (!root) return;
 	root->handle();
@@ -387,18 +399,18 @@ void AVLTreeForm::handle(Node* root)
 	if (root->right) handle(root->right);
 }
 
-void AVLTreeForm::draw(Node* root)
+void AVLTreeForm::draw(AVLNode* root)
 {
 	if (!root) return;
 	if (root->left) {
-		DrawLineEx(root->getCenter(), root->left->getCenter(), 2.0f, BLACK);
+		DrawLineEx(root->getCenter(), root->left->getCenter(), 2.0f, root->button_setting->hover_color);
 		draw(root->left);
 	}
 	if (root->right) {
-		DrawLineEx(root->getCenter(), root->right->getCenter(), 2.0f, BLACK);
+		DrawLineEx(root->getCenter(), root->right->getCenter(), 2.0f, root->button_setting->hover_color);
 		draw(root->right);
 	}
- 	root->draw();
+	root->draw();
 }
 
 void AVLTreeForm::rePosition()

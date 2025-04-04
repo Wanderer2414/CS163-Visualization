@@ -14,7 +14,9 @@ public:
     Edge(Vertex* start, Vertex* end, TextSetting* text_setting);
     TextSetting*    text_setting;
     bool            IsColorChange() const,
-                    IsReverse() const;
+                    IsReverse() const,
+                    isHovered() const override,
+                    isPressed() const;
     int             getWeight() const;
     virtual void    draw()      override,
                     handle()    override,
@@ -32,7 +34,9 @@ private:
     bool            m_is_color_changed,
                     m_is_direct,
                     m_is_weight,
-                    is_reverse;
+                    is_reverse,
+                    m_is_hovered,
+                    m_is_pressed;
     float           percent,
                     m_duration,
                     m_start_time;

@@ -52,7 +52,8 @@ Form::Form(const int& index, FormSetting f_setting, const Vector2& window_size) 
     children.push_back(&back_button);
     children.push_back(&home_button);
     children.push_back(&buttonTab);
-
+    children.push_back(&small_skip_back_button);
+    children.push_back(&small_skip_next_button);
 
     create_box.push_back(&create_label);
     create_box.push_back(&create_button);
@@ -212,17 +213,26 @@ Form::Form(const int& index, FormSetting f_setting, const Vector2& window_size) 
     play_button.setButtonStage(1, PlayButton, PlayButtonHovered);
     play_button.setButtonStage(2, Replay, Replayhovered);
 
-    skip_button.setSize(30, 30);
-    skip_button.setPosition(play_button.getPosition().x + 60, play_button.getPosition().y + 5);
+    skip_button.setPosition(play_button.getPosition().x + 110, play_button.getPosition().y + 5);
     skip_button.setSize(40, 40);
     skip_button.setButtonStage(0, SkipNormal, SkipHovered);
 
-    restart_button.setPosition(40, 270);
-    restart_button.setSize(30, 30);
-    restart_button.setPosition(play_button.getPosition().x - 50, play_button.getPosition().y + 5);
+    small_skip_next_button.setPosition(play_button.getPosition().x + 60, play_button.getPosition().y + 5);
+    small_skip_next_button.setSize(40, 40);
+    small_skip_next_button.setButtonStage(0, DoubleArrowRight, DoubleArrowRight_Hovered);
+
+    //restart_button.setPosition(40, 270);
+    restart_button.setPosition(play_button.getPosition().x - 100, play_button.getPosition().y + 5);
     restart_button.setSize(40, 40);
-    restart_button.setButtonStage(0, SkipNormal, SkipHovered);
+    restart_button.setButtonStage(0, SkipBackNormal, SkipBackHovered);
     
+    //small_skip_back_button.setPosition(40, 270);
+    small_skip_back_button.setPosition(play_button.getPosition().x - 50, play_button.getPosition().y + 5);
+    small_skip_back_button.setSize(40, 40);
+    small_skip_back_button.setButtonStage(0, DoubleArrowLeft, DoubleArrowLeft_Hovered);
+
+
+
     speed_scroll.setPosition(m_window_size.x - 100, 10);
     speed_scroll.setSize(70, m_window_size.y - 160);
     for (float i = 0.2; i<=5; i+=0.2) {
@@ -352,6 +362,7 @@ void Form::handle() {
                 setPause(false);
             }
         } else if (play_button.getStage() == 2) {
+            setPause(true);
             GotoCommandLine(0);
         }
     } 
@@ -359,9 +370,11 @@ void Form::handle() {
     else if (isPause() && progress<1) play_button.go(1);
     else play_button.go(2);
     //Skip button
-    if (skip_button.isPressed()) 
-        GotoCommandLine(1);
-    if (restart_button.isPressed()) GotoCommandLine(0);
+    if (skip_button.isPressed()) GotoCommandLine(1);
+    if (restart_button.isPressed()) {
+        setPause(true);
+        GotoCommandLine(0);
+    }
     //Speed
     if (speed_scroll.isChanged())
         setSpeed(1.0f/(speed_scroll.getValue()));
