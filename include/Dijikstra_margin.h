@@ -4,11 +4,11 @@
 class Dijikstra_Margin {
 public:
     Dijikstra_Margin(Vertex* vertex);
-    int             getValue() const;
-    virtual void    setValue(const int& value),
+    float           getValue() const;
+    virtual void    setValue(const float& value),
                     draw();
 private:
-    int             m_value;
+    float           m_value;
     Vertex*         host;
 };
 #endif

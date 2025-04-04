@@ -11,7 +11,7 @@ Application::Application()
 }
 void Application::run() {
     int form_index = 0;
-    int mode = 1;
+    int mode = 0;
     FormSetting* form_setting = &DarkTheme;
     while (!WindowShouldClose()) {
         switch (form_index) {
@@ -30,8 +30,10 @@ void Application::run() {
         }
               break;
         case 3: {
-            BinaryTreeForm  BSTForm(0, *form_setting, {m_width, m_height});
-            form_index = BSTForm.run();
+            /*BinaryTreeForm  BSTForm(0, *form_setting, {m_width, m_height});
+            form_index = BSTForm.run();*/
+            AVLTreeForm AVLtreeForm(0, *form_setting, { m_width, m_height });
+            form_index = AVLtreeForm.run();
         }
             break;
         case 4: {

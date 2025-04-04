@@ -45,7 +45,7 @@ private:
                         sub_command_pointer;
     float               m_speed, cur_time;
     vector<vector<float>>     command_code;
-    vector<vector<float>>       sub_command;
+    vector<vector<vector<float>>>       sub_command;
     Clock               m_clock;
 };
 

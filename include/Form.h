@@ -58,7 +58,9 @@ protected:
                     back_button,
                     skip_button,
                     restart_button,
-                    home_button;
+                    home_button,
+                    small_skip_next_button,
+                    small_skip_back_button;
 
     TextureButton   random_create,
                     random_insert,
