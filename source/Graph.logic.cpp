@@ -146,6 +146,62 @@ void Graph::getVertex(const int& graph, vector<bool>& visited) {
             getVertex(i, visited);
         }
 }
+void Graph::dijikstra_console_add(const int& value) {
+    console.InsertNextSubCommand("Create min heap");
+    console.InsertNextSubCommand("vertex = " + to_string(value));
+    console.InsertNextSubCommand("Set cost at vertex = 0");
+    console.InsertNextSubCommand("f(vertex)");
+    console.InsertNextSubCommand("   for i = first edge to last edge");
+    console.InsertNextSubCommand("      if cost[vertex] + cost[edge] < cost[end]");
+    console.InsertNextSubCommand("         cost[end] = cost[vertex] + cost[edge]");
+    console.InsertNextSubCommand("         add edge to min heap");
+    console.InsertNextSubCommand("   Pop all next edges with used end");
+    console.InsertNextSubCommand("   if heap has element: ");
+    console.InsertNextSubCommand("         vertex = heap.pop()[end] ");
+    console.InsertNextSubCommand("         f(vertex) ");
+}
+void Graph::kruskal_console_add() {
+    console.InsertNextSubCommand("f(vertex)");
+    console.InsertNextSubCommand("  Add all edge to heap");
+    console.InsertNextSubCommand("  while heap has element");
+    console.InsertNextSubCommand("      Pop all next edge make cycle");
+    console.InsertNextSubCommand("      Add top edges to DSU");
+    console.InsertNextSubCommand("      Pop top edge");
+}
+void Graph::prim_console_add() {
+    console.InsertNextSubCommand("f(vertex)");
+    console.InsertNextSubCommand("  Add all edge start at vertex to heap");
+    console.InsertNextSubCommand("  Pop all edges with used end vertex from heap");
+    console.InsertNextSubCommand("  while heap have element ");
+    console.InsertNextSubCommand("      vertex = top heap -> end");
+    console.InsertNextSubCommand("      Pop top heap");
+    console.InsertNextSubCommand("      f(vertex)");
+}
+void Graph::search_console_add(const int& vertex, const int& mode) {
+    int value = vertices[vertex]->getValue();
+    if (mode) {
+        console.InsertNextSubCommand("Create queue");
+        console.InsertNextSubCommand("add vertex = " + to_string(value) + " to queue");
+        console.InsertNextSubCommand("while queue not empty");
+        console.InsertNextSubCommand("   Push all child to queue ");
+        console.InsertNextSubCommand("   pop front of queue");
+    } else {
+        console.InsertNextSubCommand("Create visited[n]");
+        console.InsertNextSubCommand("vertex = " + to_string(value));
+        console.InsertNextSubCommand("f(vertex) {");
+        console.InsertNextSubCommand("   visited[vertex] = true ");
+        console.InsertNextSubCommand("   for i = first_des to last_des ");
+        console.InsertNextSubCommand("      if this des didn't visited");
+        console.InsertNextSubCommand("          f(i)");
+        console.InsertNextSubCommand("}");
+    }
+}
+void Graph::complete_color() {
+    for (int i = 0; i<vertices.size(); i++) 
+        if (vertices[i]) vertices[i]->complete();
+    for (int i = 0; i<edges.size(); i++) 
+        if (edges[i]) edges[i]->complete();
+}
 vector<vector<int>> create_graph_undir(const int& vertex, const int& edge) {
     srand(clock());
     vector<vector<int>> matrix(vertex, vector<int>(vertex, 0));

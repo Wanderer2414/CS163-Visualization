@@ -94,8 +94,8 @@ Form::Form(const int& index, FormSetting f_setting, const Vector2& window_size) 
     option_box.setText(4,"Remove");
     option_box.setVisible(false);
 
-    console.setPosition(m_window_size.x - 240, m_window_size.y - 170);
-    console.setSize(230, 150);
+    console.setPosition(m_window_size.x - 510, m_window_size.y - 220);
+    console.setSize(500, 200);
     console.setTextOrigin({ 10,10 });
 
     buttonTab.setSize(400, 40);
@@ -230,8 +230,6 @@ Form::Form(const int& index, FormSetting f_setting, const Vector2& window_size) 
     small_skip_back_button.setPosition(play_button.getPosition().x - 50, play_button.getPosition().y + 5);
     small_skip_back_button.setSize(40, 40);
     small_skip_back_button.setButtonStage(0, DoubleArrowLeft, DoubleArrowLeft_Hovered);
-
-
 
     speed_scroll.setPosition(m_window_size.x - 100, 10);
     speed_scroll.setSize(70, m_window_size.y - 160);

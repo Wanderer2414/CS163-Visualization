@@ -15,6 +15,8 @@ namespace HT {
                             draw()      override,
                             handle()    override,
                             setIndex(const int& index);
+            Color               anim_color;
+    bool                is_animating = false;
     private:
         int                 m_value,
                             m_index;
@@ -28,12 +30,14 @@ namespace HT {
             _choose = 1,
             _unchoose = 2,
             _add = 3,
-            _remove = 4
-
+            _remove = 4,
+            _search = 6
         };
         HashTable(const int& index, FormSetting form_setting, const Vector2& window_size);
         virtual void        add(const vector<std::string>& data) override,
                             remove(const std::string& data) override,
+                            search(const std::string& x) override,
+                                
                             draw()              override,
                             handle()            override,
                             setMemorySize(const int& size),
@@ -48,8 +52,8 @@ namespace HT {
 
         int         index(const int& value);
         void        insert(const int& value),
-            remove(const int& value, const bool& isShow = true);
-
+                    remove(const int& value, const bool& isShow = true),
+                    search(const int& value);
         TextBox     m_memory_sz_textBox;
         std::vector<Node> m_memory;
 

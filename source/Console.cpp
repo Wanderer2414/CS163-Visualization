@@ -36,6 +36,7 @@ void Console::InsertNextMainCommand(const std::string& log) {
 }
 void Console::InsertNextSubCommand(const std::string& log) {
     if (m_is_enable) {
+        cout << current_add << endl;
         m_list.insert(m_list.begin() + current_add, log);
         temporary.insert(temporary.begin() + current_add, true);
         current_add++;

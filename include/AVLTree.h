@@ -34,6 +34,8 @@ private:
     int             rePosition(AVLNode* root, const int& level, float index, std::map<std::pair<float, int>, bool>& board);
     int             getHeight(AVLNode* root), getBalanceFactor(AVLNode* root);
     std::vector<AVLNode*> m_list;
+    void InsertTraverseCommands(AVLNode* root,int val);
+
 };
 
 #endif

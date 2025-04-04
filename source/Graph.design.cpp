@@ -608,3 +608,58 @@ void Graph::handle() {
         dijikstra(dijikstra_textbox.getText());
     }
 }
+
+void Graph::search(const string& val) {
+    float i = to_int(val);
+    if (i<vertices.size()) {
+        int value = vertices[i]->getValue();
+        if (search_type == 0)
+            console.InsertNextMainCommand("Search " + to_string(value) + " with DFS");
+        else console.InsertNextMainCommand("Search " + to_string(value) + " with BFS");
+        InsertNextMainCommand({search_code, 1.0f*search_type, i, 0});
+    }
+}
+
+void Graph::add(const vector<std::string>& str) {
+    if (str.size()>1) {
+        int n = to_int(str[0]);
+        true_color.resize(true_color.size() + n, colors[(color_pointer+1)%6]);
+        for (int i = 0; i<n; i++) {
+            vertices.push_back(new Vertex(&form_setting, vertices.size()));
+            float x = 1.0f*rand()/RAND_MAX*m_window_size.x;
+            float y = 1.0f*rand()/RAND_MAX*m_window_size.y;
+            vertices.back()->setPosition(x, y);
+            vertices.back()->setSize(50, 50);;
+            vertices.back()->setValue(matrix.size()+i);
+        }
+        int delta = n+matrix.size();
+
+        matrix.resize(delta, {});
+        for (int i = 0; i<matrix.size(); i++) matrix[i].resize(delta, -1);
+
+        delta -= n;
+        for (int i = delta; i<n+delta; i++) {
+            for (int j = delta; j<n+delta; j++) {
+                int weight = to_int(str[(i-delta)*n+(j-delta)+1]);
+                if (weight && i != j) {
+                    matrix[i][j] = edges.size();
+                    edges.push_back(new Edge(vertices[i], vertices[j], &form_setting));
+                    edges.back()->setWeight(weight);
+                    if (i<j) edges.back()->setType(m_type == 0);
+                }
+            }
+        }
+        setSubGraphColor(delta, colors[(++color_pointer)%6]);
+        for (int i = 0; i<edges.size(); i++) 
+            if (edges[i]) edges[i]->start(false);
+    } else {
+        InsertNextMainCommand({add_code, 1.0f*to_int(str[0]),1});
+    }
+}
+
+void Graph::remove(const std::string& str) {
+    int i = to_int(str);
+    if (i<vertices.size()) {
+        remove(i);
+    }
+}
