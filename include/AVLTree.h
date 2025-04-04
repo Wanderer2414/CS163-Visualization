@@ -21,9 +21,11 @@ public:
             val(value), height(h), left(0), right(0), index(i) {};
     };
     void            add(const vector<std::string>& x)   override,
-                    remove(const std::string& x)override,
-                    FetchNextCommand(const std::vector<float>& codes)  override,
-                    FetchPrevCommand(const std::vector<float>& codes)  override,
+                    remove(const std::string& x)        override,
+                    search(const string& x)             override,
+                    update(const string& oldValue, const string& newValue)  override,
+                    FetchNextCommand(const std::vector<float>& codes)       override,
+                    FetchPrevCommand(const std::vector<float>& codes)       override,
                     draw()                      override,
                     handle()                    override;
     
@@ -38,15 +40,22 @@ private:
         if (root) return root->height;
         else return 0;
     }
-    int             insert(Node*& root, Node* parent, const int& x)                 ;
-    void            visual_rotateRight(AVLNode*& root)                              ,
+    void            insert(Node*& root, Node* parent, const int& x)                 ,
+                    update(Node*& root, const int& old, const int& x)              ,
+                    update(Node*& root),
+                    visual_rotateRight(AVLNode*& root)                              ,
                     visual_rotateLeft(AVLNode*& root)                               ,
                     rotateRight(Node*& root)                                        ,
                     rotateLeft(Node*& root)                                         ,
+                    clone(Node*& rootA, AVLNode*& rootB)                            ,
+                    search(Node* rootA, const int& x)                               ,
+                    show(Node* root, const int& indent)                             ,
                     show(AVLNode* root, const int& indent)                          ;
     
     int             remove(Node*& root, const int& x)                               ;
     void            visual_remove(AVLNode*& root, const int& x)                     ,
+                    swap(AVLNode* rootA, AVLNode* rootB)                            ,
+                    swap(Node* rootA, Node* rootB)                                ,
                     rePosition(const float& dur)                                    ,
                     draw(AVLNode* root)                                             ,
                     handle(AVLNode* root)                                           ,
@@ -54,6 +63,7 @@ private:
                     free(AVLNode* root)                                             ;
 
     float           rePosition(AVLNode* root, float left, const int& level)         ;
+    stack<Node*>   Up, Down;
     AVLNode         *vroot;
     vector<Node*>   logic_node;
     vector<AVLNode*>visual_node;
