@@ -7,35 +7,57 @@
 #include "Global.h"
 #include "CommandCode.h"
 #include "Form.h"
+#include "SettingPackage.h"
 
 class AVLTreeForm : public Form {
 public:
     AVLTreeForm(const int& index, FormSetting form_setting, const Vector2& window_size);
+    struct Node {
+        int val;
+        int height;
+        int index;
+        Node* left, *right, *parent;
+        Node(const int& value, const int& h, const int& i): 
+            val(value), height(h), left(0), right(0), index(i) {};
+    };
     void            add(const vector<std::string>& x)   override,
                     remove(const std::string& x)override,
                     FetchNextCommand(const std::vector<float>& codes)  override,
                     FetchPrevCommand(const std::vector<float>& codes)  override,
                     draw()                      override,
                     handle()                    override;
-    bool isAnimationDone = false;
+    
     ~AVLTreeForm();
 private:
-    AVLNode* m_root;
-    AVLNode* rotateRight(AVLNode* root);
-    AVLNode* rotateLeft(AVLNode* root);
-    AVLNode* insert(AVLNode*& root, const Vector2& par, const int& x);
-    AVLNode*& findNode(AVLNode*& root, int value);
-    void            remove(AVLNode*& root, const int& x),
-                    rePosition(),
-                    draw(AVLNode* root),
-                    handle(AVLNode* root),
-                    free(),
-                    free(AVLNode* root);
-    int             rePosition(AVLNode* root, const int& level, float index, std::map<std::pair<float, int>, bool>& board);
-    int             getHeight(AVLNode* root), getBalanceFactor(AVLNode* root);
-    std::vector<AVLNode*> m_list;
-    void InsertTraverseCommands(AVLNode* root,int val);
+    Node* m_root;
+    int height(Node* root) {
+        if (root) return root->height;
+        else return 0;
+    }
+    int height(AVLNode* root) {
+        if (root) return root->height;
+        else return 0;
+    }
+    int             insert(Node*& root, Node* parent, const int& x)                 ;
+    void            visual_rotateRight(AVLNode*& root)                              ,
+                    visual_rotateLeft(AVLNode*& root)                               ,
+                    rotateRight(Node*& root)                                        ,
+                    rotateLeft(Node*& root)                                         ,
+                    show(AVLNode* root, const int& indent)                          ;
+    
+    int             remove(Node*& root, const int& x)                               ;
+    void            visual_remove(AVLNode*& root, const int& x)                     ,
+                    rePosition(const float& dur)                                    ,
+                    draw(AVLNode* root)                                             ,
+                    handle(AVLNode* root)                                           ,
+                    free()                                                          ,
+                    free(AVLNode* root)                                             ;
 
+    float           rePosition(AVLNode* root, float left, const int& level)         ;
+    AVLNode         *vroot;
+    vector<Node*>   logic_node;
+    vector<AVLNode*>visual_node;
+    ButtonSetting   fill_setting;
 };
 
 #endif

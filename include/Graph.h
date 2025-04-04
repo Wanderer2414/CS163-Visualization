@@ -74,6 +74,7 @@ public:
                         dijikstra(const string& str),
                         FetchNextCommand(const vector<float>& codes) override,
                         FetchPrevCommand(const vector<float>& codes) override;
+                        
     virtual string      RandomCreate() const override,
                         RandomSearch() const override;
     void clearGraph();

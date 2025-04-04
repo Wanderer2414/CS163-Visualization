@@ -373,6 +373,8 @@ void Form::handle() {
         setPause(true);
         GotoCommandLine(0);
     }
+    if (small_skip_back_button.isPressed()) goMainPrev();
+    if (small_skip_next_button.isPressed()) goMainNext();
     //Speed
     if (speed_scroll.isChanged())
         setSpeed(1.0f/(speed_scroll.getValue()));
