@@ -2,9 +2,6 @@
 #include "../include/Vertex.h"
 #include "../include/General.h"
 #include "../include/DSU.h"
-#include <climits>
-#include <cmath>
-#include <queue>
 
 void Graph::dfs(const int& vertex) {
     vector<bool> visited(matrix.size(), 0);
@@ -117,14 +114,14 @@ void Graph::dijikstra_algorithms(const int& index) {
     InsertNextSubCommand({goDown, 1, 0.2});
     InsertNextSubCommand({set_cost, 1.0f*index, 0, 1.0f*DMargins[index]->getValue(), 0.1});
     InsertNextSubCommand({goDown, 1, 0.2});
-    vector<int> board(vertices.size(), MAXFLOAT);
+    vector<float> board(vertices.size(), numeric_limits<float>::max());
     vector<bool> visited(vertices.size(), 0);
     board[index] = 0;
     MinHeap q;
     InsertNextSubCommand({goDown, 1, 0.2});
     dijikstra_algorithms(index, q, visited, board);
 };
-void Graph::dijikstra_algorithms(const int& index, MinHeap& heap, vector<bool>& visited, vector<int>& board) {
+void Graph::dijikstra_algorithms(const int& index, MinHeap& heap, vector<bool>& visited, vector<float>& board) {
     visited[index] = true;
     InsertNextSubCommand({goDown, 1, 0.2});
     for (int i = 0; i<matrix.size(); i++) {
@@ -756,8 +753,4 @@ void Graph::kruskal_algorithms(const int& index) {
             InsertNextSubCommand({goDown, 1, 0.5});
         }
     }
-}
-
-Graph::~Graph() {
-    free();
 }

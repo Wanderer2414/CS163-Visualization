@@ -19,4 +19,5 @@ private:
     int             pointer;
     std::vector<Vector2> m_vertices;
 };
+
 #endif

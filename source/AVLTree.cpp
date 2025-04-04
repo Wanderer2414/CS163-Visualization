@@ -1,8 +1,6 @@
 #include "../include/AVLTree.h"
 #include "../include/General.h"
-#include <iostream>
-#include <cmath>
-#include <string>
+#include "../include/Global.h"
 
 AVLTreeForm::AVLTreeForm(const int& index, FormSetting form_setting, const Vector2& window_size) :
 	Form(index, form_setting, window_size) {
@@ -165,8 +163,8 @@ void AVLTreeForm::handle()
 		if (visual_node[i]) visual_node[i]->handle();
 }
 
-AVLTreeForm::~AVLTreeForm()
-{
+AVLTreeForm::~AVLTreeForm() {
+
 }
 
 void AVLTreeForm::draw()

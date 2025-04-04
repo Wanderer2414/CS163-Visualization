@@ -1,7 +1,5 @@
 #include "../include/Edge.h"
 #include "../include/General.h"
-#include <cmath>
-#include <string>
 
 void DrawArc(const Vector2& start, const Vector2& end, const float& angular, const Color& color) {
     Vector2 middle = (start+end)/2;

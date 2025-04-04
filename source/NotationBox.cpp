@@ -1,6 +1,4 @@
 #include "../include/NotationBox.h"
-#include <sstream>
-#include <string>
 
 NotationBox::NotationBox(FormSetting* f_setting): 
         m_address(f_setting), 

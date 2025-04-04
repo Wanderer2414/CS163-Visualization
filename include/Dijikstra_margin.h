@@ -1,6 +1,8 @@
 #ifndef DIJIKSTRA_MARGIN_H
 #define DIJIKSTRA_MARGIN_H
+
 #include "Vertex.h"
+
 class Dijikstra_Margin {
 public:
     Dijikstra_Margin(Vertex* vertex);
@@ -11,4 +13,5 @@ private:
     float           m_value;
     Vertex*         host;
 };
+
 #endif

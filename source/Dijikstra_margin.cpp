@@ -1,9 +1,7 @@
 #include "../include/Dijikstra_margin.h"
-#include <climits>
-#include <cmath>
 
 Dijikstra_Margin::Dijikstra_Margin(Vertex* vertex) {
-    m_value = MAXFLOAT;
+    m_value = numeric_limits<float>::max();
     host = vertex;
 }
 float Dijikstra_Margin::getValue() const {
@@ -17,7 +15,7 @@ void Dijikstra_Margin::draw() {
     pos.x += host->getSize().x/2;
     FormSetting* f = host->form_setting;
     pos.y -= f->font_size/1.5 + host->getSize().y/2;
-    if (m_value<MAXFLOAT) DrawTextEx(f->font, to_string(int(m_value)).c_str(), pos, f->font_size, f->spacing, host->getColor());
+    if (m_value < numeric_limits<float>::max()) DrawTextEx(f->font, to_string(int(m_value)).c_str(), pos, f->font_size, f->spacing, host->getColor());
     else {
         pos.x -= 5;
         DrawRing(pos, 3,5, 0, 360, 30, host->getColor());

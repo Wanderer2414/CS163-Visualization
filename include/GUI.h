@@ -4,6 +4,7 @@
 #include "Global.h"
 #include "SlowMotion.h"
 #include "TextButton.h"
+
 class Node : public TextButton, public SlowMotion {
 public:
     Node(const int& index, const int& val);

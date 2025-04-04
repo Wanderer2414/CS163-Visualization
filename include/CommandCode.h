@@ -1,5 +1,5 @@
-#ifndef COMMAND_CODE_H
-#define COMMAND_CODE_H
+#ifndef COMMANDCODE_H
+#define COMMANDCODE_H
 
 enum CommandCode {
     add,

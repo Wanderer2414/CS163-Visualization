@@ -27,4 +27,5 @@ private:
     Vector2         m_point;
     Texture2D       sun_light_texture, sun_dark_texture;
 };
+
 #endif

@@ -1,4 +1,5 @@
 #include "../include/DSU.h"
+
 DSU::DSU(const int& size) {
     data.resize(size,0);
     for (int i = 0; i<size; i++) data[i] = new Node(i);
