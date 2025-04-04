@@ -1,5 +1,6 @@
-#ifndef GRAPH_NODE_H
-#define GRAPH_NODE_H
+#ifndef VERTEX_H
+#define VERTEX_H
+
 #include "Controller.h"
 #include "Label.h"
 #include "SettingPackage.h"
@@ -47,4 +48,5 @@ class Vertex: public Controller, public DynamicColorCircle {
 
 
     };
+
 #endif

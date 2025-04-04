@@ -1,8 +1,10 @@
 #ifndef VALUESCROLL_H
 #define VALUESCROLL_H
+
 #include "Controller.h"
 #include "SettingPackage.h"
 #include "Global.h"
+
 class ValueScroll: public Controller {
 public:
     ValueScroll(TextSetting* text_setting);
@@ -39,4 +41,5 @@ protected:
     vector<float>           m_values;
     vector<Vector2>         m_text_position                 ;
 };
+
 #endif

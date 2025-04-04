@@ -1,7 +1,9 @@
 #ifndef COLORPOINTER_H
 #define COLORPOINTER_H
+
 #include "ColorBox.h"
 #include "Controller.h"
+
 class ColorPointer: public Controller {
 public:
     ColorPointer(ButtonSetting* button_setting);

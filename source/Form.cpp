@@ -2,7 +2,6 @@
 #include "../include/General.h"
 #include "../include/IncludePath.h"
 
-
 Form::Form(const int& index, FormSetting f_setting, const Vector2& window_size) :
     m_window_size(window_size),
     form_setting(f_setting),
@@ -227,8 +226,6 @@ Form::Form(const int& index, FormSetting f_setting, const Vector2& window_size) 
     small_skip_back_button.setSize(40, 40);
     small_skip_back_button.setButtonStage(0, DoubleArrowLeft, DoubleArrowLeft_Hovered);
 
-
-
     speed_scroll.setPosition(m_window_size.x - 100, 10);
     speed_scroll.setSize(70, m_window_size.y - 160);
     for (float i = 0.2; i<=5; i+=0.2) {
@@ -275,7 +272,6 @@ int Form::run() {
     while (!WindowShouldClose()) {
         handle();
         BeginDrawing();
-
         ClearBackground(form_setting.background_color);
         draw();
         EndDrawing();
@@ -285,11 +281,9 @@ int Form::run() {
         if (buttonTab.isChanged()) {
             return 3 + buttonTab.GetSelection();
         }
-        
     }
     return 0;
 }
-
 
 void Form::handle() {
     //Base handle + children handle

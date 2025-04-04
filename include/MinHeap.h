@@ -1,6 +1,8 @@
 #ifndef MINHEAP_H
 #define MINHEAP_H
+
 #include "Global.h"
+
 struct Path {
     int start = 0, end = 0;
     int weight;
@@ -8,6 +10,7 @@ struct Path {
     bool operator>(const Path& b);
     bool operator==(const Path& b);
 };
+
 class MinHeap {
 public:
     MinHeap();
@@ -23,4 +26,5 @@ protected:
     vector<Path>    data;
     virtual void    swap(Path& a, Path& b);
 };
+
 #endif

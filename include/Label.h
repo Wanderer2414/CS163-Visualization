@@ -46,4 +46,5 @@ protected:
 
     int                     m_align;
 };
+
 #endif

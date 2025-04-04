@@ -27,4 +27,5 @@ public:
 extern FormSetting LightTheme;
 extern FormSetting DarkTheme;
 extern FormSetting NeonTheme;
+
 #endif

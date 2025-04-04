@@ -1,11 +1,12 @@
 #ifndef NOTATIONBOX_H
 #define NOTATIONBOX_H
+
 #include "Controller.h"
 #include "Label.h"
 #include "Global.h"
 #include "SettingPackage.h"
 #include "Vertex.h"
-using namespace std;
+
 class NotationBox:public Controller {
 public:
     NotationBox(FormSetting* form_setting);
@@ -22,4 +23,5 @@ private:
     bool                isVisible;
     Label               m_address, m_value, m_pos, m_index;
 };
+
 #endif

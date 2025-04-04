@@ -1,6 +1,8 @@
 #ifndef COLORBOX_H
 #define COLORBOX_H
+
 #include "Controller.h"
+
 class ColorBox: public Controller {
 public:
     ColorBox(const Color& a, const Color& b);
@@ -18,4 +20,5 @@ private:
     Color               m_start, m_end;
     Rectangle           m_pointer;
 };
+
 #endif

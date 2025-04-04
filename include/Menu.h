@@ -30,4 +30,4 @@ private:
     Vector2         m_windowSize;
 };
 
-#endif //MENU_H
+#endif

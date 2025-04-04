@@ -1,6 +1,8 @@
 #ifndef DSU_H
 #define DSU_H
+
 #include "Global.h"
+
 class DSU {
 public:
     DSU(const int& size);
@@ -22,4 +24,5 @@ public:
 private:
     vector<Node*> data;
 };
+
 #endif

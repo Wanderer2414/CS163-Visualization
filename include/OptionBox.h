@@ -24,4 +24,5 @@ protected:
     int         m_index;
     std::string m_text;
 };
+
 #endif

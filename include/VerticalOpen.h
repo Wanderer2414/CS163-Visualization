@@ -1,5 +1,5 @@
-#ifndef VERTICAL_OPEN_H
-#define VERTICAL_OPEN_H
+#ifndef VERTICALOPEN_H
+#define VERTICALOPEN_H
 
 #include "Global.h"
 
@@ -26,4 +26,5 @@ private:
                         m_delta,
                         m_duration;
 };
+
 #endif

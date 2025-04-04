@@ -5,6 +5,7 @@
 #include "SettingPackage.h"
 #include "SlowMotion.h"
 #include "TextButton.h"
+
 class AVLNode : public Controller, public SlowMotion {
 public:
     AVLNode(ButtonSetting* b_setting, TextSetting* t_setting, const int& index, const int& val);
@@ -31,4 +32,5 @@ private:
                         m_value = 0;
     Vector2             m_text_position;
 };
+
 #endif

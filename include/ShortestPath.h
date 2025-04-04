@@ -58,4 +58,4 @@ class GraphVisual {
 
 };
 
-#endif //SHORTESTPATH_H
+#endif

@@ -1,8 +1,7 @@
 #include "../include/MinHeap.h"
-#include <utility>
 
-MinHeap::MinHeap(){
-
+MinHeap::MinHeap() {
+    
 }
 void MinHeap::MinHeapify(const int& index) {
     int i = index;

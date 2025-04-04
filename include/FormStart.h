@@ -29,4 +29,4 @@ private:
     Vector2         m_windowSize;
 };
 
-#endif //FORMSTART_H
+#endif

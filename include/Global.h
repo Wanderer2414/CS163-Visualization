@@ -1,9 +1,7 @@
 #ifndef GLOBAL_H
 #define GLOBAL_H
 
-
 #define _USE_MATH_DEFINES
-#include <cmath>
 
 #include "../raylib/raylib.h"
 #include <iostream>
@@ -20,14 +18,13 @@
 #include <cstddef>
 #include <ctime>
 #include <cmath>
+#include <cfloat>
 #include <cctype>
 #include <new>
 #include <algorithm>
 #include <cstdlib>
-#include <cstddef>
-#include <cmath>
-#include <ctime>
-#include <new>
+#include <limits>
+#include <utility>
 
 using namespace std;
 

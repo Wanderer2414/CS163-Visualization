@@ -33,4 +33,4 @@ private:
     vector<Rectangle>   m_choice;
 };
 
-#endif //TEXTBOX_H
+#endif

@@ -1,7 +1,5 @@
 #include "../include/AVLTree.h"
 #include "../include/General.h"
-#include <iostream>
-#include <cmath>
 
 AVLTreeForm::AVLTreeForm(const int& index, FormSetting form_setting, const Vector2& window_size) :
 	Form(index, form_setting, window_size) {
@@ -17,66 +15,6 @@ void AVLTreeForm::add(const vector<std::string>& x)
 		InsertNextMainCommand({ CommandCode::insert, 1.0f * to_int(x[i]), 1});
 	}
 }
-// {
-// 	if (!root) {
-// 		// InsertNextSubCommand({ CommandCode::choose, 1.0f * m_list.size(), 1 });
-// 		// InsertNextSubCommand({ CommandCode::redraw, 1.0f });
-// 		// console.InsertNextSubCommand("Insert " + std::to_string(x));
-// 		root = new Node(x, 1, 0);
-// 		logic_node.push_back(root);	
-// 		InsertNextSubCommand({CommandCode::add, -1, 1.0f*x, 1});
-// 		// InsertNextSubCommand({ CommandCode::unchoose, 1.0f * root->index, 0 });
-// 		return ;
-// 	}
-// 	// InsertNextSubCommand({ CommandCode::choose, 1.0f * root->getIndex(), 1 });
-// 	console.InsertNextSubCommand("Compare with " + std::to_string(x));
-// 	// InsertNextSubCommand({ CommandCode::unchoose, 1.0f * root->getIndex(), 0 });
-// 	if (x < root->val) {
-// 		if (root->left) insert(root->left, x);
-// 		else {
-// 			root->left = new Node(x, 1, logic_node.size());
-// 			logic_node.push_back(root);
-// 		}
-// 	} 
-// 	else if (x > root->val) {
-// 		if (root->right) insert(root->right, x);
-// 		else {
-// 			root->right = new Node(x, 1, logic_node.size());
-// 			logic_node.push_back(root->right);
-// 		}
-// 	} else return ;
-// 	root->height = max(getHeight(root->left), getHeight(root->right))+1;
-// 	int balance = getHeight(root->left)-getHeight(root->right);	
-// 	// Left heavy
-// 	if (balance) {
-// 		if (x < root->left->getValue()) {
-// 			console.InsertNextSubCommand("LL Case: Rotate Right ");
-// 			return rotateRight(root); // LL case
-// 		}
-// 		else {
-// 			console.InsertNextSubCommand("LR Case: Rotate Left ");
-// 			root->left = rotateLeft(root->left); // LR case
-// 			return rotateRight(root);
-// 		}
-// 	} // Right Heavy
-// 	else if (balance < -1) {
-// 		if (x > root->right->getValue()) {
-// 			console.InsertNextSubCommand("RR Case: Rotate Left ");
-// 			return rotateLeft(root); // RR case
-// 		}
-// 		else {
-// 			console.InsertNextSubCommand("RL Case: Rotate Right ");
-// 			root->right = rotateRight(root->right); // RL case
-// 			return rotateLeft(root);
-// 		}
-// 	}
-// 	// recheck
-// 	root->updateHeight();
-// 	balance = getBalanceFactor(root);
-// 	if (root->parent == nullptr) m_root = root;
-// 	// rePosition(root, 0, 0, board);
-// 	return root;
-// }
 
 int AVLTreeForm::insert(Node*& root, Node* parent, const int& x) {
     if (!root) {
@@ -138,8 +76,8 @@ void AVLTreeForm::handle()
 		if (visual_node[i]) visual_node[i]->handle();
 }
 
-AVLTreeForm::~AVLTreeForm()
-{
+AVLTreeForm::~AVLTreeForm() {
+
 }
 
 void AVLTreeForm::draw()
@@ -441,29 +379,6 @@ int AVLTreeForm::remove(Node*& root, const int& x)
 	}
 	return -1;
 }
-	// // Left Heavy
-	// if (balance > 1) {
-	// 	if (getBalanceFactor(root->left) >= 0) {
-	// 		root = rotateRight(root);
-	// 	}
-	// 	else {
-	// 		root->left = rotateLeft(root->left);
-	// 		root = rotateRight(root);
-	// 	}
-	// }
-	// // Right Heavy
-	// else if (balance < -1) {
-	// 	if (getBalanceFactor(root->right) <= 0) {
-	// 		root = rotateLeft(root);
-	// 	}
-	// 	else {
-	// 		root->right = rotateRight(root->right);
-	// 		root = rotateLeft(root);
-	// 	}
-	// }
-	// if (root->left) root->left->parent = root;
-	// if (root->right) root->right->parent = root;
-// }
 
 void AVLTreeForm::show(AVLNode* root, const int& indent) {
 	if (!root) return;
