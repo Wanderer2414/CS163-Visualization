@@ -2,7 +2,6 @@
 #define DIJIKSTRA_MARGIN_H
 
 #include "Vertex.h"
-#include "Global.h"
 
 class Dijikstra_Margin {
 public:
