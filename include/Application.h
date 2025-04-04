@@ -7,6 +7,7 @@
 #include "Menu.h"
 #include "SinglyLinkedList.h"
 #include "BinaryTree.h"
+#include "AVLTree.h"
 #include "FormStart.h"
 #include "Graph.h"
 

@@ -74,9 +74,12 @@ public:
                         dijikstra(const string& str),
                         FetchNextCommand(const vector<float>& codes) override,
                         FetchPrevCommand(const vector<float>& codes) override;
+                        
     virtual string      RandomCreate() const override,
                         RandomSearch() const override;
+    void clearGraph();
     ~Graph();
+  
 private:
     bool                m_is_physics,
                         m_is_lock;
@@ -161,7 +164,15 @@ private:
     vector<int>         getEdge(const int& graph),
                         getVertex(const int& graph);
     void                getVertex(const int& graph, vector<bool>& visited);
-
+    int                 getVertexIndex(Vertex* node);
+    
+    int                 findParent(vector<int>& parent, int node);
+    void                unionNode(vector<int>& parent, vector<int>& rank, int u, int v);
+    void                addVertex(Vertex* node);
+    void                addVertex();
+    int                 addEdge(int from, int to, int weight);
+    void                random(int vertexCount, int maxX, int maxY);
+    void                startFromFile(const string filename);
     vector<Dijikstra_Margin*> DMargins;
     vector<Color>             true_color;
 

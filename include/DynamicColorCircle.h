@@ -1,6 +1,9 @@
 #ifndef DYNAMIC_COLOR_CICLE_H
 #define DYNAMIC_COLOR_CICLE_H
 #include "../raylib/raylib.h"
+
+#define _USE_MATH_DEFINES
+#include <cmath> 
 class DynamicColorCircle {
 public:
     DynamicColorCircle();

@@ -61,10 +61,12 @@ void ValueScroll::handle() {
         pointer += velocity;
         if (abs(velocity) > 0.1) velocity /= 1.05;
         else velocity = 0;
-        if (pointer>=m_text_position.size()) pointer -= m_text_position.size();
-        if (pointer<0) pointer += m_text_position.size();
+        if (pointer>=m_text_position.size()) 
+            pointer -= m_text_position.size();
+        if (pointer<0) 
+            pointer += m_text_position.size();
         m_index= round(pointer);
-        if (m_index>=m_text_position.size()) m_index = m_text_position.size()-1;
+        if (m_index >= m_text_position.size()) m_index = m_text_position.size() - 1;
         m_is_changed = true;
         update_text();
     }

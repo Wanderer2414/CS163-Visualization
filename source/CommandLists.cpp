@@ -1,4 +1,5 @@
 #include "../include/CommandLists.h"
+#include <vector>
 
 CommandList::CommandList() {
     command_pointer = 0;
@@ -26,7 +27,7 @@ float CommandList::getProgress() {
     if (command_code.empty()) return 1;
     float ans = 1.0f * command_pointer / command_code.size();
     if (sub_command.size()) 
-        ans += 1.0f * sub_command_pointer / sub_command.size() / command_code.size();
+        ans += 1.0f * sub_command_pointer / sub_command[command_pointer].size() / command_code.size();
     return ans;
 }
 float CommandList::getSpeed() const {
@@ -40,14 +41,15 @@ void CommandList::FetchNextCommand(const std::vector<float>& codes) {}
 void CommandList::FetchPrevCommand(const std::vector<float>& codes) {}
 bool CommandList::BeforeFetchNext() {
     if (command_pointer == command_code.size()) return false;
-    FetchNextCommand(sub_command[sub_command_pointer]);
+    if (!sub_command_pointer) {
+        sub_command[command_pointer].clear();
+        sub_command[command_pointer].push_back(command_code[command_pointer]);
+    }
+    FetchNextCommand(sub_command[command_pointer][sub_command_pointer]);
     sub_command_pointer++;
-    if (sub_command_pointer == sub_command.size()) {
+    if (sub_command_pointer == sub_command[command_pointer].size()) {
         sub_command_pointer = 0;
-        sub_command.clear();
         command_pointer++;
-        if (command_pointer < command_code.size())
-            sub_command.push_back(command_code[command_pointer]);
     }
     return true;
 }
@@ -55,22 +57,11 @@ bool CommandList::BeforeFetchPrev() {
     if (!command_pointer && !sub_command_pointer) return false;
     if (sub_command_pointer) {
         sub_command_pointer--;
-        if (!sub_command_pointer) {
-            sub_command.clear();
-            sub_command.push_back(command_code[command_pointer]);
-        }
-        FetchPrevCommand(sub_command[sub_command_pointer]);
-    }
-    else {
+        FetchPrevCommand(sub_command[command_pointer][sub_command_pointer]);
+    } else {
         command_pointer--;
-        sub_command.clear();
-        sub_command.push_back(command_code[command_pointer]);
-        FetchPrevCommand(sub_command[sub_command_pointer]);
-        BeforeFetchNext();
-        if (sub_command.size()==1) BeforeFetchPrev();
-        else {
-            while (sub_command_pointer<sub_command.size()-1) BeforeFetchNext();
-        }
+        sub_command_pointer = sub_command[command_pointer].size()-1;
+        FetchPrevCommand(sub_command[command_pointer][sub_command_pointer]);
     }
     return false;
 }
@@ -84,25 +75,25 @@ void CommandList::goMainPrev() {
     if (sub_command_pointer) {
         while (sub_command_pointer) BeforeFetchPrev();
     } else {
-        int prev = command_pointer--;
-        while (command_pointer>prev) BeforeFetchPrev();
+        int prev = command_pointer-1;
+        while (command_pointer>prev || sub_command_pointer) BeforeFetchPrev();
     }
 }
 void CommandList::InsertNextMainCommand(const std::vector<float>& code) {
     if (m_is_enable) {
         if (!sub_command_pointer) {
             command_code.insert(command_code.begin() + command_pointer, code);
-            sub_command.clear();
-            sub_command.push_back(code);
+            sub_command.insert(sub_command.begin()+command_pointer, {code});
         }
         else {
             command_code.insert(command_code.begin() + command_pointer + 1, code);
+            sub_command.insert(sub_command.begin()+command_pointer+1, {code});
         }
     }
 }
 void CommandList::InsertNextSubCommand(const std::vector<float>& code) {
     if (m_is_enable) {
-        sub_command.push_back(code);
+        sub_command[command_pointer].push_back(code);
     }
 }
 
@@ -120,39 +111,25 @@ void CommandList::GotoCommandLine(const float& percent) {
     else if (percent > 1) GotoCommandLine(1);
     else {
         int cur = percent*command_code.size();
-        if (cur == command_pointer) {
-            float delta = percent*command_code.size() - cur;
-            int sub_cur = delta*sub_command.size();
-            if (sub_command.size()>1) {
-                while (sub_cur > sub_command_pointer) BeforeFetchNext();
-                while (sub_cur < sub_command_pointer) BeforeFetchPrev();
-            } else if (sub_command.size()==1) {
-                BeforeFetchNext();
-                if (command_pointer == cur) {
-                    sub_cur = delta*sub_command.size();
-                    while (sub_cur > sub_command_pointer) BeforeFetchNext();
-                    while (sub_cur < sub_command_pointer) BeforeFetchPrev();
-                }
-                else BeforeFetchPrev();
-            }
-        }
-        else if (cur>command_pointer) {
-            while (command_pointer < cur) BeforeFetchNext();
-        }
-        else if (cur<command_pointer) {
-            while (command_pointer>cur) BeforeFetchPrev();
-        }
+        while (command_pointer < cur) BeforeFetchNext();
+        while (command_pointer>cur) BeforeFetchPrev();
+
+        float delta = percent*command_code.size() - cur;
+        int sub_cur = delta*sub_command[command_pointer].size();
+        
+        while (sub_cur > sub_command_pointer) BeforeFetchNext();
+        while (sub_cur < sub_command_pointer) BeforeFetchPrev();
     }
 }
 void CommandList::handle() {
-    if (m_is_enable && !m_is_pause && (sub_command_pointer<sub_command.size()) && m_clock.get()
+    if (m_is_enable && !m_is_pause && command_pointer< command_code.size() && m_clock.get()
         && GetTime()-cur_time>0.5) {
         BeforeFetchNext();
     }
 }
 
 void CommandList::goNext() {
-    if (sub_command_pointer == sub_command.size()) return;
+    if (sub_command_pointer == sub_command[command_pointer].size()) return;
     BeforeFetchNext();
     if (!m_clock.getDuration() && sub_command_pointer) goNext();
 }
