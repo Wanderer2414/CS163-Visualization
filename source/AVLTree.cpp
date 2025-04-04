@@ -163,7 +163,8 @@ void AVLTreeForm::handle()
 }
 
 AVLTreeForm::~AVLTreeForm() {
-
+	for (int i = 0; i<visual_node.size(); i++) delete visual_node[i];
+	for (int i = 0; i<logic_node.size(); i++) delete logic_node[i];
 }
 
 void AVLTreeForm::draw()
@@ -181,7 +182,6 @@ void AVLTreeForm::FetchPrevCommand(const std::vector<float>& codes)
 	float dur = codes.back();
 	int code = codes[0];
 	switch (code) {
-		cout << code;
 	case CommandCode::insert: {
 		int val = codes[1];
 		for (int i =0;i<logic_node.size(); i++) {
@@ -191,8 +191,6 @@ void AVLTreeForm::FetchPrevCommand(const std::vector<float>& codes)
 		logic_node.pop_back();
 		m_root = 0;
 		clone(m_root, vroot);
-		show(m_root, 0);
-		show(vroot, 0);
 		setDuration(0.1);
 	}
 	break;
@@ -391,8 +389,6 @@ void AVLTreeForm::FetchNextCommand(const std::vector<float>& codes)
 		else visual_rotateLeft(tmp->parent->left);
 		rePosition(dur*getSpeed()*0.5);
 		setDuration(dur);
-		show(m_root, 0);
-		show(vroot, 0);
 	}
 	break;
 	case CommandCode::rotateRight: {
@@ -401,8 +397,6 @@ void AVLTreeForm::FetchNextCommand(const std::vector<float>& codes)
 		else if (tmp->parent->right == tmp) visual_rotateRight(tmp->parent->right);
 		else visual_rotateRight(tmp->parent->left);
 		rePosition(dur*getSpeed()*0.5);
-		show(m_root, 0);
-		show(vroot, 0);
 		setDuration(dur);
 	}
 	break;

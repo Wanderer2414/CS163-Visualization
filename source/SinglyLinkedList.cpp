@@ -164,7 +164,6 @@ void SLL::SLLForm::search(const std::string & x)
 
 void SLL::SLLForm::draw()
 {
-	Form::draw();
 	BeginMode2D(m_camera);
     BeginScissorMode(m_workspace.x, m_workspace.y, m_workspace.width, m_workspace.height);
 	ListNode* cur = m_head->m_next;
@@ -175,6 +174,7 @@ void SLL::SLLForm::draw()
 	}
 	EndScissorMode();
     EndMode2D();
+	Form::draw();
 }
 
 

@@ -87,7 +87,6 @@ void CommandList::InsertNextMainCommand(const std::vector<float>& code) {
                 command_code.insert(command_code.begin() + command_pointer, code);
                 sub_command.insert(sub_command.begin() + command_pointer, {code});
             }
-            
         }
         else {
             command_code.insert(command_code.begin() + command_pointer + 1, code);
@@ -112,17 +111,15 @@ void CommandList::GotoCommandLine(const float& percent) {
     cur_time = GetTime();
     if (command_code.empty() || sub_command.empty()) return; 
     
-    float clamped_percent = std::clamp(percent, 0.0f, 1.0f); // Giới hạn percent trong [0,1]
+    float clamped_percent = std::clamp(percent, 0.0f, 1.0f);
     int cur = clamped_percent * command_code.size();
     
-    // Đảm bảo command_pointer không vượt quá kích thước hợp lệ
-    if (cur >= command_code.size()) cur = command_code.size() - 1;
+    if (cur > command_code.size()) cur = command_code.size() - 1;
     
     while (command_pointer < cur) BeforeFetchNext();
     while (command_pointer > cur) BeforeFetchPrev();
     
-    // Kiểm tra giới hạn trước khi truy cập sub_command
-    if (command_pointer < sub_command.size() && !sub_command[command_pointer].empty()) {
+    if (command_pointer < command_code.size()) {
         float delta = clamped_percent * command_code.size() - cur;
         int sub_cur = delta * sub_command[command_pointer].size();
         

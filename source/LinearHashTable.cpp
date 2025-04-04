@@ -63,12 +63,12 @@ void HT::HashTable::setMemorySize(const int& sz) {
     }
 }
 void HT::HashTable::draw() {
-    Form::draw();
     BeginMode2D(m_camera);
     BeginScissorMode(m_workspace.x, m_workspace.y, m_workspace.width, m_workspace.height);
     for (int i = 0; i < m_memory.size(); i++) m_memory[i].draw();
     EndScissorMode();
     EndMode2D();
+    Form::draw();
 }
 void HT::HashTable::handle() {
     Form::handle();
