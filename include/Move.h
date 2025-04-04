@@ -1,11 +1,13 @@
 #ifndef MOVE_H
 #define MOVE_H
-#include "../raylib/include/raylib.h"
-#include <vector>
+
+#include "Global.h"
+
 class Move {
 public:
     Move();
-    int             getVertexDone() const;
+    int             getVertexDone() const,
+                    size()          const;
     virtual void    handle();
     virtual void    setPosition(const float& x, const float& y),
                     add_vertex(const Vector2& point),

@@ -1,6 +1,5 @@
 #include "../include/TabBox.h"
 #include "../include/General.h"
-#include <iostream>
 
 TabBox::TabBox(FormSetting* f_setting) {
     pos_changed = false;
@@ -31,6 +30,8 @@ void TabBox::push_back(const int& index, Controller* controller) {
             name_widths.push_back(0);
         }
     tabs[index].push_back(controller);
+    Vector2 pos = controller->getPosition() + m_position;
+    controller->setPosition(pos.x, pos.y);
 }
 
 void TabBox::setText(const int& index, const string& name) {

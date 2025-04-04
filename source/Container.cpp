@@ -1,6 +1,6 @@
 #include "../include/Container.h"
 #include "../include/General.h"
-#include <iostream>
+
 Container::Container(FormSetting* f_setting) {
     m_is_hover = false;
     form_setting = f_setting;
@@ -24,7 +24,7 @@ void Container::setPosition(const float& x, const float& y) {
     Controller::setPosition(x, y);
 }
 void Container::reLocate(Controller* i) {
-    i->setPosition(m_position.x, m_position.y);
+    i->setPosition(m_position.x+i->getPosition().x, m_position.y+i->getPosition().y);
 }
 void Container::pop(Controller* control) {
     for (int i =0; i<children.size(); i++) {

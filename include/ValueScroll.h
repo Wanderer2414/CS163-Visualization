@@ -1,11 +1,10 @@
-#ifndef VALUESCROL_H
-#define VALUESCROL_H
+#ifndef VALUESCROLL_H
+#define VALUESCROLL_H
+
 #include "Controller.h"
 #include "SettingPackage.h"
-#include <new>
-#include <string>
-#include <vector>
-using namespace std;
+#include "Global.h"
+
 class ValueScroll: public Controller {
 public:
     ValueScroll(TextSetting* text_setting);

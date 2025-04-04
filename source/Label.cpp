@@ -24,6 +24,7 @@ void Label::clear() {
     m_text_position.clear();
     m_text = {""};
     m_text_position = {{0, 0}};
+    update_line(0);
 }
 void Label::draw() {
     if (text_setting) {
@@ -146,12 +147,12 @@ void Label::setAlignText(const int& align) {
     m_align = align;
     update_text();
 }
-std::string Label::getText() {
+std::string Label::getText() const {
     string ans;
-    for (auto& i:m_text) ans+=i;
+    for (auto& i:m_text) ans+=i+'\n';
     return ans;
 }
-std::string Label::getText(const Vector2& start, const Vector2& end) {
+std::string Label::getText(const Vector2& start, const Vector2& end) const {
     if (end.y < start.y || (end.y==start.y && end.x<=start.x)) return "";
     if (start.x<0 || start.y<0 || end.x < 0 || start.x < 0) return "";
     if (start.y >= m_text.size() || end.y >= m_text.size()) return "";
@@ -159,8 +160,8 @@ std::string Label::getText(const Vector2& start, const Vector2& end) {
     if (start.y == end.y) return m_text[start.y].substr(start.x, end.x-start.x);
     else {
         string ans;    
-        ans += m_text[start.y].substr(start.x);
-        for (int i = start.y+1; i<end.y;i++) ans += m_text[i];
+        ans += m_text[start.y].substr(start.x) + '\n';
+        for (int i = start.y+1; i<end.y;i++) ans += m_text[i] + '\n';
         ans += m_text[end.y].substr(0, end.x);
         return ans;
     }

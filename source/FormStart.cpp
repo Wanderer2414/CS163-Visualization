@@ -1,6 +1,5 @@
 #include "../include/FormStart.h"
-#include <cmath>
-#include <string>
+
 MenuStart::MenuStart(FormSetting f_setting, const Vector2& windowSize) :
     form_setting(f_setting),
     m_windowSize(windowSize),

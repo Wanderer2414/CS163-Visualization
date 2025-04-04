@@ -1,10 +1,10 @@
 #ifndef LABEL_H
 #define LABEL_H
+
 #include "Controller.h"
 #include "SettingPackage.h"
-#include <string>
-#include <vector>
-using namespace std;
+#include "Global.h"
+
 class Label: public Controller {
 public:
     Label(TextSetting* text_setting);
@@ -34,8 +34,8 @@ public:
                             clear();
     Vector2                 getLinePosition(const int& index) const,
                             getCharPosition(const int& row, const int& col) const;
-    std::string             getText(),
-                            getText(const Vector2& start, const Vector2& end);
+    std::string             getText()                                           const,
+                            getText(const Vector2& start, const Vector2& end)   const;
     float                   margin;
     ~Label();
 protected:

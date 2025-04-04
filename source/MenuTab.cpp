@@ -1,5 +1,5 @@
 #include "../include/MenuTab.h"
-#include "../raylib/include/raylib.h"
+
 ButtonTab::ButtonTab(ButtonSetting* b_setting, TextSetting *t_setting) {
     button_setting = b_setting;
     text_setting = t_setting;

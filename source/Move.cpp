@@ -1,4 +1,3 @@
-#include "../raylib/include/raylib.h"
 #include "../include/Move.h"
 #include "../include/General.h"
 
@@ -9,6 +8,9 @@ Move::Move() {
 int Move::getVertexDone() const {
     if (progress == pointer) return pointer;
     else return -1;
+}
+int Move::size() const {
+    return m_vertices.size();
 }
 void Move::handle() {
     if (progress != pointer) {

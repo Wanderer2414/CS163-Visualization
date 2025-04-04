@@ -4,7 +4,8 @@
 #include "Form.h"
 #include "TextBox.h"
 #include "TextButton.h"
-#include <vector>
+#include "Global.h"
+
 namespace HT {
     class Node : public TextButton {
     public:

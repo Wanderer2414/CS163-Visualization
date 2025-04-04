@@ -1,9 +1,6 @@
 #include "../include/General.h"
-#include <cctype>
-#include <cmath>
-#include <string>
-#include <fstream>
-using namespace std;
+#include <cstring>
+
 float abs(const Vector2& vector) {
     return sqrt(vector.x * vector.x + vector.y * vector.y);
 };
@@ -39,20 +36,52 @@ Color operator*(const float& x, Color color) {
     color.a*=x;
     return color;
 }
-
+Color to_color(const float &x) {
+    Color color;
+    memcpy(&color,&x, 4);
+    return color;
+}
 bool operator==(const Vector2& a, const Vector2& b) {
     return a.x == b.x && a.y == b.y;
 }
 bool operator!=(const Vector2& a, const Vector2& b) {
     return a.x != b.x || a.y != b.y;
 }
+bool operator!=(const Color& a, const Color& b) {
+    return a.r != b.r || a.b!=b.b || a.g != b.g || a.a != b.a;
+}
+bool operator==(const Color& a, const Color& b) {
+    return a.r == b.r && a.g == b.g && a.b==b.g && a.a==b.a;
+}
 
+float arctan(const Vector2 &vector) {
+    float ans = atan(vector.y/vector.x);
+    if (vector.x < 0) ans+=M_PI;
+    return ans;
+}
+float to_degree(const float& radian) {
+    return radian/M_PI*180;
+}
+float to_float(const Color& color) {
+    float x;
+    memcpy(&x, &color, 4);
+    return x;
+}
 int to_int(const std::string& str) {
     int ans = 0;
     for (int i = 0; i < str.size(); i++) {
         if (std::isdigit(str[i])) ans = ans * 10 + str[i] - '0';
     }
     return ans;
+}
+
+Vector2 getCenter(const Vector2& a, const Vector2& b, const float& angular) {
+    Vector2 middle = (a+b)/2;
+    Vector2 u = {middle.y, -middle.x};
+    float radius = abs(b-a)/angular;
+    float side = abs(b-a)/2;
+    side = sqrt(radius*radius - side*side);
+    return middle + u/side*radius;
 }
 
 Rectangle TransToCameraRec(const Camera2D& camera, Rectangle rec) {
@@ -68,12 +97,11 @@ Vector2 TransToGlobalPoint(const Camera2D& camera, const Vector2& point) {
 string readFromFile(const string& link) {
     string ans;
     ifstream fin(link);
-    char BUFFER[64];
+    string line;
     while (!fin.eof()) {
-        fin.read(&BUFFER[0], 64);
-        ans+=BUFFER;
+        getline(fin, line);
+        ans += line + '\n';
     }
-    ans.pop_back();
     fin.close();
     return ans;
 }
@@ -102,7 +130,7 @@ vector<int> readFromFileInt(const string& link) {
 vector<string> split(const string& str) {
     vector<string> ans = {""};
     for (char c:str) {
-        if (c==' ' && ans.back().size()) ans.push_back("");
+        if ((c==' ' || c=='\n') && ans.back().size()) ans.push_back("");
         else ans.back().push_back(c);
     }
     return ans;

@@ -6,6 +6,7 @@
 #include <sstream>
 #include <iostream>
 
+
 Form::Form(const int& index, FormSetting f_setting, const Vector2& window_size) :
     m_window_size(window_size),
     form_setting(f_setting),
@@ -51,7 +52,8 @@ Form::Form(const int& index, FormSetting f_setting, const Vector2& window_size) 
     children.push_back(&back_button);
     children.push_back(&home_button);
     children.push_back(&buttonTab);
-
+    children.push_back(&small_skip_back_button);
+    children.push_back(&small_skip_next_button);
 
     create_box.push_back(&create_label);
     create_box.push_back(&create_button);
@@ -211,17 +213,26 @@ Form::Form(const int& index, FormSetting f_setting, const Vector2& window_size) 
     play_button.setButtonStage(1, PlayButton, PlayButtonHovered);
     play_button.setButtonStage(2, Replay, Replayhovered);
 
-    skip_button.setSize(30, 30);
-    skip_button.setPosition(play_button.getPosition().x + 60, play_button.getPosition().y + 5);
+    skip_button.setPosition(play_button.getPosition().x + 110, play_button.getPosition().y + 5);
     skip_button.setSize(40, 40);
     skip_button.setButtonStage(0, SkipNormal, SkipHovered);
 
-    restart_button.setPosition(40, 270);
-    restart_button.setSize(30, 30);
-    restart_button.setPosition(play_button.getPosition().x - 50, play_button.getPosition().y + 5);
+    small_skip_next_button.setPosition(play_button.getPosition().x + 60, play_button.getPosition().y + 5);
+    small_skip_next_button.setSize(40, 40);
+    small_skip_next_button.setButtonStage(0, DoubleArrowRight, DoubleArrowRight_Hovered);
+
+    //restart_button.setPosition(40, 270);
+    restart_button.setPosition(play_button.getPosition().x - 100, play_button.getPosition().y + 5);
     restart_button.setSize(40, 40);
-    restart_button.setButtonStage(0, SkipNormal, SkipHovered);
+    restart_button.setButtonStage(0, SkipBackNormal, SkipBackHovered);
     
+    //small_skip_back_button.setPosition(40, 270);
+    small_skip_back_button.setPosition(play_button.getPosition().x - 50, play_button.getPosition().y + 5);
+    small_skip_back_button.setSize(40, 40);
+    small_skip_back_button.setButtonStage(0, DoubleArrowLeft, DoubleArrowLeft_Hovered);
+
+
+
     speed_scroll.setPosition(m_window_size.x - 100, 10);
     speed_scroll.setSize(70, m_window_size.y - 160);
     for (float i = 0.2; i<=5; i+=0.2) {
@@ -237,7 +248,7 @@ Form::Form(const int& index, FormSetting f_setting, const Vector2& window_size) 
 
     m_workspace.x = 10;
     m_workspace.y = 70;
-    m_workspace.width = m_window_size.x - m_workspace.x;
+    m_workspace.width = m_window_size.x - m_workspace.x - 120;
     m_workspace.height = m_window_size.y - m_workspace.y - 50;
 
     m_camera.offset = { m_window_size.x / 2, 100 };
@@ -282,6 +293,8 @@ int Form::run() {
     }
     return 0;
 }
+
+
 void Form::handle() {
     //Base handle + children handle
     CommandList::handle();
@@ -322,16 +335,10 @@ void Form::handle() {
             track_hover.setPosition(pos.x, pos.y);
             option_box.setPosition(option_box.getPosition().x, pos.y);
         } 
-        if (option_box.getVertexDone()==0) {
-            option_box.setVisible(true);
-            option_box.next();
-        }
+        main_box_show();
     } else if (!track_hover.isHovered() && !option_box.isHovered()) {
-        if (option_box.getVertexDone() == 1) {
-            option_box.next();
-            option_box.select(-1);
-            insert_textbox.setFocus(false);
-            remove_textbox.setFocus(false);
+        if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) {
+            main_box_hide();
         }
         else if (option_box.getVertexDone() == 0) {
             option_box.setVisible(false);
@@ -355,6 +362,7 @@ void Form::handle() {
                 setPause(false);
             }
         } else if (play_button.getStage() == 2) {
+            setPause(true);
             GotoCommandLine(0);
         }
     } 
@@ -363,7 +371,12 @@ void Form::handle() {
     else play_button.go(2);
     //Skip button
     if (skip_button.isPressed()) GotoCommandLine(1);
-    if (restart_button.isPressed()) GotoCommandLine(0);
+    if (restart_button.isPressed()) {
+        setPause(true);
+        GotoCommandLine(0);
+    }
+    if (small_skip_back_button.isPressed()) goMainPrev();
+    if (small_skip_next_button.isPressed()) goMainNext();
     //Speed
     if (speed_scroll.isChanged())
         setSpeed(1.0f/(speed_scroll.getValue()));
@@ -407,6 +420,20 @@ void Form::update(const std::string& oldValue, const std::string& newValue) {
 }
 void Form::search(const std::string& x) {
 
+}
+void Form::main_box_show() {
+    if (option_box.getVertexDone()==0) {
+        option_box.setVisible(true);
+        option_box.next();
+    }
+}
+void Form::main_box_hide() {
+    if (option_box.getVertexDone() == 1) {
+        option_box.next();
+        option_box.select(-1);
+        insert_textbox.setFocus(false);
+        remove_textbox.setFocus(false);
+    }
 }
 string Form::RandomCreate() const {
     string ans;

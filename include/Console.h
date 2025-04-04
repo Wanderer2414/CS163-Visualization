@@ -5,8 +5,8 @@
 #include "Controller.h"
 #include "SettingPackage.h"
 #include "TextButton.h"
-#include <string>
-#include <vector>
+#include "Global.h"
+
 class Console :public TextButton {
 public:
     Console(ButtonSetting *b_setting, TextSetting* t_setting);

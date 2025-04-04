@@ -13,11 +13,8 @@
 #include "TextBox.h"
 #include "TextButton.h"
 #include "MenuTab.h"
-#include "../raylib/raylib.h"
+#include "Global.h"
 #include "ValueScroll.h"
-#include <string>
-#include <vector>
-#include <deque>
 
 class Form : public CommandList {
 public:
@@ -61,7 +58,9 @@ protected:
                     back_button,
                     skip_button,
                     restart_button,
-                    home_button;
+                    home_button,
+                    small_skip_next_button,
+                    small_skip_back_button;
 
     TextureButton   random_create,
                     random_insert,
@@ -92,5 +91,6 @@ protected:
     Rectangle       m_workspace;
     ProgressBar     m_progress;
     Camera2D        m_camera;
+    void main_box_show(), main_box_hide();
 };
 #endif

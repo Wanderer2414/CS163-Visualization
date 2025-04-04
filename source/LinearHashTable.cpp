@@ -1,6 +1,6 @@
 #include "../include/LinearHashTable.h"
-#include <string>
 #include "../include/General.h"
+
 HT::Node::Node(): TextButton(0, 0) {
     m_value = 0;
     m_index = 0;
@@ -35,7 +35,7 @@ HT::HashTable::HashTable(const int& index, FormSetting f_setting, const Vector2&
 
     m_memory_sz_textBox.button_setting = &form_setting;
     m_memory_sz_textBox.text_setting = &form_setting;
-    m_memory_sz_textBox.setPosition(m_window_size.x - 100, 10);
+    m_memory_sz_textBox.setPosition(m_window_size.x - 100, 70);
     m_memory_sz_textBox.setSize(70, 50);
 
     setMemorySize(10);
@@ -165,7 +165,7 @@ void HT::HashTable::FetchNextCommand(const std::vector<float>& command) {
     }
                 break;
     case _choose: {
-        //m_memory[(int)command[1]].m_normal_color = RED;
+        // m_memory[(int)command[1]].m_normal_color = RED;
         setDuration(command[2]);
     }
                 break;

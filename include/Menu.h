@@ -4,11 +4,13 @@
 #include "Console.h"
 #include "SettingPackage.h"
 #include "TextButton.h"
-#include "../raylib/raylib.h"
 #include "TextureButton.h"
+#include "Global.h"
+
 #define main_button_width 350
 #define main_button_height 100
 #define button_count 3
+
 class Menu {
 public:
     Menu(FormSetting form_setting, const Vector2& windowSize) ;

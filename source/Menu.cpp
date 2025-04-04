@@ -1,9 +1,6 @@
 #include "../include/Menu.h"
-#include "../raylib/raylib.h"
 #include "../include/General.h"
 #include "../include/IncludePath.h"
-#include <cmath>
-#include <string>
 
 Menu::Menu(FormSetting f_setting, const Vector2& windowSize) :
     form_setting(f_setting),
@@ -20,7 +17,7 @@ Menu::Menu(FormSetting f_setting, const Vector2& windowSize) :
     children.push_back(&SLLForm);
 
     BSTForm.setSize(main_button_width, main_button_height);
-    BSTForm.setText("BST");
+    BSTForm.setText("AVL Tree");
 
     GraphForm.setSize(main_button_width, main_button_height);
     GraphForm.setText("Graph");

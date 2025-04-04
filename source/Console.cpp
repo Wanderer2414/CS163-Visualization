@@ -1,6 +1,5 @@
 #include "../include/Console.h"
 #include "../include/General.h"
-#include <algorithm>
 
 Console::Console(ButtonSetting *b_setting, TextSetting *t_setting): TextButton(b_setting, t_setting) {
     clock.setDuration(0.01);
@@ -37,6 +36,7 @@ void Console::InsertNextMainCommand(const std::string& log) {
 }
 void Console::InsertNextSubCommand(const std::string& log) {
     if (m_is_enable) {
+        cout << current_add << endl;
         m_list.insert(m_list.begin() + current_add, log);
         temporary.insert(temporary.begin() + current_add, true);
         current_add++;
