@@ -79,21 +79,32 @@ SLL::SLLForm::SLLForm(const int &index, FormSetting form_setting, const Vector2 
 	m_node_size = 50;
 	m_node_spacing = 50;
 
-	
+	temp_b_setting.click_color = form_setting.click_color;
+	temp_b_setting.hover_color = form_setting.hover_color;
+	temp_b_setting.normal_color = RED;
+	temp_b_setting.roundness = form_setting.roundness;
+	temp_b_setting.segment = form_setting.segment;
 
+	temp_t_setting.color = BLACK;
+	temp_t_setting.font = form_setting.font;
+	temp_t_setting.font_size = form_setting.font_size;
+	temp_t_setting.spacing = form_setting.spacing;
+	
+	m_dummy = new ListNode(-1,-1);
+	m_head = m_dummy;
 }
 
 void SLL::SLLForm::add(const vector<string> &str)
 {
 	for (int i = str.size()-1; i>=0; i--) {
-		InsertNextMainCommand({_insert,(float)stoi(str[i])});
+		InsertNextMainCommand({_insert,1.0f * to_int(str[i])});
 		//console.InsertNextMainCommand("Add " + str[i]);
 	}
 }
 
 void SLL::SLLForm::handle() {
     Form::handle();
-    ListNode* cur = m_head;
+    ListNode* cur = m_head->m_next;
 	while (cur) {
 		cur->handle();
 		cur=cur->m_next;
@@ -101,7 +112,7 @@ void SLL::SLLForm::handle() {
 }
 
 void SLL::SLLForm::rePosition() {
-    ListNode* cur = m_head;
+    ListNode* cur = m_head->m_next;
     while (cur) {
 		if (cur) {
 			float target_x = m_workspace.x + 100 * cur->getIndex() - 100 * (size) / 2;
@@ -119,16 +130,14 @@ void SLL::SLLForm::remove(const std::string & str)
 	console.InsertNextMainCommand("Remove " + str);
 	console.goDown();
 	ListNode* cur = m_head;
-	int count = 0;
 	int value = stoi(str);
-	while (cur) {
-		if (cur->getValue() == value) break;
-		cur=cur->m_next;
-		count++;
+	while (cur && cur->getValue() != value)
+	{
+		cur = cur->m_next;
 	}
 	if (cur) {
-		InsertNextMainCommand({_delete,float(value),float(count)});
-	} else InsertNextMainCommand({_delete,float(value),float(-2)});
+		InsertNextMainCommand({_delete,float(value),float(cur->getIndex())});
+	} else InsertNextMainCommand({_delete,float(value),float(size)});
 }
 
 
@@ -143,11 +152,10 @@ void SLL::SLLForm::update(const std::string & old_value, const std::string & new
 		count++;
 	}
 	if (!cur) {
-		InsertNextMainCommand({_update,float(stoi(old_value)),float(stoi(new_value)),0});
+		InsertNextMainCommand({_update,float(stoi(old_value)),float(stoi(new_value)),-1});
 	}
 	InsertNextMainCommand({_update,float(stoi(old_value)),float(stoi(new_value)),float(count)});
 }
-
 
 void SLL::SLLForm::search(const std::string & x)
 {
@@ -159,7 +167,7 @@ void SLL::SLLForm::draw()
 	Form::draw();
 	BeginMode2D(m_camera);
     BeginScissorMode(m_workspace.x, m_workspace.y, m_workspace.width, m_workspace.height);
-	ListNode* cur = m_head;
+	ListNode* cur = m_head->m_next;
 	while (cur) {
 		cur->draw();
 		if (cur->m_next) cur->m_arrow.draw();
@@ -175,64 +183,47 @@ void SLL::SLLForm::FetchNextCommand(const std::vector<float>& command)
 	if (command.empty()) return;
 	switch ((int)command[0])
 	{
-	case _insert: 
+	case _insert:
 	{
 		insert(int(command[1]),size);
-		setDuration(0);
+		setDuration(0.001);
 		break;
 	}
-	case _insertNext:
+	case _insertSilent:
 	{
-		insertNext(int(command[1]),int(command[2]));
+		insertSilent(int(command[1]),int(command[2]));
 		rePosition();
 		break;
 	}
 	case _delete:
 	{
 		remove(int(command[1]),int(command[2]));
-		setDuration(0);
+		setDuration(0.001);
 		break;
 	}
-	case _removeNext: 
+	case _removeSilent:
 	{
-		removeNext(int(command[1]),int(command[2]));
+		cout << 1;
+		removeSilent(int(command[1]),int(command[2]));
 		rePosition();
 		break;
 	}
-	case _update:
-	{
-		update(int(command[1]),int(command[2]));
-		setDuration(0);
-		break;
-	}
-	case _updateSilent:
-	{
-		updateSilent(int(command[1]),int(command[2]));
-		break;
-	}
-	case _choose: 
+	case _choose:
 	{
 		ListNode* cur = m_head;
-		int count = 0;
-		while (count < int(command[1])) {
-			count++;
-			cur=cur->m_next;
-		}
-		cur->button_setting->normal_color = BLUE;
+		while (cur->getIndex() != int(command[1])) cur = cur->m_next;
+		cur->text_setting = &temp_t_setting;
+		cur->button_setting = &temp_b_setting;
 		setDuration(int(command[2]));
 		break;
 	}
 	case _unchoose:
 	{
 		ListNode* cur = m_head;
-		int count = 0;
-		while (count < int(command[1])) {
-			count++;
-			cur=cur->m_next;
-		}
-		cur->button_setting->normal_color = form_setting.normal_color;
-		console.goDown();
-		setDuration(0);
+		while (cur->getIndex() != int(command[1])) cur = cur->m_next;
+		cur->text_setting = &form_setting;
+		cur->button_setting = &form_setting;
+		setDuration(int(command[2]));
 		break;
 	}
 	default:
@@ -243,66 +234,40 @@ void SLL::SLLForm::FetchNextCommand(const std::vector<float>& command)
 
 void SLL::SLLForm::FetchPrevCommand(const std::vector<float>& command)
 {
-	// if (command.empty()) return;
-	// switch ((int)command[0])
-	// {
-	// case _insert: 
-	// {
-	// 	cout << "abc" << " ";
-	// 	//cout << command[2];
-	// 	//removeNext(int(command[1]),-1);
-	// 	break;
-	// }
-	// case _insertNext:
-	// {
-	// 	insertNext(int(command[1]),int(command[2]));
-	// 	break;
-	// }
-	// case _delete:
-	// {
-	// 	console.clear();
-	// 	insert(int(command[1]),int(command[2]));
-	// 	break;
-	// }
-	// case _removeNext:
-	// {
-	// 	removeNext(int(command[1]),int(command[2]));
-	// 	break;
-	// }
-	// case _update:
-	// {
-	// 	if (int(command[3]) == -1) return;
-	// 	updateSilent(int(command[1]),int(command[3])); 
-	// 	break;
-	// }
-	// case _choose: 
-	// {
-	// 	ListNode* cur = m_head;
-	// 	int count = 0;
-	// 	while (count < int(command[1])) {
-	// 		count++;
-	// 		cur=cur->m_next;
-	// 	}
-	// 	cur->button_setting->normal_color = form_setting.normal_color;
-	// 	console.goDown();
-	// 	setDuration(0);
-	// 	break;
-	// }
-	// case _unchoose:
-	// {
-	// 	ListNode* cur = m_head;
-	// 	int count = 0;
-	// 	while (count < int(command[1])) {
-	// 		count++;
-	// 		cur=cur->m_next;
-	// 	}
-	// 	cur->button_setting->normal_color = BLUE;
-	// 	setDuration(int(command[2]));
-	// 	break;
-	// }
-	// default:
-	// 	break;
-	// }
+	if (command.empty()) return;
+	switch ((int)command[0])
+	{
+		case _choose:
+		{
+			ListNode* cur = m_head;
+			while (cur->getIndex() != int(command[1])) cur = cur->m_next;
+			cur->text_setting = &form_setting;
+			cur->button_setting = &form_setting;
+			break;
+		}
+		case _unchoose:
+		{
+			ListNode* cur = m_head;
+			while (cur->getIndex() != int(command[1])) cur = cur->m_next;
+			cur->text_setting = &temp_t_setting;
+			cur->button_setting = &temp_b_setting;
+			break;
+		}
+		case _insertSilent:
+		{
+			removeSilent(int(command[1]),int(command[2]));
+			rePosition();
+			break;
+		}
+		case _removeSilent:
+		{
+			insertSilent(int(command[1]),int(command[2]));
+			rePosition();
+			break;
+		}
+		default:
+			break;
+	}
 }
 
 SLL::SLLForm::~SLLForm()
@@ -316,194 +281,117 @@ SLL::SLLForm::~SLLForm()
 
 void SLL::SLLForm::insert(const int &value, const int &index)
 {
-	if (index == -2) return;
-	if (!m_head) {
-		InsertNextSubCommand({_insertNext,float(value),0});
-		console.InsertNextSubCommand("Insert " + to_string(value));
-		InsertNextSubCommand({_choose,0,1});
-		InsertNextSubCommand({_unchoose,0,1});
-	} else {
-		ListNode* cur = m_head;
-		int count=0;
-		while (cur->m_next) {
-			console.InsertNextSubCommand("Go next");
-			InsertNextSubCommand({_choose,float(count),1});
-			InsertNextSubCommand({_unchoose,float(count),1});
-			cur = cur->m_next;
-			count++;
-		}
-		console.InsertNextSubCommand("Go next");
-		InsertNextSubCommand({_choose,float(count),1});
-		InsertNextSubCommand({_unchoose,float(count),1});
-		InsertNextSubCommand({_insertNext,float(value),float(count+1)});
-		console.InsertNextSubCommand("Insert " + to_string(value));
-		InsertNextSubCommand({_choose,float(count+1),1});
-		InsertNextSubCommand({_unchoose,float(count+1),1});
-	}
-
-}
-
-void SLL::SLLForm::insertNext(const int &value,const int& index)
-{
-	if (index == -2) return;
 	ListNode* cur = m_head;
-	if (!m_head) {
-		m_head = new ListNode(value,index);
-		cur = m_head;
-		size++;
-	}
-	else if (index == 0) {
-		ListNode* newNode = new ListNode(value,index);
-		newNode->m_next = m_head;
-		m_head=newNode;
-		ListNode* temp = m_head->m_next;
-		while (temp) {
-			temp->setIndex(temp->getIndex()+1);
-			temp=temp->m_next;
-		}
-		size++;
-	} else {
-		for (int i=0;i<index-1;i++) {
+	while (cur && cur->getIndex() != index-1) {
+		if (cur->getIndex() == -1) {
 			cur = cur->m_next;
+			continue;
 		}
-		ListNode* newNode = new ListNode(value,index);
-		newNode->m_next = cur->m_next;
-		cur->m_next = newNode;
+		InsertNextSubCommand({_choose,float(cur->getIndex()),1});
+		InsertNextSubCommand({_unchoose,float(cur->getIndex()),1});
 		cur = cur->m_next;
-		ListNode* temp = cur->m_next;
-		while (temp) {
-			temp->setIndex(temp->getIndex()+1);
-		}
-		size++;
 	}
-	cur->button_setting = new ButtonSetting;
-	cur->button_setting->click_color = form_setting.click_color;
-	cur->button_setting->hover_color = form_setting.hover_color;
-	cur->button_setting->normal_color = form_setting.normal_color;
-	cur->button_setting->roundness = form_setting.roundness;
-	cur->button_setting->segment = form_setting.segment;
-	cur->text_setting = new TextSetting;
-	cur->text_setting->color = form_setting.color;
-	cur->text_setting->font = form_setting.font;
-	cur->text_setting->font_size = form_setting.font_size;
-	cur->text_setting->spacing = form_setting.spacing;
-	cur->setPosition(getRandom(0,m_workspace.width),getRandom(0,m_workspace.height));
-	float target_x = m_workspace.x + 100 * index - 100 * (size) / 2;
-    float target_y = m_workspace.y;
-    cur->setDuration(getSpeed()/2); 
-    cur->setSlowPosition(target_x, target_y);
+	InsertNextSubCommand({_choose,float(cur->getIndex()),1});
+	InsertNextSubCommand({_unchoose,float(cur->getIndex()),1});
+	InsertNextSubCommand({_insertSilent,float(value),float(index)});
+	InsertNextSubCommand({_choose,float(cur->getIndex()+1),1});
+	InsertNextSubCommand({_unchoose,float(cur->getIndex()+1),1});
 }
+
+void SLL::SLLForm::insertSilent(const int& value, const int& index) {
+    ListNode* cur = m_head;
+    while (cur && cur->getIndex() != index - 1) {
+        cur = cur->m_next;
+    }
+    if (!cur) return; 
+    ListNode* newNode = new ListNode(value, index);
+    newNode->m_next = cur->m_next;
+    cur->m_next = newNode;
+    newNode->button_setting = &form_setting;
+    newNode->text_setting = &form_setting;
+    newNode->setPosition(getRandom(0, m_workspace.width), getRandom(0, m_workspace.height));
+    ListNode* temp = newNode->m_next;
+    while (temp) {
+        temp->setIndex(temp->getIndex() + 1);
+        temp = temp->m_next;
+    }
+    size++;
+}
+
+
 void SLL::SLLForm::remove(const int &value,const int& index)
 {
-	ListNode* cur = m_head;
-	int count = 0;
-	if (!cur) return;
-	if (index == -2) {
-		//There is nothing to delete
-		while (cur->m_next) {
-			console.InsertNextSubCommand("Next is not " + to_string(value)); 
-			InsertNextSubCommand({_choose,float(count),1});
-			InsertNextSubCommand({_unchoose,float(count),1});
-			cur=cur->m_next;
-			count++;
-		}
-		return;
-	}
-	if (index == -1) {
-		InsertNextSubCommand({_removeNext,float(value),float(index)});
-		return;
-	}
-	if (cur->getValue() == value) {
-		InsertNextSubCommand({_choose,float(count),1});
-		console.InsertNextSubCommand("Head is " + to_string(value));
-		InsertNextSubCommand({_removeNext,float(value),0});
-		console.goDown();
-		return;
-	}
-	while (cur && cur->m_next && cur->m_next->getValue() != value) {
-		console.InsertNextSubCommand("Next is not " + to_string(value)); 
-		InsertNextSubCommand({_choose,float(count),1});
-		InsertNextSubCommand({_unchoose,float(count),1});
-		cur=cur->m_next;
-		count++;
-	}
-	if (cur->m_next->getValue() == value) {
-		InsertNextSubCommand({_choose,float(count),1});
-		console.InsertNextSubCommand("Next is  " + to_string(value));
-		//setDuration(1);
-		InsertNextSubCommand({_removeNext,float(value),float(count)+1});
-		InsertNextSubCommand({_unchoose,float(count),1});
-	}
-}
-
-void SLL::SLLForm::removeNext(const int &value,const int& index)
-{
-	if (index == -1) {
-		if (!m_head) return;
-		if (!m_head->m_next) {
-			delete m_head;
-			m_head = nullptr;
-			size--;
-			return;
-		}
-		ListNode* pre = m_head;
-		while (pre->m_next && pre->m_next->m_next) pre = pre->m_next;
-		ListNode* del = pre->m_next;
-		delete del;
-		pre->m_next = nullptr;
-		size--;
-		return;
-	}
+	ListNode* cur = m_head->m_next;
 	if (index == 0) {
-		ListNode* del = m_head;
-		m_head = m_head->m_next;
-		delete del;
-		ListNode* cur = m_head;
-		while (cur) {
-			cur->setIndex(cur->getIndex()-1);
-			cur=cur->m_next;
-		}
-		size--;
-	} else {
-		ListNode* pre = m_head;
-		while (pre->getIndex() != index-1) pre=pre->m_next;
-		ListNode* del = pre->m_next;
-		pre->m_next = pre->m_next->m_next;
-		delete del;
-		pre=pre->m_next;
-		while (pre) {
-			pre->setIndex(pre->getIndex()-1);
-			pre = pre->m_next;
-		}
-		size--;
+		InsertNextSubCommand({_removeSilent,float(value),float(index)});
+		return;
 	}
-}
-
-void SLL::SLLForm::update(const int &old_value, const int &new_value)
-{
-	ListNode* cur = m_head;
-	int count = 0;
-	while (cur) {
-		if (cur->getValue() == old_value) break;
-		InsertNextSubCommand({_choose,float(count),1});
-		console.InsertNextSubCommand(to_string(cur->getValue()) + " is not " + to_string(old_value));
-		InsertNextSubCommand({_unchoose,float(count),1});
+	while (cur && cur->getIndex() != index-1) {
+		InsertNextSubCommand({_choose,float(cur->getIndex()),1});
+		InsertNextSubCommand({_unchoose,float(cur->getIndex()),1});
 		cur = cur->m_next;
-		count++;
 	}
-	if (!cur) return;
-	InsertNextSubCommand({_choose,float(count),1});
-	console.InsertNextSubCommand("Change " + to_string(old_value) + " to " + to_string(new_value));
-	InsertNextSubCommand({_updateSilent,float(new_value),float(count)});
-	InsertNextSubCommand({_unchoose,float(count),1});
+	if (cur && cur->m_next) {
+		InsertNextSubCommand({_choose,float(cur->getIndex()),1});
+		InsertNextSubCommand({_removeSilent,float(value),float(index)});
+		InsertNextSubCommand({_unchoose,float(cur->getIndex()),1});
+	} else {
+		//There is nothing to delete
+		InsertNextSubCommand({_choose,float(cur->getIndex()),1});
+		InsertNextSubCommand({_unchoose,float(cur->getIndex()),1});
+	}
 }
 
-void SLL::SLLForm::updateSilent(const int &value, const int &index)
+void SLL::SLLForm::removeSilent(const int &value, const int &index)
 {
-	ListNode* cur = m_head;
-	while (cur && cur->getIndex() != index) cur = cur->m_next;
-	cur->setValue(value);
+    if (!m_dummy || !m_dummy->m_next) return;
+
+    ListNode* cur = m_dummy;
+    while (cur->m_next && cur->m_next->getIndex() != index) {
+        cur = cur->m_next;
+    }
+
+    if (cur->m_next) {
+        ListNode* del = cur->m_next;
+        cur->m_next = del->m_next;
+        delete del;
+
+        ListNode* temp = cur->m_next;
+        while (temp) {
+            temp->setIndex(temp->getIndex() - 1);
+            temp = temp->m_next;
+        }
+
+        size--;
+    }
 }
+
+
+// void SLL::SLLForm::update(const int &old_value, const int &new_value)
+// {
+// 	ListNode* cur = m_head;
+// 	int count = 0;
+// 	while (cur) {
+// 		if (cur->getValue() == old_value) break;
+// 		InsertNextSubCommand({_choose,float(count),1});
+// 		console.InsertNextSubCommand(to_string(cur->getValue()) + " is not " + to_string(old_value));
+// 		InsertNextSubCommand({_unchoose,float(count),1});
+// 		cur = cur->m_next;
+// 		count++;
+// 	}
+// 	if (!cur) return;
+// 	InsertNextSubCommand({_choose,float(count),1});
+// 	console.InsertNextSubCommand("Change " + to_string(old_value) + " to " + to_string(new_value));
+// 	InsertNextSubCommand({_updateSilent,float(new_value),float(count)});
+// 	InsertNextSubCommand({_unchoose,float(count),1});
+// }
+
+// void SLL::SLLForm::updateSilent(const int &value, const int &index)
+// {
+// 	ListNode* cur = m_head;
+// 	while (cur && cur->getIndex() != index) cur = cur->m_next;
+// 	cur->setValue(value);
+// }
 void SLL::Arrow::setPosition(Vector2 tail, Vector2 head)
 {
     m_tail = tail;

@@ -16,6 +16,7 @@
 #include "SettingPackage.h"
 #include "TextBox.h"
 #include "TextureButton.h"
+#include <cfloat>
 #include <vector>
 
 class Graph: public Form {

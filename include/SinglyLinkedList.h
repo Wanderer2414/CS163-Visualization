@@ -45,6 +45,10 @@ namespace SLL {
 	};
 	class SLLForm : public Form {
 	public:
+
+		ButtonSetting temp_b_setting;
+		TextSetting temp_t_setting;
+
 		enum CommandCode {
 			_insert = 0,
 			_delete = 5,
@@ -53,8 +57,8 @@ namespace SLL {
 			_add = 3,
 			_update = 6,
 			_remove = 4,
-			_insertNext = 7,
-			_removeNext = 8,
+			_insertSilent = 7,
+			_removeSilent = 8,
 			_updateSilent = 9
 		};
 		SLLForm(const int& index, FormSetting form_setting, const Vector2& window_size);
@@ -73,12 +77,13 @@ namespace SLL {
 		int m_node_spacing;
 		int size = 0;
 		ListNode* m_head = nullptr;
-		void insert(const int& value,const int& index);
-		void insertNext(const int& value,const int& index);
-		void remove(const int& value,const int& index);
-		void removeNext(const int& value,const int& index);
-		void update(const int& old_value, const int& new_value);
-		void updateSilent(const int& value,const int& index);
+		ListNode* m_dummy = nullptr;
+
+		void insert(const int& value, const int& index);
+		void insertSilent(const int& value, const int& index);
+
+		void remove(const int& value, const int& index);
+		void removeSilent(const int& value,const int& index);
 	};
 }
 

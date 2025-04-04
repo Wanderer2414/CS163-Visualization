@@ -117,7 +117,7 @@ void Graph::dijikstra_algorithms(const int& index) {
     InsertNextSubCommand({goDown, 1, 0.2});
     InsertNextSubCommand({set_cost, 1.0f*index, 0, 1.0f*DMargins[index]->getValue(), 0.1});
     InsertNextSubCommand({goDown, 1, 0.2});
-    vector<int> board(vertices.size(), MAXFLOAT);
+    vector<int> board(vertices.size(), FLT_MAX);
     vector<bool> visited(vertices.size(), 0);
     board[index] = 0;
     MinHeap q;
