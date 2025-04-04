@@ -11,61 +11,69 @@ set(RAYLIB_INCLUDE_DIR "C:/Users/Dell/Downloads/CS163-DSAVisual/raylib")
 # Include directories (Raylib headers)
 include_directories(${RAYLIB_INCLUDE_DIR})
 
+# Link to raylib library (static or dynamic)
+link_directories(${RAYLIB_LIB_DIR})
+
 # Add the list of source files
-set(SOURCES
+set(Run
     source/Application.cpp
-    AVLNode.cpp
-    AVLTree.cpp
-    Button.cpp
-    Clock.cpp
-    ColorBox.cpp
-    ColorPointer.cpp
-    CommandLists.cpp
-    Console.cpp
-    Container.cpp
-    Controller.cpp
-    Dijikstra_margin.cpp
-    DSU.cpp
-    DynamicColorCircle.cpp
-    Edge.cpp
-    FileDropBox.cpp
-    Form.cpp
-    FormStart.cpp
-    General.cpp
-    Graph.cpp
-    Graph.design.cpp
-    Graph.logic.cpp
-    GUI.cpp
-    HeapVisual.cpp
-    Label.cpp
-    LinearHashTable.cpp
-    Menu.cpp
-    MenuBox.cpp
-    MenuTab.cpp
-    MinHeap.cpp
-    Move.cpp
-    NotationBox.cpp
-    OptionBox.cpp
-    ProgressBar.cpp
-    SettingPackage.cpp
-    ShortestPath.cpp
-    SinglyLinkedList.cpp
-    SlowMotion.cpp
-    SunMode.cpp
-    TabBox.cpp
-    TextBox.cpp
-    TextButton.cpp
-    TextureButton.cpp
-    ValueScroll.cpp
-    Vertex.cpp
-    VerticalOpen.cpp
-    main.cpp
+    source/AVLNode.cpp
+    source/AVLTree.cpp
+    source/Button.cpp
+    source/Clock.cpp
+    source/ColorBox.cpp
+    source/ColorPointer.cpp
+    source/CommandLists.cpp
+    source/Console.cpp
+    source/Container.cpp
+    source/Controller.cpp
+    source/Dijikstra_margin.cpp
+    source/DSU.cpp
+    source/DynamicColorCircle.cpp
+    source/Edge.cpp
+    source/FileDropBox.cpp
+    source/Form.cpp
+    source/FormStart.cpp
+    source/General.cpp
+    source/Graph.cpp
+    source/Graph.design.cpp
+    source/Graph.logic.cpp
+    source/GUI.cpp
+    source/HeapVisual.cpp
+    source/Label.cpp
+    source/LinearHashTable.cpp
+    source/Menu.cpp
+    source/MenuBox.cpp
+    source/MenuTab.cpp
+    source/MinHeap.cpp
+    source/Move.cpp
+    source/NotationBox.cpp
+    source/OptionBox.cpp
+    source/ProgressBar.cpp
+    source/SettingPackage.cpp
+    source/ShortestPath.cpp
+    source/SinglyLinkedList.cpp
+    source/SlowMotion.cpp
+    source/SunMode.cpp
+    source/TabBox.cpp
+    source/TextBox.cpp
+    source/TextButton.cpp
+    source/TextureButton.cpp
+    source/ValueScroll.cpp
+    source/Vertex.cpp
+    source/VerticalOpen.cpp
+    source/main.cpp
 )
 
 #Add Executables
+add_executable(DSAVisual ${Run})
 
-#Target Link Libraries
-#-ID:\raylib\include -LD:\raylib\lib -lraylib -lopengl32 -lgdi32 –lwinmm
+# Link the executable target with raylib and other system libraries
+target_link_libraries(DSAVisual ${RAYLIB_LIB_DIR}/libraylib.a opengl32 gdi32 kernel32 winmm)
+add_custom_command(TARGET DSAVisual POST_BUILD
+                   COMMAND ${CMAKE_COMMAND}
+                   -E copy_if_different "${RAYLIB_LIB_DIR}/raylib.dll"
+                   $<TARGET_FILE_DIR:DSAVisual>)
 
 # Only have to rerun the cmake when we change this file (CMakeLists.txt)
 # cmake -G "Visual Studio 17 2022" -A x64 ..

@@ -1,0 +1,284 @@
+[
+{
+  "directory": "C:/Users/Dell/Downloads/CS163-DSAVisual/build",
+  "command": "C:\\MinGW\\bin\\g++.exe  @CMakeFiles/DSAVisual.dir/includes_CXX.rsp -g -std=gnu++17 -o CMakeFiles\\DSAVisual.dir\\source\\Application.cpp.obj -c C:\\Users\\Dell\\Downloads\\CS163-DSAVisual\\source\\Application.cpp",
+  "file": "C:/Users/Dell/Downloads/CS163-DSAVisual/source/Application.cpp",
+  "output": "CMakeFiles/DSAVisual.dir/source/Application.cpp.obj"
+},
+{
+  "directory": "C:/Users/Dell/Downloads/CS163-DSAVisual/build",
+  "command": "C:\\MinGW\\bin\\g++.exe  @CMakeFiles/DSAVisual.dir/includes_CXX.rsp -g -std=gnu++17 -o CMakeFiles\\DSAVisual.dir\\source\\AVLNode.cpp.obj -c C:\\Users\\Dell\\Downloads\\CS163-DSAVisual\\source\\AVLNode.cpp",
+  "file": "C:/Users/Dell/Downloads/CS163-DSAVisual/source/AVLNode.cpp",
+  "output": "CMakeFiles/DSAVisual.dir/source/AVLNode.cpp.obj"
+},
+{
+  "directory": "C:/Users/Dell/Downloads/CS163-DSAVisual/build",
+  "command": "C:\\MinGW\\bin\\g++.exe  @CMakeFiles/DSAVisual.dir/includes_CXX.rsp -g -std=gnu++17 -o CMakeFiles\\DSAVisual.dir\\source\\AVLTree.cpp.obj -c C:\\Users\\Dell\\Downloads\\CS163-DSAVisual\\source\\AVLTree.cpp",
+  "file": "C:/Users/Dell/Downloads/CS163-DSAVisual/source/AVLTree.cpp",
+  "output": "CMakeFiles/DSAVisual.dir/source/AVLTree.cpp.obj"
+},
+{
+  "directory": "C:/Users/Dell/Downloads/CS163-DSAVisual/build",
+  "command": "C:\\MinGW\\bin\\g++.exe  @CMakeFiles/DSAVisual.dir/includes_CXX.rsp -g -std=gnu++17 -o CMakeFiles\\DSAVisual.dir\\source\\Button.cpp.obj -c C:\\Users\\Dell\\Downloads\\CS163-DSAVisual\\source\\Button.cpp",
+  "file": "C:/Users/Dell/Downloads/CS163-DSAVisual/source/Button.cpp",
+  "output": "CMakeFiles/DSAVisual.dir/source/Button.cpp.obj"
+},
+{
+  "directory": "C:/Users/Dell/Downloads/CS163-DSAVisual/build",
+  "command": "C:\\MinGW\\bin\\g++.exe  @CMakeFiles/DSAVisual.dir/includes_CXX.rsp -g -std=gnu++17 -o CMakeFiles\\DSAVisual.dir\\source\\Clock.cpp.obj -c C:\\Users\\Dell\\Downloads\\CS163-DSAVisual\\source\\Clock.cpp",
+  "file": "C:/Users/Dell/Downloads/CS163-DSAVisual/source/Clock.cpp",
+  "output": "CMakeFiles/DSAVisual.dir/source/Clock.cpp.obj"
+},
+{
+  "directory": "C:/Users/Dell/Downloads/CS163-DSAVisual/build",
+  "command": "C:\\MinGW\\bin\\g++.exe  @CMakeFiles/DSAVisual.dir/includes_CXX.rsp -g -std=gnu++17 -o CMakeFiles\\DSAVisual.dir\\source\\ColorBox.cpp.obj -c C:\\Users\\Dell\\Downloads\\CS163-DSAVisual\\source\\ColorBox.cpp",
+  "file": "C:/Users/Dell/Downloads/CS163-DSAVisual/source/ColorBox.cpp",
+  "output": "CMakeFiles/DSAVisual.dir/source/ColorBox.cpp.obj"
+},
+{
+  "directory": "C:/Users/Dell/Downloads/CS163-DSAVisual/build",
+  "command": "C:\\MinGW\\bin\\g++.exe  @CMakeFiles/DSAVisual.dir/includes_CXX.rsp -g -std=gnu++17 -o CMakeFiles\\DSAVisual.dir\\source\\ColorPointer.cpp.obj -c C:\\Users\\Dell\\Downloads\\CS163-DSAVisual\\source\\ColorPointer.cpp",
+  "file": "C:/Users/Dell/Downloads/CS163-DSAVisual/source/ColorPointer.cpp",
+  "output": "CMakeFiles/DSAVisual.dir/source/ColorPointer.cpp.obj"
+},
+{
+  "directory": "C:/Users/Dell/Downloads/CS163-DSAVisual/build",
+  "command": "C:\\MinGW\\bin\\g++.exe  @CMakeFiles/DSAVisual.dir/includes_CXX.rsp -g -std=gnu++17 -o CMakeFiles\\DSAVisual.dir\\source\\CommandLists.cpp.obj -c C:\\Users\\Dell\\Downloads\\CS163-DSAVisual\\source\\CommandLists.cpp",
+  "file": "C:/Users/Dell/Downloads/CS163-DSAVisual/source/CommandLists.cpp",
+  "output": "CMakeFiles/DSAVisual.dir/source/CommandLists.cpp.obj"
+},
+{
+  "directory": "C:/Users/Dell/Downloads/CS163-DSAVisual/build",
+  "command": "C:\\MinGW\\bin\\g++.exe  @CMakeFiles/DSAVisual.dir/includes_CXX.rsp -g -std=gnu++17 -o CMakeFiles\\DSAVisual.dir\\source\\Console.cpp.obj -c C:\\Users\\Dell\\Downloads\\CS163-DSAVisual\\source\\Console.cpp",
+  "file": "C:/Users/Dell/Downloads/CS163-DSAVisual/source/Console.cpp",
+  "output": "CMakeFiles/DSAVisual.dir/source/Console.cpp.obj"
+},
+{
+  "directory": "C:/Users/Dell/Downloads/CS163-DSAVisual/build",
+  "command": "C:\\MinGW\\bin\\g++.exe  @CMakeFiles/DSAVisual.dir/includes_CXX.rsp -g -std=gnu++17 -o CMakeFiles\\DSAVisual.dir\\source\\Container.cpp.obj -c C:\\Users\\Dell\\Downloads\\CS163-DSAVisual\\source\\Container.cpp",
+  "file": "C:/Users/Dell/Downloads/CS163-DSAVisual/source/Container.cpp",
+  "output": "CMakeFiles/DSAVisual.dir/source/Container.cpp.obj"
+},
+{
+  "directory": "C:/Users/Dell/Downloads/CS163-DSAVisual/build",
+  "command": "C:\\MinGW\\bin\\g++.exe  @CMakeFiles/DSAVisual.dir/includes_CXX.rsp -g -std=gnu++17 -o CMakeFiles\\DSAVisual.dir\\source\\Controller.cpp.obj -c C:\\Users\\Dell\\Downloads\\CS163-DSAVisual\\source\\Controller.cpp",
+  "file": "C:/Users/Dell/Downloads/CS163-DSAVisual/source/Controller.cpp",
+  "output": "CMakeFiles/DSAVisual.dir/source/Controller.cpp.obj"
+},
+{
+  "directory": "C:/Users/Dell/Downloads/CS163-DSAVisual/build",
+  "command": "C:\\MinGW\\bin\\g++.exe  @CMakeFiles/DSAVisual.dir/includes_CXX.rsp -g -std=gnu++17 -o CMakeFiles\\DSAVisual.dir\\source\\Dijikstra_margin.cpp.obj -c C:\\Users\\Dell\\Downloads\\CS163-DSAVisual\\source\\Dijikstra_margin.cpp",
+  "file": "C:/Users/Dell/Downloads/CS163-DSAVisual/source/Dijikstra_margin.cpp",
+  "output": "CMakeFiles/DSAVisual.dir/source/Dijikstra_margin.cpp.obj"
+},
+{
+  "directory": "C:/Users/Dell/Downloads/CS163-DSAVisual/build",
+  "command": "C:\\MinGW\\bin\\g++.exe  @CMakeFiles/DSAVisual.dir/includes_CXX.rsp -g -std=gnu++17 -o CMakeFiles\\DSAVisual.dir\\source\\DSU.cpp.obj -c C:\\Users\\Dell\\Downloads\\CS163-DSAVisual\\source\\DSU.cpp",
+  "file": "C:/Users/Dell/Downloads/CS163-DSAVisual/source/DSU.cpp",
+  "output": "CMakeFiles/DSAVisual.dir/source/DSU.cpp.obj"
+},
+{
+  "directory": "C:/Users/Dell/Downloads/CS163-DSAVisual/build",
+  "command": "C:\\MinGW\\bin\\g++.exe  @CMakeFiles/DSAVisual.dir/includes_CXX.rsp -g -std=gnu++17 -o CMakeFiles\\DSAVisual.dir\\source\\DynamicColorCircle.cpp.obj -c C:\\Users\\Dell\\Downloads\\CS163-DSAVisual\\source\\DynamicColorCircle.cpp",
+  "file": "C:/Users/Dell/Downloads/CS163-DSAVisual/source/DynamicColorCircle.cpp",
+  "output": "CMakeFiles/DSAVisual.dir/source/DynamicColorCircle.cpp.obj"
+},
+{
+  "directory": "C:/Users/Dell/Downloads/CS163-DSAVisual/build",
+  "command": "C:\\MinGW\\bin\\g++.exe  @CMakeFiles/DSAVisual.dir/includes_CXX.rsp -g -std=gnu++17 -o CMakeFiles\\DSAVisual.dir\\source\\Edge.cpp.obj -c C:\\Users\\Dell\\Downloads\\CS163-DSAVisual\\source\\Edge.cpp",
+  "file": "C:/Users/Dell/Downloads/CS163-DSAVisual/source/Edge.cpp",
+  "output": "CMakeFiles/DSAVisual.dir/source/Edge.cpp.obj"
+},
+{
+  "directory": "C:/Users/Dell/Downloads/CS163-DSAVisual/build",
+  "command": "C:\\MinGW\\bin\\g++.exe  @CMakeFiles/DSAVisual.dir/includes_CXX.rsp -g -std=gnu++17 -o CMakeFiles\\DSAVisual.dir\\source\\FileDropBox.cpp.obj -c C:\\Users\\Dell\\Downloads\\CS163-DSAVisual\\source\\FileDropBox.cpp",
+  "file": "C:/Users/Dell/Downloads/CS163-DSAVisual/source/FileDropBox.cpp",
+  "output": "CMakeFiles/DSAVisual.dir/source/FileDropBox.cpp.obj"
+},
+{
+  "directory": "C:/Users/Dell/Downloads/CS163-DSAVisual/build",
+  "command": "C:\\MinGW\\bin\\g++.exe  @CMakeFiles/DSAVisual.dir/includes_CXX.rsp -g -std=gnu++17 -o CMakeFiles\\DSAVisual.dir\\source\\Form.cpp.obj -c C:\\Users\\Dell\\Downloads\\CS163-DSAVisual\\source\\Form.cpp",
+  "file": "C:/Users/Dell/Downloads/CS163-DSAVisual/source/Form.cpp",
+  "output": "CMakeFiles/DSAVisual.dir/source/Form.cpp.obj"
+},
+{
+  "directory": "C:/Users/Dell/Downloads/CS163-DSAVisual/build",
+  "command": "C:\\MinGW\\bin\\g++.exe  @CMakeFiles/DSAVisual.dir/includes_CXX.rsp -g -std=gnu++17 -o CMakeFiles\\DSAVisual.dir\\source\\FormStart.cpp.obj -c C:\\Users\\Dell\\Downloads\\CS163-DSAVisual\\source\\FormStart.cpp",
+  "file": "C:/Users/Dell/Downloads/CS163-DSAVisual/source/FormStart.cpp",
+  "output": "CMakeFiles/DSAVisual.dir/source/FormStart.cpp.obj"
+},
+{
+  "directory": "C:/Users/Dell/Downloads/CS163-DSAVisual/build",
+  "command": "C:\\MinGW\\bin\\g++.exe  @CMakeFiles/DSAVisual.dir/includes_CXX.rsp -g -std=gnu++17 -o CMakeFiles\\DSAVisual.dir\\source\\General.cpp.obj -c C:\\Users\\Dell\\Downloads\\CS163-DSAVisual\\source\\General.cpp",
+  "file": "C:/Users/Dell/Downloads/CS163-DSAVisual/source/General.cpp",
+  "output": "CMakeFiles/DSAVisual.dir/source/General.cpp.obj"
+},
+{
+  "directory": "C:/Users/Dell/Downloads/CS163-DSAVisual/build",
+  "command": "C:\\MinGW\\bin\\g++.exe  @CMakeFiles/DSAVisual.dir/includes_CXX.rsp -g -std=gnu++17 -o CMakeFiles\\DSAVisual.dir\\source\\Graph.cpp.obj -c C:\\Users\\Dell\\Downloads\\CS163-DSAVisual\\source\\Graph.cpp",
+  "file": "C:/Users/Dell/Downloads/CS163-DSAVisual/source/Graph.cpp",
+  "output": "CMakeFiles/DSAVisual.dir/source/Graph.cpp.obj"
+},
+{
+  "directory": "C:/Users/Dell/Downloads/CS163-DSAVisual/build",
+  "command": "C:\\MinGW\\bin\\g++.exe  @CMakeFiles/DSAVisual.dir/includes_CXX.rsp -g -std=gnu++17 -o CMakeFiles\\DSAVisual.dir\\source\\Graph.design.cpp.obj -c C:\\Users\\Dell\\Downloads\\CS163-DSAVisual\\source\\Graph.design.cpp",
+  "file": "C:/Users/Dell/Downloads/CS163-DSAVisual/source/Graph.design.cpp",
+  "output": "CMakeFiles/DSAVisual.dir/source/Graph.design.cpp.obj"
+},
+{
+  "directory": "C:/Users/Dell/Downloads/CS163-DSAVisual/build",
+  "command": "C:\\MinGW\\bin\\g++.exe  @CMakeFiles/DSAVisual.dir/includes_CXX.rsp -g -std=gnu++17 -o CMakeFiles\\DSAVisual.dir\\source\\Graph.logic.cpp.obj -c C:\\Users\\Dell\\Downloads\\CS163-DSAVisual\\source\\Graph.logic.cpp",
+  "file": "C:/Users/Dell/Downloads/CS163-DSAVisual/source/Graph.logic.cpp",
+  "output": "CMakeFiles/DSAVisual.dir/source/Graph.logic.cpp.obj"
+},
+{
+  "directory": "C:/Users/Dell/Downloads/CS163-DSAVisual/build",
+  "command": "C:\\MinGW\\bin\\g++.exe  @CMakeFiles/DSAVisual.dir/includes_CXX.rsp -g -std=gnu++17 -o CMakeFiles\\DSAVisual.dir\\source\\GUI.cpp.obj -c C:\\Users\\Dell\\Downloads\\CS163-DSAVisual\\source\\GUI.cpp",
+  "file": "C:/Users/Dell/Downloads/CS163-DSAVisual/source/GUI.cpp",
+  "output": "CMakeFiles/DSAVisual.dir/source/GUI.cpp.obj"
+},
+{
+  "directory": "C:/Users/Dell/Downloads/CS163-DSAVisual/build",
+  "command": "C:\\MinGW\\bin\\g++.exe  @CMakeFiles/DSAVisual.dir/includes_CXX.rsp -g -std=gnu++17 -o CMakeFiles\\DSAVisual.dir\\source\\HeapVisual.cpp.obj -c C:\\Users\\Dell\\Downloads\\CS163-DSAVisual\\source\\HeapVisual.cpp",
+  "file": "C:/Users/Dell/Downloads/CS163-DSAVisual/source/HeapVisual.cpp",
+  "output": "CMakeFiles/DSAVisual.dir/source/HeapVisual.cpp.obj"
+},
+{
+  "directory": "C:/Users/Dell/Downloads/CS163-DSAVisual/build",
+  "command": "C:\\MinGW\\bin\\g++.exe  @CMakeFiles/DSAVisual.dir/includes_CXX.rsp -g -std=gnu++17 -o CMakeFiles\\DSAVisual.dir\\source\\Label.cpp.obj -c C:\\Users\\Dell\\Downloads\\CS163-DSAVisual\\source\\Label.cpp",
+  "file": "C:/Users/Dell/Downloads/CS163-DSAVisual/source/Label.cpp",
+  "output": "CMakeFiles/DSAVisual.dir/source/Label.cpp.obj"
+},
+{
+  "directory": "C:/Users/Dell/Downloads/CS163-DSAVisual/build",
+  "command": "C:\\MinGW\\bin\\g++.exe  @CMakeFiles/DSAVisual.dir/includes_CXX.rsp -g -std=gnu++17 -o CMakeFiles\\DSAVisual.dir\\source\\LinearHashTable.cpp.obj -c C:\\Users\\Dell\\Downloads\\CS163-DSAVisual\\source\\LinearHashTable.cpp",
+  "file": "C:/Users/Dell/Downloads/CS163-DSAVisual/source/LinearHashTable.cpp",
+  "output": "CMakeFiles/DSAVisual.dir/source/LinearHashTable.cpp.obj"
+},
+{
+  "directory": "C:/Users/Dell/Downloads/CS163-DSAVisual/build",
+  "command": "C:\\MinGW\\bin\\g++.exe  @CMakeFiles/DSAVisual.dir/includes_CXX.rsp -g -std=gnu++17 -o CMakeFiles\\DSAVisual.dir\\source\\Menu.cpp.obj -c C:\\Users\\Dell\\Downloads\\CS163-DSAVisual\\source\\Menu.cpp",
+  "file": "C:/Users/Dell/Downloads/CS163-DSAVisual/source/Menu.cpp",
+  "output": "CMakeFiles/DSAVisual.dir/source/Menu.cpp.obj"
+},
+{
+  "directory": "C:/Users/Dell/Downloads/CS163-DSAVisual/build",
+  "command": "C:\\MinGW\\bin\\g++.exe  @CMakeFiles/DSAVisual.dir/includes_CXX.rsp -g -std=gnu++17 -o CMakeFiles\\DSAVisual.dir\\source\\MenuBox.cpp.obj -c C:\\Users\\Dell\\Downloads\\CS163-DSAVisual\\source\\MenuBox.cpp",
+  "file": "C:/Users/Dell/Downloads/CS163-DSAVisual/source/MenuBox.cpp",
+  "output": "CMakeFiles/DSAVisual.dir/source/MenuBox.cpp.obj"
+},
+{
+  "directory": "C:/Users/Dell/Downloads/CS163-DSAVisual/build",
+  "command": "C:\\MinGW\\bin\\g++.exe  @CMakeFiles/DSAVisual.dir/includes_CXX.rsp -g -std=gnu++17 -o CMakeFiles\\DSAVisual.dir\\source\\MenuTab.cpp.obj -c C:\\Users\\Dell\\Downloads\\CS163-DSAVisual\\source\\MenuTab.cpp",
+  "file": "C:/Users/Dell/Downloads/CS163-DSAVisual/source/MenuTab.cpp",
+  "output": "CMakeFiles/DSAVisual.dir/source/MenuTab.cpp.obj"
+},
+{
+  "directory": "C:/Users/Dell/Downloads/CS163-DSAVisual/build",
+  "command": "C:\\MinGW\\bin\\g++.exe  @CMakeFiles/DSAVisual.dir/includes_CXX.rsp -g -std=gnu++17 -o CMakeFiles\\DSAVisual.dir\\source\\MinHeap.cpp.obj -c C:\\Users\\Dell\\Downloads\\CS163-DSAVisual\\source\\MinHeap.cpp",
+  "file": "C:/Users/Dell/Downloads/CS163-DSAVisual/source/MinHeap.cpp",
+  "output": "CMakeFiles/DSAVisual.dir/source/MinHeap.cpp.obj"
+},
+{
+  "directory": "C:/Users/Dell/Downloads/CS163-DSAVisual/build",
+  "command": "C:\\MinGW\\bin\\g++.exe  @CMakeFiles/DSAVisual.dir/includes_CXX.rsp -g -std=gnu++17 -o CMakeFiles\\DSAVisual.dir\\source\\Move.cpp.obj -c C:\\Users\\Dell\\Downloads\\CS163-DSAVisual\\source\\Move.cpp",
+  "file": "C:/Users/Dell/Downloads/CS163-DSAVisual/source/Move.cpp",
+  "output": "CMakeFiles/DSAVisual.dir/source/Move.cpp.obj"
+},
+{
+  "directory": "C:/Users/Dell/Downloads/CS163-DSAVisual/build",
+  "command": "C:\\MinGW\\bin\\g++.exe  @CMakeFiles/DSAVisual.dir/includes_CXX.rsp -g -std=gnu++17 -o CMakeFiles\\DSAVisual.dir\\source\\NotationBox.cpp.obj -c C:\\Users\\Dell\\Downloads\\CS163-DSAVisual\\source\\NotationBox.cpp",
+  "file": "C:/Users/Dell/Downloads/CS163-DSAVisual/source/NotationBox.cpp",
+  "output": "CMakeFiles/DSAVisual.dir/source/NotationBox.cpp.obj"
+},
+{
+  "directory": "C:/Users/Dell/Downloads/CS163-DSAVisual/build",
+  "command": "C:\\MinGW\\bin\\g++.exe  @CMakeFiles/DSAVisual.dir/includes_CXX.rsp -g -std=gnu++17 -o CMakeFiles\\DSAVisual.dir\\source\\OptionBox.cpp.obj -c C:\\Users\\Dell\\Downloads\\CS163-DSAVisual\\source\\OptionBox.cpp",
+  "file": "C:/Users/Dell/Downloads/CS163-DSAVisual/source/OptionBox.cpp",
+  "output": "CMakeFiles/DSAVisual.dir/source/OptionBox.cpp.obj"
+},
+{
+  "directory": "C:/Users/Dell/Downloads/CS163-DSAVisual/build",
+  "command": "C:\\MinGW\\bin\\g++.exe  @CMakeFiles/DSAVisual.dir/includes_CXX.rsp -g -std=gnu++17 -o CMakeFiles\\DSAVisual.dir\\source\\ProgressBar.cpp.obj -c C:\\Users\\Dell\\Downloads\\CS163-DSAVisual\\source\\ProgressBar.cpp",
+  "file": "C:/Users/Dell/Downloads/CS163-DSAVisual/source/ProgressBar.cpp",
+  "output": "CMakeFiles/DSAVisual.dir/source/ProgressBar.cpp.obj"
+},
+{
+  "directory": "C:/Users/Dell/Downloads/CS163-DSAVisual/build",
+  "command": "C:\\MinGW\\bin\\g++.exe  @CMakeFiles/DSAVisual.dir/includes_CXX.rsp -g -std=gnu++17 -o CMakeFiles\\DSAVisual.dir\\source\\SettingPackage.cpp.obj -c C:\\Users\\Dell\\Downloads\\CS163-DSAVisual\\source\\SettingPackage.cpp",
+  "file": "C:/Users/Dell/Downloads/CS163-DSAVisual/source/SettingPackage.cpp",
+  "output": "CMakeFiles/DSAVisual.dir/source/SettingPackage.cpp.obj"
+},
+{
+  "directory": "C:/Users/Dell/Downloads/CS163-DSAVisual/build",
+  "command": "C:\\MinGW\\bin\\g++.exe  @CMakeFiles/DSAVisual.dir/includes_CXX.rsp -g -std=gnu++17 -o CMakeFiles\\DSAVisual.dir\\source\\ShortestPath.cpp.obj -c C:\\Users\\Dell\\Downloads\\CS163-DSAVisual\\source\\ShortestPath.cpp",
+  "file": "C:/Users/Dell/Downloads/CS163-DSAVisual/source/ShortestPath.cpp",
+  "output": "CMakeFiles/DSAVisual.dir/source/ShortestPath.cpp.obj"
+},
+{
+  "directory": "C:/Users/Dell/Downloads/CS163-DSAVisual/build",
+  "command": "C:\\MinGW\\bin\\g++.exe  @CMakeFiles/DSAVisual.dir/includes_CXX.rsp -g -std=gnu++17 -o CMakeFiles\\DSAVisual.dir\\source\\SinglyLinkedList.cpp.obj -c C:\\Users\\Dell\\Downloads\\CS163-DSAVisual\\source\\SinglyLinkedList.cpp",
+  "file": "C:/Users/Dell/Downloads/CS163-DSAVisual/source/SinglyLinkedList.cpp",
+  "output": "CMakeFiles/DSAVisual.dir/source/SinglyLinkedList.cpp.obj"
+},
+{
+  "directory": "C:/Users/Dell/Downloads/CS163-DSAVisual/build",
+  "command": "C:\\MinGW\\bin\\g++.exe  @CMakeFiles/DSAVisual.dir/includes_CXX.rsp -g -std=gnu++17 -o CMakeFiles\\DSAVisual.dir\\source\\SlowMotion.cpp.obj -c C:\\Users\\Dell\\Downloads\\CS163-DSAVisual\\source\\SlowMotion.cpp",
+  "file": "C:/Users/Dell/Downloads/CS163-DSAVisual/source/SlowMotion.cpp",
+  "output": "CMakeFiles/DSAVisual.dir/source/SlowMotion.cpp.obj"
+},
+{
+  "directory": "C:/Users/Dell/Downloads/CS163-DSAVisual/build",
+  "command": "C:\\MinGW\\bin\\g++.exe  @CMakeFiles/DSAVisual.dir/includes_CXX.rsp -g -std=gnu++17 -o CMakeFiles\\DSAVisual.dir\\source\\SunMode.cpp.obj -c C:\\Users\\Dell\\Downloads\\CS163-DSAVisual\\source\\SunMode.cpp",
+  "file": "C:/Users/Dell/Downloads/CS163-DSAVisual/source/SunMode.cpp",
+  "output": "CMakeFiles/DSAVisual.dir/source/SunMode.cpp.obj"
+},
+{
+  "directory": "C:/Users/Dell/Downloads/CS163-DSAVisual/build",
+  "command": "C:\\MinGW\\bin\\g++.exe  @CMakeFiles/DSAVisual.dir/includes_CXX.rsp -g -std=gnu++17 -o CMakeFiles\\DSAVisual.dir\\source\\TabBox.cpp.obj -c C:\\Users\\Dell\\Downloads\\CS163-DSAVisual\\source\\TabBox.cpp",
+  "file": "C:/Users/Dell/Downloads/CS163-DSAVisual/source/TabBox.cpp",
+  "output": "CMakeFiles/DSAVisual.dir/source/TabBox.cpp.obj"
+},
+{
+  "directory": "C:/Users/Dell/Downloads/CS163-DSAVisual/build",
+  "command": "C:\\MinGW\\bin\\g++.exe  @CMakeFiles/DSAVisual.dir/includes_CXX.rsp -g -std=gnu++17 -o CMakeFiles\\DSAVisual.dir\\source\\TextBox.cpp.obj -c C:\\Users\\Dell\\Downloads\\CS163-DSAVisual\\source\\TextBox.cpp",
+  "file": "C:/Users/Dell/Downloads/CS163-DSAVisual/source/TextBox.cpp",
+  "output": "CMakeFiles/DSAVisual.dir/source/TextBox.cpp.obj"
+},
+{
+  "directory": "C:/Users/Dell/Downloads/CS163-DSAVisual/build",
+  "command": "C:\\MinGW\\bin\\g++.exe  @CMakeFiles/DSAVisual.dir/includes_CXX.rsp -g -std=gnu++17 -o CMakeFiles\\DSAVisual.dir\\source\\TextButton.cpp.obj -c C:\\Users\\Dell\\Downloads\\CS163-DSAVisual\\source\\TextButton.cpp",
+  "file": "C:/Users/Dell/Downloads/CS163-DSAVisual/source/TextButton.cpp",
+  "output": "CMakeFiles/DSAVisual.dir/source/TextButton.cpp.obj"
+},
+{
+  "directory": "C:/Users/Dell/Downloads/CS163-DSAVisual/build",
+  "command": "C:\\MinGW\\bin\\g++.exe  @CMakeFiles/DSAVisual.dir/includes_CXX.rsp -g -std=gnu++17 -o CMakeFiles\\DSAVisual.dir\\source\\TextureButton.cpp.obj -c C:\\Users\\Dell\\Downloads\\CS163-DSAVisual\\source\\TextureButton.cpp",
+  "file": "C:/Users/Dell/Downloads/CS163-DSAVisual/source/TextureButton.cpp",
+  "output": "CMakeFiles/DSAVisual.dir/source/TextureButton.cpp.obj"
+},
+{
+  "directory": "C:/Users/Dell/Downloads/CS163-DSAVisual/build",
+  "command": "C:\\MinGW\\bin\\g++.exe  @CMakeFiles/DSAVisual.dir/includes_CXX.rsp -g -std=gnu++17 -o CMakeFiles\\DSAVisual.dir\\source\\ValueScroll.cpp.obj -c C:\\Users\\Dell\\Downloads\\CS163-DSAVisual\\source\\ValueScroll.cpp",
+  "file": "C:/Users/Dell/Downloads/CS163-DSAVisual/source/ValueScroll.cpp",
+  "output": "CMakeFiles/DSAVisual.dir/source/ValueScroll.cpp.obj"
+},
+{
+  "directory": "C:/Users/Dell/Downloads/CS163-DSAVisual/build",
+  "command": "C:\\MinGW\\bin\\g++.exe  @CMakeFiles/DSAVisual.dir/includes_CXX.rsp -g -std=gnu++17 -o CMakeFiles\\DSAVisual.dir\\source\\Vertex.cpp.obj -c C:\\Users\\Dell\\Downloads\\CS163-DSAVisual\\source\\Vertex.cpp",
+  "file": "C:/Users/Dell/Downloads/CS163-DSAVisual/source/Vertex.cpp",
+  "output": "CMakeFiles/DSAVisual.dir/source/Vertex.cpp.obj"
+},
+{
+  "directory": "C:/Users/Dell/Downloads/CS163-DSAVisual/build",
+  "command": "C:\\MinGW\\bin\\g++.exe  @CMakeFiles/DSAVisual.dir/includes_CXX.rsp -g -std=gnu++17 -o CMakeFiles\\DSAVisual.dir\\source\\VerticalOpen.cpp.obj -c C:\\Users\\Dell\\Downloads\\CS163-DSAVisual\\source\\VerticalOpen.cpp",
+  "file": "C:/Users/Dell/Downloads/CS163-DSAVisual/source/VerticalOpen.cpp",
+  "output": "CMakeFiles/DSAVisual.dir/source/VerticalOpen.cpp.obj"
+},
+{
+  "directory": "C:/Users/Dell/Downloads/CS163-DSAVisual/build",
+  "command": "C:\\MinGW\\bin\\g++.exe  @CMakeFiles/DSAVisual.dir/includes_CXX.rsp -g -std=gnu++17 -o CMakeFiles\\DSAVisual.dir\\source\\main.cpp.obj -c C:\\Users\\Dell\\Downloads\\CS163-DSAVisual\\source\\main.cpp",
+  "file": "C:/Users/Dell/Downloads/CS163-DSAVisual/source/main.cpp",
+  "output": "CMakeFiles/DSAVisual.dir/source/main.cpp.obj"
+}
+]
