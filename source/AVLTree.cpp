@@ -181,6 +181,7 @@ void AVLTreeForm::FetchPrevCommand(const std::vector<float>& codes)
 	float dur = codes.back();
 	int code = codes[0];
 	switch (code) {
+		cout << code;
 	case CommandCode::insert: {
 		int val = codes[1];
 		for (int i =0;i<logic_node.size(); i++) {

@@ -59,9 +59,7 @@ namespace HT {
                     update(const int& oldvalue, const int& newvalue);
         TextBox     m_memory_sz_textBox;
         std::vector<Node> m_memory;
-
     };
-
 }
 
 #endif
