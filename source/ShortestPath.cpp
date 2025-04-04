@@ -35,14 +35,15 @@ vector<int> dijkstra(vector<vector<pair<int, int>>>& graph, int start, int end) 
 }
 
 void localDijsktra(vector<vector<pair<int, int>>>& graph, vector<int>& distance, vector<int>& previous, int start, int radius) {
-    distance.resize(graph.size(), numeric_limits<int>::max());
-    previous.resize(graph.size(), -1);
+    distance.assign(graph.size(), numeric_limits<int>::max());
+    previous.assign(graph.size(), -1);
     priority_queue<pair<int, int>, vector<pair<int, int>>, greater<pair<int, int>>> minHeap;
     minHeap.push({0, start});
     distance[start] = 0;
     while (!minHeap.empty()) {
         int u = minHeap.top().second;
         minHeap.pop();
+        if (distance[u] > radius) break;
         for (auto& v : graph[u]) {
             int w = v.first;
             int weight = v.second;
@@ -51,8 +52,7 @@ void localDijsktra(vector<vector<pair<int, int>>>& graph, vector<int>& distance,
                 previous[w] = u;
                 minHeap.push({distance[w], w});
             }
-        }
-        if (distance[u] > radius) continue;
+        }   
     }
 }
 
@@ -68,7 +68,7 @@ void dfs(const vector<vector<int>>& matrix, vector<bool>& visited, vector<int>& 
 
 int Graph::findParent(vector<int>& parent, int node) {
     if (parent[node] != node) {
-        findParent(parent, parent[node]);
+        parent[node] = findParent(parent, parent[node]);
     }
     return parent[node];
 }
@@ -131,11 +131,25 @@ int Graph::addEdge(int from, int to, int weight) {
 }
 
 void Graph::random(int vertexCount, int maxX, int maxY) {
-
+    for (int i = 0; i < vertexCount; ++i) {
+        addVertex();
+    }
+    for (int i = 0; i < vertexCount; ++i) {
+        for (int j = i + 1; j < vertexCount; ++j) {
+            if (rand() % 3 == 0) {
+                int weight = 1 + rand() % 10;
+                addEdge(i, j, weight);
+            }
+        }
+    }
 }
 
 void Graph::startFromFile(const string filename) {
     ifstream file(filename);
+    if (!file) {
+        cerr << "Error: Cannot open file!" << endl;
+        return;
+    }
     int n;
     file >> n;
     for (int i = 0; i < n; ++i) {
@@ -146,7 +160,9 @@ void Graph::startFromFile(const string filename) {
     for (int i = 0; i < n; ++i) {
         for (int j = 0; j < n; ++j) {
             file >> weight;
-            addEdge(i, j, weight);
+            if (i != j && weight > 0) {
+                addEdge(i, j, weight);
+            }
         }
     }
     file.close();
@@ -200,6 +216,7 @@ void Graph::updatePosition() {
                 float dx = node->pos.x - other->pos.x;
                 float dy = node->pos.y - other->pos.y;
                 float distance = sqrt(dx * dx + dy * dy);
+                if (distance < 1.0f) continue; 
                 if (distance > 0) {
                     float repulsion = 500000.0f / (distance * distance);
                     force.x += repulsion * dx / distance;
@@ -208,7 +225,7 @@ void Graph::updatePosition() {
             }
         }
         //Spring Force
-        for (auto edge : node->neighbor) {
+        for (auto& edge : node->neighbor) {
             float dx = node->pos.x - edge.nearVertex->pos.x;
             float dy = node->pos.y - edge.nearVertex->pos.y;
             float distance = sqrt(dx * dx + dy * dy);
@@ -218,21 +235,42 @@ void Graph::updatePosition() {
                 force.y -= attraction * dy / distance;
             }
         }
-        if(this->frameCount > 2000) continue;
+        if (this->frameCount > 2000) continue;
         node->pos.x += force.x;
         node->pos.y += force.y;
-        node->pos.x = std::max(std::min(1200.f, node->pos.x), 380.f);
-        node->pos.y = std::max(std::min(650.f, node->pos.y), 150.f);
+        node->pos.x = max(min(1200.f, node->pos.x), 380.f);
+        node->pos.y = max(min(650.f, node->pos.y), 150.f);
         frameCount++;
     }
 }
 
-GraphVisual::GraphVisual(Font font) {
+Graph::~Graph() {
+    for (auto node : nodes) {
+        delete node;
+    }
+    nodes.clear();
+}
+
+GraphVisual::GraphVisual(Font font) : font(font), isChosen(false), numComponent(0), graph() {
     
 }
 
 void GraphVisual::random() {
-
+    int vertexCount = rand() % 10 + 5;
+    graph = Graph();
+    for (int i = 0; i < vertexCount; ++i) {
+        graph.addVertex();
+    }
+    for (int i = 0; i < vertexCount; ++i) {
+        for (int j = i + 1; j < vertexCount; ++j) {
+            if (rand() % 3 == 0) {
+                int weight = rand() % 10 + 1;
+                graph.addEdge(i, j, weight);
+            }
+        }
+    }
+    numComponent = 0;
+    colorComponent.clear();
 }
 
 void GraphVisual::drawButton() {
@@ -249,12 +287,26 @@ void GraphVisual::drawGraph() {
 }
 
 int GraphVisual::loadFile(const std::string filename) {
-    /*std::ifstream inputFile("");
+    ifstream inputFile(filename);
     if (!inputFile) {
-        cerr << "Error: Cannot open file!";
-        exit(1);
+        cerr << "Error: Cannot open file!" << endl;
+        return 0;
     }
-    
-    inputFile.close();*/
+    int n;
+    inputFile >> n;
+    this->graph = Graph();
+    for (int i = 0; i < n; ++i) {
+        graph.addVertex();
+    }
+    int weight;
+    for (int i = 0; i < n; ++i) {
+        for (int j = 0; j < n; ++j) {
+            inputFile >> weight;
+            if (weight > 0) {
+                graph.addEdge(i, j, weight);
+            }
+        }
+    }
+    inputFile.close();
     return 1;
 }
