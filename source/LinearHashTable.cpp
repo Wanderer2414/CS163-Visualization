@@ -4,6 +4,8 @@
 HT::Node::Node(): TextButton(0, 0) {
     m_value = 0;
     m_index = 0;
+    is_animating = false;
+    anim_color = WHITE;
 }
 int HT::Node::getValue() const {
     return m_value;
@@ -16,10 +18,18 @@ void HT::Node::setValue(const int& value) {
     setText(std::to_string(value));
 }
 void HT::Node::draw() {
-    TextButton::draw();
+    Color curr;
+    if (is_animating) {
+        curr = anim_color;
+    }
+    else curr = button_setting->normal_color;
+    
+    if (button_setting) DrawRectangleRounded({ m_position.x, m_position.y, m_size.x, m_size.y }, button_setting->roundness, button_setting->segment, curr);
+    if (text_setting)
+        DrawTextEx(text_setting->font, m_text.c_str(), m_text_position, text_setting->font_size, text_setting->spacing, text_setting->color);
     Vector2 index_pos = m_text_position;
     index_pos.y -= text_setting->font_size + 5;
-    DrawTextEx(text_setting->font, std::to_string(m_index).c_str(), index_pos, text_setting->font_size / 1.5, text_setting->spacing, WHITE);
+    DrawTextEx(text_setting->font, std::to_string(m_index).c_str(), index_pos, text_setting->font_size / 1.5, text_setting->spacing, text_setting->color);
 }
 void HT::Node::handle() {
     TextButton::handle();
@@ -30,7 +40,7 @@ HT::HashTable::HashTable(const int& index, FormSetting f_setting, const Vector2&
     m_memory_sz_textBox(0, 0) {
     children.push_back(&m_memory_sz_textBox);
     m_node_size = 50;
-    m_node_spacing = 5;
+    m_node_spacing = 10;
     max_size = 0;
 
     m_memory_sz_textBox.button_setting = &form_setting;
@@ -38,7 +48,7 @@ HT::HashTable::HashTable(const int& index, FormSetting f_setting, const Vector2&
     m_memory_sz_textBox.setPosition(m_window_size.x - 100, 70);
     m_memory_sz_textBox.setSize(70, 50);
 
-    setMemorySize(10);
+    setMemorySize(20);
 
     m_camera.offset.y = m_workspace.y + 20;
 }
@@ -88,25 +98,43 @@ int HT::HashTable::index(const int& value) {
     return value % m_memory.size();
 }
 void HT::HashTable::add(const vector<std::string>& data) {
+    int cnt = 0;
     for (auto& i:data) {
+        if (cnt > m_memory.size()) return;
+        console.InsertNextMainCommand("Insert " + i);
         InsertNextMainCommand({ _insert, (float)to_int(i) });
+        cnt++;
     }
+}
+void HT::HashTable::search(const std::string& x)
+{
+    InsertNextMainCommand({ _search, (float)to_int(x) });
 }
 void HT::HashTable::remove(const std::string& data) {
     InsertNextMainCommand({ _delete, (float)to_int(data) });
 }
 void HT::HashTable::insert(const int& value) {
     int pos = index(value);
+    console.InsertNextSubCommand("Index = value % table_size");
+
     InsertNextSubCommand({ _choose, (float)pos, 1 });
     InsertNextSubCommand({ _unchoose, (float)pos, 1 });
+    console.InsertNextSubCommand("if (table[index] = value) return");
+    
     if (m_memory[pos].getValue() == value) return;
+
+    console.InsertNextSubCommand("if (table[index] is empty) insert value at index");
     if (!m_memory[pos].getValue()) {
         InsertNextSubCommand({ _add, (float)pos, (float)value, 1 });
+        console.InsertNextSubCommand("Insert value at index");
+        console.goDown();
     }
     else {
+        console.InsertNextSubCommand("else traverse through the table until it reaches empty slot");
         int cur = pos + 1;
         if (cur == m_memory.size()) cur = 0;
         while (cur != pos && m_memory[cur].getValue() && m_memory[cur].getValue() != value) {
+            console.InsertNextSubCommand("Checking index " + std::to_string(cur));
             InsertNextSubCommand({ _choose, (float)cur, 1 });
             InsertNextSubCommand({ _unchoose, (float)cur, 1 });
             cur++;
@@ -116,7 +144,43 @@ void HT::HashTable::insert(const int& value) {
             InsertNextSubCommand({ _choose, (float)cur, 1 });
             InsertNextSubCommand({ _unchoose, (float)cur, 1 });
             InsertNextSubCommand({ _add, (float)cur, (float)value, 1 });
+            console.InsertNextSubCommand("Insert value at new index " + std::to_string(cur)); // Show insertion at new index
+            console.goDown(); // Move to the next step
         }
+    }
+}
+void HT::HashTable::search(const int& value)
+{
+    int pos = index(value);
+    console.InsertNextSubCommand( "Index = value % table_size" );
+    console.InsertNextSubCommand("if (table[index] == value) return");
+    InsertNextSubCommand({ _choose, (float)pos, 1 });
+    InsertNextSubCommand({ _unchoose, (float)pos, 1 });
+
+    if (m_memory[pos].getValue() == value) {
+        console.InsertNextSubCommand("Value found at index " + std::to_string(pos));
+        console.goDown(); 
+        return;
+    }
+    console.InsertNextSubCommand("if (table[index] is empty or value not found) traverse through the table");
+
+    int cur = pos + 1; 
+    if (cur == m_memory.size()) cur = 0; 
+
+    while (cur != pos && m_memory[cur].getValue() && m_memory[cur].getValue() != value) {
+        console.InsertNextSubCommand("Checking index " + std::to_string(cur));
+        InsertNextSubCommand({ _choose, (float)cur, 1 }); 
+        InsertNextSubCommand({ _unchoose, (float)cur, 1 });
+        cur++;  
+        if (cur == m_memory.size()) cur = 0; 
+    }
+    if (m_memory[cur].getValue() == value) {
+        console.InsertNextSubCommand("Value found at index " + std::to_string(cur));  // Visualize the found value
+        console.goDown();  // Move to the next step
+    }
+    else {
+        console.InsertNextSubCommand("Value not found in table");  // Value not found, show message
+        console.goDown();  // Move to the next step
     }
 }
 void HT::HashTable::remove(const int& value, const bool& isShow) {
@@ -157,6 +221,7 @@ void HT::HashTable::FetchNextCommand(const std::vector<float>& command) {
     case _insert: {
         insert(int(command[1]));
         setDuration(0);
+        console.goDown();
     }
                 break;
     case _delete: {
@@ -164,19 +229,31 @@ void HT::HashTable::FetchNextCommand(const std::vector<float>& command) {
         setDuration(0);
     }
                 break;
+    case _search: {
+        search((int)command[1]);
+        setDuration(0);
+        console.goDown();  
+    }
+                break;
     case _choose: {
         // m_memory[(int)command[1]].m_normal_color = RED;
+        m_memory[(int)command[1]].anim_color = RED;
+        m_memory[(int)command[1]].is_animating = true;
         setDuration(command[2]);
     }
                 break;
     case _unchoose: {
         // m_memory[(int)command[1]].m_normal_color = WHITE;
+        m_memory[(int)command[1]].anim_color = WHITE;
+        m_memory[(int)command[1]].is_animating = false;
         setDuration(0);
+        console.goDown();
     }
                   break;
     case _add: {
         m_memory[(int)command[1]].setValue(command[2]);
         setDuration(command[3]);
+        console.goDown();
     }
              break;
     case _remove: {
@@ -200,11 +277,15 @@ void HT::HashTable::FetchPrevCommand(const std::vector<float>& command) {
     }
     case _choose: {
         // m_memory[(int)command[1]].m_normal_color = WHITE;
+        m_memory[(int)command[1]].anim_color = WHITE;
+        m_memory[(int)command[1]].is_animating = false;
         setDuration(0);
     }
                 break;
     case _unchoose: {
         // m_memory[(int)command[1]].m_normal_color = RED;
+        m_memory[(int)command[1]].anim_color = RED;
+        m_memory[(int)command[1]].is_animating = true;
         setDuration(0);
     }
                   break;

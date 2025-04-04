@@ -1,4 +1,4 @@
-#include "../include/AVLTree.h"
+﻿#include "../include/AVLTree.h"
 #include "../include/General.h"
 #include <iostream>
 #include <cmath>
@@ -11,12 +11,13 @@ AVLTreeForm::AVLTreeForm(const int& index, FormSetting form_setting, const Vecto
 void AVLTreeForm::add(const vector<std::string>& x)
 {
 	for (int i = x.size() - 1; i >= 0; i--) {
-		console.InsertNextMainCommand("Add " + x[i]);
-		//InsertNextMainCommand({ CommandCode::add, 1.0f * to_int(x[i]), 1 });
-		/*InsertNextMainCommand({ CommandCode::choose, 1.0f * to_int(x[i]), 1 });
-		InsertNextMainCommand({ CommandCode::unchoose, 1.0f * to_int(x[i]), 1 });
-		*/
-		InsertNextMainCommand({ CommandCode::insert, 1.0f * to_int(x[i])});
+		int val = to_int(x[i]);
+
+		console.InsertNextMainCommand("Add " + std::to_string(val));
+		InsertTraverseCommands(m_root, val);
+
+		InsertNextMainCommand({ CommandCode::insert, float(val)});
+
 		rePosition();
 		//console.goDown();
 	}
@@ -24,10 +25,11 @@ void AVLTreeForm::add(const vector<std::string>& x)
 AVLNode* AVLTreeForm::insert(AVLNode*& root, const Vector2& par, const int& x)
 {
 	if (!root) {
-		InsertNextSubCommand({ CommandCode::choose, 1.0f * m_list.size(), 1 });
-		InsertNextSubCommand({ CommandCode::redraw, 1.0f });
+		//InsertNextSubCommand({ CommandCode::redraw, 1.0f });
 
-		console.InsertNextSubCommand("Insert " + std::to_string(x));
+		console.InsertNextSubCommand("Create Node " + std::to_string(x));
+		InsertNextSubCommand({ CommandCode::choose, 1.0f * m_list.size(), 1 });
+
 		root = new AVLNode(m_list.size(), x);
 		root->button_setting = &form_setting;
 		root->text_setting = &form_setting;
@@ -49,29 +51,32 @@ AVLNode* AVLTreeForm::insert(AVLNode*& root, const Vector2& par, const int& x)
 		root->right = insert(root->right, root->getCenter(), x);
 		root->right->parent = root;
 	}
-	else return root;
+	else {
+		console.InsertNextSubCommand("Value " + std::to_string(x) + " already in tree");
+		return root;
+	}
 
 	root->updateHeight();
 	int balance = getBalanceFactor(root);
 	// Left heavy
 	if (balance > 1) {
 		if (x < root->left->getValue()) {
-			console.InsertNextSubCommand("LL Case: Rotate Right ");
+			console.InsertNextSubCommand("LL Rotation on " + std::to_string(root->getValue()));
 			return rotateRight(root); // LL case
 		}
 		else {
-			console.InsertNextSubCommand("LR Case: Rotate Left ");
+			console.InsertNextSubCommand("LR Rotation on " + std::to_string(root->getValue()));
 			root->left = rotateLeft(root->left); // LR case
 			return rotateRight(root);
 		}
 	} // Right Heavy
 	else if (balance < -1) {
 		if (x > root->right->getValue()) {
-			console.InsertNextSubCommand("RR Case: Rotate Left ");
+			console.InsertNextSubCommand("RR Rotation on " + std::to_string(root->getValue()));
 			return rotateLeft(root); // RR case
 		}
 		else {
-			console.InsertNextSubCommand("RL Case: Rotate Right ");
+			console.InsertNextSubCommand("RL Rotation on " + std::to_string(root->getValue()));
 			root->right = rotateRight(root->right); // RL case
 			return rotateLeft(root);
 		}
@@ -148,7 +153,8 @@ void AVLTreeForm::FetchNextCommand(const std::vector<float>& codes)
 	if (codes.empty()) return;
 	switch ((int)codes[0]) {
 	case CommandCode::insert: {
-		insert(m_root, { 400, 100 }, (int)codes[1]);
+		int val = (int)codes[1];
+		insert(m_root, { 400, 100 }, val);
 		rePosition();
 		setDuration(0);
 		console.goDown();
@@ -373,6 +379,31 @@ int AVLTreeForm::getBalanceFactor(AVLNode* root)
 	int leftHeight = root->left ? root->left->getHeight() : 0;
 	int rightHeight = root->right ? root->right->getHeight() : 0;
 	return leftHeight - rightHeight;
+}
+
+void AVLTreeForm::InsertTraverseCommands(AVLNode* root, int val)
+{
+	if (!root) {
+		console.InsertNextSubCommand("Empty spot found -> new node will go here");
+		return;
+	}
+	// Highlight current
+	InsertNextSubCommand({ CommandCode::choose, float(root->getIndex()), 1 });
+	console.InsertNextSubCommand("Compare " + std::to_string(val) + " with " + std::to_string(root->getValue()));
+	InsertNextSubCommand({ CommandCode::unchoose, float(root->getIndex()), 0 });
+
+	if (val < root->getValue()) {
+		console.InsertNextSubCommand("⇒ Go Left");
+		InsertTraverseCommands(root->left, val);
+	}
+	else if (val > root->getValue()) {
+		console.InsertNextSubCommand("⇒ Go Right");
+		InsertTraverseCommands(root->right, val);
+	}
+	else {
+		// Equal -> do nothing, or handle duplicates
+		console.InsertNextSubCommand("Value already exists, no insertion needed");
+	}
 }
 
 
