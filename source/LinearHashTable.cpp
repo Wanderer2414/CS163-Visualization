@@ -328,6 +328,7 @@ void HT::HashTable::FetchPrevCommand(const std::vector<float>& command) {
         insert(int(command[1]));
         setDuration(0);
     }
+                break;
     case _choose: {
         // m_memory[(int)command[1]].m_normal_color = WHITE;
         m_memory[(int)command[1]].anim_color = WHITE;
