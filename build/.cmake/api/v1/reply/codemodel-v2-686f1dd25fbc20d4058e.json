@@ -38,9 +38,9 @@
 			[
 				{
 					"directoryIndex" : 0,
-					"id" : "DSAVisual::@6890427a1f51a3e7e1df",
-					"jsonFile" : "target-DSAVisual-Debug-c21758fed8f1f7e93c07.json",
-					"name" : "DSAVisual",
+					"id" : "DSAVisualization::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-DSAVisualization-Debug-103bc7367d0ddcda715b.json",
+					"name" : "DSAVisualization",
 					"projectIndex" : 0
 				}
 			]
