@@ -35,4 +35,5 @@ protected:
     SunMode         sun;
     vector<Controller*> children;
 };
+
 #endif

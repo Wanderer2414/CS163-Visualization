@@ -1,5 +1,6 @@
 #ifndef CONTAINER_H
 #define CONTAINER_H
+
 #include "Controller.h"
 #include "SettingPackage.h"
 #include "Global.h"
@@ -24,4 +25,5 @@ private:
                         m_is_visible;
     std::vector<Controller*> children;
 };
+
 #endif

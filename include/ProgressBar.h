@@ -34,4 +34,5 @@ private:
                     m_split_thick;
     Vector2         m_point;
 };
+
 #endif

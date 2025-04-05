@@ -19,8 +19,9 @@ float Clock::getDuration() const {
 }
 void Clock::setDuration(const float& duration) {
     m_duration = duration;
-    if (m_duration)
+    if (m_duration) {
         old_time = (int)(GetTime()/m_duration);
+    }
 }
 Clock::~Clock() {
 

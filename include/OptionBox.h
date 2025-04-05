@@ -1,8 +1,10 @@
 #ifndef OPTIONBOX_H
 #define OPTIONBOX_H
+
 #include "Controller.h"
 #include "SettingPackage.h"
-#include <string>
+#include "Global.h"
+
 class OptionBox: public Controller {
 public:
     OptionBox(TextSetting* text_setting, const int& index, int& option_choice);
@@ -22,4 +24,5 @@ protected:
     int         m_index;
     std::string m_text;
 };
+
 #endif

@@ -41,4 +41,5 @@ protected:
     vector<float>           m_values;
     vector<Vector2>         m_text_position                 ;
 };
+
 #endif

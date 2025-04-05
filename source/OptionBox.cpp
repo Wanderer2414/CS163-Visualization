@@ -1,5 +1,6 @@
 #include "../include/OptionBox.h"
 #include "../include/General.h"
+
 OptionBox::OptionBox(TextSetting* t_setting, const int& index, int& option_choice):
         option(option_choice) {
     text_setting = t_setting;

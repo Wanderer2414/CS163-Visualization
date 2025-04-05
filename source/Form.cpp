@@ -1,11 +1,6 @@
 #include "../include/Form.h"
-#include "../raylib/raylib.h"
 #include "../include/General.h"
-#include <string>
 #include "../include/IncludePath.h"
-#include <sstream>
-#include <iostream>
-
 
 Form::Form(const int& index, FormSetting f_setting, const Vector2& window_size) :
     m_window_size(window_size),
@@ -277,7 +272,6 @@ int Form::run() {
     while (!WindowShouldClose()) {
         handle();
         BeginDrawing();
-
         ClearBackground(form_setting.background_color);
         draw();
         EndDrawing();
@@ -287,11 +281,9 @@ int Form::run() {
         if (buttonTab.isChanged()) {
             return 3 + buttonTab.GetSelection();
         }
-        
     }
     return 0;
 }
-
 
 void Form::handle() {
     //Base handle + children handle
@@ -373,6 +365,8 @@ void Form::handle() {
         setPause(true);
         GotoCommandLine(0);
     }
+    if (small_skip_back_button.isPressed()) goMainPrev();
+    if (small_skip_next_button.isPressed()) goMainNext();
     //Speed
     if (speed_scroll.isChanged())
         setSpeed(1.0f/(speed_scroll.getValue()));

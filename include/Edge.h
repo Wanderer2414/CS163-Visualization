@@ -1,9 +1,7 @@
 #ifndef EDGE_H
 #define EDGE_H
 
-#define _USE_MATH_DEFINES
-#include <cmath>
-
+#include "Global.h"
 #include "Controller.h"
 #include "Vertex.h"
 
@@ -43,4 +41,5 @@ private:
     int             weight;
     Vector2         m_point;
 };
+
 #endif

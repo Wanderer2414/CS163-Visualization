@@ -7,10 +7,6 @@
 #include "TextButton.h"
 #include "Global.h"
 
-#define main_button_width 400
-#define main_button_height 60
-#define button_count 3
-
 class MenuStart {
 public:
     MenuStart(FormSetting form_setting, const Vector2& windowSize);
@@ -29,4 +25,4 @@ private:
     Vector2         m_windowSize;
 };
 
-#endif //FORMSTART_H
+#endif

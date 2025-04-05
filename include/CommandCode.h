@@ -1,15 +1,22 @@
-#ifndef COMMAND_CODE_H
-#define COMMAND_CODE_H
+#ifndef COMMANDCODE_H
+#define COMMANDCODE_H
 
 enum CommandCode {
-    add = 0,
-    choose = 1,
-    unchoose = 2,
-    redraw = 3,
-    erase = 4,
-    rotateLeft = 5,
-    rotateRight = 6,
-    insert = 7
+    add,
+    choose,
+    unchoose,
+    search,
+    swap,
+    update,
+    update_node,
+    redraw,
+    erase,
+    remove_node,
+    rotateLeft,
+    rotateRight,
+    insert,
+    wait,
+    update_height
 };
 
 #endif

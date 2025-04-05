@@ -2,8 +2,8 @@
 #define TEXTUREBUTTON_H 
 
 #include "Button.h"
-#include "Global.h"
 #include "SettingPackage.h"
+#include "Global.h"
 
 class TextureButton : public Button {
 public:

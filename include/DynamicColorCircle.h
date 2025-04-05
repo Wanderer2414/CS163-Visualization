@@ -1,9 +1,8 @@
 #ifndef DYNAMIC_COLOR_CICLE_H
 #define DYNAMIC_COLOR_CICLE_H
-#include "../raylib/raylib.h"
 
-#define _USE_MATH_DEFINES
-#include <cmath> 
+#include "Global.h"
+
 class DynamicColorCircle {
 public:
     DynamicColorCircle();
@@ -29,4 +28,5 @@ private:
     Color               start_color,
                         end_color;
 };
+
 #endif

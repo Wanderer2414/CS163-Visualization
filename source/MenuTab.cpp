@@ -77,6 +77,6 @@ void ButtonTab::draw() {
         }
     }
 }
-ButtonTab::~ButtonTab()
-{
+ButtonTab::~ButtonTab() {
+    
 }
