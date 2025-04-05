@@ -219,8 +219,12 @@ void HT::HashTable::search(const int& value)
     int t;
     if (m_memory[pos].getValue() == value) {
         InsertNextSubCommand({ _choose, (float)pos, 1 });
-        InsertNextSubCommand({ _found, (float)pos, 1 });
-        InsertNextSubCommand({ _unchoose, (float)pos, 1 });
+        InsertNextSubCommand({ _found, (float)pos, 0.25 });
+        InsertNextSubCommand({ _unchoose, (float)pos, 0.25 });
+        InsertNextSubCommand({ _found, (float)pos, 0.25 });
+        InsertNextSubCommand({ _unchoose, (float)pos, 0.25 });
+        InsertNextSubCommand({ _found, (float)pos, 0.25 });
+        InsertNextSubCommand({ _unchoose, (float)pos, 0 });
 
         //console.InsertNextSubCommand("Value found at index " + std::to_string(pos));
         console.goDown(); 
@@ -231,7 +235,7 @@ void HT::HashTable::search(const int& value)
     int cur = pos + 1; 
     if (cur == m_memory.size()) cur = 0; 
 
-    while (cur != pos && m_memory[cur].getValue() && m_memory[cur].getValue() != value) {
+    while (cur != pos && m_memory[cur].getValue() != value) {
         //console.InsertNextSubCommand("Checking index " + std::to_string(cur));
         InsertNextSubCommand({ _choose, (float)cur, 1 }); 
         InsertNextSubCommand({ _unchoose, (float)cur, 1 });
@@ -240,8 +244,13 @@ void HT::HashTable::search(const int& value)
     }
     if (m_memory[cur].getValue() == value) {
         InsertNextSubCommand({ _choose, (float)cur, 1 });
-        InsertNextSubCommand({ _found, (float)cur, 1 });
-        InsertNextSubCommand({ _unchoose, (float)cur, 1 });
+        InsertNextSubCommand({ _found, (float)cur, 0.25 });
+        InsertNextSubCommand({ _unchoose, (float)cur, 0.25 });
+        InsertNextSubCommand({ _found, (float)cur, 0.25 });
+        InsertNextSubCommand({ _unchoose, (float)cur, 0.25 });
+        InsertNextSubCommand({ _found, (float)cur, 0.25 });
+        InsertNextSubCommand({ _unchoose, (float)cur, 0 });
+
 
         //console.InsertNextSubCommand("Value found at index " + std::to_string(cur));  // Visualize the found value
         console.goDown();  // Move to the next step
