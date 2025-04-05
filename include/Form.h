@@ -1,5 +1,6 @@
 #ifndef FORM_H
 #define FORM_H
+
 #include "CommandLists.h"
 #include "Console.h"
 #include "Container.h"
@@ -93,4 +94,5 @@ protected:
     Camera2D        m_camera;
     void main_box_show(), main_box_hide();
 };
-#endif
+
+#endif //FORM_H

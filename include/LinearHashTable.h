@@ -15,8 +15,8 @@ namespace HT {
                             draw()      override,
                             handle()    override,
                             setIndex(const int& index);
-            Color               anim_color;
-    bool                is_animating = false;
+        Color               anim_color, found_color = YELLOW;
+        bool                is_animating = false, is_found = false;
     private:
         int                 m_value,
                             m_index;
@@ -32,7 +32,8 @@ namespace HT {
             _add = 3,
             _remove = 4,
             _search = 6,
-            _update = 7
+            _update = 7,
+            _found = 8
         };
         HashTable(const int& index, FormSetting form_setting, const Vector2& window_size);
         virtual void        add(const vector<std::string>& data) override,
@@ -59,8 +60,7 @@ namespace HT {
                     update(const int& oldvalue, const int& newvalue);
         TextBox     m_memory_sz_textBox;
         std::vector<Node> m_memory;
-
     };
-
 }
+
 #endif

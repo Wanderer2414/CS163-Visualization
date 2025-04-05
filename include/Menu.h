@@ -9,7 +9,6 @@
 
 #define main_button_width 350
 #define main_button_height 100
-#define button_count 3
 
 class Menu {
 public:
@@ -30,4 +29,4 @@ private:
     Vector2         m_windowSize;
 };
 
-#endif //MENU_H
+#endif

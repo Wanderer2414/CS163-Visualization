@@ -1,6 +1,5 @@
 #include "../include/DynamicColorCircle.h"
 #include "../include/General.h"
-#include <cmath>
 
 DynamicColorCircle::DynamicColorCircle() {
     m_is_color_change = false;
@@ -8,7 +7,7 @@ DynamicColorCircle::DynamicColorCircle() {
     percent = 1,
     m_scale = 1,
     start_angle = 0,
-    delta_angle = M_PI;
+    delta_angle = 3.14;
     start_color = end_color = WHITE;
     m_duration = 0.5;
     m_start_time = 0;
@@ -31,7 +30,7 @@ void DynamicColorCircle::handle() {
             end_color = start_color;
             m_is_color_change = true;
         } 
-        delta_angle = percent*M_PI;
+        delta_angle = percent*3.14;
     } 
     else m_is_color_change = false;
 }
@@ -40,7 +39,7 @@ void DynamicColorCircle::setColor(const Color& color) {
 }
 void DynamicColorCircle::draw() {
     DrawCircleSector(getCenter(), m_radius, to_degree(start_angle-delta_angle), to_degree(start_angle+delta_angle), 30, start_color);
-    DrawCircleSector(getCenter(), m_radius,to_degree(start_angle+delta_angle), to_degree(start_angle-delta_angle+2*M_PI), 30, end_color);
+    DrawCircleSector(getCenter(), m_radius,to_degree(start_angle+delta_angle), to_degree(start_angle-delta_angle+2*3.14), 30, end_color);
 }
 void DynamicColorCircle::complete() {
     percent = 1;

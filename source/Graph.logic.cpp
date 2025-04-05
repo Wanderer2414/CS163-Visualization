@@ -1,6 +1,5 @@
 #include "../include/Graph.h"
 #include "../include/General.h"
-#include <ctime>
 
 string Graph::RandomCreate() const {
     srand(time(0));

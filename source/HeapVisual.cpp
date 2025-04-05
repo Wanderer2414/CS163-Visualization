@@ -1,5 +1,6 @@
 #include "../include/HeapVisual.h"
 #include "../include/General.h"
+
 HeapBlock::HeapBlock(ButtonSetting *b_setting, TextSetting* t_setting) {
     button_setting = b_setting;
     text_setting = t_setting;

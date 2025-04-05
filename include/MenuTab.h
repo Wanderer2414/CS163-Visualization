@@ -31,4 +31,4 @@ protected:
     std::vector<float>            Length;
 };
 
-#endif // MENUTAB_H
+#endif

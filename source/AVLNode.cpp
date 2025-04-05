@@ -28,6 +28,10 @@ void AVLNode::draw() {
     if (button_setting && text_setting) {
         DrawEllipse(m_position.x, m_position.y, m_size.x / 2, m_size.y / 2, button_setting->normal_color);
         DrawTextEx(text_setting->font, to_string(m_value).c_str(), m_text_position, text_setting->font_size, text_setting->spacing, text_setting->color);
+        Vector2 pos = m_position;
+        pos.x += m_size.x/2;
+        pos.y -= m_size.y/2 + text_setting->font_size/1.5;
+        DrawTextEx(text_setting->font, to_string(height).c_str(), pos, text_setting->font_size/1.5, text_setting->spacing, text_setting->color);
     }
 }
 

@@ -16,7 +16,6 @@
 #include "SettingPackage.h"
 #include "TextBox.h"
 #include "TextureButton.h"
-#include <vector>
 
 class Graph: public Form {
 public:
@@ -78,7 +77,9 @@ public:
     virtual string      RandomCreate() const override,
                         RandomSearch() const override;
     void clearGraph();
-    ~Graph();
+    ~Graph() {
+        free();
+    }
   
 private:
     bool                m_is_physics,
@@ -155,7 +156,7 @@ private:
                         
                         dijikstra_console_add(const int& val),
                         dijikstra_algorithms(const int& index),
-                        dijikstra_algorithms(const int& index, MinHeap& heap, vector<bool>& visited, vector<int>& board),
+                        dijikstra_algorithms(const int& index, MinHeap& heap, vector<bool>& visited, vector<float>& board),
 
                         create_Dmargin(),
                         free_Dmargin();
@@ -169,7 +170,9 @@ private:
     vector<Color>             true_color;
 
 };
+
 string to_string(const vector<vector<int>>& matrix);
 vector<vector<int>> to_matrix(const vector<string>& str);
 vector<vector<int>> create_graph(const int& vertex, const int& edge, const bool& is_direct, const bool& is_weight);
+
 #endif //GRAPH_H

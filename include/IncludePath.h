@@ -2,7 +2,7 @@
 #define INCLUDEPATH_H
 
 // For Thinh
-#define back_normal "D:t stat/Huy/asset/images/back-normal.png"
+#define back_normal "D:/Huy/asset/images/back-normal.png"
 #define back_hovered "D:/Huy/asset/images/back-selected.png"
 #define home_normal "D:/Huy/asset/images/home-normal.png"
 #define home_hovered "D:/Huy/asset/images/home-selected.png"
@@ -45,4 +45,5 @@
 #define scissor_icon "D:/Huy/asset/Icon/scissors-circle.png"
 #define scissor_cursor_icon "D:/Huy/asset/Icon/scissors.png"
 #define scissor_filled_icon "D:/Huy/asset/Icon/scissors-circle-filled.png"
+
 #endif

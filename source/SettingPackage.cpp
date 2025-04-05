@@ -1,4 +1,4 @@
-﻿#include "../include/SettingPackage.h"
+#include "../include/SettingPackage.h"
 
 FormSetting LightTheme = {
     {
