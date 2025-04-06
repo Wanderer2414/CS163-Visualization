@@ -5,8 +5,6 @@ AVLTreeForm::AVLTreeForm(const int& index, FormSetting form_setting, const Vecto
 	Form(index, form_setting, window_size) {
 	m_root = 0;
 	vroot = 0;
-	fill_setting = form_setting;
-	fill_setting.normal_color = RED;
 }
 void AVLTreeForm::add(const vector<std::string>& x)
 {
@@ -34,7 +32,6 @@ void AVLTreeForm::swap(Node* rootA, Node* rootB) {
 void AVLTreeForm::update(Node*& root, const int& old, const int& x) {
 	if (!root) return;
 	InsertNextSubCommand({choose, 1.0f*root->index, 0.5});
-	InsertNextSubCommand({unchoose, 1.0f*root->index, 0});
 	if (old<root->val) {
 		Up.push(root);
 		update(root->left, old, x);
@@ -46,24 +43,36 @@ void AVLTreeForm::update(Node*& root, const int& old, const int& x) {
 	else {
 		InsertNextSubCommand({update_node, 1.0f*root->index, 1.0f*x, 1.0f*root->val, 1});
 		root->val = x;
-		update(root);
+		update(root, old < x);
+	}
+	while (Up.size()) {
+		InsertNextSubCommand({CommandCode::unchoose, 1.0f*Up.top()->index, 1});
+		Up.pop();
+	}
+	while (Down.size()) {
+		InsertNextSubCommand({CommandCode::unchoose, 1.0f*Down.top()->index, 1});
+		Down.pop();
 	}
 }
-void AVLTreeForm::update(Node*& root) {
+void AVLTreeForm::update(Node*& root, const bool& isGreater) {
 	if (!root) return;
-	InsertNextSubCommand({choose, 1.0f*root->index, 0.5});
-	InsertNextSubCommand({unchoose, 1.0f*root->index, 0});
-	if (root->left) {
+	if (root->left && !isGreater) {
 		Node* tmp = root->left;
 		while (tmp) {
-			Down.push(tmp);
+			if (Down.empty() || tmp->val > Down.top()->val) {
+				InsertNextSubCommand({CommandCode::choose, 1.0f*tmp->index, 1});
+				Down.push(tmp);
+			}
 			tmp = tmp->right;
 		}
 	}
-	if (root->right) {
+	if (root->right && isGreater) {
 		Node* tmp = root->right;
 		while (tmp) {
-			Up.push(tmp);
+			if (Up.empty() || tmp->val < Up.top()->val) {
+				InsertNextSubCommand({CommandCode::choose, 1.0f*tmp->index, 1});
+				Up.push(tmp);
+			}
 			tmp = tmp->left;
 		}
 	}
@@ -71,38 +80,51 @@ void AVLTreeForm::update(Node*& root) {
 	if (Up.size() && root->val > Up.top()->val) {
 		InsertNextSubCommand({CommandCode::swap, 1.0f*root->index, 1.0f*Up.top()->index, 1});
 		swap(root, Up.top());
+		Down.push(root);
 		Node* tmp = Up.top();
 		Up.pop();
-		while (Up.size() && Up.top()->val<=root->val) Up.pop();
-		update(tmp);
+		while (Down.size() && Down.top()->height < tmp->height) {
+			InsertNextSubCommand({CommandCode::unchoose, 1.0f*Down.top()->index, 1});
+			Down.pop();
+		}
+		update(tmp, true);
 	}
 	else if (Down.size() && root->val < Down.top()->val) {
 		InsertNextSubCommand({CommandCode::swap, 1.0f*root->index, 1.0f*Down.top()->index, 1});
 		swap(root, Down.top());
+		Up.push(root);
 		Node* tmp = Down.top();
 		Down.pop();
-		while (Down.size() && Down.top()->val>=root->val) Down.pop();
-		update(tmp);
+		while (Up.size() && Up.top()->height < tmp->height) {
+			InsertNextSubCommand({CommandCode::unchoose, 1.0f*Up.top()->index, 1});
+			Up.pop();
+		}
+		update(tmp, false);
+	}
+	else {
+		while (Down.size() && Down.top()->height < root->height) {
+			InsertNextSubCommand({CommandCode::unchoose, 1.0f*Down.top()->index, 1});
+			Down.pop();
+		}
+		while (Up.size() && Up.top()->height < root->height) {
+			InsertNextSubCommand({CommandCode::unchoose, 1.0f*Up.top()->index, 1});
+			Up.pop();
+		}
+		InsertNextSubCommand({CommandCode::unchoose, 1.0f*root->index, 1});
 	}
 }
 void AVLTreeForm::search(const string& str) {
-	console.InsertNextMainCommand("Search " + str);
 	InsertNextMainCommand({CommandCode::search, 1.0f*to_int(str), 1});
 }
 void AVLTreeForm::search(Node* root, const int& val) {
 	if (!root) return;
 	InsertNextSubCommand({choose, 1.0f*root->index, 0.5});
-	InsertNextSubCommand({unchoose, 1.0f*root->index, 0});
 	if (root->val>val) search(root->left, val);
 	else if (root->val<val) search(root->right,val);
 	else {
-		InsertNextSubCommand({choose, 1.0f*root->index, 0.25});
-		InsertNextSubCommand({unchoose, 1.0f*root->index, 0.25});
-		InsertNextSubCommand({choose, 1.0f*root->index, 0.25});
-		InsertNextSubCommand({unchoose, 1.0f*root->index, 0.25});
-		InsertNextSubCommand({choose, 1.0f*root->index, 0.25});
-		InsertNextSubCommand({unchoose, 1.0f*root->index, 0});
+		InsertNextSubCommand({wait, 10});
 	}
+	InsertNextSubCommand({unchoose, 1.0f*root->index, 0.5});
 }
 void AVLTreeForm::insert(Node*& root, Node* parent, const int& x) {
     if (!root) {
@@ -111,8 +133,8 @@ void AVLTreeForm::insert(Node*& root, Node* parent, const int& x) {
         logic_node.push_back(root);
         return ;
     };
-	InsertNextSubCommand({choose, 1.0f*root->index, 0.5});
-	InsertNextSubCommand({unchoose, 1.0f*root->index, 0});
+	int old_index = root->index;
+	InsertNextSubCommand({choose, 1.0f*old_index, 0.5});
     //Go to left if x<root or right when x>root like BST
 	int index = 0;
     if (x>root->val) {
@@ -127,39 +149,51 @@ void AVLTreeForm::insert(Node*& root, Node* parent, const int& x) {
 		}
         insert(root->left, root, x);
     }
-	InsertNextSubCommand({choose, 1.0f*root->index, 0.5});
     //After insert, back and check its height of each branch
 	int old_height = root->height;
     root->height = max(height(root->right), height(root->left))+1;
-	InsertNextSubCommand({update_height, 1.0f*root->index, 1.0f*root->height, 1.0f*old_height, 1});
-	InsertNextSubCommand({unchoose, 1.0f*root->index, 0});
+	InsertNextSubCommand({update_height, 1.0f*old_index, 1.0f*root->height, 1.0f*old_height, 1});
     //If right branch taller than left branch over 1 unit => Turn Left
 	int balance = height(root->right)-height(root->left);
     if (balance>1) {
         //Check if case right-right or right-left
         if (height(root->right->right)<height(root->right->left)) {
+			InsertNextSubCommand({choose, 1.0f*root->right->index, 0});
+			InsertNextSubCommand({choose, 1.0f*root->right->left->index, 0.5});
 			InsertNextSubCommand({CommandCode::rotateRight, 1.0f*root->right->index, 1});
+			InsertNextSubCommand({unchoose, 1.0f*root->right->index, 0.5});
+			InsertNextSubCommand({unchoose, 1.0f*root->right->left->index, 0.5});
 			rotateRight(root->right);
 		}
+		InsertNextSubCommand({choose, 1.0f*root->right->index, 0.5});
 		InsertNextSubCommand({CommandCode::rotateLeft, 1.0f*root->index, 1});
+		InsertNextSubCommand({unchoose, 1.0f*old_index, 0.5});
+		InsertNextSubCommand({unchoose, 1.0f*root->right->index, 0.5});
         rotateLeft(root);
     } else
     //If left branch taller than right branch over 1 unit => Turn Right
     if (balance<-1) {
         //Check if case left-left or left-right
         if (height(root->left->left)<height(root->left->right)) {
+			InsertNextSubCommand({choose, 1.0f*root->left->index, 0});
+			InsertNextSubCommand({choose, 1.0f*root->left->right->index, 0.5});
 			InsertNextSubCommand({CommandCode::rotateLeft, 1.0f*root->left->index, 1});
+			InsertNextSubCommand({unchoose, 1.0f*root->left->index, 0.5});
+			InsertNextSubCommand({unchoose, 1.0f*root->left->right->index, 0.5});
 			rotateLeft(root->left);
 		}
+		InsertNextSubCommand({choose, 1.0f*root->left->index, 0.5});
 		InsertNextSubCommand({CommandCode::rotateRight, 1.0f*root->index, 1});
+		InsertNextSubCommand({unchoose, 1.0f*old_index, 0.5});
+		InsertNextSubCommand({unchoose, 1.0f*root->left->index, 0.5});
         rotateRight(root);
-    }
+    } else InsertNextSubCommand({unchoose, 1.0f*old_index, 0.5});
 }
 void AVLTreeForm::handle()
 {
 	Form::handle();
 	for (int i = 0; i<visual_node.size(); i++) 
-		if (visual_node[i]) visual_node[i]->handle();
+		if (visual_node[i]) visual_node[i]->handle(m_camera);
 }
 
 AVLTreeForm::~AVLTreeForm() {
@@ -171,7 +205,8 @@ void AVLTreeForm::draw()
 {
 	BeginMode2D(m_camera);
 	BeginScissorMode(m_workspace.x, m_workspace.y, m_workspace.width, m_workspace.height);
-	draw(vroot);
+	for (int i = 0; i<visual_node.size(); i++)
+		if (visual_node[i]) visual_node[i]->draw();
 	EndScissorMode();
 	EndMode2D();
 	Form::draw();
@@ -238,6 +273,18 @@ void AVLTreeForm::FetchPrevCommand(const std::vector<float>& codes)
 		setDuration(dur);
 	}
 	break;
+	case CommandCode::update: {
+		setEnable(false);
+		update(m_root, codes[2], codes[1]);
+		setDuration(dur);
+		setEnable(true);
+	}
+	break;
+	case CommandCode::update_node: {
+		visual_node[codes[1]]->setValue(codes[3]);
+		setDuration(dur);
+	}
+	break;
 	case CommandCode::update_height: {
 		int index = codes[1], height = codes[3];
 		visual_node[index]->height = height;
@@ -246,14 +293,14 @@ void AVLTreeForm::FetchPrevCommand(const std::vector<float>& codes)
 	break;
 	case CommandCode::choose: {
 		int index = codes[1];
-		visual_node[index]->button_setting = &form_setting;
+		visual_node[index]->end_color(dur*getSpeed()/2);
 		setDuration(dur);
 	}
 	break;
 	case CommandCode::unchoose: {	
 		int index = codes[1];
-		visual_node[index]->button_setting = &fill_setting;
-		setDuration(0.1);		
+		visual_node[index]->start(dur*getSpeed()/2, RED);
+		setDuration(dur);		
 	}
 	break;
 	case CommandCode::rotateLeft: {
@@ -281,7 +328,7 @@ void AVLTreeForm::FetchPrevCommand(const std::vector<float>& codes)
 	}
 	break;
 	case CommandCode::wait: {
-		setDuration(1);
+		setDuration(dur);
 	}
 	break;
 	default:
@@ -312,8 +359,7 @@ void AVLTreeForm::FetchNextCommand(const std::vector<float>& codes)
 	case CommandCode::add: {
 		bool right = codes[1];
 		int value = codes[2], parent = codes[3];
-		visual_node.push_back(new AVLNode(&form_setting, &form_setting, visual_node.size(), value));
-
+		visual_node.push_back(new AVLNode(&form_setting, &form_setting, visual_node.size(), value));		
 		if (parent!=-1) {
 			if (right) visual_node[parent]->right = visual_node.back();
 			else visual_node[parent]->left = visual_node.back();
@@ -345,7 +391,7 @@ void AVLTreeForm::FetchNextCommand(const std::vector<float>& codes)
 	break;
 	case CommandCode::choose: {
 		int index = codes[1];
-		visual_node[index]->button_setting = &fill_setting;
+		visual_node[index]->start(dur*getSpeed()/2, RED);
 		setDuration(dur);
 	}
 	break;
@@ -356,12 +402,12 @@ void AVLTreeForm::FetchNextCommand(const std::vector<float>& codes)
 	break;
 	case CommandCode::unchoose: {	
 		int index = codes[1];
-		visual_node[index]->button_setting = &form_setting;
-		setDuration(codes.back());		
+		visual_node[index]->end_color(dur*getSpeed()/2);
+		setDuration(dur);		
 	}
 	break;
 	case CommandCode::wait: {
-		setDuration(1);
+		setDuration(dur);
 	}
 	break;
 	case CommandCode::erase: {
@@ -400,12 +446,6 @@ void AVLTreeForm::FetchNextCommand(const std::vector<float>& codes)
 		setDuration(dur);
 	}
 	break;
-	case CommandCode::redraw: {
-		console.goDown();
-		rePosition(dur*getSpeed());
-		setDuration(codes[1]);
-		break;
-	}
 	default:
 		break;
 	}
@@ -413,7 +453,6 @@ void AVLTreeForm::FetchNextCommand(const std::vector<float>& codes)
 
 void AVLTreeForm::remove(const std::string& x)
 {
-	console.InsertNextMainCommand("Remove " + x);
 	InsertNextMainCommand({ CommandCode::erase, 1.0f * to_int(x), 1 });
 }
 void AVLTreeForm::clone(Node*& rootA, AVLNode*& rootB) {
@@ -514,7 +553,7 @@ int AVLTreeForm::remove(Node*& root, const int& x)
 {
 	if (!root) return -1;
 	InsertNextSubCommand({choose, 1.0f*root->index, 0.5});
-	InsertNextSubCommand({unchoose, 1.0f*root->index, 0});
+	InsertNextSubCommand({unchoose, 1.0f*root->index, 0.5});
 	if (x < root->val) remove(root->left, x);
 	else if (x > root->val) remove(root->right, x);
 	else {
@@ -554,7 +593,7 @@ int AVLTreeForm::remove(Node*& root, const int& x)
 	int old_height = root->height;
     root->height = max(height(root->right), height(root->left))+1;
 	InsertNextSubCommand({update_height, 1.0f*root->index, 1.0f*root->height, 1.0f*old_height, 1});
-	InsertNextSubCommand({unchoose, 1.0f*root->index, 0});
+	InsertNextSubCommand({unchoose, 1.0f*root->index, 0.5});
     //If right branch taller than left branch over 1 unit => Turn Left
 	int balance = height(root->right)-height(root->left);
     if (balance>1) {
@@ -625,31 +664,13 @@ void AVLTreeForm::free() {
 	logic_node.clear();
 }
 
-void AVLTreeForm::handle(AVLNode* root)
-{
-	if (!root) return;
-	root->handle();
-	if (root->left) handle(root->left);
-	if (root->right) handle(root->right);
-}
-void AVLEdgeDraw(AVLNode* start, AVLNode* end) {
-	Vector2 pos = end->getPosition(), delta = end->getPosition()-start->getPosition();
-	Vector2 u = delta/abs(delta), n = {u.y, -u.x};
-	pos = pos - u*max(end->getSize().x, end->getSize().y)/2;
-	Vector2 start_point = pos - u*10;
-	DrawLineEx(start->getPosition(), pos, 2.5f, end->button_setting->normal_color);
-	DrawLineEx(start_point-5*n, pos, 2.5f, end->button_setting->normal_color);
-	DrawLineEx(start_point+5*n, pos, 2.5f, end->button_setting->normal_color);
-}
 void AVLTreeForm::draw(AVLNode* root)
 {
 	if (!root) return;
 	if (root->left) {
 		draw(root->left);
-		AVLEdgeDraw(root, root->left);
 	}
 	if (root->right) {
-		AVLEdgeDraw(root, root->right);
 		draw(root->right);
 	}
 	root->draw();
@@ -666,5 +687,6 @@ void AVLTreeForm::rePosition(const float& dur) {
 			visual_node[i]->setDuration(dur);
 			visual_node[i]->setSlowPosition(pos.x, pos.y);
 		}
+	
 }
 
