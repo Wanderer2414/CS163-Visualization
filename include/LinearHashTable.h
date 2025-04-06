@@ -15,7 +15,7 @@ namespace HT {
                             draw()      override,
                             handle()    override,
                             setIndex(const int& index);
-        Color               anim_color, found_color = YELLOW;
+        Color               anim_color, found_color;
         bool                is_animating = false, is_found = false;
     private:
         int                 m_value,

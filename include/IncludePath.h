@@ -17,6 +17,7 @@
 
 #define font_link_ver2 "D:/Huy/asset/Font/Roboto-Regular.ttf"
 #define font_link "D:/Huy/asset/Font/PublicSans-Regular.ttf"
+//#define font_link "D:/Huy/asset/Font/SF-Pro-Display-Regular.otf"
 #define PlayButton "D:/Huy/asset/images/play-normal.png"
 #define PlayButtonHovered "D:/Huy/asset/images/play-selected.png"
 #define PauseButton "D:/Huy/asset/images/pause-normal.png"

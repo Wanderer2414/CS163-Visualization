@@ -6,7 +6,7 @@ HT::Node::Node(): TextButton(0, 0) {
     m_index = 0;
     is_animating = false;
     anim_color = WHITE;
-    found_color = YELLOW;
+    found_color = ORANGE;
 }
 int HT::Node::getValue() const {
     return m_value;
@@ -25,12 +25,16 @@ void HT::Node::draw() {
     else curr = button_setting->normal_color;
 
     if (button_setting) DrawRectangleRounded({ m_position.x, m_position.y, m_size.x, m_size.y }, button_setting->roundness, button_setting->segment, curr);
-    if (text_setting)
+    if (text_setting) {
         DrawTextEx(text_setting->font, m_text.c_str(), m_text_position, text_setting->font_size, text_setting->spacing, text_setting->color);
-
-    Vector2 index_pos = m_text_position;
-    index_pos.y -= text_setting->font_size + 5;
-    DrawTextEx(text_setting->font, std::to_string(m_index).c_str(), index_pos, text_setting->font_size / 1.5, text_setting->spacing, text_setting->color);
+        
+        Vector2 index_pos = m_text_position;
+        index_pos.y -= text_setting->font_size + 5;
+        DrawTextEx(text_setting->font, std::to_string(m_index).c_str(), index_pos, text_setting->font_size / 1.7, text_setting->spacing, text_setting->color);
+    }
+    else {
+        std::cerr << "Error: text_setting is null" << std::endl;
+    }
 }
 void HT::Node::handle() {
     TextButton::handle();
@@ -41,7 +45,7 @@ HT::HashTable::HashTable(const int& index, FormSetting f_setting, const Vector2&
     m_memory_sz_textBox(0, 0) {
     children.push_back(&m_memory_sz_textBox);
     m_node_size = 50;
-    m_node_spacing = 10;
+    m_node_spacing = 20;
     max_size = 0;
 
     m_memory_sz_textBox.button_setting = &form_setting;
@@ -164,6 +168,11 @@ void HT::HashTable::insert(const int& value) {
             //console.InsertNextSubCommand("Insert value at new index " + std::to_string(cur)); // Show insertion at new index
             console.goDown(); // Move to the next step
         }
+        else if (m_memory[cur].getValue() == value) {
+            InsertNextSubCommand({ _choose, (float)cur, 1 });
+            InsertNextSubCommand({ _found, (float)cur, 1 });
+            InsertNextSubCommand({ _unchoose, (float)cur, 1 });
+        }
     }
 }
 
@@ -188,7 +197,7 @@ void HT::HashTable::update(const int& oldvalue, const int& newvalue)
 
         if (cur == m_memory.size()) cur = 0;
 
-        while (cur != pos && m_memory[cur].getValue() && m_memory[cur].getValue() != oldvalue) {
+        while (cur != pos && m_memory[cur].getValue() != oldvalue) {
             InsertNextSubCommand({ _choose, (float)cur, 1 });
             InsertNextSubCommand({ _unchoose, (float)cur, 1 });
             cur++;
@@ -216,7 +225,6 @@ void HT::HashTable::search(const int& value)
     int pos = index(value);
     //console.InsertNextSubCommand( "Index = value % table_size" );
     //console.InsertNextSubCommand("if (table[index] == value) return");
-    int t;
     if (m_memory[pos].getValue() == value) {
         InsertNextSubCommand({ _choose, (float)pos, 1 });
         InsertNextSubCommand({ _found, (float)pos, 0.25 });
@@ -363,23 +371,27 @@ void HT::HashTable::FetchPrevCommand(const std::vector<float>& command) {
     }
                 break;
     case _choose: {
-        // m_memory[(int)command[1]].m_normal_color = WHITE;
         m_memory[(int)command[1]].anim_color = WHITE;
         m_memory[(int)command[1]].is_animating = false;
+        m_memory[(int)command[1]].is_found = false;
         setDuration(0);
     }
                 break;
     case _unchoose: {
-        // m_memory[(int)command[1]].m_normal_color = RED;
         m_memory[(int)command[1]].anim_color = RED;
         m_memory[(int)command[1]].is_animating = true;
         setDuration(0);
     }
-                  break;
+                break;
     case _add: {
         m_memory[(int)command[1]].setValue(command[2]);
         setDuration(command[3]);
     }
-             break;
+                break;
+    case _remove: {
+        m_memory[(int)command[1]].setValue(0);
+        setDuration(command[3]);
+    }
+                break;
     }
 }
