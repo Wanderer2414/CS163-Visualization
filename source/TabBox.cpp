@@ -9,7 +9,7 @@ TabBox::TabBox(FormSetting* f_setting) {
     margin = 5;
     max_size = {0, margin};
     is_visible = true;
-    m_is_hovered = m_is_pressed = false;
+    m_is_hovered = m_is_pressed = m_is_focus = false;
     m_size = {300, 400};
     m_position = {0, 0};
 }
@@ -21,6 +21,9 @@ bool TabBox::isHovered() const {
 }
 bool TabBox::isPressed() const {
     return m_is_pressed;
+}
+bool TabBox::isFocus() const {
+    return m_is_focus;
 }
 void TabBox::push_back(const int& index, Controller* controller) {
     if (index>=tabs.size()) 
@@ -103,6 +106,7 @@ void TabBox::select(const int& index) {
     tab_index = index;
 }
 void TabBox::handle() {
+    m_is_focus = false;
     if (is_visible) {
         Move::handle();
         Vector2 pos = GetMousePosition();
@@ -122,6 +126,7 @@ void TabBox::handle() {
         if (tab_index >= 0 && tab_index < tabs.size())
             for (auto& i:tabs[tab_index]) {
                 i->handle();
+                m_is_focus = m_is_focus || i->isFocus();
                 m_is_hovered = m_is_hovered || i->isHovered();
             }
     } else m_is_hovered = m_is_pressed = false;

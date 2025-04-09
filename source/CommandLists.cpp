@@ -121,6 +121,8 @@ void CommandList::GotoCommandLine(const float& percent) {
     
     if (command_pointer < command_code.size()) {
         float delta = clamped_percent * command_code.size() - cur;
+        if (sub_command[command_pointer].size() == 1) BeforeFetchNext();
+        if (sub_command[command_pointer].size()==1) BeforeFetchPrev();
         int sub_cur = delta * sub_command[command_pointer].size();
         
         while (sub_cur > sub_command_pointer) BeforeFetchNext();
@@ -136,7 +138,7 @@ void CommandList::handle() {
 }
 
 void CommandList::goNext() {
-    if (sub_command.empty() || sub_command_pointer == sub_command[command_pointer].size()) return;
+    if (command_pointer==sub_command.size() || sub_command_pointer == sub_command[command_pointer].size()) return;
     BeforeFetchNext();
     if (!m_clock.getDuration() && sub_command_pointer) goNext();
 }

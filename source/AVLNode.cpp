@@ -17,7 +17,11 @@ AVLNode::AVLNode(ButtonSetting* b_setting, TextSetting* t_setting ,const int& in
     is_reverse = 0;
 
     m_is_hovered = false;
+    m_is_focus = false;
     m_is_pressed = false;
+}
+bool AVLNode::isFocus() const {
+    return m_is_focus;
 }
 int AVLNode::getIndex() const {
     return m_index;
@@ -39,6 +43,10 @@ void AVLNode::setPosition(const float& x, const float& y) {
 }
 void AVLNode::handle(const Camera2D& camera) {
     m_is_hovered = CheckCollisionPointCircle(TransToGlobalPoint(camera, GetMousePosition()), m_position, m_size.x/2);
+    if (IsMouseButtonPressed(MOUSE_LEFT_BUTTON)) {
+        if (m_is_hovered) m_is_focus = true;
+        else m_is_focus = false;
+    }
     Controller::handle();
     SlowMotion::handle();
     if (percent < 1) {
@@ -56,7 +64,9 @@ void AVLNode::end_color(const float& duration) {
 void AVLNode::draw() {
     if (button_setting && text_setting) {
         Color bcolor = button_setting->normal_color;
-        if (m_is_hovered) bcolor = button_setting->hover_color;
+        if (m_is_focus) bcolor = button_setting->click_color;
+        else if (m_is_hovered) bcolor = button_setting->hover_color;
+            
         DrawEllipse(m_position.x, m_position.y, m_size.x / 2, m_size.y / 2, bcolor);
 
         DrawTextEx(text_setting->font, to_string(m_value).c_str(), m_text_position, text_setting->font_size, text_setting->spacing, text_setting->color);

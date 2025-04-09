@@ -19,6 +19,7 @@ public:
 protected:
     bool        m_is_hovered,
                 m_is_pressed,
+                m_is_focus,
                 m_is_changed;
     int&        option;
     int         m_index;

@@ -150,6 +150,7 @@ void Label::setAlignText(const int& align) {
 std::string Label::getText() const {
     string ans;
     for (auto& i:m_text) ans+=i+'\n';
+    ans.pop_back();
     return ans;
 }
 std::string Label::getText(const Vector2& start, const Vector2& end) const {

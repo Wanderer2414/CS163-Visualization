@@ -10,6 +10,9 @@ Container::Container(FormSetting* f_setting) {
 bool Container::isHovered() const {
     return m_is_hover;
 }
+bool Container::isFocus() const {
+    return m_is_focus;
+}
 void Container::draw() {
     if (form_setting) {
         DrawRectangleRounded({m_position.x, m_position.y, m_size.x, m_size.y}, form_setting->roundness, form_setting->segment,  form_setting->middle_color);
@@ -36,9 +39,13 @@ void Container::push_back(Controller* i) {
     reLocate(i);
 }
 void Container::handle() {
-    if (m_is_visible) {
+    m_is_focus = false;
+    if (m_is_visible && form_setting) {
         m_is_hover = CheckCollisionPointRec(GetMousePosition(), {m_position.x, m_position.y, m_size.x, m_size.y});
-        for (auto& i:children) i->handle();
+        for (auto& i:children) {
+            i->handle();
+            m_is_focus = m_is_focus || i->isFocus();
+        }
     } else if (!form_setting) std::cerr << "[FORM SETTING DOES NOT EXIST IN CONTAINER!]" << endl;
 }
 void Container::setVisible(const bool& visible) {

@@ -25,7 +25,7 @@ void OptionBox::draw() {
 }
 void OptionBox::handle() {
     m_is_hovered = CheckCollisionPointRec(GetMousePosition(), {m_position.x, m_position.y, m_size.x, m_size.y});
-    m_is_pressed = m_is_hovered && IsMouseButtonReleased(MOUSE_BUTTON_LEFT);
+    m_is_pressed = m_is_hovered && IsMouseButtonPressed(MOUSE_BUTTON_LEFT);
     m_is_changed = false;
     if (m_is_pressed && option != m_index) {
         option = m_index;

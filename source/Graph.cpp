@@ -118,24 +118,27 @@ void Graph::dijikstra_algorithms(const int& index) {
     vector<bool> visited(vertices.size(), 0);
     board[index] = 0;
     MinHeap q;
+    q.Insert({index, index, 0});
     InsertNextSubCommand({goDown, 1, 0.2});
     dijikstra_algorithms(index, q, visited, board);
 };
 void Graph::dijikstra_algorithms(const int& index, MinHeap& heap, vector<bool>& visited, vector<float>& board) {
     visited[index] = true;
     InsertNextSubCommand({goDown, 1, 0.2});
+    int value = heap.front().weight;
+    heap.pop();
     for (int i = 0; i<matrix.size(); i++) {
         if (matrix[index][i]!=-1 && !visited[i]) {
             InsertNextSubCommand({goDown, 1, 0.2});
             int weight = edges[matrix[index][i]]->getWeight();
             InsertNextSubCommand({choose_edge, 1.0f*index, 1.0f*i, 1.0f*weight, 1});
-            if (board[index] + weight < board[i]) {
-                board[i] = board[index] + weight;
+            if (value + weight < board[i]) {
+                board[i] = weight+value;
                 InsertNextSubCommand({goDown, 1, 0.2});
                 InsertNextSubCommand({set_cost, 1.0f*i, 1.0f*board[i], 1.0f*DMargins[i]->getValue(), 0.1});
                 InsertNextSubCommand({goDown, 1, 0.2});
-                InsertNextSubCommand({add_heap, 1.0f*index, 1.0f*i, 1.0f*weight, 0});
-                heap.Insert({index, i, weight});
+                InsertNextSubCommand({add_heap, 1.0f*index, 1.0f*i, 1.0f*board[i], 0});
+                heap.Insert({index, i, int(board[i])});
                 InsertNextSubCommand({goUp, 2, 0.2});;
             }
             InsertNextSubCommand({goUp, 1, 0.2});

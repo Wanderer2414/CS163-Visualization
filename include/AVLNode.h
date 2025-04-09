@@ -12,6 +12,7 @@ public:
     AVLNode(ButtonSetting* b_setting, TextSetting* t_setting, const int& index, const int& val);
     ButtonSetting       *button_setting;
     TextSetting         *text_setting;
+    bool                isFocus() const;
     virtual int         getIndex() const,
                         getValue() const;
 
@@ -34,6 +35,7 @@ public:
 private:
     bool                is_reverse,
                         m_is_hovered,
+                        m_is_focus,
                         m_is_pressed;
     int                 m_index = 0,
                         m_value = 0;

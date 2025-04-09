@@ -14,6 +14,8 @@ void AVLTreeForm::add(const vector<std::string>& x)
 	}
 }
 void AVLTreeForm::update(const string& oldValue, const string& newValue) {
+	string log = "Update " + oldValue + " to " + newValue;
+	console.InsertNextMainCommand(log);
 	InsertNextMainCommand({CommandCode::update, 1.0f*to_int(oldValue), 1.0f*to_int(newValue), 1});
 }
 void AVLTreeForm::swap(AVLNode* rootA, AVLNode* rootB) {
@@ -32,18 +34,34 @@ void AVLTreeForm::swap(Node* rootA, Node* rootB) {
 void AVLTreeForm::update(Node*& root, const int& old, const int& x) {
 	if (!root) return;
 	InsertNextSubCommand({choose, 1.0f*root->index, 0.5});
+	InsertNextSubCommand({goDown, 1, 0.2});
 	if (old<root->val) {
 		Up.push(root);
+		InsertNextSubCommand({goDown, 1, 0.2});
+		InsertNextSubCommand({goUp, 2, 0.2});
 		update(root->left, old, x);
-	}
-	else if (old>root->val) {
-		Down.push(root);
-		update(root->right, old, x);
+		InsertNextSubCommand({goUp, 6, 0.2});
+		InsertNextSubCommand({goDown, 6, 0.2});
 	}
 	else {
-		InsertNextSubCommand({update_node, 1.0f*root->index, 1.0f*x, 1.0f*root->val, 1});
-		root->val = x;
-		update(root, old < x);
+		InsertNextSubCommand({goDown, 2, 0.2});
+		if (old>root->val) {
+			InsertNextSubCommand({goDown, 1, 0.2});
+			InsertNextSubCommand({goUp, 4, 0.2});
+			Down.push(root);
+			update(root->right, old, x);
+			InsertNextSubCommand({goUp, 4, 0.2});
+			InsertNextSubCommand({goDown, 4, 0.2});
+		}
+		else {
+			InsertNextSubCommand({goDown, 2, 0.2});
+			InsertNextSubCommand({goDown, 1, 0.2});
+			InsertNextSubCommand({update_node, 1.0f*root->index, 1.0f*x, 1.0f*root->val, 1});
+			InsertNextSubCommand({goDown, 1, 0.2});
+			root->val = x;
+			update(root, old < x);
+			InsertNextSubCommand({goDown, 1, 0.2});
+		}
 	}
 	while (Up.size()) {
 		InsertNextSubCommand({CommandCode::unchoose, 1.0f*Up.top()->index, 1});
@@ -114,17 +132,37 @@ void AVLTreeForm::update(Node*& root, const bool& isGreater) {
 	}
 }
 void AVLTreeForm::search(const string& str) {
+	console.InsertNextMainCommand("Search" + str);
 	InsertNextMainCommand({CommandCode::search, 1.0f*to_int(str), 1});
 }
 void AVLTreeForm::search(Node* root, const int& val) {
 	if (!root) return;
 	InsertNextSubCommand({choose, 1.0f*root->index, 0.5});
-	if (root->val>val) search(root->left, val);
-	else if (root->val<val) search(root->right,val);
+	InsertNextSubCommand({goDown, 1, 0.2});
+	if (root->val<val) {
+		InsertNextSubCommand({goDown, 1, 0.2});
+		InsertNextSubCommand({goUp, 2, 0.2});
+		search(root->right,val);
+		InsertNextSubCommand({goDown, 2, 0.2});
+		InsertNextSubCommand({goDown, 4, 0.2});
+	}
 	else {
-		InsertNextSubCommand({wait, 10});
+		InsertNextSubCommand({goDown, 2, 0.2});
+		if (root->val>val) {
+			InsertNextSubCommand({goDown, 1, 0.2});
+			InsertNextSubCommand({goUp, 4, 0.2});
+			search(root->left, val);
+			InsertNextSubCommand({goDown, 4, 0.2});
+			InsertNextSubCommand({goDown, 2, 0.2});
+		}
+		else {
+			InsertNextSubCommand({goDown, 2, 0.2});
+			InsertNextSubCommand({wait, 10});
+			InsertNextSubCommand({goDown, 1, 0.2});
+		}
 	}
 	InsertNextSubCommand({unchoose, 1.0f*root->index, 0.5});
+	InsertNextSubCommand({goUp, 6, 0.2});
 }
 void AVLTreeForm::insert(Node*& root, Node* parent, const int& x) {
     if (!root) {
@@ -137,17 +175,37 @@ void AVLTreeForm::insert(Node*& root, Node* parent, const int& x) {
 	InsertNextSubCommand({choose, 1.0f*old_index, 0.5});
     //Go to left if x<root or right when x>root like BST
 	int index = 0;
+	InsertNextSubCommand({CommandCode::goDown, 3, 1});
     if (x>root->val) {
+		InsertNextSubCommand({CommandCode::goDown, 1, 0.2});
+		InsertNextSubCommand({CommandCode::goUp, 5, 1});
+		InsertNextSubCommand({CommandCode::goDown, 1, 0.2});
 		if (!root->right) {
+			InsertNextSubCommand({CommandCode::goDown, 1, 0.2});
 			InsertNextSubCommand({CommandCode::add, 1, 1.0f*x, 1.0f*root->index, 0.5});
+			InsertNextSubCommand({CommandCode::goDown, 1, 0.2});
+			InsertNextSubCommand({CommandCode::goDown, 16, 1});
 		}
         insert(root->right, root, x);
+		InsertNextSubCommand({CommandCode::goUp, 14, 1});
+		InsertNextSubCommand({CommandCode::goDown, 3, 0.2});
     }
-    else if (x<=root->val) {
-		if (!root->left) {
-			InsertNextSubCommand({CommandCode::add, 0, 1.0f*x,1.0f*root->index, 0.5});
+    else {
+		InsertNextSubCommand({CommandCode::goDown, 2, 0.2});
+		if (x<=root->val) {
+			InsertNextSubCommand({CommandCode::goDown, 1, 0.2});
+			InsertNextSubCommand({CommandCode::goUp, 7, 1});
+			InsertNextSubCommand({CommandCode::goDown, 1, 0.2});
+			if (!root->left) {
+				InsertNextSubCommand({CommandCode::goDown, 1, 0.2});
+				InsertNextSubCommand({CommandCode::add, 0, 1.0f*x,1.0f*root->index, 0.5});
+				InsertNextSubCommand({CommandCode::goDown, 1, 0.2});
+				InsertNextSubCommand({CommandCode::goDown, 16, 1});
+			}
+			insert(root->left, root, x);
+			InsertNextSubCommand({CommandCode::goUp, 12, 1});
+			InsertNextSubCommand({CommandCode::goDown, 1, 0.2});
 		}
-        insert(root->left, root, x);
     }
     //After insert, back and check its height of each branch
 	int old_height = root->height;
@@ -156,44 +214,91 @@ void AVLTreeForm::insert(Node*& root, Node* parent, const int& x) {
     //If right branch taller than left branch over 1 unit => Turn Left
 	int balance = height(root->right)-height(root->left);
     if (balance>1) {
+		InsertNextSubCommand({CommandCode::goDown, 1, 0.2});
         //Check if case right-right or right-left
         if (height(root->right->right)<height(root->right->left)) {
-			InsertNextSubCommand({choose, 1.0f*root->right->index, 0});
+			InsertNextSubCommand({CommandCode::goDown, 2, 0.2});
+			InsertNextSubCommand({CommandCode::goDown, 1, 0.2});
+			InsertNextSubCommand({choose, 1.0f*root->right->index, 0.5});
 			InsertNextSubCommand({choose, 1.0f*root->right->left->index, 0.5});
 			InsertNextSubCommand({CommandCode::rotateRight, 1.0f*root->right->index, 1});
 			InsertNextSubCommand({unchoose, 1.0f*root->right->index, 0.5});
 			InsertNextSubCommand({unchoose, 1.0f*root->right->left->index, 0.5});
 			rotateRight(root->right);
+
+			InsertNextSubCommand({CommandCode::goDown, 1, 0.2});
+			InsertNextSubCommand({choose, 1.0f*root->right->index, 0.5});
+			InsertNextSubCommand({CommandCode::rotateLeft, 1.0f*root->index, 1});
+			InsertNextSubCommand({CommandCode::goDown, 6, 1});
+			InsertNextSubCommand({unchoose, 1.0f*old_index, 0.5});
+			InsertNextSubCommand({unchoose, 1.0f*root->right->index, 0.5});
+		} else {
+			InsertNextSubCommand({CommandCode::goDown, 1, 0.2});
+			InsertNextSubCommand({choose, 1.0f*root->right->index, 0.5});
+			InsertNextSubCommand({CommandCode::rotateLeft, 1.0f*root->index, 1});
+			InsertNextSubCommand({CommandCode::goDown, 9, 1});
+			InsertNextSubCommand({unchoose, 1.0f*old_index, 0.5});
+			InsertNextSubCommand({unchoose, 1.0f*root->right->index, 0.5});
 		}
-		InsertNextSubCommand({choose, 1.0f*root->right->index, 0.5});
-		InsertNextSubCommand({CommandCode::rotateLeft, 1.0f*root->index, 1});
-		InsertNextSubCommand({unchoose, 1.0f*old_index, 0.5});
-		InsertNextSubCommand({unchoose, 1.0f*root->right->index, 0.5});
         rotateLeft(root);
     } else
     //If left branch taller than right branch over 1 unit => Turn Right
     if (balance<-1) {
         //Check if case left-left or left-right
         if (height(root->left->left)<height(root->left->right)) {
+			InsertNextSubCommand({CommandCode::goDown, 8, 1});
+			InsertNextSubCommand({CommandCode::goDown, 1, 0.2});
 			InsertNextSubCommand({choose, 1.0f*root->left->index, 0});
 			InsertNextSubCommand({choose, 1.0f*root->left->right->index, 0.5});
 			InsertNextSubCommand({CommandCode::rotateLeft, 1.0f*root->left->index, 1});
 			InsertNextSubCommand({unchoose, 1.0f*root->left->index, 0.5});
 			InsertNextSubCommand({unchoose, 1.0f*root->left->right->index, 0.5});
 			rotateLeft(root->left);
+
+			InsertNextSubCommand({CommandCode::goDown, 1, 0.2});
+			InsertNextSubCommand({choose, 1.0f*root->left->index, 0.5});
+			InsertNextSubCommand({CommandCode::rotateRight, 1.0f*root->index, 1});
+			InsertNextSubCommand({CommandCode::goDown, 1, 0.2});
+			InsertNextSubCommand({unchoose, 1.0f*old_index, 0.5});
+			InsertNextSubCommand({unchoose, 1.0f*root->left->index, 0.5});
+			rotateRight(root);
+		} else {
+			InsertNextSubCommand({CommandCode::goDown, 6, 1});
+			InsertNextSubCommand({CommandCode::goDown, 1, 0.2});
+			InsertNextSubCommand({choose, 1.0f*root->left->index, 0.5});
+			InsertNextSubCommand({CommandCode::rotateRight, 1.0f*root->index, 1});
+			InsertNextSubCommand({CommandCode::goDown, 4, 0.2});
+			InsertNextSubCommand({unchoose, 1.0f*old_index, 0.5});
+			InsertNextSubCommand({unchoose, 1.0f*root->left->index, 0.5});
+			rotateRight(root);
 		}
-		InsertNextSubCommand({choose, 1.0f*root->left->index, 0.5});
-		InsertNextSubCommand({CommandCode::rotateRight, 1.0f*root->index, 1});
+    } else {
+		InsertNextSubCommand({CommandCode::goDown, 11, 1});
 		InsertNextSubCommand({unchoose, 1.0f*old_index, 0.5});
-		InsertNextSubCommand({unchoose, 1.0f*root->left->index, 0.5});
-        rotateRight(root);
-    } else InsertNextSubCommand({unchoose, 1.0f*old_index, 0.5});
+	}
 }
 void AVLTreeForm::handle()
 {
 	Form::handle();
+	int index_focus = -1;
 	for (int i = 0; i<visual_node.size(); i++) 
-		if (visual_node[i]) visual_node[i]->handle(m_camera);
+		if (visual_node[i]) {
+			visual_node[i]->handle(m_camera);
+			if (visual_node[i]->isFocus()) index_focus = i;
+		}
+	if (IsKeyDown(KEY_F2) && index_focus != -1) {
+		main_box_show();
+		option_box.select(2);
+		update_textbox_choice.setText(to_string(visual_node[index_focus]->getValue()));
+		update_textbox_value.setFocus(true);
+	}
+	else if (IsKeyDown(KEY_DELETE) && index_focus != -1) {
+		main_box_show();
+		option_box.select(4);
+		remove_textbox.setText(to_string(visual_node[index_focus]->getValue()));
+		remove_textbox.setFocus(true);
+	}
+	if (skip_button.isPressed()) reFocusCamera();
 }
 
 AVLTreeForm::~AVLTreeForm() {
@@ -226,7 +331,15 @@ void AVLTreeForm::FetchPrevCommand(const std::vector<float>& codes)
 		logic_node.pop_back();
 		m_root = 0;
 		clone(m_root, vroot);
+		console.goUp();
 		setDuration(0.1);
+	}
+	break;
+	case CommandCode::insert_end: {
+		console.goUp();
+		insert_console_add();
+		for (int i = 0; i<20; i++) console.goDown();
+		setDuration(dur);
 	}
 	break;
 	case CommandCode::add: {
@@ -250,6 +363,14 @@ void AVLTreeForm::FetchPrevCommand(const std::vector<float>& codes)
 		}
 		m_root = 0;
 		clone(m_root, vroot);
+		console.goUp();
+		setDuration(dur);
+	}
+	break;
+	case CommandCode::erase_end: {
+		console.goUp();
+		remove_console_add();
+		for (int i = 0; i<33; i++) console.goDown();
 		setDuration(dur);
 	}
 	break;
@@ -274,14 +395,33 @@ void AVLTreeForm::FetchPrevCommand(const std::vector<float>& codes)
 	}
 	break;
 	case CommandCode::update: {
+		console.goUp();
 		setEnable(false);
 		update(m_root, codes[2], codes[1]);
 		setDuration(dur);
 		setEnable(true);
 	}
 	break;
+	case CommandCode::update_end: {
+		console.goUp();
+		update_console_add();
+		for (int i = 0; i<9; i++) console.goDown();
+		setDuration(dur);
+	}
 	case CommandCode::update_node: {
 		visual_node[codes[1]]->setValue(codes[3]);
+		setDuration(dur);
+	}
+	break;
+	case CommandCode::search: {
+		console.goUp();
+		setDuration(dur);
+	}
+	break;	
+	case CommandCode::search_end: {
+		console.goUp();
+		search_console_add();
+		console.goDown();
 		setDuration(dur);
 	}
 	break;
@@ -331,6 +471,18 @@ void AVLTreeForm::FetchPrevCommand(const std::vector<float>& codes)
 		setDuration(dur);
 	}
 	break;
+	case CommandCode::goUp: {
+		int n = codes[1];
+		for (int i= 0; i<n; i++) console.goDown();
+		setDuration(dur);
+	}
+	break;
+	case CommandCode::goDown: {
+		int n = codes[1];
+		for (int i= 0; i<n; i++) console.goUp();
+		setDuration(dur);
+	}
+	break;
 	default:
 		break;
 	}
@@ -343,19 +495,37 @@ void AVLTreeForm::FetchNextCommand(const std::vector<float>& codes)
 	switch (code) {
 	case CommandCode::insert: {
 		int value = codes[1];
+		insert_console_add();
+		console.goDown();
+		InsertNextSubCommand({CommandCode::goDown, 1, 0.2});
 		insert(m_root, 0, value);
 		if (!vroot) {
+			InsertNextSubCommand({CommandCode::goDown, 1, 0.2});
 			InsertNextSubCommand({CommandCode::add, 0, 1.0f*value, -1, 1});
+			InsertNextSubCommand({CommandCode::goDown, 17, 1});
 		}
-		
+		InsertNextSubCommand({CommandCode::insert_end, 1});
+		setDuration(dur);
+	}
+	break;
+	case CommandCode::insert_end: {
+		console.goDown();
 		setDuration(dur);
 	}
 	break;
 	case CommandCode::search: {
+		search_console_add();
+		console.goDown();
 		search(m_root, codes[1]);
+		InsertNextSubCommand({search_end, 1});
 		setDuration(dur);
 	}
 	break;	
+	case CommandCode::search_end: {
+		for (int i = 0; i<7; i++) console.goDown();
+		setDuration(dur);
+	}
+	break;
 	case CommandCode::add: {
 		bool right = codes[1];
 		int value = codes[2], parent = codes[3];
@@ -385,7 +555,15 @@ void AVLTreeForm::FetchNextCommand(const std::vector<float>& codes)
 	}
 	break;
 	case CommandCode::update: {
+		update_console_add();
+		console.goDown();
 		update(m_root, codes[1], codes[2]);
+		InsertNextSubCommand({update_end, 1});
+		setDuration(dur);
+	}
+	break;
+	case CommandCode::update_end: {
+		console.goDown();
 		setDuration(dur);
 	}
 	break;
@@ -411,8 +589,31 @@ void AVLTreeForm::FetchNextCommand(const std::vector<float>& codes)
 	}
 	break;
 	case CommandCode::erase: {
-		remove(m_root, (int)codes[1]);
+		int x = codes[1];
+		remove_console_add();
+		console.goDown();
+		int index = vroot->getIndex();
+		if (vroot) InsertNextSubCommand({choose, 1.0f*index, 1});
+		remove(m_root, x);
 		rePosition(dur*getSpeed());
+		InsertNextSubCommand({erase_end, 1});
+		setDuration(dur);
+	}
+	break;
+	case CommandCode::erase_end: {
+		console.goDown();
+		setDuration(dur);
+	}
+	break;
+	case CommandCode::goDown: {
+		int n = codes[1];
+		for (int i= 0; i<n; i++) console.goDown();
+		setDuration(dur);
+	}
+	break;
+	case CommandCode::goUp: {
+		int n = codes[1];
+		for (int i= 0; i<n; i++) console.goUp();
 		setDuration(dur);
 	}
 	break;
@@ -453,6 +654,7 @@ void AVLTreeForm::FetchNextCommand(const std::vector<float>& codes)
 
 void AVLTreeForm::remove(const std::string& x)
 {
+	console.InsertNextMainCommand("Remove " + x);
 	InsertNextMainCommand({ CommandCode::erase, 1.0f * to_int(x), 1 });
 }
 void AVLTreeForm::clone(Node*& rootA, AVLNode*& rootB) {
@@ -552,68 +754,254 @@ void AVLTreeForm::rotateRight(Node*& root)
 int AVLTreeForm::remove(Node*& root, const int& x)
 {
 	if (!root) return -1;
-	InsertNextSubCommand({choose, 1.0f*root->index, 0.5});
-	InsertNextSubCommand({unchoose, 1.0f*root->index, 0.5});
-	if (x < root->val) remove(root->left, x);
-	else if (x > root->val) remove(root->right, x);
+	InsertNextSubCommand({goDown, 1, 0.2});
+	if (x < root->val) {
+		InsertNextSubCommand({goDown, 1, 0.2});
+		InsertNextSubCommand({goUp, 2, 0.2});
+		InsertNextSubCommand({choose, 1.0f*root->left->index, 0.5});
+		remove(root->left, x);
+		InsertNextSubCommand({goUp, 30, 1});
+		InsertNextSubCommand({goDown, 19, 1});
+	}
 	else {
-		if (!root->left && !root->right) {
-			int index = root->index, par = -1;
-			if (root->parent) par = root->parent->index;
-			logic_node[index] = 0;
-			delete root;
-			root = 0;
-			InsertNextSubCommand({CommandCode::remove_node, 1.0f*par, 1.0f*index, 1.0f*x, 1});
-			return index;
-		} 
-		else if (root->left && root->right) {
-			int balance = root->left->height - root->right->height;
-			if (balance>0) {
-				InsertNextSubCommand({CommandCode::rotateRight, 1.0f*root->index, 1});
-				rotateRight(root);
-				remove(root->right, x);
-			} else {
-				InsertNextSubCommand({CommandCode::rotateLeft, 1.0f*root->index, 1});
-				rotateLeft(root);
-				remove(root->left, x);
+		InsertNextSubCommand({goDown, 2, 0.2});
+		if (x > root->val) {
+			InsertNextSubCommand({goDown, 1, 0.2});
+			InsertNextSubCommand({goUp, 4, 0.2});
+			InsertNextSubCommand({choose, 1.0f*root->right->index, 0.5});
+			remove(root->right, x);
+			InsertNextSubCommand({goUp, 28, 0.2});
+			InsertNextSubCommand({goDown, 17, 1});
+		}
+		else {
+			InsertNextSubCommand({goDown, 2, 0.2});
+			InsertNextSubCommand({goDown, 1, 0.2});
+			if (!root->left && !root->right) {
+				InsertNextSubCommand({goDown, 1, 0.2});
+				int index = root->index, par = -1;
+				if (root->parent) par = root->parent->index;
+				logic_node[index] = 0;
+				delete root;
+				root = 0;
+				InsertNextSubCommand({CommandCode::remove_node, 1.0f*par, 1.0f*index, 1.0f*x, 1});
+				InsertNextSubCommand({goDown, 25, 1});
+				return index;
+			} 
+			else {
+				InsertNextSubCommand({goDown, 2, 0.2});
+				if (root->left && root->right) {
+					InsertNextSubCommand({goDown, 1, 0.2});
+					int balance = root->left->height - root->right->height;
+					if (balance>0) {
+						InsertNextSubCommand({choose, 1.0f*root->left->index, 0.5});
+						InsertNextSubCommand({goDown, 1, 0.2});
+						InsertNextSubCommand({CommandCode::rotateRight, 1.0f*root->index, 1});
+						rotateRight(root);
+						InsertNextSubCommand({goDown, 1, 0.2});
+						InsertNextSubCommand({goUp, 11, 1});
+						remove(root->right, x);
+						InsertNextSubCommand({goUp, 21, 1});
+						InsertNextSubCommand({goDown, 10, 0.2});
+					} else {
+						InsertNextSubCommand({goDown, 3, 0.2});
+						InsertNextSubCommand({choose, 1.0f*root->right->index, 0.5});
+						InsertNextSubCommand({goDown, 1, 0.2});
+						InsertNextSubCommand({CommandCode::rotateLeft, 1.0f*root->index, 1});
+						rotateLeft(root);
+						InsertNextSubCommand({goDown, 1, 0.2});
+						InsertNextSubCommand({goUp, 14, 1});
+						remove(root->left, x);
+						InsertNextSubCommand({goUp, 18, 1});
+						InsertNextSubCommand({goDown, 7, 0.2});
+					}
+				}
+				else {
+					InsertNextSubCommand({goDown, 7, 1});
+					if (root->left) {
+						InsertNextSubCommand({goDown, 1, 0.2});
+						InsertNextSubCommand({choose, 1.0f*root->left->index, 0.5});
+						InsertNextSubCommand({CommandCode::rotateRight, 1.0f*root->index, 1});
+						rotateRight(root);
+						InsertNextSubCommand({goDown, 1, 0.2});
+						InsertNextSubCommand({goUp, 17, 1});
+						remove(root->right, x);
+						InsertNextSubCommand({goUp, 15, 1});
+						InsertNextSubCommand({goDown, 4, 1});
+					}
+					else if (root->right) {
+						InsertNextSubCommand({goDown, 3, 0.2});
+						InsertNextSubCommand({goDown, 1, 0.2});
+						InsertNextSubCommand({choose, 1.0f*root->right->index, 0.5});
+						InsertNextSubCommand({CommandCode::rotateLeft, 1.0f*root->index, 1});
+						rotateLeft(root);
+						InsertNextSubCommand({goDown, 1, 0.2});
+						InsertNextSubCommand({goUp, 20, 1});
+						remove(root->left, x);
+						InsertNextSubCommand({goUp, 12, 1});
+						InsertNextSubCommand({goDown, 1, 0.2});
+					}
+				}
 			}
 		}
-		else if (root->left) {
-			InsertNextSubCommand({CommandCode::rotateRight, 1.0f*root->index, 1});
-			rotateRight(root);
-			remove(root->right, x);
-		}
-		else if (root->right) {
-			InsertNextSubCommand({CommandCode::rotateLeft, 1.0f*root->index, 1});
-			rotateLeft(root);
-			remove(root->left, x);
-		}
 	}
-	InsertNextSubCommand({choose, 1.0f*root->index, 0.5});
 	int old_height = root->height;
     root->height = max(height(root->right), height(root->left))+1;
 	InsertNextSubCommand({update_height, 1.0f*root->index, 1.0f*root->height, 1.0f*old_height, 1});
-	InsertNextSubCommand({unchoose, 1.0f*root->index, 0.5});
     //If right branch taller than left branch over 1 unit => Turn Left
 	int balance = height(root->right)-height(root->left);
     if (balance>1) {
+		InsertNextSubCommand({CommandCode::goDown, 1, 0.2});
         //Check if case right-right or right-left
         if (height(root->right->right)<height(root->right->left)) {
+			InsertNextSubCommand({CommandCode::goDown, 2, 0.2});
+			InsertNextSubCommand({CommandCode::goDown, 1, 0.2});
+			InsertNextSubCommand({choose, 1.0f*root->right->index, 0.5});
+			InsertNextSubCommand({choose, 1.0f*root->right->left->index, 0.5});
 			InsertNextSubCommand({CommandCode::rotateRight, 1.0f*root->right->index, 1});
+			InsertNextSubCommand({unchoose, 1.0f*root->right->index, 0.5});
+			InsertNextSubCommand({unchoose, 1.0f*root->right->left->index, 0.5});
 			rotateRight(root->right);
+
+			InsertNextSubCommand({CommandCode::goDown, 1, 0.2});
+			InsertNextSubCommand({choose, 1.0f*root->right->index, 0.5});
+			InsertNextSubCommand({CommandCode::rotateLeft, 1.0f*root->index, 1});
+			InsertNextSubCommand({CommandCode::goDown, 6, 1});
+			InsertNextSubCommand({unchoose, 1.0f*root->index, 0.5});
+			InsertNextSubCommand({unchoose, 1.0f*root->right->index, 0.5});
+		} else {
+			InsertNextSubCommand({CommandCode::goDown, 1, 0.2});
+			InsertNextSubCommand({choose, 1.0f*root->right->index, 0.5});
+			InsertNextSubCommand({CommandCode::rotateLeft, 1.0f*root->index, 1});
+			InsertNextSubCommand({CommandCode::goDown, 9, 1});
+			InsertNextSubCommand({unchoose, 1.0f*root->index, 0.5});
+			InsertNextSubCommand({unchoose, 1.0f*root->right->index, 0.5});
 		}
-		InsertNextSubCommand({CommandCode::rotateLeft, 1.0f*root->index, 1});
         rotateLeft(root);
-    } else if (balance<-1) {
+    } else
+    //If left branch taller than right branch over 1 unit => Turn Right
+    if (balance<-1) {
         //Check if case left-left or left-right
         if (height(root->left->left)<height(root->left->right)) {
+			InsertNextSubCommand({CommandCode::goDown, 8, 1});
+			InsertNextSubCommand({CommandCode::goDown, 1, 0.2});
+			InsertNextSubCommand({choose, 1.0f*root->left->index, 0});
+			InsertNextSubCommand({choose, 1.0f*root->left->right->index, 0.5});
 			InsertNextSubCommand({CommandCode::rotateLeft, 1.0f*root->left->index, 1});
+			InsertNextSubCommand({unchoose, 1.0f*root->left->index, 0.5});
+			InsertNextSubCommand({unchoose, 1.0f*root->left->right->index, 0.5});
 			rotateLeft(root->left);
+
+			InsertNextSubCommand({CommandCode::goDown, 1, 0.2});
+			InsertNextSubCommand({choose, 1.0f*root->left->index, 0.5});
+			InsertNextSubCommand({CommandCode::rotateRight, 1.0f*root->index, 1});
+			InsertNextSubCommand({CommandCode::goDown, 1, 0.2});
+			InsertNextSubCommand({unchoose, 1.0f*root->index, 0.5});
+			InsertNextSubCommand({unchoose, 1.0f*root->left->index, 0.5});
+			rotateRight(root);
+		} else {
+			InsertNextSubCommand({CommandCode::goDown, 6, 1});
+			InsertNextSubCommand({CommandCode::goDown, 1, 0.2});
+			InsertNextSubCommand({choose, 1.0f*root->left->index, 0.5});
+			InsertNextSubCommand({CommandCode::rotateRight, 1.0f*root->index, 1});
+			InsertNextSubCommand({CommandCode::goDown, 4, 0.2});
+			InsertNextSubCommand({unchoose, 1.0f*root->index, 0.5});
+			InsertNextSubCommand({unchoose, 1.0f*root->left->index, 0.5});
+			rotateRight(root);
 		}
-		InsertNextSubCommand({CommandCode::rotateRight, 1.0f*root->index, 1});
-        rotateRight(root);
-    }
+    } else {
+		InsertNextSubCommand({CommandCode::goDown, 11, 1});
+		InsertNextSubCommand({unchoose, 1.0f*root->index, 0.5});
+	}
 	return -1;
+}
+void AVLTreeForm::remove_console_add() {
+	console.InsertNextSubCommand("f(&root, x) {");
+	console.InsertNextSubCommand("if root->val > x");
+	console.InsertNextSubCommand("		f(root->left, x)");
+	console.InsertNextSubCommand("else if root->val < x");
+	console.InsertNextSubCommand("		f(root->right, x)");
+	console.InsertNextSubCommand("else	");
+	console.InsertNextSubCommand("		if root doesn't have child");
+	console.InsertNextSubCommand("			remove root");
+	console.InsertNextSubCommand("		else if root have both left and right child");
+	console.InsertNextSubCommand("			if left node is heavier");
+	console.InsertNextSubCommand("				Rotate right");
+	console.InsertNextSubCommand("				f(root->right, x)");
+	console.InsertNextSubCommand("			else");
+	console.InsertNextSubCommand("				Rotate left");
+	console.InsertNextSubCommand("				f(root->left, x)");
+	console.InsertNextSubCommand("		else if root has left child");
+	console.InsertNextSubCommand("			Rotate right");
+	console.InsertNextSubCommand("			f(root->right, x)");
+	console.InsertNextSubCommand("		else if root has right child");
+	console.InsertNextSubCommand("			Rotate left");
+	console.InsertNextSubCommand("			f(root->left, x)");
+	console.InsertNextSubCommand("if root is not balance");
+	console.InsertNextSubCommand("		if root->right and root->right->right are heavier");
+	console.InsertNextSubCommand("			RR: Rotate left");
+	console.InsertNextSubCommand("		if root->right and root->right->left are heavier");
+	console.InsertNextSubCommand("			RL: Rotate right (root->right)");
+	console.InsertNextSubCommand("			RL: Rotate left");
+	console.InsertNextSubCommand("		if root->left and root->left->left are heavier");
+	console.InsertNextSubCommand("			LL: Rotate right");
+	console.InsertNextSubCommand("		if root->left and root->left->right are heavier");
+	console.InsertNextSubCommand("			LR: Rotate left (root->left)");
+	console.InsertNextSubCommand("			LR: Rotate right");
+	console.InsertNextSubCommand("}");
+}
+void AVLTreeForm::search_console_add() {
+	console.InsertNextSubCommand("f(root, x) {");
+	console.InsertNextSubCommand("	  if root->val < x");
+	console.InsertNextSubCommand("		f(root->right, x)");
+	console.InsertNextSubCommand("   else	if root->val > x");
+	console.InsertNextSubCommand("		f(root->left, x)");
+	console.InsertNextSubCommand("   else return root");
+	console.InsertNextSubCommand("}");
+}
+void AVLTreeForm::insert_console_add() {
+	console.InsertNextSubCommand("f(&root, x) {");
+	console.InsertNextSubCommand("if root is null");
+	console.InsertNextSubCommand("		root = new Node(x)");
+	console.InsertNextSubCommand("		return");
+	console.InsertNextSubCommand("else	if root->val < x");
+	console.InsertNextSubCommand("		f(root->right, x)");
+	console.InsertNextSubCommand("else	if root->val >= x");
+	console.InsertNextSubCommand("		f(root->left, x)");
+	console.InsertNextSubCommand("if root is not balance");
+	console.InsertNextSubCommand("		if root->right and root->right->right are heavier");
+	console.InsertNextSubCommand("			RR: Rotate left");
+	console.InsertNextSubCommand("		if root->right and root->right->left are heavier");
+	console.InsertNextSubCommand("			RL: Rotate right (root->right)");
+	console.InsertNextSubCommand("			RL: Rotate left");
+	console.InsertNextSubCommand("		if root->left and root->left->left are heavier");
+	console.InsertNextSubCommand("			LL: Rotate right");
+	console.InsertNextSubCommand("		if root->left and root->left->right are heavier");
+	console.InsertNextSubCommand("			LR: Rotate left (root->left)");
+	console.InsertNextSubCommand("			LR: Rotate right");
+	console.InsertNextSubCommand("}");
+}
+void AVLTreeForm::update_console_add() {
+	console.InsertNextSubCommand("f(&root, x, new) {");
+	console.InsertNextSubCommand("if root->val > x");
+	console.InsertNextSubCommand("		f(root->left, x)");
+	console.InsertNextSubCommand("else if root->val < x");
+	console.InsertNextSubCommand("		f(root->right, x)");
+	console.InsertNextSubCommand("else	");
+	console.InsertNextSubCommand("		Update its value");
+	console.InsertNextSubCommand("		Update its position");
+	console.InsertNextSubCommand("}");
+}
+void AVLTreeForm::reFocusCamera() {
+	if (!vroot) return ;
+	AVLNode* right = vroot, *left=vroot;
+	while (right->right) right = right->right;
+	while (left->left) left = left->left;
+	float middle = (right->getEndPoint().x + left->getEndPoint().x)/2;
+	float zoom = m_workspace.width/(right->getEndPoint().x-left->getEndPoint().x + 100);
+	if (zoom < m_camera.zoom) m_camera.zoom	 = zoom;
+	middle*=m_camera.zoom;
+	m_camera.offset.x = m_workspace.x-middle+m_workspace.width/2;
+
 }
 void AVLTreeForm::show(Node* root, const int& indent) {
 	if (!root) return;
