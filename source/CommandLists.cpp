@@ -138,7 +138,7 @@ void CommandList::handle() {
 }
 
 void CommandList::goNext() {
-    if (command_pointer==sub_command.size() || sub_command_pointer == sub_command[command_pointer].size()) return;
+    if (command_pointer == sub_command.size() || sub_command_pointer == sub_command[command_pointer].size()) return;
     BeforeFetchNext();
     if (!m_clock.getDuration() && sub_command_pointer) goNext();
 }
