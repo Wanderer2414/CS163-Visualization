@@ -125,6 +125,10 @@ void Console::clear() {
 void Console::setEnable(const bool& enbale) {
     m_is_enable = enbale;
 }
+bool Console::isEmpty()
+{
+    return m_list.size() == 0;
+}
 void Console::setTextOrigin(const Vector2& origin) {
     m_origin = origin;
 }

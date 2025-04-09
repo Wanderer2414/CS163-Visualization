@@ -25,6 +25,7 @@ public:
                     setText(const std::string& str)             override,
                     setTextOrigin(const Vector2& origin),
                     setEnable(const bool& enable);
+    bool            isEmpty();
     Color           m_color_line = RED;
     ~Console();
 private:

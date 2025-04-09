@@ -286,6 +286,7 @@ int Form::run() {
 }
 
 void Form::handle() {
+    cout << " IN "<<endl;
     //Base handle + children handle
     CommandList::handle();
     for (auto i : children) i->handle();

@@ -5,6 +5,7 @@ enum CommandCode {
     add,
     choose,
     unchoose,
+    unchoose_end,
     search,
     swap,
     update,

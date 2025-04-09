@@ -41,7 +41,7 @@ private:
     }
     void            insert(Node*& root, Node* parent, const int& x)                 ,
                     update(Node*& root, const int& old, const int& x)              ,
-                    update(Node*& root),
+                    update(Node*& root, const bool& isGreater),
                     visual_rotateRight(AVLNode*& root)                              ,
                     visual_rotateLeft(AVLNode*& root)                               ,
                     rotateRight(Node*& root)                                        ,
@@ -66,7 +66,6 @@ private:
     AVLNode         *vroot;
     vector<Node*>   logic_node;
     vector<AVLNode*>visual_node;
-    ButtonSetting   fill_setting;
 };
 
 #endif

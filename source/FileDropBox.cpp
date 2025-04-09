@@ -25,8 +25,8 @@ void DropBox::handle() {
             files.push_back(list.paths[i]);
         }
         m_file_add = true;
-        UnloadDroppedFiles(list);
         m_file_count = list.count;
+        UnloadDroppedFiles(list);
     }
 }
 void DropBox::draw() {
