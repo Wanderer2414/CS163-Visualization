@@ -116,19 +116,18 @@ void Graph::getVertex(const int& graph, vector<bool>& visited) {
             getVertex(edge->m_end->getIndex(), visited);
         }
 }
-void Graph::dijikstra_console_add(const int& value) {
+void Graph::Dijkstra_console_add(const int& value) {
     console.InsertNextSubCommand("Create min heap");
-    console.InsertNextSubCommand("vertex = " + to_string(value));
-    console.InsertNextSubCommand("Set cost at vertex = 0");
-    console.InsertNextSubCommand("f(vertex)");
-    console.InsertNextSubCommand("   for i = first edge to last edge");
-    console.InsertNextSubCommand("      if cost[vertex] + cost[edge] < cost[end]");
-    console.InsertNextSubCommand("         cost[end] = cost[vertex] + cost[edge]");
-    console.InsertNextSubCommand("         add edge to min heap");
-    console.InsertNextSubCommand("   Pop all next edges with used end");
-    console.InsertNextSubCommand("   if heap has element: ");
-    console.InsertNextSubCommand("         vertex = heap.pop()[end] ");
-    console.InsertNextSubCommand("         f(vertex) ");
+    console.InsertNextSubCommand("add " + to_string(value) + " to heap");
+    console.InsertNextSubCommand("while heap not empty");
+    console.InsertNextSubCommand("   vertex = heap.top()");
+    console.InsertNextSubCommand("   Pop heap");
+    console.InsertNextSubCommand("   if  !visited[vertex]");
+    console.InsertNextSubCommand("      for first edge to last edge");
+    console.InsertNextSubCommand("          if cost[vertex] + cost[edge] < cost[end]");
+    console.InsertNextSubCommand("              cost[end] = cost[vertex] + cost[edge]");
+    console.InsertNextSubCommand("              add end to min heap");
+    console.InsertNextSubCommand("}");
 }
 void Graph::kruskal_console_add() {
     console.InsertNextSubCommand("f(vertex)");

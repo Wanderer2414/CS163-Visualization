@@ -1,6 +1,7 @@
 #include "../include/Graph.h"
 #include "../include/IncludePath.h"
 #include "../include/General.h"
+#include <cmath>
 
 Graph::Graph(const int& index, FormSetting f_setting, const Vector2& window_size):
     Form(index, f_setting, window_size),
@@ -22,18 +23,18 @@ Graph::Graph(const int& index, FormSetting f_setting, const Vector2& window_size
 
     search_graph_box(&form_setting),
     tools_box(&form_setting),
-    dijikstra_button(&form_setting, &form_setting),
+    Dijkstra_button(&form_setting, &form_setting),
     prim_button(&form_setting, &form_setting),
     kruskal_button(&form_setting, &form_setting),
 
     algorithms_box(&form_setting),
     prim_box(&form_setting),
     kruskal_box(&form_setting),
-    dijikstra_box(&form_setting),
+    Dijkstra_box(&form_setting),
     extract_box(&form_setting),
 
     extract_text_bx(&form_setting, &form_setting),
-    dijikstra_textbox(&form_setting, &form_setting),
+    Dijkstra_textbox(&form_setting, &form_setting),
     prim_textbox(&form_setting, &form_setting),
     kruskal_textbox(&form_setting, &form_setting),
     pull_matrix_button(&form_setting, &form_setting),
@@ -61,10 +62,10 @@ Graph::Graph(const int& index, FormSetting f_setting, const Vector2& window_size
     setting_box.push_back(&direct_choice);
     setting_box.push_back(&undirect_choice);
 
-    algorithms_box.push_back(0, &dijikstra_box);
-    dijikstra_box.push_back(&dijikstra_textbox);
-    dijikstra_box.push_back(&random_dijikstra_button);
-    dijikstra_box.push_back(&dijikstra_button);
+    algorithms_box.push_back(0, &Dijkstra_box);
+    Dijkstra_box.push_back(&Dijkstra_textbox);
+    Dijkstra_box.push_back(&random_Dijkstra_button);
+    Dijkstra_box.push_back(&Dijkstra_button);
 
     algorithms_box.push_back(1, &prim_box);
     prim_box.push_back(&prim_textbox);
@@ -129,16 +130,16 @@ Graph::Graph(const int& index, FormSetting f_setting, const Vector2& window_size
     scissors_tool.setPosition(95, 5);
     scissors_tool.setSize(40, 40);
     //Algorithms
-    dijikstra_textbox.setPosition(5, 5);
-    dijikstra_textbox.setSize(100, 40);
+    Dijkstra_textbox.setPosition(5, 5);
+    Dijkstra_textbox.setSize(100, 40);
 
-    random_dijikstra_button.setPosition(110, 5);
-    random_dijikstra_button.setSize(40, 40);
-    random_dijikstra_button.setButtonStage(0, Rand, Rand);
+    random_Dijkstra_button.setPosition(110, 5);
+    random_Dijkstra_button.setSize(40, 40);
+    random_Dijkstra_button.setButtonStage(0, Rand, Rand);
 
-    dijikstra_button.setPosition(155, 5);
-    dijikstra_button.setSize(100, 40);
-    dijikstra_button.setText("Start");
+    Dijkstra_button.setPosition(155, 5);
+    Dijkstra_button.setSize(100, 40);
+    Dijkstra_button.setText("Start");
 
     prim_textbox.setPosition(5, 5);
     prim_textbox.setSize(100, 40);
@@ -162,12 +163,12 @@ Graph::Graph(const int& index, FormSetting f_setting, const Vector2& window_size
     kruskal_button.setSize(100, 40);
     kruskal_button.setText("Start");
 
-    algorithms_box.setText(0, "Dijikstra");
+    algorithms_box.setText(0, "Dijkstra");
     algorithms_box.setText(1, "Prim");
     algorithms_box.setText(2, "Kruskal");
 
-    dijikstra_box.setPosition(algorithms_box.getAutoSize().x + 15, 0);
-    dijikstra_box.setSize(260, 50);
+    Dijkstra_box.setPosition(algorithms_box.getAutoSize().x + 15, 0);
+    Dijkstra_box.setSize(260, 50);
 
     prim_box.setPosition(algorithms_box.getAutoSize().x + 15, 45);
     prim_box.setSize(260, 50);
@@ -361,20 +362,14 @@ void Graph::handle() {
             if (!m_is_lock && edge->m_start->IsColorChange() && (edge->m_start->getColor() != edge->start_color)) {
                 int start = edge->m_start->getIndex();
                 int end = edge->m_end->getIndex();
-                if (m_type == 1) {
-                    if (start<end) {
-                        edge->setDuration(getSpeed());
-                        edge->start(false, false);
-                    }
-                    else {
-                        edge->setDuration(getSpeed());
-                        edge->start(true, false);
-                    }
-                }
-                else {
-                    edge->setDuration(getSpeed());
-                    edge->start(false, false);
-                }
+                edge->setDuration(getSpeed());
+                edge->start(false, false);
+            }
+            if (!m_is_lock && edge->m_end->IsColorChange() && (edge->m_end->getColor() != edge->start_color)) {
+                int start = edge->m_start->getIndex();
+                int end = edge->m_end->getIndex();
+                edge->setDuration(getSpeed());
+                edge->start(true, false);
             }
             //Check press delete
             if (edge->isPressed()) {
@@ -476,14 +471,20 @@ void Graph::handle() {
                 //Check collision
                 for (int j = i+1; j<vertices.size(); j++) {
                     if (vertices[j]) {
-                        if (abs(vertices[i]->getCenter()-vertices[j]->getCenter()) < vertices[i]->getRadius() + vertices[j]->getRadius()) {
+                        if (abs(vertices[i]->getCenter()-vertices[j]->getCenter()) < vertices[i]->getRadius() + vertices[j]->getRadius() + 5) {
                             Vector2 delta = vertices[j]->getCenter() - vertices[i]->getCenter();
-                            delta = delta/abs(delta)*(vertices[i]->getRadius() + vertices[j]->getRadius() - abs(delta));
+                            delta = delta/abs(delta)*(vertices[i]->getRadius() + vertices[j]->getRadius() + 5 - abs(delta));
                             if (m_mode == 2) {
                                 Vector2 velocityA = vertices[i]->getVelocity();
                                 Vector2 velocityB = vertices[j]->getVelocity();
-                                vertices[i]->setVelocity(velocityB - delta/10);
-                                vertices[j]->setVelocity(velocityA + delta/10);
+                                Vector2 pos = vertices[i]->getCenter()-delta;
+                                vertices[i]->setPosition(pos.x, pos.y);
+                                pos = vertices[j]->getCenter()+delta;
+                                vertices[j]->setPosition(pos.x, pos.y);
+
+                                delta = delta/sqrt(abs(delta))*0.1;
+                                vertices[i]->setVelocity(velocityB - delta);
+                                vertices[j]->setVelocity(velocityA + delta);
                             } else {
                                 Vector2 posA = vertices[i]->getPosition() - delta*1.1;
                                 Vector2 posB = vertices[j]->getPosition() + delta*1.1;
@@ -610,8 +611,8 @@ void Graph::handle() {
     if (kruskal_button.isPressed()) {
         kruskal(kruskal_textbox.getText());
     }
-    if (dijikstra_button.isPressed()) {
-        dijikstra(dijikstra_textbox.getText());
+    if (Dijkstra_button.isPressed()) {
+        Dijkstra(Dijkstra_textbox.getText());
     }
 }
 
@@ -657,9 +658,6 @@ void Graph::add(const vector<std::string>& str) {
                 }
             }
         }
-        // setSubGraphColor(edges.back()->m_start->getIndex(), colors[(++color_pointer)%6]);
-        // for (int i = 0; i<edges.size(); i++) 
-        //     if (edges[i]) edges[i]->start(false);
     } else {
         InsertNextMainCommand({add_code, 1.0f*to_int(str[0]),1});
     }
