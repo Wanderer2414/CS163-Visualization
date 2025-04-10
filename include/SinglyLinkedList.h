@@ -57,6 +57,8 @@ namespace SLL {
 			_add = 3,
 			_update = 6,
 			_remove = 4,
+			_search = 10,
+			_searchSilent = 11,
 			_insertSilent = 7,
 			_removeSilent = 8,
 			_updateSilent = 9
@@ -84,6 +86,11 @@ namespace SLL {
 
 		void remove(const int& value, const int& index);
 		void removeSilent(const int& value,const int& index);
+
+		void update(const int& old_value, const int& new_value);
+		void updateSilent(const int& old_value,const int& new_value,const int& index);
+
+		void search(const int& value);
 	};
 }
 
