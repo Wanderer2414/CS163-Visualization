@@ -1074,7 +1074,6 @@ void AVLTreeForm::rePosition(const float& dur) {
 			pos.x -= delta;
 			visual_node[i]->setDuration(dur);
 			visual_node[i]->setSlowPosition(pos.x, pos.y);
-		}
-	
+		}	
 }
 

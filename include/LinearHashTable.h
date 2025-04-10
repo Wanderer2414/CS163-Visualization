@@ -74,7 +74,6 @@ namespace HT {
         Label       size_label;
         TextureButton random_size_button;
         std::vector<Node> m_memory;
-        bool checkAnimationsComplete();
     };
 }
 
