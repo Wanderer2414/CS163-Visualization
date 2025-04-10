@@ -6,6 +6,7 @@
 struct Path {
     int start = 0, end = 0;
     int weight;
+    int index;
     bool operator<(const Path& b);
     bool operator>(const Path& b);
     bool operator==(const Path& b);

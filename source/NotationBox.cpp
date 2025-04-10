@@ -25,7 +25,7 @@ NotationBox::NotationBox(FormSetting* f_setting):
 }
 
 void NotationBox::handle() {
-    if (isVisible) {
+    if (isVisible && vertex) {
         stringstream ss;
         ss << vertex;
         m_address.setText(ss.str());
@@ -38,7 +38,7 @@ void NotationBox::handle() {
     }
 }
 void NotationBox::draw() {
-    if (isVisible) {
+    if (isVisible && vertex) {
         DrawRectangleRounded({m_position.x, m_position.y, m_size.x, m_size.y}, 0.1,form_setting->segment, form_setting->normal_color);
         DrawRectangleRounded({m_position.x+2, m_position.y+2, m_size.x-4, m_size.y-4}, 0.1,form_setting->segment, form_setting->hover_color);
         m_address.draw();

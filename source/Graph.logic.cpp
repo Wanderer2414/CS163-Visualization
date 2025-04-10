@@ -32,69 +32,39 @@ void Graph::free() {
         if (edges[i]) delete edges[i];
     vertices.clear();
     edges.clear();
-    matrix.clear();
     console.clear();
     clear();
 }
-void Graph::add_edge(const int& start, const int& end, const int& weight) {
+void Graph::add_edge(const int& globalIndex, const int& localIndex, const int& start, const int& end, const int& weight) {
     if (start == end) return;
-    if (matrix[start][end]==-1) {
-        matrix[start][end] = edges.size();
-        edges.push_back(new Edge(vertices[start], vertices[end], &form_setting));
-        edges.back()->start(false);
-        edges.back()->setWeight(weight);
-        edges.back()->setType(m_type == 0);
-    }
-    if (m_type == 1) {
-        if (matrix[end][start]==-1) {
-            matrix[end][start] = edges.size();
-            edges.push_back(new Edge(vertices[end], vertices[start], &form_setting));
-            edges.back()->start(true);
-            edges.back()->setWeight(weight);
-            edges.back()->setType(m_type == 0);
+    for (Edge* edge:vertices[start]->edges)
+        if (edge && edge->m_end->getIndex() == end) return;
+    int iend = -1;
+    for (Edge* edge:vertices[end]->edges) 
+        if (edge && edge->m_end->getIndex() == start) {
+            iend = edge->getGlobalIndex();
+            break ;
         }
-    }
-}
-void Graph::random_subGraphColor() {
-    vector<bool> visited(matrix.size(), 0);
-    for (int i = 0; i<visited.size(); i++) {
-        if (!visited[i]) {
-            setSubGraphColor(i, visited, colors[color_pointer]);
-            color_pointer = (color_pointer+1)%6;
-        }
-    }
-}
-void Graph::setSubGraphColor(const int& row, const Color& color) {
-    if (!vertices[row]) return;
-    vector<bool> visited(matrix.size(), 0);
-    setSubGraphColor(row, visited, color);
-}
-void Graph::setSubGraphColor(const int& row, vector<bool>& visited, const Color& color) {
-    if (!vertices[row]) return;
-    visited[row] = true;
-    vertices[row]->setColor(color);
-    for (int i = 0; i<matrix.size(); i++) {
-        if (matrix[row][i] != -1) {
-            edges[matrix[row][i]]->setColor(color);
-            if (m_type == 1 && matrix[i][row]!=-1) edges[matrix[i][row]]->setColor(color);
-        }
-        if (matrix[row][i]!=-1 && !visited[i]) {
-            setSubGraphColor(i, visited, color);
-        }
+    edges[globalIndex] = new Edge(vertices[start], vertices[end], globalIndex, localIndex, &form_setting);
+    vertices[start]->edges[localIndex] = edges[globalIndex];
+    edges[globalIndex]->start(false);
+    edges[globalIndex]->setWeight(weight);
+    edges[globalIndex]->setType(m_type == 0);
+    if (iend!=-1) {
+        edges[globalIndex]->reverse = edges[iend];
+        edges[iend]->reverse = edges[globalIndex];
     }
 }
 void Graph::pull_matrix(const int& graph) {
-    auto vertices = getVertex(graph);
-    string ans = to_string(vertices.size()) + '\n';
-    for (auto i: vertices) {
-        for (int j: vertices) {
-            if (matrix[i][j]!=-1) {
-                ans += to_string(edges[matrix[i][j]]->getWeight()) + " ";
-            } else ans += "0 ";
+    auto vertices_index = getVertex(graph);
+    vector<vector<int>> ans(vertices.size(), vector<int>(vertices.size(), 0));
+    for (auto i: vertices_index) {
+        for (Edge* edge:vertices[i]->edges) {
+            if (edge) ans[edge->m_start->getIndex()][edge->m_end->getIndex()] = edge->getWeight();
+            if (edge->reverse) ans[edge->m_end->getIndex()][edge->m_start->getIndex()] = edge->reverse->getWeight();
         }
-        ans += '\n';
     }
-    extract_text_bx.setText(ans);
+    extract_text_bx.setText(to_string(ans));
 }
 string to_string(const vector<vector<int>>& matrix) {
     string ans = to_string(matrix.size()) + '\n';
@@ -117,21 +87,22 @@ vector<vector<int>> to_matrix(const vector<string>& str){
     return ans;
 }
 vector<int> Graph::getEdge(const int& graph) {
-    int vertex = graph;
-    vector<bool> visited(matrix.size(), 0);
+    vector<bool> visited(edges.size(), 0);
+    getEdge(graph, visited);
     vector<int> ans;
-    getVertex(graph, visited);
-    for (int i = 0; i<edges.size(); i++) {
-        int start = edges[i]->m_start->getIndex();
-        int end = edges[i]->m_end->getIndex();
-        if (start < end && visited[start]) {
-            ans.push_back(i);
-        }
-    }
+    for (int i = 0; i<edges.size(); i++)
+        if (visited[i]) ans.push_back(i);
     return ans;
 }
+void Graph::getEdge(const int& graph, vector<bool>& visited) {
+    for (Edge* edge:vertices[graph]->edges)
+        if (edge && !visited[edge->getGlobalIndex()]) {
+            visited[edge->getGlobalIndex()] = true;
+            getEdge(edge->m_end->getIndex(), visited);
+        }
+}
 vector<int> Graph::getVertex(const int& graph) {
-    vector<bool> visited(matrix.size(), 0);
+    vector<bool> visited(vertices.size(), 0);
     getVertex(graph, visited);
     vector<int> ans;
     for (int i = 0; i<visited.size(); i++) 
@@ -140,9 +111,9 @@ vector<int> Graph::getVertex(const int& graph) {
 }
 void Graph::getVertex(const int& graph, vector<bool>& visited) {
     visited[graph] = true;
-    for (int i = 0; i<matrix.size(); i++)
-        if (matrix[graph][i]!=-1 && !visited[i]) {
-            getVertex(i, visited);
+    for (Edge* edge:vertices[graph]->edges)
+        if (edge && !visited[edge->m_end->getIndex()]) {
+            getVertex(edge->m_end->getIndex(), visited);
         }
 }
 void Graph::dijikstra_console_add(const int& value) {
@@ -168,13 +139,15 @@ void Graph::kruskal_console_add() {
     console.InsertNextSubCommand("      Pop top edge");
 }
 void Graph::prim_console_add() {
-    console.InsertNextSubCommand("f(vertex)");
-    console.InsertNextSubCommand("  Add all edge start at vertex to heap");
-    console.InsertNextSubCommand("  Pop all edges with used end vertex from heap");
-    console.InsertNextSubCommand("  while heap have element ");
+    console.InsertNextSubCommand("f(vertex) ");
+    console.InsertNextSubCommand("  Push vertex to heap");
+    console.InsertNextSubCommand("  while heap have element {");
     console.InsertNextSubCommand("      vertex = top heap -> end");
     console.InsertNextSubCommand("      Pop top heap");
-    console.InsertNextSubCommand("      f(vertex)");
+    console.InsertNextSubCommand("      if !visited[vertex]");
+    console.InsertNextSubCommand("          visited[vertex] = true");
+    console.InsertNextSubCommand("          Push all edge to heap");
+    console.InsertNextSubCommand("  }");
 }
 void Graph::search_console_add(const int& vertex, const int& mode) {
     int value = vertices[vertex]->getValue();
@@ -182,8 +155,8 @@ void Graph::search_console_add(const int& vertex, const int& mode) {
         console.InsertNextSubCommand("Create queue");
         console.InsertNextSubCommand("add vertex = " + to_string(value) + " to queue");
         console.InsertNextSubCommand("while queue not empty");
-        console.InsertNextSubCommand("   Push all child to queue ");
-        console.InsertNextSubCommand("   pop front of queue");
+        console.InsertNextSubCommand("   Pop front of queue");
+        console.InsertNextSubCommand("   Push all child(not visited) to queue ");
     } else {
         console.InsertNextSubCommand("Create visited[n]");
         console.InsertNextSubCommand("vertex = " + to_string(value));

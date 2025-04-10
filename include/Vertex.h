@@ -2,6 +2,7 @@
 #define VERTEX_H
 
 #include "Controller.h"
+#include "Edge.h"
 #include "Label.h"
 #include "SettingPackage.h"
 #include "DynamicColorCircle.h"
@@ -29,7 +30,7 @@ class Vertex: public Controller, public DynamicColorCircle {
                             setDragable(const bool& dragable);
                             
         virtual Vector2     getCenter() const override;
-    
+        vector<Edge*>       edges;
         Vector2             getVelocity() const;
         ~Vertex();
     private:
