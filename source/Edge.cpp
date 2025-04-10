@@ -1,4 +1,5 @@
 #include "../include/Edge.h"
+#include "../include/Vertex.h"
 #include "../include/General.h"
 
 void DrawArc(const Vector2& start, const Vector2& end, const float& angular, const Color& color) {
@@ -71,7 +72,7 @@ Vector2 PointOnArc(const Vector2& start, const Vector2& end, const float& angula
     ans.y +=  radius*sin(start_angular+current_angular);
     return ans;
 }
-Edge::Edge(Vertex* start, Vertex* end, TextSetting* t_setting) {
+Edge::Edge(Vertex* start, Vertex* end, const int& globalIndex, const int& localIndex, TextSetting* t_setting) {
     text_setting = t_setting;
     m_start = start;
     m_end = end;
@@ -80,6 +81,9 @@ Edge::Edge(Vertex* start, Vertex* end, TextSetting* t_setting) {
     percent = 1;
     start_color = start->getColor();
     end_color = end->getColor();
+    m_global_index = globalIndex;
+    m_local_index = localIndex;
+    reverse = 0;
     m_is_color_changed = false;
     m_is_direct = false;
     m_is_weight = false;
@@ -101,6 +105,12 @@ bool Edge::isPressed() const {
 }
 int Edge::getWeight() const {
     return weight;
+}
+int Edge::getLocalIndex() const {
+    return m_local_index;
+}
+int Edge::getGlobalIndex() const {
+    return m_global_index;
 }
 void Edge::setType(const bool& direct) {
     m_is_direct = direct;
