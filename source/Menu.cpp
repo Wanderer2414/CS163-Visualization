@@ -29,13 +29,13 @@ Menu::Menu(FormSetting f_setting, const Vector2& windowSize) :
     SLLForm.setText("Singly Linked List");
     
     Back.setPosition(10, 10);
-    Back.setButtonStage(0, back_normal, back_hovered);
+    Back.setButtonStage(0, form_setting.back_normal, form_setting.back_hovered);
     Back.setSize(30, 30);
     Back.setSize(40, 40);
 
     MenuDSA.setPosition( m_windowSize.x / 2 - 200 , 30);
     MenuDSA.setSize(400, 50);
-    MenuDSA.setButtonStage(0, TitleMenu, TitleMenu);
+    MenuDSA.setButtonStage(0, form_setting.TitleMenu, form_setting.TitleMenu);
 
     Vector2 center = m_windowSize / 2;
     int cols = 2;
