@@ -17,13 +17,12 @@ namespace HT {
                             draw()      override,
                             handle()    override,
                             setIndex(const int& index);
-        Color               anim_color, found_color;
-        bool                is_animating = false, is_found = false;
+        Color               anim_color;
+        bool                is_animating = false;
     private:
         int                 m_value,
                             m_index;
     };
-
     class HashTable : public Form {
     public:
         enum CommandCode {
@@ -35,13 +34,12 @@ namespace HT {
             _remove = 4,
             _search = 6,
             _update = 7,
-            _found = 8,
             _goUp = 9,
             _goDown = 10,
-            _insert_end_code,
-            _search_end_code,
-            _remove_end_code,
-            _update_end_code
+            _insert_end_code = 12,
+            _search_end_code = 13,
+            _remove_end_code = 14,
+            _update_end_code = 15
         };
         HashTable(const int& index, FormSetting form_setting, const Vector2& window_size);
         virtual void        add(const vector<std::string>& data) override,
@@ -78,3 +76,4 @@ namespace HT {
 }
 
 #endif
+   
