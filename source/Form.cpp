@@ -314,10 +314,12 @@ void Form::handle() {
         GotoCommandLine(progress);
         if (!IsMouseButtonDown(MOUSE_BUTTON_LEFT)) m_progress.setProgresss(getProgress());
     }
-    else if (!isFocus) {
-        //Progress go next and go back
-        if (IsKeyReleased(KEY_RIGHT)) goNext();
-        else if (IsKeyReleased(KEY_LEFT)) goBack();
+    else {
+        if (!isFocus) {
+            //Progress go next and go back
+            if (IsKeyReleased(KEY_RIGHT)) goNext();
+            else if (IsKeyReleased(KEY_LEFT)) goBack();
+        }
         //Reshow progress
         progress = getProgress();
         m_progress.setProgresss(progress);
