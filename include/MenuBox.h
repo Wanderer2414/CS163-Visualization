@@ -2,8 +2,10 @@
 #define MENUBOX_H
 
 #include "Controller.h"
+#include "Label.h"
 #include "SettingPackage.h"
 #include "SunMode.h"
+#include "TextButton.h"
 #include "TextureButton.h"
 #include "VerticalOpen.h"
 #include "MenuTab.h"
@@ -12,9 +14,11 @@
 class MenuBox: public Controller, public VerticalOpen {
 public:
     MenuBox(FormSetting& f_setting);
-    int             getMode() const;
+    int             getMode() const,
+                    getWindowSizeIndex();
     FormSetting     &form_setting;
-    bool            isHovered() const;
+    bool            isHovered() const override,
+                    isSizeChanged() const;
     virtual void    handle()    override,
                     draw()      override;
 
@@ -22,23 +26,25 @@ public:
                     setPosition(const float &width, const float &height) override;
 
     virtual void    setVisible(const bool& visible) override,
-                    setMode(const int& mode);
+                    setMode(const int& mode),
+                    setWindowSize(const int& index);
     
                 
     Vector2         getPosition()   const override,
-                    getSize()       const override,
-                    getWindowSize();
+                    getSize()       const override;
 
     ~MenuBox();
 protected:
     bool            m_is_hovered,
                     m_is_pressed,
+                    is_size_changed,
                     m_is_visible;
+    int             window_size_index;
     SunMode         sun;
     ButtonTab       window_size;
+    Label           window_size_label;
     TextButton      submit_button;
     vector<Controller*> children;
-    const Vector2 window_sizes[3] = {Vector2({1366, 768}), Vector2({1820, 980}), Vector2({1024, 768})};
 };
 
 #endif

@@ -16,8 +16,11 @@ public:
     void    run();
     ~Application();
 private:
-    float   m_width = 1344,
-            m_height = 700;
+    const Vector2 window_sizes[3] = {
+        Vector2({1366, 768}), 
+        Vector2({1820, 1080}), 
+        Vector2({1024, 600}),
+    };
 };
 
 #endif

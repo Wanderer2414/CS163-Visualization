@@ -19,6 +19,8 @@ class TextSetting {
 public:
     Font    font;
     float   font_size,
+            medium_font_size,
+            small_font_size,
             spacing;
     Color   color;
 };
@@ -71,6 +73,5 @@ public:
 
 extern FormSetting LightTheme;
 extern FormSetting DarkTheme;
-extern FormSetting NeonTheme;
 
 #endif

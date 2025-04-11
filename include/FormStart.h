@@ -2,6 +2,7 @@
 #define FORMSTART_H
 
 #include "Console.h"
+#include "Label.h"
 #include "MenuBox.h"
 #include "MoveButton.h"
 #include "SettingPackage.h"
@@ -16,8 +17,10 @@ public:
     virtual void    handle(),
                     draw();
                     
-    virtual void    setMode(const int& mode);
+    virtual void    setMode(const int& mode),
+                    setSizeIndex(const int& index);
     FormSetting     form_setting;
+    int             getWindowSizeIndex();
 private:
     int             old_mode = -1;
     MoveButton      Start, Setting, Exit, AboutUs;
