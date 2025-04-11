@@ -243,9 +243,9 @@ void Graph::FetchNextCommand(const vector<float>& codes) {
             int n = codes[1];
             prevs.push(to_float(vertices[n]->getColor()));
             vector<int> vertices_index= getVertex(n);
-            for (int i:vertices_index) vertices[i]->setColor(PURPLE);
+            for (int i:vertices_index) vertices[i]->setColor(form_setting.middle_color);
             vector<int> edge_index = getEdge(n);
-            for (int i:edge_index) edges[i]->setColor(PURPLE);
+            for (int i:edge_index) edges[i]->setColor(form_setting.middle_color);
             setDuration(codes.back());
         }
         break;
@@ -297,13 +297,13 @@ void Graph::FetchNextCommand(const vector<float>& codes) {
             Vector2 delta = vertices[start]->getCenter()-vertices[end]->getCenter();
             if (start == end) delta = vertices[start]->getCenter();
             vertices[end]->setDuration(codes.back()*getSpeed());
-            vertices[end]->start(arctan(delta),ORANGE ,vertices[end]->getColor());
+            vertices[end]->start(arctan(delta),form_setting.hightlight_color3 ,vertices[end]->getColor());
             setDuration(codes.back());
         }
         break;
         case fill_vertex: {
             int index = codes[1];
-            vertices[index]->setColor(ORANGE);
+            vertices[index]->setColor(form_setting.hightlight_color3);
             setDuration(codes.back());
         }
         break;
@@ -311,7 +311,7 @@ void Graph::FetchNextCommand(const vector<float>& codes) {
             int start = codes[1], end = codes[2];
             Vector2 delta = vertices[start]->getCenter()-vertices[end]->getCenter();
             if (start == end) delta = vertices[start]->getCenter();
-            vertices[end]->start(arctan(delta), LIME ,vertices[end]->getColor());
+            vertices[end]->start(arctan(delta), form_setting.hightlight_color2 ,vertices[end]->getColor());
             setDuration(codes.back());
         }
         break;
@@ -561,13 +561,13 @@ void Graph::FetchPrevCommand(const vector<float>& codes) {
             Vector2 delta = vertices[end]->getCenter() - vertices[start]->getCenter();
             if (start == end) delta = vertices[start]->getCenter();
             vertices[end]->setDuration(codes.back()*getSpeed());
-            vertices[end]->start(arctan(delta),PURPLE ,vertices[end]->getColor());
+            vertices[end]->start(arctan(delta),form_setting.middle_color ,vertices[end]->getColor());
             setDuration(codes.back());
         }
         break;
         case fill_vertex: {
             int index = codes[1];
-            vertices[index]->setColor(PURPLE);
+            vertices[index]->setColor(form_setting.middle_color);
             setDuration(codes.back());
         }
         break;
@@ -575,7 +575,7 @@ void Graph::FetchPrevCommand(const vector<float>& codes) {
             int start = codes[1], end = codes[2];
             Vector2 delta = vertices[end]->getCenter() - vertices[start]->getCenter();
             if (start == end) delta = vertices[start]->getCenter();
-            vertices[end]->start(arctan(delta), ORANGE ,vertices[end]->getColor());
+            vertices[end]->start(arctan(delta), form_setting.hightlight_color3 ,vertices[end]->getColor());
             setDuration(codes.back());
         }
         break;

@@ -59,7 +59,7 @@ HT::HashTable::HashTable(const int& index, FormSetting f_setting, const Vector2&
     size_label.setText("Size: ");
     size_label.setAlignText(Label::Left);
 
-    random_size_button.setButtonStage(0, Rand, Rand);
+    random_size_button.setButtonStage(0, form_setting.Rand, form_setting.Rand);
     random_size_button.setPosition(275, 50);
     random_size_button.setSize(30, 30);
 
@@ -96,16 +96,28 @@ void HT::HashTable::draw() {
     EndMode2D();
     Form::draw();
 }
+string HT::HashTable::RandomCreateSize(int _max, int _min)
+{
+    static bool seeded = false;
+    if (!seeded) {
+        std::srand(std::time(nullptr));
+        seeded = true;
+    }
+    return std::to_string(_min + std::rand() % (_max - _min + 1));
+}
 void HT::HashTable::handle() {
     Form::handle();
     for (auto& i:m_memory) i.handle();
     
     m_camera.offset.x = m_workspace.x + 10;
-    if (m_memory_sz_textBox.isEnter()) {
+    if (random_size_button.isPressed()) {
+        m_memory_sz_textBox.setText(RandomCreateSize(100, 10));
+    }
+    if (m_memory_sz_textBox.isEnter() || create_button.isPressed()) {
         setMemorySize(to_int(m_memory_sz_textBox.getText()));
     }
     int count = m_workspace.width / m_camera.zoom / (m_node_size + m_node_spacing);
-    if (count != max_size || m_memory_sz_textBox.isEnter()) {
+    if (count != max_size || m_memory_sz_textBox.isEnter() || create_button.isPressed()) {
         max_size = count;
         int i = 0;
         int y = 0;

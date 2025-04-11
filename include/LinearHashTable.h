@@ -56,6 +56,7 @@ namespace HT {
             search_console_add(),
             remove_console_add(),
             update_console_add();
+        virtual string RandomCreateSize(int _max, int _min);
         ~HashTable();
     private:
         int         m_storage_size,

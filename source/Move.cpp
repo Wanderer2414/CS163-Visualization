@@ -15,7 +15,7 @@ int Move::size() const {
 void Move::handle() {
     if (progress != pointer) {
         Vector2 delta = m_vertices[pointer] - getPosition();
-        if (abs(pointer-progress)>0.1) {
+        if (abs(pointer-progress)>0.001) {
             Vector2 pos = getPosition() + delta/10;
             progress += (pointer-progress)/10;
             setPosition(pos.x, pos.y);

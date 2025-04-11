@@ -244,9 +244,9 @@ void Graph::updatePosition() {
     }
 }
 
-GraphVisual::GraphVisual(Font font) : font(font), isChosen(false), numComponent(0), graph(Graph()) {
-    
-}
+//GraphVisual::GraphVisual(Font font) : font(font), isChosen(false), numComponent(0), graph(Graph()) {
+//    
+//}
 
 void GraphVisual::random() {
     int vertexCount = rand() % 10 + 5;
