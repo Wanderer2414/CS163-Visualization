@@ -1,10 +1,13 @@
 #include "../include/Application.h"
 #include "../include/IncludePath.h"
+#include "../include/Global.h"
 
+Vector2 WindowSize;
 Application::Application()
 {
     InitWindow(window_sizes[window_size_index].x, window_sizes[window_size_index].y, "Visualization");
     SetTargetFPS(60);
+    WindowSize = window_sizes[window_size_index];
     LightTheme.font = LoadFont(font_link);
     DarkTheme.font = LoadFont(font_link);
 }
@@ -25,6 +28,7 @@ void Application::run() {
             int wsize_index = menuStart.getWindowSizeIndex();
             if (wsize_index != window_size_index) {
                 window_size_index = wsize_index;
+                WindowSize = window_sizes[window_size_index];
                 SetWindowSize(window_sizes[window_size_index].x,window_sizes[window_size_index].y);
             }
         }

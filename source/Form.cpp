@@ -89,12 +89,12 @@ Form::Form(const int& index, FormSetting f_setting, const Vector2& window_size) 
     option_box.setText(4,"Remove");
     option_box.setVisible(false);
 
-    console.setPosition(m_window_size.x - 510, m_window_size.y - 220);
-    console.setSize(500, 200);
-    console.setTextOrigin({ 10,10 });
+    console.setSize(TransX(500), TransY(200));
+    console.setPosition(m_window_size.x - console.getSize().x - TransX(10), m_window_size.y - console.getSize().y - TransY(20));
+    console.setTextOrigin({ TransX(10),TransY(10) });
 
-    buttonTab.setSize(400, 40);
-    buttonTab.setPosition(m_window_size.x/2 - 200, 10);
+    buttonTab.setSize(TransX(400), TransY(40));
+    buttonTab.setPosition(m_window_size.x/2 - buttonTab.getSize().x/2, TransY(10));
     buttonTab.push_back("AVL Tree");
     buttonTab.push_back("Graph");
     buttonTab.push_back("Hash Table");

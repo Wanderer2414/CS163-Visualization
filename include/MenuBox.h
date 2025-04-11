@@ -42,7 +42,11 @@ protected:
     int             window_size_index;
     SunMode         sun;
     ButtonTab       window_size;
-    Label           window_size_label;
+    
+    Label           window_size_label, 
+                    font_size_label, 
+                    small_font_size_label, 
+                    medium_font_size_label;
     TextButton      submit_button;
     vector<Controller*> children;
 };

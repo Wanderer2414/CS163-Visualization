@@ -1,6 +1,7 @@
 #include "../include/FormStart.h"
 #include "../include/IncludePath.h"
-#include <memory>
+#include "../include/General.h"
+extern Vector2 WindowSize;
 MenuStart::MenuStart(FormSetting f_setting, const Vector2& windowSize) :
     form_setting(f_setting),
     m_windowSize(windowSize),
@@ -11,7 +12,7 @@ MenuStart::MenuStart(FormSetting f_setting, const Vector2& windowSize) :
     Exit(&form_setting,&form_setting),
     setting_box(form_setting)
 {
-    
+
     children.push_back(&Start);
     children.push_back(&Setting);
     children.push_back(&Exit);
@@ -20,11 +21,11 @@ MenuStart::MenuStart(FormSetting f_setting, const Vector2& windowSize) :
     children.push_back(&Title);
     children.push_back(&setting_box);
 
-    image_list.setPosition(-600, m_windowSize.y / 2 - 115);
-    image_list.add_vertex({-600,m_windowSize.y / 2 - 115});
-    image_list.add_vertex({180,m_windowSize.y / 2 - 115});
+    image_list.setSize(TransX(550), TransY(325));
+    image_list.setPosition(-image_list.getSize().x - 50, m_windowSize.y / 2 - TransY(115));
+    image_list.add_vertex({-600,m_windowSize.y / 2 - TransY(115)});
+    image_list.add_vertex({180,m_windowSize.y / 2 - TransY(115)});
     image_list.moveNext();
-    image_list.setSize(550, 325);
 
     image_list.push(0, AVL0);
     image_list.push(0, AVL1);
@@ -45,46 +46,46 @@ MenuStart::MenuStart(FormSetting f_setting, const Vector2& windowSize) :
     
     title_setting = form_setting;
     title_setting.font = GetFontDefault();
-    title_setting.font_size = 50;
+    title_setting.font_size = TransY(50);
     Title.setPosition(0, -120);
     Title.add_vertex({0, -120});
     Title.add_vertex({0, 70});
-    Title.setSize(m_windowSize.x, 120);
+    Title.setSize(m_windowSize.x, TransY(120));
     Title.setAlignText(Label::Middle);
     Title.setText("DATA STRUCTURE\nVISUALIZATION");
     Title.moveNext();
 
-    Start.setSize(400, 60);
+    Start.setSize(TransX(400), TransY(60));
     Start.setText("Start");
-    Start.setPosition(m_windowSize.x+100, m_windowSize.y / 2 - Start.getSize().y / 2 - 90);
-    Start.add_vertex({m_windowSize.x+100, m_windowSize.y / 2 - Start.getSize().y / 2 - 90});
-    Start.add_vertex({m_windowSize.x - Start.getSize().x -100, m_windowSize.y / 2 - Start.getSize().y / 2 - 90});
+    Start.setPosition(m_windowSize.x+100, m_windowSize.y / 2 - Start.getSize().y / 2 - TransY(90));
+    Start.add_vertex({m_windowSize.x+100, m_windowSize.y / 2 - Start.getSize().y / 2 - TransY(90)});
+    Start.add_vertex({m_windowSize.x - Start.getSize().x -100, m_windowSize.y / 2 - Start.getSize().y / 2 - TransY(90)});
     Start.moveNext();
 
-    Setting.setSize(400, 60);
+    Setting.setSize(TransX(400), TransY(60));
     Setting.setText("Setting");
     Setting.setPosition(m_windowSize.x*2, m_windowSize.y / 2 - Setting.getSize().y / 2);
     Setting.add_vertex({m_windowSize.x*2, m_windowSize.y / 2 - Setting.getSize().y / 2});
     Setting.add_vertex({m_windowSize.x - Setting.getSize().x -100, m_windowSize.y / 2 - Setting.getSize().y / 2});
     Setting.moveNext();
 
-    setting_box.setSize(500, 600);
+    setting_box.setSize(TransX(500), TransY(600));
     setting_box.setPosition(m_windowSize.x/2-setting_box.getSize().x/2, m_windowSize.y/2-setting_box.getSize().y/2);
     setting_box.setDuration(0.2);
     setting_box.setVisible(false);
 
-    AboutUs.setSize(400,60);
+    AboutUs.setSize(TransX(400), TransY(60));
     AboutUs.setText("About Us");
-    AboutUs.setPosition(m_windowSize.x*3, m_windowSize.y / 2 - AboutUs.getSize().y / 2 + 90);
-    AboutUs.add_vertex({m_windowSize.x*3, m_windowSize.y / 2 - AboutUs.getSize().y / 2 + 90});
-    AboutUs.add_vertex({m_windowSize.x - AboutUs.getSize().x -100, m_windowSize.y / 2 - AboutUs.getSize().y / 2 + 90});
+    AboutUs.setPosition(m_windowSize.x*3, m_windowSize.y / 2 - AboutUs.getSize().y / 2 + TransY(90));
+    AboutUs.add_vertex({m_windowSize.x*3, m_windowSize.y / 2 - AboutUs.getSize().y / 2 + TransY(90)});
+    AboutUs.add_vertex({m_windowSize.x - AboutUs.getSize().x -100, m_windowSize.y / 2 - AboutUs.getSize().y / 2 + TransY(90)});
     AboutUs.moveNext();
     
-    Exit.setSize(400, 60);
+    Exit.setSize(TransX(400), TransY(60));
     Exit.setText("Exit");
-    Exit.setPosition(m_windowSize.x*4, m_windowSize.y / 2 - Exit.getSize().y / 2 + 180);
-    Exit.add_vertex({m_windowSize.x*4, m_windowSize.y / 2 - Setting.getSize().y / 2 + 180});
-    Exit.add_vertex({m_windowSize.x - Exit.getSize().x -100, m_windowSize.y / 2 - Exit.getSize().y / 2 + 180});
+    Exit.setPosition(m_windowSize.x*4, m_windowSize.y / 2 - Exit.getSize().y / 2 + TransY(180));
+    Exit.add_vertex({m_windowSize.x*4, m_windowSize.y / 2 - Setting.getSize().y / 2 + TransY(180)});
+    Exit.add_vertex({m_windowSize.x - Exit.getSize().x -100, m_windowSize.y / 2 - Exit.getSize().y / 2 + TransY(180)});
     Exit.moveNext();
 }
 int MenuStart::getMode() const {

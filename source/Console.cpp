@@ -166,9 +166,9 @@ void Console::handle() {
 }
 void Console::draw() {
     if (m_is_hovered)
-        DrawRectangleRounded({ m_position.x, m_position.y, m_size.x, m_size.y }, button_setting->roundness, button_setting->segment, button_setting->hover_color);
+        DrawRectangleRounded({ m_position.x, m_position.y, m_size.x, m_size.y }, 0.05f, button_setting->segment, button_setting->hover_color);
     else
-        DrawRectangleRounded({ m_position.x, m_position.y, m_size.x, m_size.y }, button_setting->roundness, button_setting->segment, button_setting->normal_color);
+        DrawRectangleRounded({ m_position.x, m_position.y, m_size.x, m_size.y }, 0.05f, button_setting->segment, button_setting->normal_color);
     BeginScissorMode(m_position.x, m_position.y, m_size.x, m_size.y);
     if (line_cursor >= 0)
         DrawRectangle(m_position.x, m_origin.y + m_position.y + text_setting->medium_font_size * current_line + m_delta.y, m_size.x, text_setting->medium_font_size, button_setting->hightlight_color1);
