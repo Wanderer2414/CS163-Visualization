@@ -6,13 +6,14 @@
 #include "SunMode.h"
 #include "TextureButton.h"
 #include "VerticalOpen.h"
+#include "MenuTab.h"
 #include "Global.h"
 
 class MenuBox: public Controller, public VerticalOpen {
 public:
-    MenuBox();
+    MenuBox(FormSetting& f_setting);
     int             getMode() const;
-    FormSetting     light_setting, dark_setting;
+    FormSetting     &form_setting;
     bool            isHovered() const;
     virtual void    handle()    override,
                     draw()      override;
@@ -25,7 +26,8 @@ public:
     
                 
     Vector2         getPosition()   const override,
-                    getSize()       const override;
+                    getSize()       const override,
+                    getWindowSize();
 
     ~MenuBox();
 protected:
@@ -33,7 +35,10 @@ protected:
                     m_is_pressed,
                     m_is_visible;
     SunMode         sun;
+    ButtonTab       window_size;
+    TextButton      submit_button;
     vector<Controller*> children;
+    const Vector2 window_sizes[3] = {Vector2({1366, 768}), Vector2({1820, 980}), Vector2({1024, 768})};
 };
 
 #endif

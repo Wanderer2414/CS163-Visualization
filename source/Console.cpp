@@ -172,8 +172,9 @@ void Console::draw() {
     BeginScissorMode(m_position.x, m_position.y, m_size.x, m_size.y);
     if (line_cursor >= 0)
         DrawRectangle(m_position.x, m_origin.y + m_position.y + text_setting->font_size * current_line + m_delta.y, m_size.x, text_setting->font_size, button_setting->hightlight_color1);
-    for (int i = 0; i < m_list.size(); i++)
+    for (int i = 0; i < m_list.size(); i++) {
         DrawTextEx(text_setting->font, m_list[i].c_str(), m_origin + m_delta + m_position + Vector2({ 0, text_setting->font_size * i }), text_setting->font_size, text_setting->spacing, text_setting->color);
+    }
     EndScissorMode();
 }
 Console::~Console() {

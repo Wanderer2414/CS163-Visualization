@@ -6,7 +6,8 @@ MenuStart::MenuStart(FormSetting f_setting, const Vector2& windowSize) :
     Start(&form_setting,&form_setting),
     Setting(&form_setting, &form_setting),
     AboutUs(&form_setting ,&form_setting),
-    Exit(&form_setting,&form_setting)
+    Exit(&form_setting,&form_setting),
+    setting_box(form_setting)
 {
     
     children.push_back(&Start);

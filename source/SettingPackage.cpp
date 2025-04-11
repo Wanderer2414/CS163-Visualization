@@ -2,7 +2,7 @@
 #include "../include/IncludePath.h"
 FormSetting LightTheme = {
     {
-        0.2f, 30,
+        0.1f, 30,
         {100, 160, 220, 255},  // Button Pressed 
         {130, 180, 230, 255},  // Button Hover 
         {160, 200, 250, 255},   // Button 
@@ -62,7 +62,7 @@ FormSetting LightTheme = {
 
 FormSetting DarkTheme = {
     {
-        0.2f, 30,
+        0.1f, 30,
         {54, 63, 68, 255},    // Button Pressed (Deepest Green-Blue)
         {24, 61, 61, 255},   // Button Hover (Muted Dark Teal)
         {92, 131, 116, 255},  // Button (Soft Desaturated Green)
