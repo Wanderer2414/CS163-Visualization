@@ -17,7 +17,7 @@ public:
     ~Application();
 private:
     float   m_width = 1820,
-            m_height = 980;
+            m_height = 960;
 };
 
 #endif
