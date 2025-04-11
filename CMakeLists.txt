@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.8)
 
-project(DSAVisual)
+project(DSAVisualization)
 
 # Set C++ standard
 set(CMAKE_CXX_STANDARD 17)
@@ -22,12 +22,12 @@ file(GLOB SOURCES
 )
 
 # Create executable
-add_executable(DSAVisual ${SOURCES})
+add_executable(DSAVisualization ${SOURCES})
 
 # Link Raylib (MinGW-compatible .a or .dll.a file)
 # Example: raylib.dll.a or libraylib.a
 # Adjust the name to match the actual file you have in your lib folder
-target_link_libraries(DSAVisual
+target_link_libraries(DSAVisualization
     ${RAYLIB_LIB_DIR}/libraylib.a
     opengl32
     gdi32
