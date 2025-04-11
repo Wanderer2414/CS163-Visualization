@@ -13,19 +13,19 @@ void ImageTab::handle() {
     if (gif_pointer == -1 && gifs.size()) {
         gif_pointer++;
         gifs[gif_pointer]->setPosition(m_position.x, m_position.y);
-        gifs[gif_pointer]->next();
+        gifs[gif_pointer]->moveNext();
     }
     if (gifs[gif_pointer]->getVertexDone() == 2) {
         gifs[gif_pointer]->setPosition(m_position.x+m_size.x, m_position.y);
-        gifs[gif_pointer]->next();
+        gifs[gif_pointer]->moveNext();
         gif_pointer = (gif_pointer+1)%gifs.size();
     }
     if (gif_pointer>=0 && gif_pointer<gifs.size()) gifs[gif_pointer]->handle();
     if (gifs[(gif_pointer+1)%gifs.size()]->getVertexDone() == -1) 
         gifs[(gif_pointer+1)%gifs.size()]->handle();
     if (clock.get()) {
-        gifs[gif_pointer]->next();
-        gifs[(gif_pointer+1)%gifs.size()]->next();  
+        gifs[gif_pointer]->moveNext();
+        gifs[(gif_pointer+1)%gifs.size()]->moveNext();  
     }
     
 }

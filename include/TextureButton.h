@@ -9,6 +9,7 @@ class TextureButton : public Button {
 public:
     TextureButton();
     int             getStage() const;
+    bool            isFocus() const override;
     virtual void    handle()                                            override,
                     draw()                                              override,
                     setSize(const float& width, const float& height)    override,
@@ -17,6 +18,7 @@ public:
     void            next(), back(), go(const int& index);
     ~TextureButton();
 protected:
+    bool              m_is_focus;
     int               source_pointer;
     vector<Texture2D> m_sources;
     vector<Texture2D> m_sources_hover;

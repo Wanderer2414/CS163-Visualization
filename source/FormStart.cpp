@@ -20,10 +20,10 @@ MenuStart::MenuStart(FormSetting f_setting, const Vector2& windowSize) :
     children.push_back(&Title);
     children.push_back(&setting_box);
 
-    image_list.setPosition(-550, m_windowSize.y / 2 - 115);
-    image_list.add_vertex({-550,m_windowSize.y / 2 - 115});
+    image_list.setPosition(-600, m_windowSize.y / 2 - 115);
+    image_list.add_vertex({-600,m_windowSize.y / 2 - 115});
     image_list.add_vertex({180,m_windowSize.y / 2 - 115});
-    image_list.next();
+    image_list.moveNext();
     image_list.setSize(550, 325);
 
     image_list.push(0, AVL0);
@@ -52,21 +52,21 @@ MenuStart::MenuStart(FormSetting f_setting, const Vector2& windowSize) :
     Title.setSize(m_windowSize.x, 120);
     Title.setAlignText(Label::Middle);
     Title.setText("DATA STRUCTURE\nVISUALIZATION");
-    Title.next();
+    Title.moveNext();
 
     Start.setSize(400, 60);
     Start.setText("Start");
-    Start.setPosition(m_windowSize.x, m_windowSize.y / 2 - Start.getSize().y / 2 - 90);
-    Start.add_vertex({m_windowSize.x, m_windowSize.y / 2 - Start.getSize().y / 2 - 90});
+    Start.setPosition(m_windowSize.x+100, m_windowSize.y / 2 - Start.getSize().y / 2 - 90);
+    Start.add_vertex({m_windowSize.x+100, m_windowSize.y / 2 - Start.getSize().y / 2 - 90});
     Start.add_vertex({m_windowSize.x - Start.getSize().x -100, m_windowSize.y / 2 - Start.getSize().y / 2 - 90});
-    Start.next();
+    Start.moveNext();
 
     Setting.setSize(400, 60);
     Setting.setText("Setting");
     Setting.setPosition(m_windowSize.x*2, m_windowSize.y / 2 - Setting.getSize().y / 2);
     Setting.add_vertex({m_windowSize.x*2, m_windowSize.y / 2 - Setting.getSize().y / 2});
     Setting.add_vertex({m_windowSize.x - Setting.getSize().x -100, m_windowSize.y / 2 - Setting.getSize().y / 2});
-    Setting.next();
+    Setting.moveNext();
 
     setting_box.setSize(500, 600);
     setting_box.setPosition(m_windowSize.x/2-setting_box.getSize().x/2, m_windowSize.y/2-setting_box.getSize().y/2);
@@ -78,14 +78,14 @@ MenuStart::MenuStart(FormSetting f_setting, const Vector2& windowSize) :
     AboutUs.setPosition(m_windowSize.x*3, m_windowSize.y / 2 - AboutUs.getSize().y / 2 + 90);
     AboutUs.add_vertex({m_windowSize.x*3, m_windowSize.y / 2 - AboutUs.getSize().y / 2 + 90});
     AboutUs.add_vertex({m_windowSize.x - AboutUs.getSize().x -100, m_windowSize.y / 2 - AboutUs.getSize().y / 2 + 90});
-    AboutUs.next();
+    AboutUs.moveNext();
     
     Exit.setSize(400, 60);
     Exit.setText("Exit");
     Exit.setPosition(m_windowSize.x*4, m_windowSize.y / 2 - Exit.getSize().y / 2 + 180);
     Exit.add_vertex({m_windowSize.x*4, m_windowSize.y / 2 - Setting.getSize().y / 2 + 180});
     Exit.add_vertex({m_windowSize.x - Exit.getSize().x -100, m_windowSize.y / 2 - Exit.getSize().y / 2 + 180});
-    Exit.next();
+    Exit.moveNext();
 }
 int MenuStart::getMode() const {
     return setting_box.getMode();
@@ -98,7 +98,7 @@ int MenuStart::run() {
         ClearBackground(form_setting.background_color);
         draw();
         EndDrawing();
-        if (!setting_box.isHovered() && Start.getVertexDone()==0) return 1;
+        if (!setting_box.isHovered() && Start.getProgress()<0.05) return 1;
         if (!setting_box.isHovered() && setting_box.isEnd() && Setting.isPressed()) setting_box.open();
         if (!setting_box.isHovered() && Exit.isPressed()) return -1;
         if (setting_box.isSizeChanged()) return 0;
@@ -110,14 +110,15 @@ void MenuStart::handle() {
         old_mode = setting_box.getMode();
         if (old_mode) form_setting = DarkTheme;
         else form_setting = LightTheme;
+        title_setting.color = form_setting.color;
     }
     if (!setting_box.isHovered() && (Start.isPressed() || Exit.isPressed())) {
-        Start.next();
-        AboutUs.next();
-        Setting.next();
-        Exit.next();
-        Title.next();
-        image_list.next();
+        Start.moveNext();
+        AboutUs.moveNext();
+        Setting.moveNext();
+        Exit.moveNext();
+        Title.moveNext();
+        image_list.moveNext();
     }
 }
 void MenuStart::draw() {

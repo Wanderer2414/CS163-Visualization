@@ -540,14 +540,14 @@ void Graph::handle() {
         }
         if (graph_setting.getVertexDone() == 0) {
             graph_setting.setVisible(true);
-            graph_setting.next();
+            graph_setting.moveNext();
         }
     }
     else if (!graph_setting.isHovered()) {
         if (graph_setting.getVertexDone() == 0)
             graph_setting.setVisible(false);
         else if (graph_setting.getVertexDone() == 1) {
-            graph_setting.next();
+            graph_setting.moveNext();
             graph_setting.select(-1);
         }
     }

@@ -13,8 +13,9 @@ public:
     virtual void    setPosition(const float& x, const float& y),
                     setVerticesPosition(const float& x, const float& y),
                     add_vertex(const Vector2& point),
-                    next(),
-                    back();
+                    skip(),
+                    moveNext(),
+                    moveBack();
     virtual Vector2 getPosition() const;
 private:
     float           progress;

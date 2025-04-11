@@ -2,13 +2,12 @@
 #define MENU_H
 
 #include "Console.h"
+#include "MoveTexture.h"
 #include "SettingPackage.h"
 #include "TextButton.h"
 #include "TextureButton.h"
 #include "Global.h"
-
-#define main_button_width 350
-#define main_button_height 100
+#include "ZoomInTransition.h"
 
 class Menu {
 public:
@@ -19,12 +18,14 @@ public:
                     draw()          ;
     FormSetting     form_setting;
 private:
-    TextButton      BSTForm,
+    int             return_value;
+    MoveTexture     BSTForm,
                     GraphForm,
                     HashTableForm,
                     SLLForm;
-    TextureButton   Back,
+    MoveTexture     Back,
                     MenuDSA;
+    ZoomInTransition zoom;
     std::vector<Controller*> children;
     Vector2         m_windowSize;
 };

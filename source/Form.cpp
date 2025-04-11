@@ -268,17 +268,40 @@ Form::Form(const int& index, FormSetting f_setting, const Vector2& window_size) 
     setSpeed(1);
 }
 int Form::run() {
+    float transparent = 1;
+    bool isStart = false, isEnd = false;
     while (!WindowShouldClose()) {
         handle();
         BeginDrawing();
         ClearBackground(form_setting.background_color);
         draw();
+        if (!isStart) {
+            Color color = form_setting.reverse_color;
+            color.a = transparent*255;
+            transparent -= 0.03;
+            DrawRectangle(0, 0, m_window_size.x, m_window_size.y, color);
+            if (transparent<0) {
+                transparent = 0;
+                isStart = true;
+            }
+        }
+        if (isEnd) {
+            Color color = form_setting.reverse_color;
+            color.a = transparent*255;
+            transparent += 0.1;
+            DrawRectangle(0, 0, m_window_size.x, m_window_size.y, color);
+            if (transparent > 1) {
+                transparent = 1;
+                return 3 + buttonTab.GetSelection();
+            }
+        }
         EndDrawing();
         if (back_button.isPressed()) return 1;
         //Home button handle
         if (home_button.isPressed()) return 0;
         if (buttonTab.isChanged()) {
-            return 3 + buttonTab.GetSelection();
+            transparent = 0.1;
+            isEnd = true;
         }
     }
     return 0;
@@ -420,12 +443,12 @@ void Form::search(const std::string& x) {
 void Form::main_box_show() {
     if (!option_box.isVisible()) {
         option_box.setVisible(true);
-        option_box.next();
+        option_box.moveNext();
     }
 }
 void Form::main_box_hide() {
     if (option_box.getVertexDone() == 1) {
-        option_box.next();
+        option_box.moveNext();
         option_box.select(-1);
         insert_textbox.setFocus(false);
         remove_textbox.setFocus(false);

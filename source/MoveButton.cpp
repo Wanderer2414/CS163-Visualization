@@ -6,7 +6,6 @@ MoveButton::MoveButton(ButtonSetting* button_setting, TextSetting* text_setting)
     }
 void MoveButton::setPosition(const float& x, const float& y) {
     TextButton::setPosition(x, y);
-    Move::setPosition(x, y);
 }
 void MoveButton::handle() {
     Move::handle();
