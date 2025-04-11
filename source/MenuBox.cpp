@@ -25,7 +25,7 @@ MenuBox::MenuBox(FormSetting& f_setting):
     window_size.setPosition(270, 80);
     window_size.setSize(200, 40);
     window_size.push_back("1366x768");
-    window_size.push_back("1820x1080");
+    window_size.push_back("1820x980");
     window_size.push_back("1024x600");
     window_size.setSelection(window_size_index);
 

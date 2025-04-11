@@ -62,7 +62,7 @@ int MenuStart::run() {
         EndDrawing();
         if (!setting_box.isHovered() && Start.getVertexDone()==0) return 1;
         if (!setting_box.isHovered() && setting_box.isEnd() && Setting.isPressed()) setting_box.open();
-        if (!setting_box.isHovered() && Exit.getVertexDone() == 0) return -1;
+        if (!setting_box.isHovered() && Exit.isPressed()) return -1;
         if (setting_box.isSizeChanged()) return 0;
     };
     return 0;

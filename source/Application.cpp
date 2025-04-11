@@ -29,7 +29,6 @@ void Application::run() {
             if (wsize_index != size_index) {
                 size_index = wsize_index;
                 windowSize = window_sizes[size_index];
-                SetWindowPosition(0, 0);
                 SetWindowSize(windowSize.x,windowSize.y);
             }
         }

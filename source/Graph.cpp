@@ -776,8 +776,8 @@ void Graph::kruskal_algorithms(const int& index) {
     InsertNextSubCommand({goDown, 1, 0.5});
     while (q.size()) {
         if (dsu.check(q.front().start, q.front().end)) {
-            q.pop();
             InsertNextSubCommand({pop_heap, 1.0f*q.front().start, 1.0f*q.front().end, 1.0f*q.front().weight, 0});
+            q.pop();
         } else {
             InsertNextSubCommand({goDown, 1, 0.5});
             InsertNextSubCommand({fill_vertex, 1.0f*q.front().start,  1});
