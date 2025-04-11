@@ -228,7 +228,7 @@ Form::Form(const int& index, FormSetting f_setting, const Vector2& window_size) 
 
     speed_scroll.setPosition(m_window_size.x - 100, 10);
     speed_scroll.setSize(70, m_window_size.y - 160);
-    for (float i = 0.2; i<=5; i+=0.2) {
+    for (float i = 0.2; i<=8; i+=0.2) {
         stringstream s;
         s<< i <<"x";
         speed_scroll.push_back(i, s.str());
@@ -259,7 +259,7 @@ Form::Form(const int& index, FormSetting f_setting, const Vector2& window_size) 
     option_box.setPosition(-option_box.getSize().x, m_window_size.y/2);
     option_box.add_vertex({-option_box.getSize().x, m_window_size.y/2});
     option_box.add_vertex({10, m_window_size.y/2});
-    option_box.setSize(200, m_window_size.y/2-30);
+    option_box.setSize(option_box.getAutoSize().x + 20, option_box.getAutoSize().y);
     option_box.setVisible(false);
 
     track_hover.setText("");

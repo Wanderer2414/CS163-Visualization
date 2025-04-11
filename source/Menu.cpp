@@ -71,7 +71,8 @@ int Menu::run() {
         if (MenuDSA.getProgress()<0.05) return return_value;
         draw();
         EndDrawing();
-        if (zoom.getProgress() == 1 && return_value > 0) return return_value;
+        if ((zoom.getProgress() == 1 || IsMouseButtonPressed(MOUSE_LEFT_BUTTON)) && return_value > 0) 
+            return return_value;
     };
     return 0;
 };
@@ -92,29 +93,31 @@ void Menu::handle() {
         SLLForm.moveNext();
         MenuDSA.moveNext();
     }
-    if (BSTForm.isPressed()) {
-        return_value = 3;
-        BSTForm.skip();
-        zoom.host = &BSTForm;
-        zoom.start();
-    }
-    if (GraphForm.isPressed()) {
-        return_value = 4;
-        GraphForm.skip();
-        zoom.host = &GraphForm;
-        zoom.start();
-    }
-    if (HashTableForm.isPressed()) {
-        return_value = 5;
-        HashTableForm.skip();
-        zoom.host = &HashTableForm;
-        zoom.start();
-    }
-    if (SLLForm.isPressed()) {
-        return_value = 6;
-        SLLForm.skip();
-        zoom.host = &SLLForm;
-        zoom.start();
+    if (zoom.getProgress()==1) {
+        if (BSTForm.isPressed()) {
+            return_value = 3;
+            BSTForm.skip();
+            zoom.host = &BSTForm;
+            zoom.start();
+        }
+        if (GraphForm.isPressed()) {
+            return_value = 4;
+            GraphForm.skip();
+            zoom.host = &GraphForm;
+            zoom.start();
+        }
+        if (HashTableForm.isPressed()) {
+            return_value = 5;
+            HashTableForm.skip();
+            zoom.host = &HashTableForm;
+            zoom.start();
+        }
+        if (SLLForm.isPressed()) {
+            return_value = 6;
+            SLLForm.skip();
+            zoom.host = &SLLForm;
+            zoom.start();
+        }
     }
 }
 void Menu::draw() {
