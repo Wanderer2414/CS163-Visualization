@@ -73,9 +73,9 @@
 },
 {
   "directory": "C:/Users/Dell/Downloads/CS163-DSAVisual/build",
-  "command": "C:\\MinGW\\bin\\g++.exe  @CMakeFiles/DSAVisual.dir/includes_CXX.rsp -g -std=gnu++17 -o CMakeFiles\\DSAVisual.dir\\source\\Dijkstra_margin.cpp.obj -c C:\\Users\\Dell\\Downloads\\CS163-DSAVisual\\source\\Dijkstra_margin.cpp",
-  "file": "C:/Users/Dell/Downloads/CS163-DSAVisual/source/Dijkstra_margin.cpp",
-  "output": "CMakeFiles/DSAVisual.dir/source/Dijkstra_margin.cpp.obj"
+  "command": "C:\\MinGW\\bin\\g++.exe  @CMakeFiles/DSAVisual.dir/includes_CXX.rsp -g -std=gnu++17 -o CMakeFiles\\DSAVisual.dir\\source\\DijkstraMargin.cpp.obj -c C:\\Users\\Dell\\Downloads\\CS163-DSAVisual\\source\\DijkstraMargin.cpp",
+  "file": "C:/Users/Dell/Downloads/CS163-DSAVisual/source/DijkstraMargin.cpp",
+  "output": "CMakeFiles/DSAVisual.dir/source/DijkstraMargin.cpp.obj"
 },
 {
   "directory": "C:/Users/Dell/Downloads/CS163-DSAVisual/build",
@@ -127,15 +127,15 @@
 },
 {
   "directory": "C:/Users/Dell/Downloads/CS163-DSAVisual/build",
-  "command": "C:\\MinGW\\bin\\g++.exe  @CMakeFiles/DSAVisual.dir/includes_CXX.rsp -g -std=gnu++17 -o CMakeFiles\\DSAVisual.dir\\source\\Graph.design.cpp.obj -c C:\\Users\\Dell\\Downloads\\CS163-DSAVisual\\source\\Graph.design.cpp",
-  "file": "C:/Users/Dell/Downloads/CS163-DSAVisual/source/Graph.design.cpp",
-  "output": "CMakeFiles/DSAVisual.dir/source/Graph.design.cpp.obj"
+  "command": "C:\\MinGW\\bin\\g++.exe  @CMakeFiles/DSAVisual.dir/includes_CXX.rsp -g -std=gnu++17 -o CMakeFiles\\DSAVisual.dir\\source\\GraphDesign.cpp.obj -c C:\\Users\\Dell\\Downloads\\CS163-DSAVisual\\source\\GraphDesign.cpp",
+  "file": "C:/Users/Dell/Downloads/CS163-DSAVisual/source/GraphDesign.cpp",
+  "output": "CMakeFiles/DSAVisual.dir/source/GraphDesign.cpp.obj"
 },
 {
   "directory": "C:/Users/Dell/Downloads/CS163-DSAVisual/build",
-  "command": "C:\\MinGW\\bin\\g++.exe  @CMakeFiles/DSAVisual.dir/includes_CXX.rsp -g -std=gnu++17 -o CMakeFiles\\DSAVisual.dir\\source\\Graph.logic.cpp.obj -c C:\\Users\\Dell\\Downloads\\CS163-DSAVisual\\source\\Graph.logic.cpp",
-  "file": "C:/Users/Dell/Downloads/CS163-DSAVisual/source/Graph.logic.cpp",
-  "output": "CMakeFiles/DSAVisual.dir/source/Graph.logic.cpp.obj"
+  "command": "C:\\MinGW\\bin\\g++.exe  @CMakeFiles/DSAVisual.dir/includes_CXX.rsp -g -std=gnu++17 -o CMakeFiles\\DSAVisual.dir\\source\\GraphLogic.cpp.obj -c C:\\Users\\Dell\\Downloads\\CS163-DSAVisual\\source\\GraphLogic.cpp",
+  "file": "C:/Users/Dell/Downloads/CS163-DSAVisual/source/GraphLogic.cpp",
+  "output": "CMakeFiles/DSAVisual.dir/source/GraphLogic.cpp.obj"
 },
 {
   "directory": "C:/Users/Dell/Downloads/CS163-DSAVisual/build",

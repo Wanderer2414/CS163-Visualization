@@ -416,29 +416,29 @@ source/DSU.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles\DSAVisual.dir\build.make CMakeFiles/DSAVisual.dir/source/DSU.cpp.s
 .PHONY : source/DSU.cpp.s
 
-source/Dijkstra_margin.obj: source/Dijkstra_margin.cpp.obj
-.PHONY : source/Dijkstra_margin.obj
+source/DijkstraMargin.obj: source/DijkstraMargin.cpp.obj
+.PHONY : source/DijkstraMargin.obj
 
 # target to build an object file
-source/Dijkstra_margin.cpp.obj:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\DSAVisual.dir\build.make CMakeFiles/DSAVisual.dir/source/Dijkstra_margin.cpp.obj
-.PHONY : source/Dijkstra_margin.cpp.obj
+source/DijkstraMargin.cpp.obj:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\DSAVisual.dir\build.make CMakeFiles/DSAVisual.dir/source/DijkstraMargin.cpp.obj
+.PHONY : source/DijkstraMargin.cpp.obj
 
-source/Dijkstra_margin.i: source/Dijkstra_margin.cpp.i
-.PHONY : source/Dijkstra_margin.i
+source/DijkstraMargin.i: source/DijkstraMargin.cpp.i
+.PHONY : source/DijkstraMargin.i
 
 # target to preprocess a source file
-source/Dijkstra_margin.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\DSAVisual.dir\build.make CMakeFiles/DSAVisual.dir/source/Dijkstra_margin.cpp.i
-.PHONY : source/Dijkstra_margin.cpp.i
+source/DijkstraMargin.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\DSAVisual.dir\build.make CMakeFiles/DSAVisual.dir/source/DijkstraMargin.cpp.i
+.PHONY : source/DijkstraMargin.cpp.i
 
-source/Dijkstra_margin.s: source/Dijkstra_margin.cpp.s
-.PHONY : source/Dijkstra_margin.s
+source/DijkstraMargin.s: source/DijkstraMargin.cpp.s
+.PHONY : source/DijkstraMargin.s
 
 # target to generate assembly for a file
-source/Dijkstra_margin.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\DSAVisual.dir\build.make CMakeFiles/DSAVisual.dir/source/Dijkstra_margin.cpp.s
-.PHONY : source/Dijkstra_margin.cpp.s
+source/DijkstraMargin.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\DSAVisual.dir\build.make CMakeFiles/DSAVisual.dir/source/DijkstraMargin.cpp.s
+.PHONY : source/DijkstraMargin.cpp.s
 
 source/DynamicColorCircle.obj: source/DynamicColorCircle.cpp.obj
 .PHONY : source/DynamicColorCircle.obj
@@ -632,53 +632,53 @@ source/Graph.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles\DSAVisual.dir\build.make CMakeFiles/DSAVisual.dir/source/Graph.cpp.s
 .PHONY : source/Graph.cpp.s
 
-source/Graph.design.obj: source/Graph.design.cpp.obj
-.PHONY : source/Graph.design.obj
+source/GraphDesign.obj: source/GraphDesign.cpp.obj
+.PHONY : source/GraphDesign.obj
 
 # target to build an object file
-source/Graph.design.cpp.obj:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\DSAVisual.dir\build.make CMakeFiles/DSAVisual.dir/source/Graph.design.cpp.obj
-.PHONY : source/Graph.design.cpp.obj
+source/GraphDesign.cpp.obj:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\DSAVisual.dir\build.make CMakeFiles/DSAVisual.dir/source/GraphDesign.cpp.obj
+.PHONY : source/GraphDesign.cpp.obj
 
-source/Graph.design.i: source/Graph.design.cpp.i
-.PHONY : source/Graph.design.i
+source/GraphDesign.i: source/GraphDesign.cpp.i
+.PHONY : source/GraphDesign.i
 
 # target to preprocess a source file
-source/Graph.design.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\DSAVisual.dir\build.make CMakeFiles/DSAVisual.dir/source/Graph.design.cpp.i
-.PHONY : source/Graph.design.cpp.i
+source/GraphDesign.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\DSAVisual.dir\build.make CMakeFiles/DSAVisual.dir/source/GraphDesign.cpp.i
+.PHONY : source/GraphDesign.cpp.i
 
-source/Graph.design.s: source/Graph.design.cpp.s
-.PHONY : source/Graph.design.s
+source/GraphDesign.s: source/GraphDesign.cpp.s
+.PHONY : source/GraphDesign.s
 
 # target to generate assembly for a file
-source/Graph.design.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\DSAVisual.dir\build.make CMakeFiles/DSAVisual.dir/source/Graph.design.cpp.s
-.PHONY : source/Graph.design.cpp.s
+source/GraphDesign.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\DSAVisual.dir\build.make CMakeFiles/DSAVisual.dir/source/GraphDesign.cpp.s
+.PHONY : source/GraphDesign.cpp.s
 
-source/Graph.logic.obj: source/Graph.logic.cpp.obj
-.PHONY : source/Graph.logic.obj
+source/GraphLogic.obj: source/GraphLogic.cpp.obj
+.PHONY : source/GraphLogic.obj
 
 # target to build an object file
-source/Graph.logic.cpp.obj:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\DSAVisual.dir\build.make CMakeFiles/DSAVisual.dir/source/Graph.logic.cpp.obj
-.PHONY : source/Graph.logic.cpp.obj
+source/GraphLogic.cpp.obj:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\DSAVisual.dir\build.make CMakeFiles/DSAVisual.dir/source/GraphLogic.cpp.obj
+.PHONY : source/GraphLogic.cpp.obj
 
-source/Graph.logic.i: source/Graph.logic.cpp.i
-.PHONY : source/Graph.logic.i
+source/GraphLogic.i: source/GraphLogic.cpp.i
+.PHONY : source/GraphLogic.i
 
 # target to preprocess a source file
-source/Graph.logic.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\DSAVisual.dir\build.make CMakeFiles/DSAVisual.dir/source/Graph.logic.cpp.i
-.PHONY : source/Graph.logic.cpp.i
+source/GraphLogic.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\DSAVisual.dir\build.make CMakeFiles/DSAVisual.dir/source/GraphLogic.cpp.i
+.PHONY : source/GraphLogic.cpp.i
 
-source/Graph.logic.s: source/Graph.logic.cpp.s
-.PHONY : source/Graph.logic.s
+source/GraphLogic.s: source/GraphLogic.cpp.s
+.PHONY : source/GraphLogic.s
 
 # target to generate assembly for a file
-source/Graph.logic.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\DSAVisual.dir\build.make CMakeFiles/DSAVisual.dir/source/Graph.logic.cpp.s
-.PHONY : source/Graph.logic.cpp.s
+source/GraphLogic.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\DSAVisual.dir\build.make CMakeFiles/DSAVisual.dir/source/GraphLogic.cpp.s
+.PHONY : source/GraphLogic.cpp.s
 
 source/HeapVisual.obj: source/HeapVisual.cpp.obj
 .PHONY : source/HeapVisual.obj
@@ -1325,9 +1325,9 @@ help:
 	@echo ... source/DSU.obj
 	@echo ... source/DSU.i
 	@echo ... source/DSU.s
-	@echo ... source/Dijkstra_margin.obj
-	@echo ... source/Dijkstra_margin.i
-	@echo ... source/Dijkstra_margin.s
+	@echo ... source/DijkstraMargin.obj
+	@echo ... source/DijkstraMargin.i
+	@echo ... source/DijkstraMargin.s
 	@echo ... source/DynamicColorCircle.obj
 	@echo ... source/DynamicColorCircle.i
 	@echo ... source/DynamicColorCircle.s
@@ -1352,12 +1352,12 @@ help:
 	@echo ... source/Graph.obj
 	@echo ... source/Graph.i
 	@echo ... source/Graph.s
-	@echo ... source/Graph.design.obj
-	@echo ... source/Graph.design.i
-	@echo ... source/Graph.design.s
-	@echo ... source/Graph.logic.obj
-	@echo ... source/Graph.logic.i
-	@echo ... source/Graph.logic.s
+	@echo ... source/GraphDesign.obj
+	@echo ... source/GraphDesign.i
+	@echo ... source/GraphDesign.s
+	@echo ... source/GraphLogic.obj
+	@echo ... source/GraphLogic.i
+	@echo ... source/GraphLogic.s
 	@echo ... source/HeapVisual.obj
 	@echo ... source/HeapVisual.i
 	@echo ... source/HeapVisual.s

@@ -1,4 +1,4 @@
-#ifndef SHORTESTPATH_H
+/*#ifndef SHORTESTPATH_H
 #define SHORTESTPATH_H
 
 #include "Global.h"
@@ -57,4 +57,4 @@ class GraphVisual {
 
 };
 
-#endif
+#endif*/
