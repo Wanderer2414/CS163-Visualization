@@ -3,9 +3,9 @@
 
 #include "Vertex.h"
 
-class Dijikstra_Margin {
+class Dijkstra_Margin {
 public:
-    Dijikstra_Margin(Vertex* vertex);
+    Dijkstra_Margin(Vertex* vertex);
     float           getValue() const;
     virtual void    setValue(const float& value),
                     draw();

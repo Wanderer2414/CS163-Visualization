@@ -1,5 +1,4 @@
 #include "../include/SunMode.h"
-#include "../include/IncludePath.h"
 #include "../include/General.h"
 
 SunMode::SunMode(ButtonSetting* light_setting, ButtonSetting* dark_setting) {
@@ -10,8 +9,8 @@ SunMode::SunMode(ButtonSetting* light_setting, ButtonSetting* dark_setting) {
     percent = 1;
     percent_alpha = 255;
     m_point = {0,0};
-    sun_light_texture = LoadTexture(sun_light);
-    sun_dark_texture = LoadTexture(sun_dark);
+    sun_light_texture = LoadTexture(LightTheme.sun);
+    sun_dark_texture = LoadTexture(DarkTheme.sun);
 }
 float SunMode::getPercent() const {
     return percent;

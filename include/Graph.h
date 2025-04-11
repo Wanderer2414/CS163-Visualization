@@ -4,7 +4,7 @@
 #include "ColorBox.h"
 #include "ColorPointer.h"
 #include "Container.h"
-#include "Dijikstra_margin.h"
+#include "Dijkstra_margin.h"
 #include "Edge.h"
 #include "Form.h"
 #include "GUI.h"
@@ -51,7 +51,7 @@ public:
         kruskal_code,
         kruskal_end_code,
 
-        dijikstra_code,
+        Dijkstra_code,
         dijkstra_end_code,
 
         set_cost,
@@ -71,16 +71,14 @@ public:
                         update(const std::string &old_value, const std::string &new_value) override,
                         prim(const std::string& val),
                         kruskal(const string& str),
-                        dijikstra(const string& str),
+                        Dijkstra(const string& str),
                         FetchNextCommand(const vector<float>& codes) override,
                         FetchPrevCommand(const vector<float>& codes) override;
                         
     virtual string      RandomCreate() const override,
                         RandomSearch() const override;
     void clearGraph();
-    ~Graph() {
-        free();
-    }
+    ~Graph();
   
 private:
     bool                m_is_physics,
@@ -95,22 +93,22 @@ private:
 
     Label               edge_label, vertex_label;
     TextBox             edge_textbox, vertex_textbox, extract_text_bx, prim_textbox, kruskal_textbox, pull_input_textbox,
-                        dijikstra_textbox;
+                        Dijkstra_textbox;
 
     TextureButton       random_edge_button, random_vertex_button, random_prim_button, random_kruskal_button,
-                        random_dijikstra_button;
+                        random_Dijkstra_button;
 
     OptionBox           bfs_choice, dfs_choice;
 
     TextButton          track_graph_hover,
                         pull_matrix_button,
                         prim_button, kruskal_button,
-                        dijikstra_button;
+                        Dijkstra_button;
     TabBox              graph_setting, algorithms_box;
 
     vector<Edge*>       edges;
 
-    Container           setting_box, tools_box, extract_box, prim_box, kruskal_box, dijikstra_box;
+    Container           setting_box, tools_box, extract_box, prim_box, kruskal_box, Dijkstra_box;
 
     Container           search_graph_box;
 
@@ -150,9 +148,8 @@ private:
                         kruskal_console_add(),
                         kruskal_algorithms(const int& index),
                         
-                        dijikstra_console_add(const int& val),
-                        dijikstra_algorithms(const int& index),
-                        dijikstra_algorithms(const int& index, MinHeap& heap, vector<bool>& visited, vector<float>& board),
+                        Dijkstra_console_add(const int& val),
+                        Dijkstra_algorithms(const int& index),
 
                         create_Dmargin(),
                         free_Dmargin();
@@ -164,7 +161,7 @@ private:
                         getEdge(const int& graph, vector<bool>& visited);
 
     stack<float>        prevs;
-    vector<Dijikstra_Margin*> DMargins;
+    vector<Dijkstra_Margin*> DMargins;
 
 };
 

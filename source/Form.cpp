@@ -1,10 +1,10 @@
 #include "../include/Form.h"
 #include "../include/General.h"
-#include "../include/IncludePath.h"
 
 Form::Form(const int& index, FormSetting f_setting, const Vector2& window_size) :
     m_window_size(window_size),
     form_setting(f_setting),
+    m_progress(&form_setting),
     console(&form_setting, &form_setting),
     buttonTab(&form_setting, &form_setting),
 
@@ -116,7 +116,7 @@ Form::Form(const int& index, FormSetting f_setting, const Vector2& window_size) 
 
     random_create.setPosition(270, 5);
     random_create.setSize(30, 30);
-    random_create.setButtonStage(0, Rand, Rand);
+    random_create.setButtonStage(0, form_setting.Rand,form_setting.Rand);
 
     m_drop_box.setVisible(false);
     m_drop_box.setPosition(create_textbox.getPosition().x,create_textbox.getPosition().y);
@@ -131,7 +131,7 @@ Form::Form(const int& index, FormSetting f_setting, const Vector2& window_size) 
 
     random_insert.setPosition(155, 5);
     random_insert.setSize(40, 40);
-    random_insert.setButtonStage(0, Rand, Rand);
+    random_insert.setButtonStage(0, form_setting.Rand, form_setting.Rand);
 
     insert_textbox.setPosition(5, 5);
     insert_textbox.setSize(145,40);
@@ -151,7 +151,7 @@ Form::Form(const int& index, FormSetting f_setting, const Vector2& window_size) 
 
     random_update_choice.setPosition(305, 5);
     random_update_choice.setSize(40, 40);
-    random_update_choice.setButtonStage(0, Rand, Rand);
+    random_update_choice.setButtonStage(0, form_setting.Rand, form_setting.Rand);
 
     update_new_value_label.setPosition(5, 50);
     update_new_value_label.setSize(150, 40);
@@ -164,7 +164,7 @@ Form::Form(const int& index, FormSetting f_setting, const Vector2& window_size) 
     
     random_update_value.setPosition(305, 50);
     random_update_value.setSize(40, 40);
-    random_update_value.setButtonStage(0, Rand, Rand);
+    random_update_value.setButtonStage(0, form_setting.Rand, form_setting.Rand);
 
     update_button.setPosition(5, 95);
     update_button.setSize(340,40);
@@ -179,7 +179,7 @@ Form::Form(const int& index, FormSetting f_setting, const Vector2& window_size) 
 
     random_search.setPosition(155, 5);
     random_search.setSize(40, 40);
-    random_search.setButtonStage(0, Rand, Rand);
+    random_search.setButtonStage(0, form_setting.Rand, form_setting.Rand);
 
     search_button.setPosition(200, 5);
     search_button.setSize(145,40);
@@ -194,7 +194,7 @@ Form::Form(const int& index, FormSetting f_setting, const Vector2& window_size) 
 
     random_remove.setPosition(155, 5);
     random_remove.setSize(40, 40);
-    random_remove.setButtonStage(0, Rand, Rand);
+    random_remove.setButtonStage(0, form_setting.Rand, form_setting.Rand);
     
     remove_textbox.setPosition(5, 5);
     remove_textbox.setSize(145, 40);
@@ -204,27 +204,27 @@ Form::Form(const int& index, FormSetting f_setting, const Vector2& window_size) 
 
     play_button.setPosition(m_window_size.x / 2 - 25, m_window_size.y - 80);
     play_button.setSize(50, 50);
-    play_button.setButtonStage(0, PauseButton,PauseButtonHovered);
-    play_button.setButtonStage(1, PlayButton, PlayButtonHovered);
-    play_button.setButtonStage(2, Replay, Replayhovered);
+    play_button.setButtonStage(0, form_setting.PauseButton,form_setting.PauseButtonHovered);
+    play_button.setButtonStage(1, form_setting.PlayButton, form_setting.PlayButtonHovered);
+    play_button.setButtonStage(2, form_setting.Replay, form_setting.Replayhovered);
 
     skip_button.setPosition(play_button.getPosition().x + 110, play_button.getPosition().y + 5);
     skip_button.setSize(40, 40);
-    skip_button.setButtonStage(0, SkipNormal, SkipHovered);
+    skip_button.setButtonStage(0, form_setting.SkipNormal, form_setting.SkipHovered);
 
     small_skip_next_button.setPosition(play_button.getPosition().x + 60, play_button.getPosition().y + 5);
     small_skip_next_button.setSize(40, 40);
-    small_skip_next_button.setButtonStage(0, DoubleArrowRight, DoubleArrowRight_Hovered);
+    small_skip_next_button.setButtonStage(0, form_setting.DoubleArrowRight, form_setting.DoubleArrowRight_Hovered);
 
     //restart_button.setPosition(40, 270);
     restart_button.setPosition(play_button.getPosition().x - 100, play_button.getPosition().y + 5);
     restart_button.setSize(40, 40);
-    restart_button.setButtonStage(0, SkipBackNormal, SkipBackHovered);
+    restart_button.setButtonStage(0, form_setting.SkipBackNormal, form_setting.SkipBackHovered);
     
     //small_skip_back_button.setPosition(40, 270);
     small_skip_back_button.setPosition(play_button.getPosition().x - 50, play_button.getPosition().y + 5);
     small_skip_back_button.setSize(40, 40);
-    small_skip_back_button.setButtonStage(0, DoubleArrowLeft, DoubleArrowLeft_Hovered);
+    small_skip_back_button.setButtonStage(0, form_setting.DoubleArrowLeft, form_setting.DoubleArrowLeft_Hovered);
 
     speed_scroll.setPosition(m_window_size.x - 100, 10);
     speed_scroll.setSize(70, m_window_size.y - 160);
@@ -237,7 +237,7 @@ Form::Form(const int& index, FormSetting f_setting, const Vector2& window_size) 
 
     back_button.setPosition(10, 10);
     back_button.setSize(40, 40);
-    back_button.setButtonStage(0, back_normal, back_hovered);
+    back_button.setButtonStage(0, form_setting.back_normal, form_setting.back_hovered);
 
     m_workspace.x = 10;
     m_workspace.y = 70;
@@ -251,11 +251,10 @@ Form::Form(const int& index, FormSetting f_setting, const Vector2& window_size) 
 
     m_progress.setPosition(10, m_window_size.y - 20);
     m_progress.setSize(m_window_size.x - 20, 20);
-    m_progress.setThick(3);
 
     home_button.setPosition(m_window_size.x - 50, 10);
     home_button.setSize(40, 40);
-    home_button.setButtonStage(0, home_normal, home_hovered);
+    home_button.setButtonStage(0, form_setting.home_normal, form_setting.home_hovered);
 
     option_box.setPosition(-option_box.getSize().x, m_window_size.y/2);
     option_box.add_vertex({-option_box.getSize().x, m_window_size.y/2});

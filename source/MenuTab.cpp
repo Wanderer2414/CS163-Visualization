@@ -21,10 +21,11 @@ void ButtonTab::handle() {
     if (Length.empty()) return;
 
     m_is_hovered = CheckCollisionPointRec(GetMousePosition(), { m_position.x, m_position.y, m_size.x, m_size.y });
-    m_is_pressed = m_is_hovered && IsMouseButtonReleased(MOUSE_BUTTON_LEFT);
+    m_is_pressed = m_is_hovered && IsMouseButtonPressed(MOUSE_BUTTON_LEFT);
     if (m_is_pressed) {
         m_is_showed = !m_is_showed; // Toggle menu
     }
+    
     m_hover_selection = -1;
     if (m_is_showed) {
         Vector2 mousePos = GetMousePosition();
@@ -32,7 +33,7 @@ void ButtonTab::handle() {
             int index = (mousePos.y - m_position.y - m_size.y) / (m_size.y+2);
             if (mousePos.y - m_position.y - m_size.y>0 && index >= 0 && index < Items.size()) {
                 m_hover_selection = index;
-                if (IsMouseButtonReleased(MOUSE_BUTTON_LEFT)) {
+                if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) {
                     if (m_selection != index) m_isChanged = true;
                     m_selection = index; // Update selection
                     m_is_showed = false;
@@ -40,6 +41,7 @@ void ButtonTab::handle() {
             }
         }
     }
+    if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT) && !m_is_hovered) m_is_showed = false;
 }
 void ButtonTab::push_back(const std::string& name)
 {

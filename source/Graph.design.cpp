@@ -1,6 +1,7 @@
 #include "../include/Graph.h"
 #include "../include/IncludePath.h"
 #include "../include/General.h"
+#include <cmath>
 
 Graph::Graph(const int& index, FormSetting f_setting, const Vector2& window_size):
     Form(index, f_setting, window_size),
@@ -22,18 +23,18 @@ Graph::Graph(const int& index, FormSetting f_setting, const Vector2& window_size
 
     search_graph_box(&form_setting),
     tools_box(&form_setting),
-    dijikstra_button(&form_setting, &form_setting),
+    Dijkstra_button(&form_setting, &form_setting),
     prim_button(&form_setting, &form_setting),
     kruskal_button(&form_setting, &form_setting),
 
     algorithms_box(&form_setting),
     prim_box(&form_setting),
     kruskal_box(&form_setting),
-    dijikstra_box(&form_setting),
+    Dijkstra_box(&form_setting),
     extract_box(&form_setting),
 
     extract_text_bx(&form_setting, &form_setting),
-    dijikstra_textbox(&form_setting, &form_setting),
+    Dijkstra_textbox(&form_setting, &form_setting),
     prim_textbox(&form_setting, &form_setting),
     kruskal_textbox(&form_setting, &form_setting),
     pull_matrix_button(&form_setting, &form_setting),
@@ -61,10 +62,10 @@ Graph::Graph(const int& index, FormSetting f_setting, const Vector2& window_size
     setting_box.push_back(&direct_choice);
     setting_box.push_back(&undirect_choice);
 
-    algorithms_box.push_back(0, &dijikstra_box);
-    dijikstra_box.push_back(&dijikstra_textbox);
-    dijikstra_box.push_back(&random_dijikstra_button);
-    dijikstra_box.push_back(&dijikstra_button);
+    algorithms_box.push_back(0, &Dijkstra_box);
+    Dijkstra_box.push_back(&Dijkstra_textbox);
+    Dijkstra_box.push_back(&random_Dijkstra_button);
+    Dijkstra_box.push_back(&Dijkstra_button);
 
     algorithms_box.push_back(1, &prim_box);
     prim_box.push_back(&prim_textbox);
@@ -117,35 +118,35 @@ Graph::Graph(const int& index, FormSetting f_setting, const Vector2& window_size
     undirect_choice.setText("Undirect");
 
     //Tool controller
-    match_tool.setButtonStage(0, match_icon, match_filled_icon);
+    match_tool.setButtonStage(0, form_setting.match_icon, form_setting.match_filled_icon);
     match_tool.setPosition(5, 5);
     match_tool.setSize(40, 40);
 
-    filled_tool.setButtonStage(0, fill_icon, fill_filled_icon);
+    filled_tool.setButtonStage(0, form_setting.fill_icon, form_setting.fill_filled_icon);
     filled_tool.setPosition(50, 5);
     filled_tool.setSize(40, 40);
 
-    scissors_tool.setButtonStage(0, scissor_icon, scissor_filled_icon);
+    scissors_tool.setButtonStage(0, form_setting.scissor_icon, form_setting.scissor_filled_icon);
     scissors_tool.setPosition(95, 5);
     scissors_tool.setSize(40, 40);
     //Algorithms
-    dijikstra_textbox.setPosition(5, 5);
-    dijikstra_textbox.setSize(100, 40);
+    Dijkstra_textbox.setPosition(5, 5);
+    Dijkstra_textbox.setSize(100, 40);
 
-    random_dijikstra_button.setPosition(110, 5);
-    random_dijikstra_button.setSize(40, 40);
-    random_dijikstra_button.setButtonStage(0, Rand, Rand);
+    random_Dijkstra_button.setPosition(110, 5);
+    random_Dijkstra_button.setSize(40, 40);
+    random_Dijkstra_button.setButtonStage(0, form_setting.Rand, form_setting.Rand);
 
-    dijikstra_button.setPosition(155, 5);
-    dijikstra_button.setSize(100, 40);
-    dijikstra_button.setText("Start");
+    Dijkstra_button.setPosition(155, 5);
+    Dijkstra_button.setSize(100, 40);
+    Dijkstra_button.setText("Start");
 
     prim_textbox.setPosition(5, 5);
     prim_textbox.setSize(100, 40);
 
     random_prim_button.setPosition(110, 5);
     random_prim_button.setSize(40, 40);
-    random_prim_button.setButtonStage(0, Rand, Rand);
+    random_prim_button.setButtonStage(0, form_setting.Rand, form_setting.Rand);
 
     prim_button.setPosition(155, 5);
     prim_button.setSize(100, 40);
@@ -156,18 +157,18 @@ Graph::Graph(const int& index, FormSetting f_setting, const Vector2& window_size
 
     random_kruskal_button.setPosition(110, 5);
     random_kruskal_button.setSize(40, 40);
-    random_kruskal_button.setButtonStage(0, Rand, Rand);
+    random_kruskal_button.setButtonStage(0, form_setting.Rand, form_setting.Rand);
 
     kruskal_button.setPosition(155, 5);
     kruskal_button.setSize(100, 40);
     kruskal_button.setText("Start");
 
-    algorithms_box.setText(0, "Dijikstra");
+    algorithms_box.setText(0, "Dijkstra");
     algorithms_box.setText(1, "Prim");
     algorithms_box.setText(2, "Kruskal");
 
-    dijikstra_box.setPosition(algorithms_box.getAutoSize().x + 15, 0);
-    dijikstra_box.setSize(260, 50);
+    Dijkstra_box.setPosition(algorithms_box.getAutoSize().x + 15, 0);
+    Dijkstra_box.setSize(260, 50);
 
     prim_box.setPosition(algorithms_box.getAutoSize().x + 15, 45);
     prim_box.setSize(260, 50);
@@ -251,7 +252,7 @@ Graph::Graph(const int& index, FormSetting f_setting, const Vector2& window_size
 
     random_vertex_button.setPosition(110, 40);
     random_vertex_button.setSize(30, 30);
-    random_vertex_button.setButtonStage(0, Rand, Rand);
+    random_vertex_button.setButtonStage(0, form_setting.Rand, form_setting.Rand);
 
     edge_label.setText("E: ");
     edge_label.setPosition(160, 35);
@@ -263,7 +264,7 @@ Graph::Graph(const int& index, FormSetting f_setting, const Vector2& window_size
 
     random_edge_button.setPosition(265, 40);
     random_edge_button.setSize(30, 30);
-    random_edge_button.setButtonStage(0, Rand, Rand);
+    random_edge_button.setButtonStage(0, form_setting.Rand, form_setting.Rand);
     
     create_textbox.setPosition(5, 80);
     create_button.setPosition(5, 190);
@@ -321,12 +322,12 @@ void Graph::draw() {
     Form::draw();
 
     if (m_tool==0) 
-        DrawTexture(cursor_icon, GetMousePosition().x, GetMousePosition().y-cursor_icon.height, WHITE);
+        DrawTexture(cursor_icon, GetMousePosition().x, GetMousePosition().y-cursor_icon.height,form_setting.reverse_color);
     else 
     if (m_tool==1) 
-        DrawTexture(cursor_icon, GetMousePosition().x - cursor_icon.width, GetMousePosition().y, WHITE);
+        DrawTexture(cursor_icon, GetMousePosition().x - cursor_icon.width, GetMousePosition().y, form_setting.reverse_color);
     else if (m_tool == 2) 
-        DrawTexture(cursor_icon, GetMousePosition().x - cursor_icon.width/2, GetMousePosition().y-cursor_icon.height/2, WHITE);
+        DrawTexture(cursor_icon, GetMousePosition().x - 1.0f*cursor_icon.width/2, GetMousePosition().y-1.0f*cursor_icon.height/2, form_setting.reverse_color);
 }
 void Graph::handle() {
     heap.handle();
@@ -361,20 +362,14 @@ void Graph::handle() {
             if (!m_is_lock && edge->m_start->IsColorChange() && (edge->m_start->getColor() != edge->start_color)) {
                 int start = edge->m_start->getIndex();
                 int end = edge->m_end->getIndex();
-                if (m_type == 1) {
-                    if (start<end) {
-                        edge->setDuration(getSpeed());
-                        edge->start(false, false);
-                    }
-                    else {
-                        edge->setDuration(getSpeed());
-                        edge->start(true, false);
-                    }
-                }
-                else {
-                    edge->setDuration(getSpeed());
-                    edge->start(false, false);
-                }
+                edge->setDuration(getSpeed());
+                edge->start(false, false);
+            }
+            if (!m_is_lock && edge->m_end->IsColorChange() && (edge->m_end->getColor() != edge->start_color)) {
+                int start = edge->m_start->getIndex();
+                int end = edge->m_end->getIndex();
+                edge->setDuration(getSpeed());
+                edge->start(true, false);
             }
             //Check press delete
             if (edge->isPressed()) {
@@ -476,14 +471,22 @@ void Graph::handle() {
                 //Check collision
                 for (int j = i+1; j<vertices.size(); j++) {
                     if (vertices[j]) {
-                        if (abs(vertices[i]->getCenter()-vertices[j]->getCenter()) < vertices[i]->getRadius() + vertices[j]->getRadius()) {
+                        if (abs(vertices[i]->getCenter()-vertices[j]->getCenter()) < vertices[i]->getRadius() + vertices[j]->getRadius() + 5) {
                             Vector2 delta = vertices[j]->getCenter() - vertices[i]->getCenter();
-                            delta = delta/abs(delta)*(vertices[i]->getRadius() + vertices[j]->getRadius() - abs(delta));
+                            if (abs(delta)==0) delta = {10, 10};
+                            else if (abs(delta)<vertices[i]->getRadius()*1.5) delta = delta/abs(delta)*vertices[i]->getRadius()*0.5; 
+                            delta = delta/abs(delta)*(vertices[i]->getRadius() + vertices[j]->getRadius() + 5 - abs(delta));
                             if (m_mode == 2) {
                                 Vector2 velocityA = vertices[i]->getVelocity();
                                 Vector2 velocityB = vertices[j]->getVelocity();
-                                vertices[i]->setVelocity(velocityB - delta/10);
-                                vertices[j]->setVelocity(velocityA + delta/10);
+                                Vector2 pos = vertices[i]->getCenter()-delta;
+                                vertices[i]->setPosition(pos.x, pos.y);
+                                pos = vertices[j]->getCenter()+delta;
+                                vertices[j]->setPosition(pos.x, pos.y);
+
+                                delta = delta/sqrt(abs(delta))*0.1;
+                                vertices[i]->setVelocity(velocityB*0.8-velocityA*0.2 - delta);
+                                vertices[j]->setVelocity(velocityA*0.8-velocityB*0.2 + delta);
                             } else {
                                 Vector2 posA = vertices[i]->getPosition() - delta*1.1;
                                 Vector2 posB = vertices[j]->getPosition() + delta*1.1;
@@ -561,7 +564,7 @@ void Graph::handle() {
             if (m_tool!=-1) UnloadTexture(cursor_icon);
             else HideCursor();
             m_tool = 0;
-            cursor_icon = LoadTexture(match_cursor_icon);
+            cursor_icon = LoadTexture(form_setting.match_cursor_icon);
             cursor_icon.width = cursor_icon.height = 30;
         }
         else {
@@ -575,7 +578,7 @@ void Graph::handle() {
             if (m_tool!=-1) UnloadTexture(cursor_icon);
             else HideCursor();
             m_tool = 1;
-            cursor_icon = LoadTexture(fill_cursor_icon);
+            cursor_icon = LoadTexture(form_setting.fill_cursor_icon);
             cursor_icon.width = cursor_icon.height = 30;
         }
         else {
@@ -589,7 +592,7 @@ void Graph::handle() {
             if (m_tool!=-1) UnloadTexture(cursor_icon);
             else HideCursor();
             m_tool = 2;
-            cursor_icon = LoadTexture(scissor_cursor_icon);
+            cursor_icon = LoadTexture(form_setting.scissor_cursor_icon);
             cursor_icon.width = cursor_icon.height = 30;
         }
         else {
@@ -610,8 +613,8 @@ void Graph::handle() {
     if (kruskal_button.isPressed()) {
         kruskal(kruskal_textbox.getText());
     }
-    if (dijikstra_button.isPressed()) {
-        dijikstra(dijikstra_textbox.getText());
+    if (Dijkstra_button.isPressed()) {
+        Dijkstra(Dijkstra_textbox.getText());
     }
 }
 
@@ -657,9 +660,6 @@ void Graph::add(const vector<std::string>& str) {
                 }
             }
         }
-        // setSubGraphColor(edges.back()->m_start->getIndex(), colors[(++color_pointer)%6]);
-        // for (int i = 0; i<edges.size(); i++) 
-        //     if (edges[i]) edges[i]->start(false);
     } else {
         InsertNextMainCommand({add_code, 1.0f*to_int(str[0]),1});
     }
@@ -670,4 +670,8 @@ void Graph::remove(const std::string& str) {
     if (i<vertices.size() && vertices[i]) {
         remove(i);
     }
+}
+Graph::~Graph() {
+    ShowCursor();
+    free();
 }
