@@ -61,7 +61,9 @@ namespace SLL {
 			_searchSilent = 11,
 			_insertSilent = 7,
 			_removeSilent = 8,
-			_updateSilent = 9
+			_updateSilent = 9,
+			_GoUp = 12,
+			_GoDowm = 13
 		};
 		SLLForm(const int& index, FormSetting form_setting, const Vector2& window_size);
 		virtual void    add(const vector<string>& str) override,
@@ -83,14 +85,18 @@ namespace SLL {
 
 		void insert(const int& value, const int& index);
 		void insertSilent(const int& value, const int& index);
+		void console_add_insert(const int& value);
 
 		void remove(const int& value, const int& index);
 		void removeSilent(const int& value,const int& index);
+		void console_add_remove(const int& value);
 
 		void update(const int& old_value, const int& new_value);
 		void updateSilent(const int& old_value,const int& new_value,const int& index);
+		void console_add_update(const int& old_value,const int& new_value);
 
 		void search(const int& value);
+		void console_add_search(const int& value);
 	};
 }
 
