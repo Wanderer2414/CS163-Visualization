@@ -2,11 +2,11 @@
 #define SLL_H
 
 #include "Form.h"
-#include "vector"
 #include "TextBox.h"
 #include "TextButton.h"
 #include "SlowMotion.h"
 #include "General.h"
+#include "Global.h"
 
 namespace SLL {
 	class Arrow {

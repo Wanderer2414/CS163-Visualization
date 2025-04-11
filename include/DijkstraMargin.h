@@ -1,5 +1,5 @@
-#ifndef DIJIKSTRA_MARGIN_H
-#define DIJIKSTRA_MARGIN_H
+#ifndef DIJKSTRA_MARGIN_H
+#define DIJKSTRA_MARGIN_H
 
 #include "Vertex.h"
 

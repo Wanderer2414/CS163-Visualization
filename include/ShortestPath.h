@@ -39,7 +39,6 @@ class Graph {
 
 class GraphVisual {
     public:
-    GraphVisual(Font font = {});
     void random();
     int loadFile(const std::string filename);
     void drawGraph();

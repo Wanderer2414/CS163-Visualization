@@ -17,7 +17,7 @@ Menu::Menu(FormSetting f_setting, const Vector2& windowSize) :
     children.push_back(&SLLForm);
 
     BSTForm.setSize(main_button_width, main_button_height);
-    BSTForm.setText("AVL Tree");
+    BSTForm.setText("AVLTree");
 
     GraphForm.setSize(main_button_width, main_button_height);
     GraphForm.setText("Graph");

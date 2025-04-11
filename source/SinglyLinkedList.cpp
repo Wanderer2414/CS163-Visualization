@@ -1,8 +1,4 @@
 #include "../include/SinglyLinkedList.h"
-#include <math.h>
-#include <string.h>
-#include <random>
-#include "../include/SinglyLinkedList.h"
 
 int getRandom(int min, int max) {
     static std::random_device rd; 
