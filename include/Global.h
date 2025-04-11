@@ -27,6 +27,10 @@
 #include <limits>
 #include <utility>
 
+#define standard_x 1820
+#define standard_y 1080
+extern Vector2 windowSize;
+
 using namespace std;
 
 #endif

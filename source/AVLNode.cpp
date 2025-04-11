@@ -93,13 +93,13 @@ void AVLNode::draw() {
                     } else {
                         m_point = m_position-radius;
                         lcolor = color;
-                        DrawRing(m_position, m_size.x / 2 - 4 , m_size.x/2, 0, 360, 30, color);
+                        DrawRing(m_position, m_size.x / 2 - 4 , m_size.x/2, 0, 360, 60, color);
                     }
                 } else {
                     if (length*percent > m_size.x) {
                         m_point = m_position+radius-delta*percent;
                     }
-                    DrawRing(m_position, m_size.x / 2 - 4 , m_size.x/2, 0, 360, 30, button_setting->click_color);
+                    DrawRing(m_position, m_size.x / 2 - 4 , m_size.x/2, 0, 360, 60, button_setting->click_color);
                 }
 
                 DrawLineEx(parent->getPosition()+radius, m_point, 4, color);

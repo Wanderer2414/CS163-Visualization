@@ -27,7 +27,7 @@ void Console::InsertNextMainCommand(const std::string& log) {
         }
         update_tail();
 
-        Vector2 text_size = MeasureTextEx(text_setting->font, log.c_str(),text_setting->font_size, text_setting->spacing);
+        Vector2 text_size = MeasureTextEx(text_setting->font, log.c_str(),text_setting->medium_font_size, text_setting->spacing);
         max_width = std::max(max_width, text_size.x);
         max_height += text_size.y;
 
@@ -40,7 +40,7 @@ void Console::InsertNextSubCommand(const std::string& log) {
         temporary.insert(temporary.begin() + current_add, true);
         current_add++;
 
-        Vector2 text_size = MeasureTextEx(text_setting->font, log.c_str(),text_setting->font_size, text_setting->spacing);
+        Vector2 text_size = MeasureTextEx(text_setting->font, log.c_str(),text_setting->medium_font_size, text_setting->spacing);
         max_width = std::max(max_width, text_size.x);
         max_height += text_size.y;
 
@@ -55,7 +55,7 @@ void Console::PushBackMainCommand(const std::string& log) {
         m_list.push_back(log);
         temporary.push_back(false);
 
-        Vector2 text_size = MeasureTextEx(text_setting->font, log.c_str(),text_setting->font_size, text_setting->spacing);
+        Vector2 text_size = MeasureTextEx(text_setting->font, log.c_str(),text_setting->medium_font_size, text_setting->spacing);
         max_width = std::max(max_width, text_size.x);
         max_height += text_size.y;
 
@@ -67,7 +67,7 @@ void Console::PushBackSubCommand(const std::string& log) {
         m_list.push_back(log);
         temporary.push_back(true);
 
-        Vector2 text_size = MeasureTextEx(text_setting->font, log.c_str(),text_setting->font_size, text_setting->spacing);
+        Vector2 text_size = MeasureTextEx(text_setting->font, log.c_str(),text_setting->medium_font_size, text_setting->spacing);
         max_width = std::max(max_width, text_size.x);
         max_height += text_size.y;
 
@@ -78,13 +78,13 @@ void Console::goUp() {
     if (!line_cursor) return;
     BeforeGoUp();
     update_tail();
-    m_fixed.y =  -line_cursor*text_setting->font_size + m_size.y/3;
+    m_fixed.y =  -line_cursor*text_setting->medium_font_size + m_size.y/3;
 }
 void Console::goDown() {
     if (line_cursor == m_list.size()) return;
     BeforeGoDown();
     update_tail();
-    m_fixed.y =  -line_cursor*text_setting->font_size + m_size.y/3;
+    m_fixed.y =  -line_cursor*text_setting->medium_font_size + m_size.y/3;
 }
 void Console::BeforeGoUp() {
     if (!line_cursor) return;
@@ -171,9 +171,10 @@ void Console::draw() {
         DrawRectangleRounded({ m_position.x, m_position.y, m_size.x, m_size.y }, button_setting->roundness, button_setting->segment, button_setting->normal_color);
     BeginScissorMode(m_position.x, m_position.y, m_size.x, m_size.y);
     if (line_cursor >= 0)
-        DrawRectangle(m_position.x, m_origin.y + m_position.y + text_setting->font_size * current_line + m_delta.y, m_size.x, text_setting->font_size, button_setting->hightlight_color1);
-    for (int i = 0; i < m_list.size(); i++)
-        DrawTextEx(text_setting->font, m_list[i].c_str(), m_origin + m_delta + m_position + Vector2({ 0, text_setting->font_size * i }), text_setting->font_size, text_setting->spacing, text_setting->color);
+        DrawRectangle(m_position.x, m_origin.y + m_position.y + text_setting->medium_font_size * current_line + m_delta.y, m_size.x, text_setting->medium_font_size, button_setting->hightlight_color1);
+    for (int i = 0; i < m_list.size(); i++) {
+        DrawTextEx(text_setting->font, m_list[i].c_str(), m_origin + m_delta + m_position + Vector2({ 0, text_setting->medium_font_size * i }), text_setting->medium_font_size, text_setting->spacing, text_setting->color);
+    }
     EndScissorMode();
 }
 Console::~Console() {
