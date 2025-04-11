@@ -4,7 +4,7 @@
 #include "ColorBox.h"
 #include "ColorPointer.h"
 #include "Container.h"
-#include "Dijkstra_margin.h"
+#include "DijkstraMargin.h"
 #include "Edge.h"
 #include "Form.h"
 #include "GUI.h"
