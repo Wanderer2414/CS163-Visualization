@@ -36,7 +36,6 @@ void Console::InsertNextMainCommand(const std::string& log) {
 }
 void Console::InsertNextSubCommand(const std::string& log) {
     if (m_is_enable) {
-        cout << current_add << endl;
         m_list.insert(m_list.begin() + current_add, log);
         temporary.insert(temporary.begin() + current_add, true);
         current_add++;
@@ -79,13 +78,13 @@ void Console::goUp() {
     if (!line_cursor) return;
     BeforeGoUp();
     update_tail();
-    m_fixed.y = -line_cursor*text_setting->font_size + m_size.y/3;
+    m_fixed.y =  -line_cursor*text_setting->font_size + m_size.y/3;
 }
 void Console::goDown() {
     if (line_cursor == m_list.size()) return;
     BeforeGoDown();
     update_tail();
-    m_fixed.y = -line_cursor*text_setting->font_size + m_size.y/3;;
+    m_fixed.y =  -line_cursor*text_setting->font_size + m_size.y/3;
 }
 void Console::BeforeGoUp() {
     if (!line_cursor) return;
@@ -125,6 +124,10 @@ void Console::clear() {
 void Console::setEnable(const bool& enbale) {
     m_is_enable = enbale;
 }
+bool Console::isEmpty()
+{
+    return m_list.size() == 0;
+}
 void Console::setTextOrigin(const Vector2& origin) {
     m_origin = origin;
 }
@@ -140,6 +143,10 @@ void Console::update_text() {
 }
 void Console::handle() {
     TextButton::handle();
+    if (line_cursor != current_line) {
+        current_line += (line_cursor-current_line)/10;
+        if (abs(line_cursor-current_line)<0.1) current_line = line_cursor;
+    }
     if ((m_fixed.x || m_fixed.y) && clock.get()) {
         if (m_delta != m_fixed) {
             m_delta = m_delta + (m_fixed - m_delta) / 10;
@@ -164,7 +171,7 @@ void Console::draw() {
         DrawRectangleRounded({ m_position.x, m_position.y, m_size.x, m_size.y }, button_setting->roundness, button_setting->segment, button_setting->normal_color);
     BeginScissorMode(m_position.x, m_position.y, m_size.x, m_size.y);
     if (line_cursor >= 0)
-        DrawRectangle(m_position.x, m_origin.y + m_position.y + text_setting->font_size * line_cursor + m_delta.y, m_size.x, text_setting->font_size, m_color_line);
+        DrawRectangle(m_position.x, m_origin.y + m_position.y + text_setting->font_size * current_line + m_delta.y, m_size.x, text_setting->font_size, button_setting->hightlight_color1);
     for (int i = 0; i < m_list.size(); i++)
         DrawTextEx(text_setting->font, m_list[i].c_str(), m_origin + m_delta + m_position + Vector2({ 0, text_setting->font_size * i }), text_setting->font_size, text_setting->spacing, text_setting->color);
     EndScissorMode();

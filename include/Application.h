@@ -16,7 +16,7 @@ public:
     void    run();
     ~Application();
 private:
-    float   m_width = 1366,
+    float   m_width = 1344,
             m_height = 700;
 };
 

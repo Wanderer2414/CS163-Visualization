@@ -25,14 +25,15 @@ public:
                     setText(const std::string& str)             override,
                     setTextOrigin(const Vector2& origin),
                     setEnable(const bool& enable);
-    Color           m_color_line = RED;
+    bool            isEmpty();
     ~Console();
 private:
     bool            m_is_enable;
     float           min_x = 0,
                     min_y = 0,
                     max_width = 0,
-                    max_height = 0;
+                    max_height = 0,
+                    current_line = 0;
     int             line_cursor = 0,
                     main_line_cursor = 0,
                     current_add = 0;

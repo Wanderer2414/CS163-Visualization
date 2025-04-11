@@ -129,8 +129,11 @@ vector<int> readFromFileInt(const string& link) {
 vector<string> split(const string& str) {
     vector<string> ans = {""};
     for (char c:str) {
-        if ((c==' ' || c=='\n') && ans.back().size()) ans.push_back("");
+        if (c==' ' || c=='\n') {
+           if (ans.back().size()) ans.push_back("");
+        }
         else ans.back().push_back(c);
     }
+    if (ans.back().empty()) ans.pop_back();
     return ans;
 }

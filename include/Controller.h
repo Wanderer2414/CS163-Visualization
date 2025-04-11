@@ -7,7 +7,8 @@
 class Controller {
 public:
     Controller();
-    virtual bool    isHovered() const;
+    virtual bool    isHovered() const,
+                    isFocus() const;
     virtual void    handle()    ,
                     draw()      ,
                     setPosition(const float& x, const float& y),

@@ -6,10 +6,11 @@
 class VerticalOpen {
 public:
     VerticalOpen();
+    bool                isEnd() const;
     virtual Vector2     getSize() const,
                         getPosition() const,
                         getEndSize() const;
-
+    
     virtual void        handle(),
                         open(),
                         close();

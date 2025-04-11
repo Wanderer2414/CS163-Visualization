@@ -25,8 +25,10 @@ int CommandList::getCommandCount() {
 float CommandList::getProgress() {
     if (command_code.empty()) return 1;
     float ans = 1.0f * command_pointer / command_code.size();
-    if (sub_command.size()) 
+    if (!sub_command.empty() && command_pointer < sub_command.size() && !sub_command[command_pointer].empty()) {
         ans += 1.0f * sub_command_pointer / sub_command[command_pointer].size() / command_code.size();
+    }
+    
     return ans;
 }
 float CommandList::getSpeed() const {
@@ -79,10 +81,12 @@ void CommandList::goMainPrev() {
     }
 }
 void CommandList::InsertNextMainCommand(const std::vector<float>& code) {
-    if (m_is_enable) {
+    if (m_is_enable) { 
         if (!sub_command_pointer) {
-            command_code.insert(command_code.begin() + command_pointer, code);
-            sub_command.insert(sub_command.begin()+command_pointer, {code});
+            if (command_pointer <= command_code.size()) {
+                command_code.insert(command_code.begin() + command_pointer, code);
+                sub_command.insert(sub_command.begin() + command_pointer, {code});
+            }
         }
         else {
             command_code.insert(command_code.begin() + command_pointer + 1, code);
@@ -105,21 +109,27 @@ void CommandList::setSpeed(const float& clock_duration) {
 
 void CommandList::GotoCommandLine(const float& percent) {
     cur_time = GetTime();
-    if (command_code.empty() && sub_command.empty()) return;
-    if (percent < 0) GotoCommandLine(0);
-    else if (percent > 1) GotoCommandLine(1);
-    else {
-        int cur = percent*command_code.size();
-        while (command_pointer < cur) BeforeFetchNext();
-        while (command_pointer>cur) BeforeFetchPrev();
-
-        float delta = percent*command_code.size() - cur;
-        int sub_cur = delta*sub_command[command_pointer].size();
+    if (command_code.empty() || sub_command.empty()) return; 
+    
+    float clamped_percent = std::clamp(percent, 0.0f, 1.0f);
+    int cur = clamped_percent * command_code.size();
+    
+    if (cur > command_code.size()) cur = command_code.size() - 1;
+    
+    while (command_pointer < cur) BeforeFetchNext();
+    while (command_pointer > cur) BeforeFetchPrev();
+    
+    if (command_pointer < command_code.size()) {
+        float delta = clamped_percent * command_code.size() - cur;
+        if (sub_command[command_pointer].size() == 1) BeforeFetchNext();
+        if (sub_command[command_pointer].size()==1) BeforeFetchPrev();
+        int sub_cur = delta * sub_command[command_pointer].size();
         
         while (sub_cur > sub_command_pointer) BeforeFetchNext();
         while (sub_cur < sub_command_pointer) BeforeFetchPrev();
     }
 }
+
 void CommandList::handle() {
     if (m_is_enable && !m_is_pause && command_pointer< command_code.size() && m_clock.get()
         && GetTime()-cur_time>0.5) {
@@ -128,7 +138,7 @@ void CommandList::handle() {
 }
 
 void CommandList::goNext() {
-    if (sub_command_pointer == sub_command[command_pointer].size()) return;
+    if (command_pointer == sub_command.size() || sub_command_pointer == sub_command[command_pointer].size()) return;
     BeforeFetchNext();
     if (!m_clock.getDuration() && sub_command_pointer) goNext();
 }

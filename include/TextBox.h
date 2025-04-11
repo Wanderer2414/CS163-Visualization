@@ -10,7 +10,7 @@ class TextBox: public Label {
 public:
     TextBox(ButtonSetting* button_setting, TextSetting* text_setting);
     ButtonSetting       *button_setting;
-    bool                isFocus(),
+    bool                isFocus()                       const override,
                         isEnter();
     virtual void        handle()                        override,
                         draw()                          override,

@@ -4,7 +4,7 @@
 #include "ColorBox.h"
 #include "ColorPointer.h"
 #include "Container.h"
-#include "Dijikstra_margin.h"
+#include "Dijkstra_margin.h"
 #include "Edge.h"
 #include "Form.h"
 #include "GUI.h"
@@ -30,8 +30,9 @@ public:
         goUp,
         goDown,
         choosev2_vertex,
-        choosev2_edge,
+        reback_color,
         reset_color,
+        
         fill_edge,
         fill_vertex,
         
@@ -50,7 +51,7 @@ public:
         kruskal_code,
         kruskal_end_code,
 
-        dijikstra_code,
+        Dijkstra_code,
         dijkstra_end_code,
 
         set_cost,
@@ -70,16 +71,14 @@ public:
                         update(const std::string &old_value, const std::string &new_value) override,
                         prim(const std::string& val),
                         kruskal(const string& str),
-                        dijikstra(const string& str),
+                        Dijkstra(const string& str),
                         FetchNextCommand(const vector<float>& codes) override,
                         FetchPrevCommand(const vector<float>& codes) override;
                         
     virtual string      RandomCreate() const override,
                         RandomSearch() const override;
     void clearGraph();
-    ~Graph() {
-        free();
-    }
+    ~Graph();
   
 private:
     bool                m_is_physics,
@@ -94,23 +93,22 @@ private:
 
     Label               edge_label, vertex_label;
     TextBox             edge_textbox, vertex_textbox, extract_text_bx, prim_textbox, kruskal_textbox, pull_input_textbox,
-                        dijikstra_textbox;
+                        Dijkstra_textbox;
 
     TextureButton       random_edge_button, random_vertex_button, random_prim_button, random_kruskal_button,
-                        random_dijikstra_button;
+                        random_Dijkstra_button;
 
     OptionBox           bfs_choice, dfs_choice;
 
     TextButton          track_graph_hover,
                         pull_matrix_button,
                         prim_button, kruskal_button,
-                        dijikstra_button;
+                        Dijkstra_button;
     TabBox              graph_setting, algorithms_box;
 
-    vector<Vertex*>     vertices;
     vector<Edge*>       edges;
 
-    Container           setting_box, tools_box, extract_box, prim_box, kruskal_box, dijikstra_box;
+    Container           setting_box, tools_box, extract_box, prim_box, kruskal_box, Dijkstra_box;
 
     Container           search_graph_box;
 
@@ -122,9 +120,9 @@ private:
 
     Color               colors[6] = {RED, GREEN, BLUE, YELLOW, BROWN, GRAY};
     Color               tmp_color;
-    vector<vector<int>> matrix;
+    vector<Vertex*>     vertices;
     void                free(),
-                        add_edge(const int& start, const int& end, const int& weight),
+                        add_edge(const int& globalIndex, const int& localIndex, const int& start, const int& end, const int& weight),
                         update(const int& index, const int& value);
 
     Texture2D           cursor_icon;
@@ -142,21 +140,16 @@ private:
                         search_console_add(const int& vertex, const int& mode);
 
     void                pull_matrix(const int& graph),
-                        complete_color(),
-                        random_subGraphColor(),
-                        setSubGraphColor(const int& row, const Color& color),
-                        setSubGraphColor(const int& row, vector<bool>& visited, const Color& color);
+                        complete_color();
 
     void                prim_console_add(),
                         prim_algorithms(const int& vertex),
-                        prim_algorithms(vector<bool>& visited, MinHeap& q, const int& vertex),
                         
                         kruskal_console_add(),
                         kruskal_algorithms(const int& index),
                         
-                        dijikstra_console_add(const int& val),
-                        dijikstra_algorithms(const int& index),
-                        dijikstra_algorithms(const int& index, MinHeap& heap, vector<bool>& visited, vector<int>& board),
+                        Dijkstra_console_add(const int& val),
+                        Dijkstra_algorithms(const int& index),
 
                         create_Dmargin(),
                         free_Dmargin();
@@ -164,18 +157,11 @@ private:
     vector<vector<int>> pull(const int& index);
     vector<int>         getEdge(const int& graph),
                         getVertex(const int& graph);
-    void                getVertex(const int& graph, vector<bool>& visited);
-    int                 getVertexIndex(Vertex* node);
-    
-    int                 findParent(vector<int>& parent, int node);
-    void                unionNode(vector<int>& parent, vector<int>& rank, int u, int v);
-    void                addVertex(Vertex* node);
-    void                addVertex();
-    int                 addEdge(int from, int to, int weight);
-    void                random(int vertexCount, int maxX, int maxY);
-    void                startFromFile(const string filename);
-    vector<Dijikstra_Margin*> DMargins;
-    vector<Color>             true_color;
+    void                getVertex(const int& graph, vector<bool>& visited),
+                        getEdge(const int& graph, vector<bool>& visited);
+
+    stack<float>        prevs;
+    vector<Dijkstra_Margin*> DMargins;
 
 };
 

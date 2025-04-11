@@ -5,7 +5,8 @@
 
 class ProgressBar : public Controller {
 public:
-    ProgressBar();
+    ProgressBar(FormSetting*);
+    FormSetting     *form_setting;
     bool            isFocus(),
                     isChanged();
     float           getProgress() const;
@@ -14,14 +15,8 @@ public:
                     setProgresss(const float& progress),
                     setSize(const float& x, const float& y)     override,
                     setPosition(const float& x, const float& y) override,
-                    setThick(const float& thick),
                     setCursorSize(const float& radius),
-                    setSplitCount(const int& count),
-                    setSplitSize(const float& size),
-                    setSplitThick(const float& thick);
-    Color           uncomplete_color,
-                    complete_color,
-                    cursor_color;
+                    setSplitCount(const int& count);
     ~ProgressBar();
 private:
     bool            m_is_focus,

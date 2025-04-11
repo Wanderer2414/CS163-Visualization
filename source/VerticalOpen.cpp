@@ -3,7 +3,7 @@
 VerticalOpen::VerticalOpen() {
     m_start = 0;
     m_duration = 1;
-    m_is_end = false;
+    m_is_end = true;
 }
 Vector2 VerticalOpen::getSize() const {
     return {0, 0};
@@ -13,6 +13,9 @@ Vector2 VerticalOpen::getPosition() const {
 }
 Vector2 VerticalOpen::getEndSize() const {
     return {getPosition().x, m_start_height+m_delta};
+}
+bool VerticalOpen::isEnd() const {
+    return m_is_end;
 }
 void VerticalOpen::setDuration(const float& duration) {
     m_duration = duration;

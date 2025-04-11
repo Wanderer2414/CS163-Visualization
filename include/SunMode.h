@@ -3,7 +3,6 @@
 
 #include "Controller.h"
 #include "SettingPackage.h"
-
 class SunMode: public Controller {
 public:
     #define color_start YELLOW

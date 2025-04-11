@@ -8,6 +8,9 @@ Controller::Controller() {
 bool Controller::isHovered() const {
     return false;
 }
+bool Controller::isFocus() const {
+    return false;
+}
 void Controller::handle() {
 
 }

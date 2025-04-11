@@ -12,6 +12,7 @@ public:
     FormSetting     *form_setting;
     bool            isVisible() const,
                     isHovered() const override,
+                    isFocus()   const override,
                     isPressed() const;
     Vector2         getAutoSize() const;
     virtual void    draw()      override,
@@ -29,6 +30,7 @@ private:
     bool            is_visible,
                     pos_changed,
                     m_is_hovered,
+                    m_is_focus,
                     m_is_pressed;
     int             tab_index = 0,
                     tab_hover = 0;

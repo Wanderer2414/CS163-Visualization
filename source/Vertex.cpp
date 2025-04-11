@@ -61,16 +61,7 @@ void Vertex::handle() {
     if (m_is_hold) {
         velocity = GetMouseDelta();
     } else if (!m_dragable && !m_is_fixed) {
-        if (abs(velocity)>0.3) velocity=velocity/1.05;
-        else if (abs(velocity)<0.3 && abs(velocity)>0) {
-            velocity = velocity/abs(velocity)*0.3;
-        } else {
-            srand(clock());
-            velocity.x = rand()-RAND_MAX/2;
-            velocity.y = rand()-RAND_MAX/2;
-            if (abs(velocity))
-                velocity = velocity/abs(velocity)*0.3;
-        }
+        if (abs(velocity)>0.1) velocity=velocity/1.05;
     }
 
     if (!m_is_fixed) {

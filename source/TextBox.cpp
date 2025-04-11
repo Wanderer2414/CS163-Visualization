@@ -9,7 +9,7 @@ TextBox::TextBox(ButtonSetting* b_setting, TextSetting* text_setting): Label(tex
     m_is_enter = m_is_focus = false;
     m_is_chosen = false;
 }
-bool TextBox::isFocus() {
+bool TextBox::isFocus() const {
     return m_is_focus;
 }
 bool TextBox::isEnter() {
