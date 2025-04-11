@@ -77,7 +77,6 @@ public:
                         
     virtual string      RandomCreate() const override,
                         RandomSearch() const override;
-    void clearGraph();
     ~Graph();
   
 private:
@@ -154,7 +153,6 @@ private:
                         create_Dmargin(),
                         free_Dmargin();
                         
-    vector<vector<int>> pull(const int& index);
     vector<int>         getEdge(const int& graph),
                         getVertex(const int& graph);
     void                getVertex(const int& graph, vector<bool>& visited),

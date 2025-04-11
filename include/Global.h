@@ -22,7 +22,6 @@
 #include <cfloat>
 #include <cctype>
 #include <new>
-#include <algorithm>
 #include <cstdlib>
 #include <limits>
 #include <utility>

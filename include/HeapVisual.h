@@ -38,7 +38,7 @@ public:
                         Insert(const Path& path)                            override,
                         erase(const int &index)                             override,
                         clear()                                             override;
-    Path                pop()                    override;
+    Path                pop()                                               override;
 private:
     enum HeapCode {
         swap_code, pop_code, add_code, fill, pop_back

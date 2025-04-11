@@ -56,12 +56,10 @@ private:
                     show(AVLNode* root, const int& indent)                          ;
     
     int             remove(Node*& root, const int& x)                               ;
-    void            visual_remove(AVLNode*& root, const int& x)                     ,
-                    swap(AVLNode* rootA, AVLNode* rootB)                            ,
+    void            swap(AVLNode* rootA, AVLNode* rootB)                            ,
                     swap(Node* rootA, Node* rootB)                                  ,
                     rePosition(const float& dur)                                    ,
                     draw(AVLNode* root)                                             ,
-                    handle(AVLNode* root)                                           ,
                     free()                                                          ,
                     free(AVLNode* root)                                             ,
                     reFocusCamera()                                                 ;
