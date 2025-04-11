@@ -85,7 +85,7 @@ SLL::SLLForm::SLLForm(const int &index, FormSetting form_setting, const Vector2 
 	temp_b_setting.roundness = form_setting.roundness;
 	temp_b_setting.segment = form_setting.segment;
 
-	temp_t_setting.color = BLACK;
+	temp_t_setting.color = form_setting.color;
 	temp_t_setting.font = form_setting.font;
 	temp_t_setting.font_size = form_setting.font_size;
 	temp_t_setting.spacing = form_setting.spacing;
@@ -98,7 +98,6 @@ void SLL::SLLForm::add(const vector<string> &str)
 {
 	for (int i = str.size()-1; i>=0; i--) {
 		InsertNextMainCommand({_insert,1.0f * to_int(str[i])});
-		//console.InsertNextMainCommand("Add " + str[i]);
 	}
 }
 
@@ -127,8 +126,6 @@ void SLL::SLLForm::rePosition() {
 
 void SLL::SLLForm::remove(const std::string & str)
 {
-	console.InsertNextMainCommand("Remove " + str);
-	console.goDown();
 	ListNode* cur = m_head;
 	int value = stoi(str);
 	while (cur && cur->getValue() != value)
@@ -143,22 +140,12 @@ void SLL::SLLForm::remove(const std::string & str)
 
 void SLL::SLLForm::update(const std::string & old_value, const std::string & new_value)
 {
-	int count = 0;
-	ListNode* cur = m_head;
-	int value = stoi(old_value);
-	while (cur) {
-		if (cur->getValue() == value) break;
-		cur = cur->m_next;
-		count++;
-	}
-	if (!cur) {
-		InsertNextMainCommand({_update,float(stoi(old_value)),float(stoi(new_value)),-1});
-	}
-	InsertNextMainCommand({_update,float(stoi(old_value)),float(stoi(new_value)),float(count)});
+	InsertNextMainCommand({_update,float(stoi(old_value)),float(stoi(new_value))});
 }
 
 void SLL::SLLForm::search(const std::string & x)
 {
+	InsertNextMainCommand({_search,float(stoi(x))});
 }
 
 
@@ -185,27 +172,75 @@ void SLL::SLLForm::FetchNextCommand(const std::vector<float>& command)
 	{
 	case _insert:
 	{
+		console.goDown();
+		console.goDown();
+		console.InsertNextMainCommand("Add " + to_string(int(command[1])));
+		console.InsertNextSubCommand("while (cur->next) ");
+		console.InsertNextSubCommand("cur=cur->next;");
+		console.InsertNextSubCommand("cur->next = new Node(" + to_string(int(command[1]))+"};");
 		insert(int(command[1]),size);
+		console.goDown();
+		console.goDown();
 		setDuration(0.001);
 		break;
 	}
 	case _insertSilent:
 	{
+		console.goDown();
 		insertSilent(int(command[1]),int(command[2]));
 		rePosition();
 		break;
 	}
 	case _delete:
 	{
+		console.goDown();
+		console.goDown();
+		console.InsertNextMainCommand("Remove " + to_string(int(command[1])));
+		console.InsertNextSubCommand("while (cur->next->val != " + to_string(int(command[1])) +")");
+		console.InsertNextSubCommand("cur=cur->next;");
+		console.InsertNextSubCommand("cur->next = cur->next->next;");
+		console.goDown();
+		console.goDown();
 		remove(int(command[1]),int(command[2]));
 		setDuration(0.001);
 		break;
 	}
 	case _removeSilent:
 	{
-		cout << 1;
+		console.goDown();
 		removeSilent(int(command[1]),int(command[2]));
 		rePosition();
+		break;
+	}
+	case _update:
+	{	
+		console.goDown();
+		console.goDown();
+		console.InsertNextMainCommand("Update " + to_string(int(command[1])) + " to " + to_string(int(command[2])));
+		console.InsertNextSubCommand("while (cur->val != " + to_string(int(command[1])) +")");
+		console.InsertNextSubCommand("cur = cur->next");
+		console.InsertNextSubCommand("cur->val = " + to_string(int(command[2])) +";");
+		update(int(command[1]),int(command[2]));
+		console.goDown();
+		console.goDown();
+		break;
+	}
+	case _updateSilent:
+	{
+		console.goDown();
+		updateSilent(int(command[1]),int(command[2]),int(command[3]));
+		break;
+	}
+	case _search: 
+	{
+		console.goDown();
+		console.goDown();
+		console.InsertNextMainCommand("Search for " + to_string(int(command[1])));
+		console.InsertNextSubCommand("while (cur->val != " + to_string(int(command[1])) + ")");
+		console.InsertNextSubCommand("cur=cur->next;");
+		console.goDown();
+		console.goDown();
+		search(int(command[1]));
 		break;
 	}
 	case _choose:
@@ -223,7 +258,6 @@ void SLL::SLLForm::FetchNextCommand(const std::vector<float>& command)
 		while (cur->getIndex() != int(command[1])) cur = cur->m_next;
 		cur->text_setting = &form_setting;
 		cur->button_setting = &form_setting;
-		setDuration(int(command[2]));
 		break;
 	}
 	default:
@@ -263,6 +297,11 @@ void SLL::SLLForm::FetchPrevCommand(const std::vector<float>& command)
 		{
 			insertSilent(int(command[1]),int(command[2]));
 			rePosition();
+			break;
+		}
+		case _updateSilent:
+		{
+			updateSilent(int(command[2]),int(command[1]),int(command[3]));
 			break;
 		}
 		default:
@@ -309,7 +348,7 @@ void SLL::SLLForm::insertSilent(const int& value, const int& index) {
     cur->m_next = newNode;
     newNode->button_setting = &form_setting;
     newNode->text_setting = &form_setting;
-    newNode->setPosition(getRandom(0, m_workspace.width), getRandom(0, m_workspace.height));
+    newNode->setPosition(m_workspace.width, getRandom(0, m_workspace.height));
     ListNode* temp = newNode->m_next;
     while (temp) {
         temp->setIndex(temp->getIndex() + 1);
@@ -366,32 +405,39 @@ void SLL::SLLForm::removeSilent(const int &value, const int &index)
     }
 }
 
+void SLL::SLLForm::update(const int &old_value, const int &new_value)
+{
+	ListNode* cur = m_head;
+	while (cur && cur->getValue() != old_value) {
+		InsertNextSubCommand({_choose,float(cur->getIndex()),1});
+		InsertNextSubCommand({_unchoose,float(cur->getIndex()),1});
+		cur = cur->m_next;
+	}
+	if (cur) {
+		InsertNextSubCommand({_choose,float(cur->getIndex()),1});
+		InsertNextSubCommand({_updateSilent,float(old_value),float(new_value),float(cur->getIndex())});
+		InsertNextSubCommand({_unchoose,float(cur->getIndex()),1});
+	}
+}
 
-// void SLL::SLLForm::update(const int &old_value, const int &new_value)
-// {
-// 	ListNode* cur = m_head;
-// 	int count = 0;
-// 	while (cur) {
-// 		if (cur->getValue() == old_value) break;
-// 		InsertNextSubCommand({_choose,float(count),1});
-// 		console.InsertNextSubCommand(to_string(cur->getValue()) + " is not " + to_string(old_value));
-// 		InsertNextSubCommand({_unchoose,float(count),1});
-// 		cur = cur->m_next;
-// 		count++;
-// 	}
-// 	if (!cur) return;
-// 	InsertNextSubCommand({_choose,float(count),1});
-// 	console.InsertNextSubCommand("Change " + to_string(old_value) + " to " + to_string(new_value));
-// 	InsertNextSubCommand({_updateSilent,float(new_value),float(count)});
-// 	InsertNextSubCommand({_unchoose,float(count),1});
-// }
+void SLL::SLLForm::updateSilent(const int &old_value, const int &new_value, const int &index)
+{
+	ListNode* cur = m_head;
+	while (cur && cur->getIndex() != index) cur = cur->m_next;
+	if (cur) cur->setValue(new_value);
+}
 
-// void SLL::SLLForm::updateSilent(const int &value, const int &index)
-// {
-// 	ListNode* cur = m_head;
-// 	while (cur && cur->getIndex() != index) cur = cur->m_next;
-// 	cur->setValue(value);
-// }
+void SLL::SLLForm::search(const int &value)
+{
+	ListNode* cur = m_head->m_next;
+	while (cur && cur->getValue() != value) {
+		InsertNextSubCommand({_choose,float(cur->getIndex()),1});
+		InsertNextSubCommand({_unchoose,float(cur->getIndex()),1});
+		cur=cur->m_next;
+	}
+	if (cur) InsertNextSubCommand({_choose,float(cur->getIndex()),1});
+}
+
 void SLL::Arrow::setPosition(Vector2 tail, Vector2 head)
 {
     m_tail = tail;
@@ -417,5 +463,5 @@ void SLL::Arrow::handle()
 void SLL::Arrow::draw()
 {
 	DrawLineEx(m_tail,{m_t2.x,m_t1.y},m_thickness,color);
-	DrawTriangleLines(m_t1,m_t2,m_t3,color);
+	DrawTriangle(m_t1,m_t3,m_t2,color);
 }

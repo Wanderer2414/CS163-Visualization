@@ -36,7 +36,6 @@ void Console::InsertNextMainCommand(const std::string& log) {
 }
 void Console::InsertNextSubCommand(const std::string& log) {
     if (m_is_enable) {
-        cout << current_add << endl;
         m_list.insert(m_list.begin() + current_add, log);
         temporary.insert(temporary.begin() + current_add, true);
         current_add++;
@@ -124,6 +123,10 @@ void Console::clear() {
 }
 void Console::setEnable(const bool& enbale) {
     m_is_enable = enbale;
+}
+bool Console::isEmpty()
+{
+    return m_list.size() == 0;
 }
 void Console::setTextOrigin(const Vector2& origin) {
     m_origin = origin;

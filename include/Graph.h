@@ -30,8 +30,9 @@ public:
         goUp,
         goDown,
         choosev2_vertex,
-        choosev2_edge,
+        reback_color,
         reset_color,
+        
         fill_edge,
         fill_vertex,
         
@@ -107,7 +108,6 @@ private:
                         dijikstra_button;
     TabBox              graph_setting, algorithms_box;
 
-    vector<Vertex*>     vertices;
     vector<Edge*>       edges;
 
     Container           setting_box, tools_box, extract_box, prim_box, kruskal_box, dijikstra_box;
@@ -122,9 +122,9 @@ private:
 
     Color               colors[6] = {RED, GREEN, BLUE, YELLOW, BROWN, GRAY};
     Color               tmp_color;
-    vector<vector<int>> matrix;
+    vector<Vertex*>     vertices;
     void                free(),
-                        add_edge(const int& start, const int& end, const int& weight),
+                        add_edge(const int& globalIndex, const int& localIndex, const int& start, const int& end, const int& weight),
                         update(const int& index, const int& value);
 
     Texture2D           cursor_icon;
@@ -142,14 +142,10 @@ private:
                         search_console_add(const int& vertex, const int& mode);
 
     void                pull_matrix(const int& graph),
-                        complete_color(),
-                        random_subGraphColor(),
-                        setSubGraphColor(const int& row, const Color& color),
-                        setSubGraphColor(const int& row, vector<bool>& visited, const Color& color);
+                        complete_color();
 
     void                prim_console_add(),
                         prim_algorithms(const int& vertex),
-                        prim_algorithms(vector<bool>& visited, MinHeap& q, const int& vertex),
                         
                         kruskal_console_add(),
                         kruskal_algorithms(const int& index),
@@ -164,10 +160,11 @@ private:
     vector<vector<int>> pull(const int& index);
     vector<int>         getEdge(const int& graph),
                         getVertex(const int& graph);
-    void                getVertex(const int& graph, vector<bool>& visited);
+    void                getVertex(const int& graph, vector<bool>& visited),
+                        getEdge(const int& graph, vector<bool>& visited);
 
+    stack<float>        prevs;
     vector<Dijikstra_Margin*> DMargins;
-    vector<Color>             true_color;
 
 };
 

@@ -5,7 +5,9 @@ enum CommandCode {
     add,
     choose,
     unchoose,
+    unchoose_end,
     search,
+    search_end,
     swap,
     update,
     update_node,
@@ -15,7 +17,12 @@ enum CommandCode {
     rotateLeft,
     rotateRight,
     insert,
+    insert_end,
+    erase_end,
+    update_end,
     wait,
+    goDown,
+    goUp,
     update_height
 };
 

@@ -244,7 +244,7 @@ Form::Form(const int& index, FormSetting f_setting, const Vector2& window_size) 
     m_workspace.width = m_window_size.x - m_workspace.x - 120;
     m_workspace.height = m_window_size.y - m_workspace.y - 50;
 
-    m_camera.offset = { m_window_size.x / 2, 100 };
+    m_camera.offset = { m_workspace.x + m_workspace.width/ 2, 100 };
     m_camera.zoom = 1;
     m_camera.rotation = 0;
     m_camera.target = { 0, 0 };
@@ -288,18 +288,23 @@ int Form::run() {
 void Form::handle() {
     //Base handle + children handle
     CommandList::handle();
-    for (auto i : children) i->handle();
+    bool isFocus = 0;
+    for (auto i : children) {
+        i->handle();
+        if (i->isFocus()) isFocus = true;
+    }
     //Zoom in/out + zoom move setting
     bool workspace_hover = CheckCollisionPointRec(GetMousePosition(), m_workspace);
-    if (!m_workspace_focus && workspace_hover && IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) 
-            m_workspace_focus = true;
-    else if (IsMouseButtonReleased(MOUSE_BUTTON_LEFT)) 
-            m_workspace_focus = false;
-    if (!speed_scroll.isHovered() && workspace_hover && m_workspace_focus && IsMouseButtonDown(MOUSE_BUTTON_LEFT)) 
-            m_camera.offset = m_camera.offset + GetMouseDelta();
-    if (workspace_hover && !option_box.isHovered() && !speed_scroll.isHovered()) 
-            m_camera.zoom += GetMouseWheelMove() / 10;
-
+    if (!console.isHovered()) {
+        if (!m_workspace_focus && workspace_hover && IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) 
+                m_workspace_focus = true;
+        else if (IsMouseButtonReleased(MOUSE_BUTTON_LEFT)) 
+                m_workspace_focus = false;
+        if (!speed_scroll.isHovered() && workspace_hover && m_workspace_focus && IsMouseButtonDown(MOUSE_BUTTON_LEFT)) 
+                m_camera.offset = m_camera.offset + GetMouseDelta();
+        if (workspace_hover && !option_box.isHovered() && !speed_scroll.isHovered()) 
+                m_camera.zoom += GetMouseWheelMove() / 10;
+    }
     //Progresss setting
     float progress = 0;
     m_progress.setSplitCount(getCommandCount());
@@ -310,9 +315,11 @@ void Form::handle() {
         if (!IsMouseButtonDown(MOUSE_BUTTON_LEFT)) m_progress.setProgresss(getProgress());
     }
     else {
-        //Progress go next and go back
-        if (IsKeyReleased(KEY_RIGHT)) goNext();
-        else if (IsKeyReleased(KEY_LEFT)) goBack();
+        if (!isFocus) {
+            //Progress go next and go back
+            if (IsKeyReleased(KEY_RIGHT)) goNext();
+            else if (IsKeyReleased(KEY_LEFT)) goBack();
+        }
         //Reshow progress
         progress = getProgress();
         m_progress.setProgresss(progress);

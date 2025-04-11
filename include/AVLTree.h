@@ -40,8 +40,12 @@ private:
         else return 0;
     }
     void            insert(Node*& root, Node* parent, const int& x)                 ,
-                    update(Node*& root, const int& old, const int& x)              ,
-                    update(Node*& root),
+                    insert_console_add()                                            ,
+                    update(Node*& root, const int& old, const int& x)               ,
+                    update(Node*& root, const bool& isGreater)                      ,
+                    update_console_add()                                            ,
+                    remove_console_add()                                            ,
+                    search_console_add()                                            ,
                     visual_rotateRight(AVLNode*& root)                              ,
                     visual_rotateLeft(AVLNode*& root)                               ,
                     rotateRight(Node*& root)                                        ,
@@ -54,19 +58,19 @@ private:
     int             remove(Node*& root, const int& x)                               ;
     void            visual_remove(AVLNode*& root, const int& x)                     ,
                     swap(AVLNode* rootA, AVLNode* rootB)                            ,
-                    swap(Node* rootA, Node* rootB)                                ,
+                    swap(Node* rootA, Node* rootB)                                  ,
                     rePosition(const float& dur)                                    ,
                     draw(AVLNode* root)                                             ,
                     handle(AVLNode* root)                                           ,
                     free()                                                          ,
-                    free(AVLNode* root)                                             ;
+                    free(AVLNode* root)                                             ,
+                    reFocusCamera()                                                 ;
 
     float           rePosition(AVLNode* root, float left, const int& level)         ;
     stack<Node*>   Up, Down;
     AVLNode         *vroot;
     vector<Node*>   logic_node;
     vector<AVLNode*>visual_node;
-    ButtonSetting   fill_setting;
 };
 
 #endif
