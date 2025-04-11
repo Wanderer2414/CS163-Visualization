@@ -1,16 +1,16 @@
-#include "../include/Dijikstra_margin.h"
+#include "../include/Dijkstra_margin.h"
 
-Dijikstra_Margin::Dijikstra_Margin(Vertex* vertex) {
+Dijkstra_Margin::Dijkstra_Margin(Vertex* vertex) {
     m_value = numeric_limits<float>::max();
     host = vertex;
 }
-float Dijikstra_Margin::getValue() const {
+float Dijkstra_Margin::getValue() const {
     return m_value;
 }
-void Dijikstra_Margin::setValue(const float& value) {
+void Dijkstra_Margin::setValue(const float& value) {
     m_value = value;
 }
-void Dijikstra_Margin::draw() {
+void Dijkstra_Margin::draw() {
     Vector2 pos = host->getCenter();
     pos.x += host->getSize().x/2;
     FormSetting* f = host->form_setting;

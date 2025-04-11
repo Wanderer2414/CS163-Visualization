@@ -100,73 +100,72 @@ void Graph::kruskal(const string& str) {
         InsertNextMainCommand({kruskal_code, i, 1});
     }
 }
-void Graph::dijikstra(const string& str) {
+void Graph::Dijkstra(const string& str) {
     float i = to_int(str);
     if (i<vertices.size()) {
-        console.InsertNextMainCommand("Dijikstra at " + str);
-        InsertNextMainCommand({dijikstra_code, i, 1});
+        console.InsertNextMainCommand("Dijkstra at " + str);
+        InsertNextMainCommand({Dijkstra_code, i, 1});
     }
 }
 void Graph::create_Dmargin() {
     DMargins.clear();
     for (int i = 0; i<vertices.size(); i++) {
-        DMargins.push_back(new Dijikstra_Margin(vertices[i]));
+        DMargins.push_back(new Dijkstra_Margin(vertices[i]));
     }
 }
-void Graph::dijikstra_algorithms(const int& index) {
-    InsertNextSubCommand({goDown, 1, 0.2});
-    InsertNextSubCommand({set_cost, 1.0f*index, 0, 1.0f*DMargins[index]->getValue(), 0.1});
-    InsertNextSubCommand({goDown, 1, 0.2});
+void Graph::Dijkstra_algorithms(const int& index) {
     vector<float> board(vertices.size(), numeric_limits<float>::max());
     vector<bool> visited(vertices.size(), 0);
     board[index] = 0;
     MinHeap q;
-    q.Insert({index, index, 0});
+    InsertNextSubCommand({goDown, 1, 0});
+    InsertNextSubCommand({set_cost, 1.0f*index, 0, 1.0f*DMargins[index]->getValue(), 0.1});
+    q.Insert({index, index, 0, -1});
+    InsertNextSubCommand({add_heap, 1.0f*index, 1.0f*index, 0, 0});
     InsertNextSubCommand({goDown, 1, 0.2});
-    dijikstra_algorithms(index, q, visited, board);
-};
-void Graph::dijikstra_algorithms(const int& index, MinHeap& heap, vector<bool>& visited, vector<float>& board) {
-    visited[index] = true;
-    InsertNextSubCommand({goDown, 1, 0.2});
-    int value = heap.front().weight;
-    heap.pop();
-    for (Edge* edge:vertices[index]->edges) {
-        int i = edge->m_end->getIndex();
-        if (!visited[i]) {
-            InsertNextSubCommand({goDown, 1, 0.2});
-            int weight = edge->getWeight();
-            InsertNextSubCommand({choose_edge, 1.0f*index, 1.0f*i, 1.0f*weight, 1});
-            if (value + weight < board[i]) {
-                board[i] = weight+value;
-                InsertNextSubCommand({goDown, 1, 0.2});
-                InsertNextSubCommand({set_cost, 1.0f*i, 1.0f*board[i], 1.0f*DMargins[i]->getValue(), 0.1});
-                InsertNextSubCommand({goDown, 1, 0.2});
-                InsertNextSubCommand({add_heap, 1.0f*index, 1.0f*i, 1.0f*board[i], 0});
-                heap.Insert({index, i, int(board[i])});
-                InsertNextSubCommand({goUp, 2, 0.2});;
-            }
-            InsertNextSubCommand({goUp, 1, 0.2});
+    
+    while (q.size()) {
+        InsertNextSubCommand({goDown, 1, 0.2});
+        Path path = q.front();
+        q.pop();
+        InsertNextSubCommand({goDown, 1, 0.2});
+        InsertNextSubCommand({pop_heap, 1.0f*path.start, 1.0f*path.end, 1.0f*path.weight, 0});
+        InsertNextSubCommand({goDown, 1, 0.2});
+        if (visited[path.end]) {
+            InsertNextSubCommand({goDown, 5, 1});
+            InsertNextSubCommand({goUp, 8, 1});
+            continue;
         }
-    }
-    InsertNextSubCommand({goDown, 4, 0.2});
-    while (heap.size() && visited[heap.front().end]) {
-        InsertNextSubCommand({pop_heap, 1.0f*heap.front().start, 1.0f*heap.front().end, 1.0f*heap.front().weight, 1});
-        heap.pop();
-    }
-    InsertNextSubCommand({goDown, 1, 0.2});
-    if (heap.size()) {
+        InsertNextSubCommand({choose_vertex, 1.0f*path.start, 1.0f*path.end, 1 });
+        if (path.index!=-1) InsertNextSubCommand({choose_edge, 1.0f*path.index, 1});
+        visited[path.end] = true;
         InsertNextSubCommand({goDown, 1, 0.2});
-        Path q = heap.front();
-        InsertNextSubCommand({choose_vertex, 1.0f*q.start, 1.0f*q.end, 1});
-        InsertNextSubCommand({choosev2_vertex, 1.0f*q.end, 1.0f*q.start,1});
-        InsertNextSubCommand({choose_edge, 1.0f*q.start, 1.0f*q.end, 1});
-        InsertNextSubCommand({pop_heap, 1.0f*q.start, 1.0f*q.end, 1.0f*q.weight, 0});
-        InsertNextSubCommand({goDown, 1, 0.2});
-        heap.pop();
+        for (Edge* edge:vertices[path.end]->edges) {
+            if (edge && !visited[edge->m_end->getIndex()]) {
+                int weight = edge->getWeight();
+                InsertNextSubCommand({choose_edge, 1.0f*edge->getGlobalIndex(), 1});
+                if (path.weight + weight < board[edge->m_end->getIndex()]) {
+                    InsertNextSubCommand({goDown, 1, 0.2});
+                    board[edge->m_end->getIndex()] = weight+path.weight;
+                    InsertNextSubCommand({goDown, 1, 0.2});
+                    InsertNextSubCommand({set_cost, 1.0f*edge->m_end->getIndex(), 1.0f*board[edge->m_end->getIndex()], 1.0f*DMargins[edge->m_end->getIndex()]->getValue(), 0.1});
+                    InsertNextSubCommand({goDown, 1, 0.2});
+                    InsertNextSubCommand({add_heap, 1.0f*path.end, 1.0f*edge->m_end->getIndex(), 1.0f*board[edge->m_end->getIndex()], 0});
+                    q.Insert({path.end, edge->m_end->getIndex(), int(board[edge->m_end->getIndex()]), edge->getGlobalIndex()});
+                    InsertNextSubCommand({goDown, 1, 0.2});
+                    InsertNextSubCommand({goUp, 4, 0.2});
+                }
+                else {
+                    InsertNextSubCommand({goDown, 4, 0.2});
+                    InsertNextSubCommand({goUp, 4, 0.2});
+                } 
+            }
+        }
+        InsertNextSubCommand({choosev2_vertex, 1.0f*path.start, 1.0f*path.end, 1});
+        InsertNextSubCommand({goDown, 4, 0.2});
         InsertNextSubCommand({goUp, 8, 0.2});
-        dijikstra_algorithms(q.end, heap, visited, board);
     }
-}
+};
 void Graph::free_Dmargin() {
     for (int i = 0; i<DMargins.size(); i++) {
         delete DMargins[i];
@@ -244,9 +243,9 @@ void Graph::FetchNextCommand(const vector<float>& codes) {
             int n = codes[1];
             prevs.push(to_float(vertices[n]->getColor()));
             vector<int> vertices_index= getVertex(n);
-            for (int i:vertices_index) vertices[i]->setColor(PURPLE);
+            for (int i:vertices_index) vertices[i]->setColor(form_setting.middle_color);
             vector<int> edge_index = getEdge(n);
-            for (int i:edge_index) edges[i]->setColor(PURPLE);
+            for (int i:edge_index) edges[i]->setColor(form_setting.middle_color);
             setDuration(codes.back());
         }
         break;
@@ -298,13 +297,13 @@ void Graph::FetchNextCommand(const vector<float>& codes) {
             Vector2 delta = vertices[start]->getCenter()-vertices[end]->getCenter();
             if (start == end) delta = vertices[start]->getCenter();
             vertices[end]->setDuration(codes.back()*getSpeed());
-            vertices[end]->start(arctan(delta),vertices[start]->getColor() ,vertices[end]->getColor());
+            vertices[end]->start(arctan(delta),form_setting.hightlight_color3 ,vertices[end]->getColor());
             setDuration(codes.back());
         }
         break;
         case fill_vertex: {
             int index = codes[1];
-            vertices[index]->setColor(ORANGE);
+            vertices[index]->setColor(form_setting.hightlight_color3);
             setDuration(codes.back());
         }
         break;
@@ -312,7 +311,7 @@ void Graph::FetchNextCommand(const vector<float>& codes) {
             int start = codes[1], end = codes[2];
             Vector2 delta = vertices[start]->getCenter()-vertices[end]->getCenter();
             if (start == end) delta = vertices[start]->getCenter();
-            vertices[end]->start(arctan(delta), LIME ,vertices[end]->getColor());
+            vertices[end]->start(arctan(delta), form_setting.hightlight_color2 ,vertices[end]->getColor());
             setDuration(codes.back());
         }
         break;
@@ -374,6 +373,7 @@ void Graph::FetchNextCommand(const vector<float>& codes) {
             m_is_lock = true;
             InsertNextSubCommand({reset_color, 1.0f*index, 1});
             kruskal_algorithms(index);
+            InsertNextSubCommand({reback_color, 1.0f*index, to_float(vertices[index]->getColor()), 1});
             InsertNextSubCommand({kruskal_end_code, 1.0f*index, 1});
             setDuration(0.5);
         }
@@ -382,7 +382,6 @@ void Graph::FetchNextCommand(const vector<float>& codes) {
             int index = codes[1];
             heap.setVisible(false);
             for (int i = 0; i<3; i++) console.goDown();
-            InsertNextSubCommand({reback_color, 1.0f*index, 1});
             m_is_lock = false;
             setDuration(0.5);
         }
@@ -398,7 +397,7 @@ void Graph::FetchNextCommand(const vector<float>& codes) {
             setDuration(0);
         }
         break;
-        case dijikstra_code: {
+        case Dijkstra_code: {
             int index = codes[1];
             heap.clear();
             create_Dmargin();
@@ -406,23 +405,27 @@ void Graph::FetchNextCommand(const vector<float>& codes) {
             m_is_lock = true;
             InsertNextSubCommand({reset_color, 1.0f*index, 1});
             int value = vertices[index]->getValue();
-            dijikstra_console_add(value);
+            Dijkstra_console_add(value);
             console.goDown();
             InsertNextSubCommand({fill_vertex, 1.0f*index, 1});
-            dijikstra_algorithms(index);
+            Dijkstra_algorithms(index);
+            InsertNextSubCommand({reback_color, 1.0f*index, to_float(vertices[index]->getColor()), 1});
             InsertNextSubCommand({dijkstra_end_code, 1.0f*index, 1});
             setDuration(0.5);
         }
         break;
         case dijkstra_end_code: {
             int index = codes[1];
-            console.goDown();
-            console.goDown();
-            console.goDown();
+            for (int i = 0; i<9; i++) console.goDown();
             m_is_lock = false;
             heap.setVisible(false);
+            vector<int> vertices_index = getVertex(index);
+            for (int i:vertices_index) {
+                prevs.push(i);
+                prevs.push(DMargins[i]->getValue());
+            }
+            prevs.push(vertices_index.size());
             free_Dmargin();
-            InsertNextSubCommand({reback_color, 1.0f*index, 1});
             setDuration(0.5);
         }
         break;
@@ -558,13 +561,13 @@ void Graph::FetchPrevCommand(const vector<float>& codes) {
             Vector2 delta = vertices[end]->getCenter() - vertices[start]->getCenter();
             if (start == end) delta = vertices[start]->getCenter();
             vertices[end]->setDuration(codes.back()*getSpeed());
-            vertices[end]->start(arctan(delta),PURPLE ,vertices[end]->getColor());
+            vertices[end]->start(arctan(delta),form_setting.middle_color ,vertices[end]->getColor());
             setDuration(codes.back());
         }
         break;
         case fill_vertex: {
             int index = codes[1];
-            vertices[index]->setColor(PURPLE);
+            vertices[index]->setColor(form_setting.middle_color);
             setDuration(codes.back());
         }
         break;
@@ -572,7 +575,7 @@ void Graph::FetchPrevCommand(const vector<float>& codes) {
             int start = codes[1], end = codes[2];
             Vector2 delta = vertices[end]->getCenter() - vertices[start]->getCenter();
             if (start == end) delta = vertices[start]->getCenter();
-            vertices[end]->start(arctan(delta), ORANGE ,vertices[end]->getColor());
+            vertices[end]->start(arctan(delta), form_setting.hightlight_color3 ,vertices[end]->getColor());
             setDuration(codes.back());
         }
         break;
@@ -652,7 +655,7 @@ void Graph::FetchPrevCommand(const vector<float>& codes) {
             setDuration(0.5);
         }
         break;
-        case dijikstra_code: {
+        case Dijkstra_code: {
             int index = codes[1];
             heap.setVisible(false);
             free_Dmargin();
@@ -664,11 +667,20 @@ void Graph::FetchPrevCommand(const vector<float>& codes) {
             int index = codes[1];
             int value = vertices[index]->getValue();
             console.goUp();
-            dijikstra_console_add(index);
-            for (int i = 0; i<10; i++) console.goDown();
+            Dijkstra_console_add(index);
+            for (int i = 0; i<3; i++) console.goDown();
             m_is_lock = true;
             heap.setVisible(true);
             create_Dmargin();
+            int size = prevs.top();
+            prevs.pop();
+            for (int i = 0; i<size; i++) {
+                int value = prevs.top();
+                prevs.pop();
+                int index = prevs.top();
+                prevs.pop();
+                DMargins[index]->setValue(value);
+            }
             setDuration(0.5);
         }
         break;
@@ -755,24 +767,21 @@ void Graph::kruskal_algorithms(const int& index) {
     DSU dsu(vertices.size());
     vector<int> edges_index = getEdge(index);
     InsertNextSubCommand({goDown, 1, 0.5});
-    for (int i = 0; i<edges_index.size(); i++) {
-        int index = edges_index[i];
-        Path path = {edges[index]->m_start->getIndex(), edges[index]->m_end->getIndex(), edges[index]->getWeight()};
-        if (path.start < path.end) {
-            q.Insert(path);
-            InsertNextSubCommand({add_heap, 1.0f*path.start, 1.0f*path.end, 1.0f*path.weight, 0});
-        }
+    for (int i:edges_index) {
+        Path path = {edges[i]->m_start->getIndex(), edges[i]->m_end->getIndex(), edges[i]->getWeight(), i};
+        q.Insert(path);
+        InsertNextSubCommand({add_heap, 1.0f*path.start, 1.0f*path.end, 1.0f*path.weight, 0});
     }
     InsertNextSubCommand({goDown, 1, 0.5});
     InsertNextSubCommand({goDown, 1, 0.5});
     while (q.size()) {
         if (dsu.check(q.front().start, q.front().end)) {
+            InsertNextSubCommand({ pop_heap, 1.0f * q.front().start, 1.0f * q.front().end, 1.0f * q.front().weight, 0 });
             q.pop();
-            InsertNextSubCommand({pop_heap, 1.0f*q.front().start, 1.0f*q.front().end, 1.0f*q.front().weight, 0});
         } else {
             InsertNextSubCommand({goDown, 1, 0.5});
             InsertNextSubCommand({fill_vertex, 1.0f*q.front().start,  1});
-            InsertNextSubCommand({choose_edge, 1.0f*q.front().start, 1.0f*q.front().end, 1.0f*q.front().weight, 1});
+            InsertNextSubCommand({choose_edge, 1.0f*q.front().index, 1});
             InsertNextSubCommand({choose_vertex, 1.0f*q.front().start, 1.0f*q.front().end,  1});
             dsu.join(q.front().start, q.front().end);
             InsertNextSubCommand({goDown, 1, 0.5});
