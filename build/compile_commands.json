@@ -1,12 +1,6 @@
 [
 {
   "directory": "C:/Users/Dell/Downloads/CS163-DSAVisual/build",
-  "command": "C:\\MinGW\\bin\\g++.exe  @CMakeFiles/DSAVisual.dir/includes_CXX.rsp -g -std=gnu++17 -o CMakeFiles\\DSAVisual.dir\\source\\Application.cpp.obj -c C:\\Users\\Dell\\Downloads\\CS163-DSAVisual\\source\\Application.cpp",
-  "file": "C:/Users/Dell/Downloads/CS163-DSAVisual/source/Application.cpp",
-  "output": "CMakeFiles/DSAVisual.dir/source/Application.cpp.obj"
-},
-{
-  "directory": "C:/Users/Dell/Downloads/CS163-DSAVisual/build",
   "command": "C:\\MinGW\\bin\\g++.exe  @CMakeFiles/DSAVisual.dir/includes_CXX.rsp -g -std=gnu++17 -o CMakeFiles\\DSAVisual.dir\\source\\AVLNode.cpp.obj -c C:\\Users\\Dell\\Downloads\\CS163-DSAVisual\\source\\AVLNode.cpp",
   "file": "C:/Users/Dell/Downloads/CS163-DSAVisual/source/AVLNode.cpp",
   "output": "CMakeFiles/DSAVisual.dir/source/AVLNode.cpp.obj"
@@ -16,6 +10,12 @@
   "command": "C:\\MinGW\\bin\\g++.exe  @CMakeFiles/DSAVisual.dir/includes_CXX.rsp -g -std=gnu++17 -o CMakeFiles\\DSAVisual.dir\\source\\AVLTree.cpp.obj -c C:\\Users\\Dell\\Downloads\\CS163-DSAVisual\\source\\AVLTree.cpp",
   "file": "C:/Users/Dell/Downloads/CS163-DSAVisual/source/AVLTree.cpp",
   "output": "CMakeFiles/DSAVisual.dir/source/AVLTree.cpp.obj"
+},
+{
+  "directory": "C:/Users/Dell/Downloads/CS163-DSAVisual/build",
+  "command": "C:\\MinGW\\bin\\g++.exe  @CMakeFiles/DSAVisual.dir/includes_CXX.rsp -g -std=gnu++17 -o CMakeFiles\\DSAVisual.dir\\source\\Application.cpp.obj -c C:\\Users\\Dell\\Downloads\\CS163-DSAVisual\\source\\Application.cpp",
+  "file": "C:/Users/Dell/Downloads/CS163-DSAVisual/source/Application.cpp",
+  "output": "CMakeFiles/DSAVisual.dir/source/Application.cpp.obj"
 },
 {
   "directory": "C:/Users/Dell/Downloads/CS163-DSAVisual/build",
@@ -67,15 +67,15 @@
 },
 {
   "directory": "C:/Users/Dell/Downloads/CS163-DSAVisual/build",
-  "command": "C:\\MinGW\\bin\\g++.exe  @CMakeFiles/DSAVisual.dir/includes_CXX.rsp -g -std=gnu++17 -o CMakeFiles\\DSAVisual.dir\\source\\Dijikstra_margin.cpp.obj -c C:\\Users\\Dell\\Downloads\\CS163-DSAVisual\\source\\Dijikstra_margin.cpp",
-  "file": "C:/Users/Dell/Downloads/CS163-DSAVisual/source/Dijikstra_margin.cpp",
-  "output": "CMakeFiles/DSAVisual.dir/source/Dijikstra_margin.cpp.obj"
-},
-{
-  "directory": "C:/Users/Dell/Downloads/CS163-DSAVisual/build",
   "command": "C:\\MinGW\\bin\\g++.exe  @CMakeFiles/DSAVisual.dir/includes_CXX.rsp -g -std=gnu++17 -o CMakeFiles\\DSAVisual.dir\\source\\DSU.cpp.obj -c C:\\Users\\Dell\\Downloads\\CS163-DSAVisual\\source\\DSU.cpp",
   "file": "C:/Users/Dell/Downloads/CS163-DSAVisual/source/DSU.cpp",
   "output": "CMakeFiles/DSAVisual.dir/source/DSU.cpp.obj"
+},
+{
+  "directory": "C:/Users/Dell/Downloads/CS163-DSAVisual/build",
+  "command": "C:\\MinGW\\bin\\g++.exe  @CMakeFiles/DSAVisual.dir/includes_CXX.rsp -g -std=gnu++17 -o CMakeFiles\\DSAVisual.dir\\source\\Dijkstra_margin.cpp.obj -c C:\\Users\\Dell\\Downloads\\CS163-DSAVisual\\source\\Dijkstra_margin.cpp",
+  "file": "C:/Users/Dell/Downloads/CS163-DSAVisual/source/Dijkstra_margin.cpp",
+  "output": "CMakeFiles/DSAVisual.dir/source/Dijkstra_margin.cpp.obj"
 },
 {
   "directory": "C:/Users/Dell/Downloads/CS163-DSAVisual/build",
@@ -109,6 +109,12 @@
 },
 {
   "directory": "C:/Users/Dell/Downloads/CS163-DSAVisual/build",
+  "command": "C:\\MinGW\\bin\\g++.exe  @CMakeFiles/DSAVisual.dir/includes_CXX.rsp -g -std=gnu++17 -o CMakeFiles\\DSAVisual.dir\\source\\GUI.cpp.obj -c C:\\Users\\Dell\\Downloads\\CS163-DSAVisual\\source\\GUI.cpp",
+  "file": "C:/Users/Dell/Downloads/CS163-DSAVisual/source/GUI.cpp",
+  "output": "CMakeFiles/DSAVisual.dir/source/GUI.cpp.obj"
+},
+{
+  "directory": "C:/Users/Dell/Downloads/CS163-DSAVisual/build",
   "command": "C:\\MinGW\\bin\\g++.exe  @CMakeFiles/DSAVisual.dir/includes_CXX.rsp -g -std=gnu++17 -o CMakeFiles\\DSAVisual.dir\\source\\General.cpp.obj -c C:\\Users\\Dell\\Downloads\\CS163-DSAVisual\\source\\General.cpp",
   "file": "C:/Users/Dell/Downloads/CS163-DSAVisual/source/General.cpp",
   "output": "CMakeFiles/DSAVisual.dir/source/General.cpp.obj"
@@ -130,12 +136,6 @@
   "command": "C:\\MinGW\\bin\\g++.exe  @CMakeFiles/DSAVisual.dir/includes_CXX.rsp -g -std=gnu++17 -o CMakeFiles\\DSAVisual.dir\\source\\Graph.logic.cpp.obj -c C:\\Users\\Dell\\Downloads\\CS163-DSAVisual\\source\\Graph.logic.cpp",
   "file": "C:/Users/Dell/Downloads/CS163-DSAVisual/source/Graph.logic.cpp",
   "output": "CMakeFiles/DSAVisual.dir/source/Graph.logic.cpp.obj"
-},
-{
-  "directory": "C:/Users/Dell/Downloads/CS163-DSAVisual/build",
-  "command": "C:\\MinGW\\bin\\g++.exe  @CMakeFiles/DSAVisual.dir/includes_CXX.rsp -g -std=gnu++17 -o CMakeFiles\\DSAVisual.dir\\source\\GUI.cpp.obj -c C:\\Users\\Dell\\Downloads\\CS163-DSAVisual\\source\\GUI.cpp",
-  "file": "C:/Users/Dell/Downloads/CS163-DSAVisual/source/GUI.cpp",
-  "output": "CMakeFiles/DSAVisual.dir/source/GUI.cpp.obj"
 },
 {
   "directory": "C:/Users/Dell/Downloads/CS163-DSAVisual/build",
@@ -184,6 +184,12 @@
   "command": "C:\\MinGW\\bin\\g++.exe  @CMakeFiles/DSAVisual.dir/includes_CXX.rsp -g -std=gnu++17 -o CMakeFiles\\DSAVisual.dir\\source\\Move.cpp.obj -c C:\\Users\\Dell\\Downloads\\CS163-DSAVisual\\source\\Move.cpp",
   "file": "C:/Users/Dell/Downloads/CS163-DSAVisual/source/Move.cpp",
   "output": "CMakeFiles/DSAVisual.dir/source/Move.cpp.obj"
+},
+{
+  "directory": "C:/Users/Dell/Downloads/CS163-DSAVisual/build",
+  "command": "C:\\MinGW\\bin\\g++.exe  @CMakeFiles/DSAVisual.dir/includes_CXX.rsp -g -std=gnu++17 -o CMakeFiles\\DSAVisual.dir\\source\\MoveButton.cpp.obj -c C:\\Users\\Dell\\Downloads\\CS163-DSAVisual\\source\\MoveButton.cpp",
+  "file": "C:/Users/Dell/Downloads/CS163-DSAVisual/source/MoveButton.cpp",
+  "output": "CMakeFiles/DSAVisual.dir/source/MoveButton.cpp.obj"
 },
 {
   "directory": "C:/Users/Dell/Downloads/CS163-DSAVisual/build",

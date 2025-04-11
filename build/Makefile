@@ -416,29 +416,29 @@ source/DSU.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles\DSAVisual.dir\build.make CMakeFiles/DSAVisual.dir/source/DSU.cpp.s
 .PHONY : source/DSU.cpp.s
 
-source/Dijikstra_margin.obj: source/Dijikstra_margin.cpp.obj
-.PHONY : source/Dijikstra_margin.obj
+source/Dijkstra_margin.obj: source/Dijkstra_margin.cpp.obj
+.PHONY : source/Dijkstra_margin.obj
 
 # target to build an object file
-source/Dijikstra_margin.cpp.obj:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\DSAVisual.dir\build.make CMakeFiles/DSAVisual.dir/source/Dijikstra_margin.cpp.obj
-.PHONY : source/Dijikstra_margin.cpp.obj
+source/Dijkstra_margin.cpp.obj:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\DSAVisual.dir\build.make CMakeFiles/DSAVisual.dir/source/Dijkstra_margin.cpp.obj
+.PHONY : source/Dijkstra_margin.cpp.obj
 
-source/Dijikstra_margin.i: source/Dijikstra_margin.cpp.i
-.PHONY : source/Dijikstra_margin.i
+source/Dijkstra_margin.i: source/Dijkstra_margin.cpp.i
+.PHONY : source/Dijkstra_margin.i
 
 # target to preprocess a source file
-source/Dijikstra_margin.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\DSAVisual.dir\build.make CMakeFiles/DSAVisual.dir/source/Dijikstra_margin.cpp.i
-.PHONY : source/Dijikstra_margin.cpp.i
+source/Dijkstra_margin.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\DSAVisual.dir\build.make CMakeFiles/DSAVisual.dir/source/Dijkstra_margin.cpp.i
+.PHONY : source/Dijkstra_margin.cpp.i
 
-source/Dijikstra_margin.s: source/Dijikstra_margin.cpp.s
-.PHONY : source/Dijikstra_margin.s
+source/Dijkstra_margin.s: source/Dijkstra_margin.cpp.s
+.PHONY : source/Dijkstra_margin.s
 
 # target to generate assembly for a file
-source/Dijikstra_margin.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\DSAVisual.dir\build.make CMakeFiles/DSAVisual.dir/source/Dijikstra_margin.cpp.s
-.PHONY : source/Dijikstra_margin.cpp.s
+source/Dijkstra_margin.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\DSAVisual.dir\build.make CMakeFiles/DSAVisual.dir/source/Dijkstra_margin.cpp.s
+.PHONY : source/Dijkstra_margin.cpp.s
 
 source/DynamicColorCircle.obj: source/DynamicColorCircle.cpp.obj
 .PHONY : source/DynamicColorCircle.obj
@@ -872,6 +872,30 @@ source/Move.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles\DSAVisual.dir\build.make CMakeFiles/DSAVisual.dir/source/Move.cpp.s
 .PHONY : source/Move.cpp.s
 
+source/MoveButton.obj: source/MoveButton.cpp.obj
+.PHONY : source/MoveButton.obj
+
+# target to build an object file
+source/MoveButton.cpp.obj:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\DSAVisual.dir\build.make CMakeFiles/DSAVisual.dir/source/MoveButton.cpp.obj
+.PHONY : source/MoveButton.cpp.obj
+
+source/MoveButton.i: source/MoveButton.cpp.i
+.PHONY : source/MoveButton.i
+
+# target to preprocess a source file
+source/MoveButton.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\DSAVisual.dir\build.make CMakeFiles/DSAVisual.dir/source/MoveButton.cpp.i
+.PHONY : source/MoveButton.cpp.i
+
+source/MoveButton.s: source/MoveButton.cpp.s
+.PHONY : source/MoveButton.s
+
+# target to generate assembly for a file
+source/MoveButton.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\DSAVisual.dir\build.make CMakeFiles/DSAVisual.dir/source/MoveButton.cpp.s
+.PHONY : source/MoveButton.cpp.s
+
 source/NotationBox.obj: source/NotationBox.cpp.obj
 .PHONY : source/NotationBox.obj
 
@@ -1301,9 +1325,9 @@ help:
 	@echo ... source/DSU.obj
 	@echo ... source/DSU.i
 	@echo ... source/DSU.s
-	@echo ... source/Dijikstra_margin.obj
-	@echo ... source/Dijikstra_margin.i
-	@echo ... source/Dijikstra_margin.s
+	@echo ... source/Dijkstra_margin.obj
+	@echo ... source/Dijkstra_margin.i
+	@echo ... source/Dijkstra_margin.s
 	@echo ... source/DynamicColorCircle.obj
 	@echo ... source/DynamicColorCircle.i
 	@echo ... source/DynamicColorCircle.s
@@ -1358,6 +1382,9 @@ help:
 	@echo ... source/Move.obj
 	@echo ... source/Move.i
 	@echo ... source/Move.s
+	@echo ... source/MoveButton.obj
+	@echo ... source/MoveButton.i
+	@echo ... source/MoveButton.s
 	@echo ... source/NotationBox.obj
 	@echo ... source/NotationBox.i
 	@echo ... source/NotationBox.s

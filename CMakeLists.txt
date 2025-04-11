@@ -23,10 +23,10 @@ file(GLOB SOURCES
 )
 
 # Create executable
-add_executable(DSAVisualization ${SOURCES})
+add_executable(DSAVisual ${SOURCES})
 
 # Link libraries
-target_link_libraries(DSAVisualization
+target_link_libraries(DSAVisual
     ${RAYLIB_LIB_DIR}/raylib.lib
     opengl32
     gdi32

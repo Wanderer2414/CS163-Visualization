@@ -29,19 +29,19 @@
 			{
 				"command" : 0,
 				"file" : 0,
-				"line" : 69,
+				"line" : 26,
 				"parent" : 0
 			},
 			{
 				"command" : 1,
 				"file" : 0,
-				"line" : 72,
+				"line" : 29,
 				"parent" : 0
 			},
 			{
 				"command" : 2,
 				"file" : 0,
-				"line" : 12,
+				"line" : 15,
 				"parent" : 0
 			}
 		]
@@ -59,7 +59,11 @@
 			[
 				{
 					"backtrace" : 3,
-					"path" : "C:/Users/Dell/Downloads/CS163-DSAVisual/raylib"
+					"path" : "C:/Users/Dell/Downloads/CS163-DSAVisual/raylib/include"
+				},
+				{
+					"backtrace" : 3,
+					"path" : "C:/Users/Dell/Downloads/CS163-DSAVisual/include"
 				}
 			],
 			"language" : "CXX",
@@ -119,7 +123,8 @@
 				43,
 				44,
 				45,
-				46
+				46,
+				47
 			]
 		}
 	],
@@ -138,7 +143,7 @@
 			},
 			{
 				"backtrace" : 2,
-				"fragment" : "\\libraylib.a",
+				"fragment" : "C:\\Users\\Dell\\Downloads\\CS163-DSAVisual\\raylib\\raylib.lib",
 				"role" : "libraries"
 			},
 			{
@@ -149,11 +154,6 @@
 			{
 				"backtrace" : 2,
 				"fragment" : "-lgdi32",
-				"role" : "libraries"
-			},
-			{
-				"backtrace" : 2,
-				"fragment" : "-lkernel32",
 				"role" : "libraries"
 			},
 			{
@@ -227,18 +227,13 @@
 				43,
 				44,
 				45,
-				46
+				46,
+				47
 			]
 		}
 	],
 	"sources" : 
 	[
-		{
-			"backtrace" : 1,
-			"compileGroupIndex" : 0,
-			"path" : "source/Application.cpp",
-			"sourceGroupIndex" : 0
-		},
 		{
 			"backtrace" : 1,
 			"compileGroupIndex" : 0,
@@ -249,6 +244,12 @@
 			"backtrace" : 1,
 			"compileGroupIndex" : 0,
 			"path" : "source/AVLTree.cpp",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 1,
+			"compileGroupIndex" : 0,
+			"path" : "source/Application.cpp",
 			"sourceGroupIndex" : 0
 		},
 		{
@@ -302,13 +303,13 @@
 		{
 			"backtrace" : 1,
 			"compileGroupIndex" : 0,
-			"path" : "source/Dijikstra_margin.cpp",
+			"path" : "source/DSU.cpp",
 			"sourceGroupIndex" : 0
 		},
 		{
 			"backtrace" : 1,
 			"compileGroupIndex" : 0,
-			"path" : "source/DSU.cpp",
+			"path" : "source/Dijkstra_margin.cpp",
 			"sourceGroupIndex" : 0
 		},
 		{
@@ -344,6 +345,12 @@
 		{
 			"backtrace" : 1,
 			"compileGroupIndex" : 0,
+			"path" : "source/GUI.cpp",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 1,
+			"compileGroupIndex" : 0,
 			"path" : "source/General.cpp",
 			"sourceGroupIndex" : 0
 		},
@@ -363,12 +370,6 @@
 			"backtrace" : 1,
 			"compileGroupIndex" : 0,
 			"path" : "source/Graph.logic.cpp",
-			"sourceGroupIndex" : 0
-		},
-		{
-			"backtrace" : 1,
-			"compileGroupIndex" : 0,
-			"path" : "source/GUI.cpp",
 			"sourceGroupIndex" : 0
 		},
 		{
@@ -417,6 +418,12 @@
 			"backtrace" : 1,
 			"compileGroupIndex" : 0,
 			"path" : "source/Move.cpp",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 1,
+			"compileGroupIndex" : 0,
+			"path" : "source/MoveButton.cpp",
 			"sourceGroupIndex" : 0
 		},
 		{
