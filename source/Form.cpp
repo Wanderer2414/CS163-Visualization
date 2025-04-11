@@ -329,14 +329,14 @@ void Form::handle() {
             Vector2 pos = track_hover.getPosition();
             pos.y += GetMouseDelta().y;
             track_hover.setPosition(pos.x, pos.y);
-            option_box.setPosition(option_box.getPosition().x, pos.y);
+            option_box.setVerticesPosition(option_box.getPosition().x, pos.y);
         } 
         main_box_show();
     } else if (!track_hover.isHovered() && !option_box.isHovered()) {
         if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) {
             main_box_hide();
         }
-        else if (option_box.getVertexDone() == 0) {
+        else if (option_box.getProgress()<0.1) {
             option_box.setVisible(false);
         }
     }
@@ -418,7 +418,7 @@ void Form::search(const std::string& x) {
 
 }
 void Form::main_box_show() {
-    if (option_box.getVertexDone()==0) {
+    if (!option_box.isVisible()) {
         option_box.setVisible(true);
         option_box.next();
     }

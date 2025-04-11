@@ -96,16 +96,28 @@ void HT::HashTable::draw() {
     EndMode2D();
     Form::draw();
 }
+string HT::HashTable::RandomCreateSize(int _max, int _min)
+{
+    static bool seeded = false;
+    if (!seeded) {
+        std::srand(std::time(nullptr));
+        seeded = true;
+    }
+    return std::to_string(_min + std::rand() % (_max - _min + 1));
+}
 void HT::HashTable::handle() {
     Form::handle();
     for (auto& i:m_memory) i.handle();
     
     m_camera.offset.x = m_workspace.x + 10;
-    if (m_memory_sz_textBox.isEnter()) {
+    if (random_size_button.isPressed()) {
+        m_memory_sz_textBox.setText(RandomCreateSize(100, 10));
+    }
+    if (m_memory_sz_textBox.isEnter() || create_button.isPressed()) {
         setMemorySize(to_int(m_memory_sz_textBox.getText()));
     }
     int count = m_workspace.width / m_camera.zoom / (m_node_size + m_node_spacing);
-    if (count != max_size || m_memory_sz_textBox.isEnter()) {
+    if (count != max_size || m_memory_sz_textBox.isEnter() || create_button.isPressed()) {
         max_size = count;
         int i = 0;
         int y = 0;
@@ -180,7 +192,7 @@ void HT::HashTable::insert_console_add()
 }
 void HT::HashTable::update(const std::string& old_value, const std::string& new_value)
 {
-    console.InsertNextMainCommand("Update " + old_value);
+    console.InsertNextMainCommand("Update " + old_value + " to " + new_value);
     InsertNextMainCommand({ _update, (float)to_int(old_value), (float)to_int(new_value) });
 }
 void HT::HashTable::search(const std::string& x)
@@ -209,7 +221,6 @@ void HT::HashTable::update(const int& oldvalue, const int& newvalue)
         InsertNextSubCommand({ _goDown, 6, 1 });
     }
     else {
-
         InsertNextSubCommand({ _goDown, 1, 0.5 });
         InsertNextSubCommand({ _unchoose, (float)pos, 0.5 });
         int cur = pos + 1;

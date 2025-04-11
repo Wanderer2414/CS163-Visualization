@@ -17,10 +17,11 @@ public:
     ~Application();
 private:
     const Vector2 window_sizes[3] = {
-        Vector2({1366, 768}), 
+        Vector2({1366, 700}), 
         Vector2({1820, 980}), 
         Vector2({1024, 600}),
     };
+    int window_size_index = 0;
 };
 
 #endif

@@ -233,13 +233,6 @@ Graph::Graph(const int& index, FormSetting f_setting, const Vector2& window_size
     search_graph_box.setSize(search_box.getSize().x, 100);
     option_box.push_back(3, &search_graph_box);
 
-    //ReSetting console
-    console_setting.font = LoadFont(font_link);
-    console_setting.font_size = 20;
-    console_setting.spacing = 2;
-    console_setting.color = BLACK;
-    console.text_setting = &console_setting;
-
     //Add random button to create box
     vertex_label.setText("V: ");
     vertex_label.setPosition(5, 35);
