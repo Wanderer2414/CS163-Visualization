@@ -2,7 +2,6 @@
 #include <math.h>
 #include <string.h>
 #include <random>
-#include "../include/SinglyLinkedList.h"
 
 int getRandom(int min, int max) {
     static std::random_device rd; 
@@ -174,19 +173,15 @@ void SLL::SLLForm::FetchNextCommand(const std::vector<float>& command)
 	{
 		console.goDown();
 		console.goDown();
-		console.InsertNextMainCommand("Add " + to_string(int(command[1])));
-		console.InsertNextSubCommand("while (cur->next) ");
-		console.InsertNextSubCommand("cur=cur->next;");
-		console.InsertNextSubCommand("cur->next = new Node(" + to_string(int(command[1]))+"};");
+		console_add_insert(int(command[1]));
+		console.goDown();
+		console.goDown();
 		insert(int(command[1]),size);
-		console.goDown();
-		console.goDown();
 		setDuration(0.001);
 		break;
 	}
 	case _insertSilent:
 	{
-		console.goDown();
 		insertSilent(int(command[1]),int(command[2]));
 		rePosition();
 		break;
@@ -195,10 +190,7 @@ void SLL::SLLForm::FetchNextCommand(const std::vector<float>& command)
 	{
 		console.goDown();
 		console.goDown();
-		console.InsertNextMainCommand("Remove " + to_string(int(command[1])));
-		console.InsertNextSubCommand("while (cur->next->val != " + to_string(int(command[1])) +")");
-		console.InsertNextSubCommand("cur=cur->next;");
-		console.InsertNextSubCommand("cur->next = cur->next->next;");
+		console_add_remove(int(command[1]));
 		console.goDown();
 		console.goDown();
 		remove(int(command[1]),int(command[2]));
@@ -216,10 +208,7 @@ void SLL::SLLForm::FetchNextCommand(const std::vector<float>& command)
 	{	
 		console.goDown();
 		console.goDown();
-		console.InsertNextMainCommand("Update " + to_string(int(command[1])) + " to " + to_string(int(command[2])));
-		console.InsertNextSubCommand("while (cur->val != " + to_string(int(command[1])) +")");
-		console.InsertNextSubCommand("cur = cur->next");
-		console.InsertNextSubCommand("cur->val = " + to_string(int(command[2])) +";");
+		
 		update(int(command[1]),int(command[2]));
 		console.goDown();
 		console.goDown();
@@ -235,9 +224,7 @@ void SLL::SLLForm::FetchNextCommand(const std::vector<float>& command)
 	{
 		console.goDown();
 		console.goDown();
-		console.InsertNextMainCommand("Search for " + to_string(int(command[1])));
-		console.InsertNextSubCommand("while (cur->val != " + to_string(int(command[1])) + ")");
-		console.InsertNextSubCommand("cur=cur->next;");
+		console_add_search(int(command[1]));
 		console.goDown();
 		console.goDown();
 		search(int(command[1]));
@@ -260,6 +247,22 @@ void SLL::SLLForm::FetchNextCommand(const std::vector<float>& command)
 		cur->button_setting = &form_setting;
 		break;
 	}
+	case _GoDowm:
+	{
+		for (int i = 0 ;i<int(command[1]);i++) {
+			console.goDown();
+		}
+		setDuration(int(command[2]));
+		break;
+	}
+	case _GoUp: 
+	{
+		for (int i = 0 ;i<int(command[1]);i++) {
+			console.goUp();
+		}
+		setDuration(int(command[2]));
+		break;
+	}
 	default:
 		break;
 	}
@@ -271,6 +274,22 @@ void SLL::SLLForm::FetchPrevCommand(const std::vector<float>& command)
 	if (command.empty()) return;
 	switch ((int)command[0])
 	{
+		case _GoDowm:
+		{
+			for (int i = 0 ;i<int(command[1]);i++) {
+				console.goUp();
+			}
+			setDuration(int(command[2]));
+			break;
+		}
+		case _GoUp: 
+		{
+			for (int i = 0 ;i<int(command[1]);i++) {
+				console.goDown();
+			}
+			setDuration(int(command[2]));
+			break;
+		}
 		case _choose:
 		{
 			ListNode* cur = m_head;
@@ -326,12 +345,15 @@ void SLL::SLLForm::insert(const int &value, const int &index)
 			cur = cur->m_next;
 			continue;
 		}
+		InsertNextSubCommand({_GoUp,1,0.75});
+		InsertNextSubCommand({_GoDowm,1,0.75});
 		InsertNextSubCommand({_choose,float(cur->getIndex()),1});
 		InsertNextSubCommand({_unchoose,float(cur->getIndex()),1});
 		cur = cur->m_next;
 	}
 	InsertNextSubCommand({_choose,float(cur->getIndex()),1});
 	InsertNextSubCommand({_unchoose,float(cur->getIndex()),1});
+	InsertNextSubCommand({_GoDowm,1,0.5});
 	InsertNextSubCommand({_insertSilent,float(value),float(index)});
 	InsertNextSubCommand({_choose,float(cur->getIndex()+1),1});
 	InsertNextSubCommand({_unchoose,float(cur->getIndex()+1),1});
@@ -357,25 +379,39 @@ void SLL::SLLForm::insertSilent(const int& value, const int& index) {
     size++;
 }
 
+void SLL::SLLForm::console_add_insert(const int &value)
+{
+	console.InsertNextMainCommand("Add " + to_string(value));
+	console.InsertNextSubCommand("while (cur->next) ");
+	console.InsertNextSubCommand("cur=cur->next;");
+	console.InsertNextSubCommand("cur->next = new Node(" + to_string(value)+");");
+}
 
 void SLL::SLLForm::remove(const int &value,const int& index)
 {
 	ListNode* cur = m_head->m_next;
 	if (index == 0) {
+		InsertNextSubCommand({_GoDowm,1,0.75});
+		InsertNextSubCommand({_GoDowm,1,0.75});
 		InsertNextSubCommand({_removeSilent,float(value),float(index)});
 		return;
 	}
 	while (cur && cur->getIndex() != index-1) {
+		InsertNextSubCommand({_GoUp,1,0.75});
+		InsertNextSubCommand({_GoDowm,1,0.75});
 		InsertNextSubCommand({_choose,float(cur->getIndex()),1});
 		InsertNextSubCommand({_unchoose,float(cur->getIndex()),1});
 		cur = cur->m_next;
 	}
 	if (cur && cur->m_next) {
+		InsertNextSubCommand({_GoDowm,1,0.75});
+		InsertNextSubCommand({_GoDowm,1,0.75});
 		InsertNextSubCommand({_choose,float(cur->getIndex()),1});
 		InsertNextSubCommand({_removeSilent,float(value),float(index)});
 		InsertNextSubCommand({_unchoose,float(cur->getIndex()),1});
 	} else {
 		//There is nothing to delete
+		InsertNextSubCommand({_GoDowm,3,1});
 		InsertNextSubCommand({_choose,float(cur->getIndex()),1});
 		InsertNextSubCommand({_unchoose,float(cur->getIndex()),1});
 	}
@@ -405,19 +441,33 @@ void SLL::SLLForm::removeSilent(const int &value, const int &index)
     }
 }
 
+void SLL::SLLForm::console_add_remove(const int &value)
+{
+	console.InsertNextMainCommand("Remove " + to_string(value));
+	console.InsertNextSubCommand("while (cur->next && cur->next->val != " + to_string(value) +")");
+	console.InsertNextSubCommand("cur=cur->next;");
+	console.InsertNextSubCommand("if (cur->next)");
+	console.InsertNextSubCommand("cur->next = cur->next->next;");
+	console.InsertNextSubCommand("return;");
+}
+
 void SLL::SLLForm::update(const int &old_value, const int &new_value)
 {
 	ListNode* cur = m_head;
 	while (cur && cur->getValue() != old_value) {
+		InsertNextSubCommand({_GoUp,1,0.5});
+		InsertNextSubCommand({_GoDowm,1,0.5});
 		InsertNextSubCommand({_choose,float(cur->getIndex()),1});
 		InsertNextSubCommand({_unchoose,float(cur->getIndex()),1});
 		cur = cur->m_next;
 	}
 	if (cur) {
+		InsertNextSubCommand({_GoDowm,1,0.75});
+		InsertNextSubCommand({_GoDowm,1,0.75});
 		InsertNextSubCommand({_choose,float(cur->getIndex()),1});
 		InsertNextSubCommand({_updateSilent,float(old_value),float(new_value),float(cur->getIndex())});
 		InsertNextSubCommand({_unchoose,float(cur->getIndex()),1});
-	}
+	} else InsertNextSubCommand({_GoDowm,3,0.75});
 }
 
 void SLL::SLLForm::updateSilent(const int &old_value, const int &new_value, const int &index)
@@ -427,15 +477,41 @@ void SLL::SLLForm::updateSilent(const int &old_value, const int &new_value, cons
 	if (cur) cur->setValue(new_value);
 }
 
+void SLL::SLLForm::console_add_update(const int &old_value,const int& new_value)
+{
+	console.InsertNextMainCommand("Update " + to_string(old_value) + " to " + to_string(new_value));
+	console.InsertNextSubCommand("while (cur->val != " + to_string(old_value) +")");
+	console.InsertNextSubCommand("cur = cur->next");
+	console.InsertNextSubCommand("if (cur)");
+	console.InsertNextSubCommand("cur->val = " + to_string(new_value) +";");
+	console.InsertNextSubCommand("return;");
+}
+
 void SLL::SLLForm::search(const int &value)
 {
 	ListNode* cur = m_head->m_next;
 	while (cur && cur->getValue() != value) {
+		InsertNextSubCommand({_GoUp,1,0.5});
+		InsertNextSubCommand({_GoDowm,1,0.5});
 		InsertNextSubCommand({_choose,float(cur->getIndex()),1});
 		InsertNextSubCommand({_unchoose,float(cur->getIndex()),1});
 		cur=cur->m_next;
 	}
-	if (cur) InsertNextSubCommand({_choose,float(cur->getIndex()),1});
+	if (cur) {
+		InsertNextSubCommand({_GoDowm,1,0.5});
+		InsertNextSubCommand({_GoDowm,1,0.5});
+		InsertNextSubCommand({_choose,float(cur->getIndex()),1});
+	}
+}
+
+void SLL::SLLForm::console_add_search(const int &value)
+{
+	console.InsertNextMainCommand("Search for " + to_string(value));
+	console.InsertNextSubCommand("while (cur->val != " + to_string(value) + ")");
+	console.InsertNextSubCommand("cur=cur->next;");
+	console.InsertNextSubCommand("if (cur)");
+	console.InsertNextSubCommand("Hightlight");
+	console.InsertNextSubCommand("return;");
 }
 
 void SLL::Arrow::setPosition(Vector2 tail, Vector2 head)

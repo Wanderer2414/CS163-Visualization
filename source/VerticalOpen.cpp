@@ -22,6 +22,7 @@ void VerticalOpen::setDuration(const float& duration) {
     m_start = GetTime();
 }
 void VerticalOpen::open() {
+    if (!m_is_end) return ;
     m_start = GetTime();
     m_start_height = 0;
     m_delta = getSize().y-m_start_height;
@@ -29,6 +30,7 @@ void VerticalOpen::open() {
     setVisible(true);
 }
 void VerticalOpen::close() {
+    if (!m_is_end) return;
     m_start = GetTime();
     m_start_height = getSize().y;
     m_delta = -m_start_height;

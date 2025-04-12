@@ -23,6 +23,9 @@ void Controller::setPosition(const float& x, const float& y) {
 void Controller::setSize(const float& width, const float& height) {
     m_size = { width, height };
 }
+void Controller::update() {
+    
+}
 Vector2 Controller::getSize() const {
     return m_size;
 }

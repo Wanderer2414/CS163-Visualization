@@ -31,7 +31,9 @@ void TextButton::draw() {
         DrawTextEx(text_setting->font, m_text.c_str(), m_text_position, text_setting->font_size, text_setting->spacing,text_setting->color);
     else cerr<<"[TEXT_SETTING DOES NOT EXIST IN TEXTBUTTON!]" << endl;
 }
-
+void TextButton::update() {
+    update_text();
+}
 void TextButton::update_text() {
     if (text_setting) {
         m_text_position = m_position + m_size / 2;

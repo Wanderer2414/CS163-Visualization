@@ -15,6 +15,7 @@ public:
                     setSize(const float& width, const float& height);
     virtual Vector2 getSize() const,
                     getPosition() const;
+    virtual void    update();
     ~Controller();
 protected:
     Vector2         m_position,

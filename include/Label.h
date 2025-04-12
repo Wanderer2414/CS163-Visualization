@@ -37,6 +37,7 @@ public:
     std::string             getText()                                           const,
                             getText(const Vector2& start, const Vector2& end)   const;
     float                   margin;
+    virtual void            update() override;
     ~Label();
 protected:
     vector<string>          m_text;

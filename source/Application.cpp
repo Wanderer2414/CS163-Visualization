@@ -18,7 +18,7 @@ void Application::run() {
     while (!WindowShouldClose()) {
         switch (form_index) {
         case 0: {
-            MenuStart menuStart(*form_setting, window_sizes[window_size_index]);
+            MenuStart menuStart(form_setting, window_sizes[window_size_index]);
             menuStart.setMode(mode);
             menuStart.setSizeIndex(window_size_index);
             form_index = menuStart.run();

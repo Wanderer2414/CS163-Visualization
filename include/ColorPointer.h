@@ -9,7 +9,8 @@ public:
     ColorPointer(ButtonSetting* button_setting);
     ButtonSetting       *button_setting;
     bool                isVisible() const,
-                        isHovered() const override;
+                        isHovered() const override,
+                        isFocus() const override;
     virtual void        draw()      override,
                         handle()    override,
 
@@ -19,7 +20,7 @@ public:
                         setVisible(const bool& visible);
     Color               getColor() const;
 private:
-    bool                m_is_visible, m_is_hovered;
+    bool                m_is_visible, m_is_hovered, m_is_focus;
     ColorBox            red, green, blue, alpha;
 };
 
