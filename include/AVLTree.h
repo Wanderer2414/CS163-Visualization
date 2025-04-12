@@ -28,6 +28,11 @@ public:
                     draw()                      override,
                     handle()                    override;
     
+    string          RandomInsert() const override,
+                    RandomSearch() const override,
+                    RandomRemove() const override,
+                    RandomOldValue() const override,
+                    RandomNewValue() const override;
     ~AVLTreeForm();
 private:
     Node* m_root;

@@ -1,5 +1,7 @@
 ﻿#include "../include/AVLTree.h"
 #include "../include/General.h"
+#include <cstdlib>
+#include <string>
 
 AVLTreeForm::AVLTreeForm(const int& index, FormSetting form_setting, const Vector2& window_size) :
 	Form(index, form_setting, window_size) {
@@ -1077,3 +1079,36 @@ void AVLTreeForm::rePosition(const float& dur) {
 		}	
 }
 
+
+string AVLTreeForm::RandomInsert() const {
+	srand(clock());
+	return to_string(rand()%1000);
+}
+string AVLTreeForm::RandomSearch() const {
+	vector<int> ans;
+	for (auto i:visual_node)
+		if (i) ans.push_back(i->getValue());
+	if (ans.empty()) return "";
+	srand(clock());
+	return to_string(ans[rand()%ans.size()]);
+}
+string AVLTreeForm::RandomRemove() const {
+	vector<int> ans;
+	for (auto i:visual_node)
+		if (i) ans.push_back(i->getValue());
+	if (ans.empty()) return "";
+	srand(clock());
+	return to_string(ans[rand()%ans.size()]);
+}
+string AVLTreeForm::RandomOldValue() const {
+	vector<int> ans;
+	for (auto i:visual_node)
+		if (i) ans.push_back(i->getValue());
+	if (ans.empty()) return "";
+	srand(clock());
+	return to_string(ans[rand()%ans.size()]);
+}
+string AVLTreeForm::RandomNewValue() const {
+	srand(clock());
+	return to_string(rand()%1000);
+}

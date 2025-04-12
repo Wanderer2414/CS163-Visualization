@@ -1,6 +1,7 @@
 #include "../include/LinearHashTable.h"
 #include "../include/General.h"
 #include "../include/IncludePath.h"
+#include <algorithm>
 
 HT::Node::Node(): TextButton(0, 0) {
     m_value = 0;
@@ -116,6 +117,7 @@ void HT::HashTable::handle() {
     if (m_memory_sz_textBox.isEnter() || create_button.isPressed()) {
         setMemorySize(to_int(m_memory_sz_textBox.getText()));
     }
+    m_camera.zoom = std::clamp(m_camera.zoom, 0.1f, 10.f);
     int count = m_workspace.width / m_camera.zoom / (m_node_size + m_node_spacing);
     if (count != max_size || m_memory_sz_textBox.isEnter() || create_button.isPressed()) {
         max_size = count;
