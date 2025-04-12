@@ -35,14 +35,6 @@ public:
     const char* back_hovered;
     const char* home_normal;
     const char* home_hovered;
-    const char* menu_avltree_normal;
-    const char* menu_avltree_hovered;
-    const char* menu_sll_normal;
-    const char* menu_sll_hovered;
-    const char* menu_graph_normal;
-    const char* menu_graph_hovered;
-    const char* menu_hash_normal;
-    const char* menu_hash_hoverd;
     const char* PlayButton;
     const char* PlayButtonHovered;
     const char* PauseButton;
