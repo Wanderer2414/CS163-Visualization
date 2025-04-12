@@ -1,8 +1,8 @@
 #include "../include/SinglyLinkedList.h"
 #include <math.h>
+#include <raylib.h>
 #include <string.h>
 #include <random>
-
 int getRandom(int min, int max) {
     static std::random_device rd; 
     static std::mt19937 gen(rd());
@@ -10,12 +10,17 @@ int getRandom(int min, int max) {
     return dist(gen);
 }
 
-SLL::ListNode::ListNode(const int &value, const int &index) : TextButton(0,0)
+SLL::ListNode::ListNode(const int &value, const int &index, Camera2D& c) : TextButton(0,0), camera(c)
 {
 	m_value = value;
 	m_index = index;
 	TextButton::setText(to_string(m_value));
 	m_next = nullptr;
+	m_is_focus = false;
+}
+
+bool SLL::ListNode::isFocus() const {
+	return m_is_focus;	
 }
 
 int SLL::ListNode::getValue() const
@@ -61,19 +66,20 @@ void SLL::ListNode::handle()
 			this->m_arrow.m_thickness = m_size.y / 10;
 			this->m_arrow.color = text_setting->color;
 		}
-		TextButton::handle();
-		SlowMotion::handle();
-		return;
 	}
-	if (this->m_next) {
+	else if (this->m_next) {
 		this->m_arrow.setPosition(
-			{this->getPosition().x + m_size.x, this->getCenter().y}, 
-			{this->m_next->getCenter().x - this->m_next->m_size.x / 2, this->m_next->getCenter().y}
+			{this->getPosition().x + m_size.x - 5, this->getCenter().y}, 
+			{this->m_next->getPosition().x, this->m_next->getCenter().y}
 		);
 		this->m_arrow.m_thickness = m_size.y / 10;
 		this->m_arrow.color = text_setting->color;
 	}
-	TextButton::handle();
+	m_is_hovered = CheckCollisionPointRec(TransToGlobalPoint(camera, GetMousePosition()), { m_position.x, m_position.y, m_size.x, m_size.y });
+	m_is_pressed = m_is_hovered && IsMouseButtonPressed(MOUSE_BUTTON_LEFT);
+	if (IsMouseButtonPressed(MOUSE_LEFT_BUTTON)) {
+		m_is_focus = m_is_hovered;
+	}
 	SlowMotion::handle();
 }
 
@@ -92,32 +98,24 @@ SLL::SLLForm::SLLForm(const int &index, FormSetting f_setting, const Vector2 &wi
 	m_node_size = 50;
 	m_node_spacing = 50;
 
-	temp_b_setting.click_color = form_setting.click_color;
-	temp_b_setting.hover_color = form_setting.hover_color;
-	temp_b_setting.normal_color = RED;
-	temp_b_setting.roundness = form_setting.roundness;
-	temp_b_setting.segment = form_setting.segment;
-
-	temp_t_setting.color = form_setting.color;
-	temp_t_setting.font = form_setting.font;
-	temp_t_setting.font_size = form_setting.font_size;
-	temp_t_setting.spacing = form_setting.spacing;
+	temp_b_setting = form_setting;
+	temp_b_setting.normal_color = form_setting.hightlight_color1;
 	
-	m_dummy = new ListNode(-1,-1);
+	m_dummy = new ListNode(-1,-1, m_camera);
 	m_head = m_dummy;
 	m_dummy->setText("head");
 	m_dummy->text_setting = &form_setting;
 	m_dummy->button_setting = &form_setting;
 	
-	null = new ListNode(-1,0);
+	null = new ListNode(-1,0, m_camera);
 	null->setText("NULL");
 	null->text_setting = &form_setting;
 	null->button_setting = &form_setting;
 
-	m_cur = new ListNode(-1,-10);
+	m_cur = new ListNode(-1,-10, m_camera);
 	m_cur->setText("cur");
-	m_cur->text_setting = &temp_t_setting;
-	m_cur->button_setting = &temp_b_setting;
+	m_cur->text_setting = &form_setting;
+	m_cur->button_setting = &form_setting;
 	m_cur->setPosition(m_dummy->getPosition().x,m_dummy->getPosition().y);
 	m_cur->setSize(m_node_size,m_node_size);
 	showCur = false;
@@ -138,9 +136,25 @@ void SLL::SLLForm::handle() {
 
     Form::handle();
     ListNode* cur = m_head;
+	ListNode* focus_node = 0;
 	while (cur) {
 		cur->handle();
+		if (cur->isFocus()) focus_node = cur;
 		cur=cur->m_next;
+	}
+	if (focus_node && focus_node != m_head && focus_node != null) {
+		if (IsKeyDown(KEY_DELETE)) {
+			main_box_show();
+			option_box.select(4);
+			remove_textbox.setText(focus_node->getText());
+			remove_textbox.setFocus(true);
+		}
+		else if (IsKeyDown(KEY_F2)) {
+			main_box_show();
+			option_box.select(2);
+			update_textbox_choice.setText(focus_node->getText());
+			update_textbox_value.setFocus(true);
+		}
 	}
 	m_cur->handle();
 }
@@ -199,8 +213,8 @@ void SLL::SLLForm::draw()
     BeginScissorMode(m_workspace.x, m_workspace.y, m_workspace.width, m_workspace.height);
 	ListNode* cur = m_head;
 	while (cur) {
-		cur->draw();
 		if (cur->m_next) cur->m_arrow.draw();
+		cur->draw();
 		cur = cur->m_next;
 	}
 	if (showCur == true) {
@@ -283,7 +297,6 @@ void SLL::SLLForm::FetchNextCommand(const std::vector<float>& command)
 	{
 		ListNode* cur = m_head;
 		while (cur->getIndex() != int(command[1])) cur = cur->m_next;
-		cur->text_setting = &temp_t_setting;
 		cur->button_setting = &temp_b_setting;
 		setDuration(int(command[2]));
 		break;
@@ -367,7 +380,6 @@ void SLL::SLLForm::FetchPrevCommand(const std::vector<float>& command)
 		{
 			ListNode* cur = m_head;
 			while (cur->getIndex() != int(command[1])) cur = cur->m_next;
-			cur->text_setting = &temp_t_setting;
 			cur->button_setting = &temp_b_setting;
 			break;
 		}
@@ -435,7 +447,7 @@ void SLL::SLLForm::insertSilent(const int& value, const int& index) {
         cur = cur->m_next;
     }
     if (!cur) return; 
-    ListNode* newNode = new ListNode(value, index);
+    ListNode* newNode = new ListNode(value, index, m_camera);
     newNode->m_next = cur->m_next;
     cur->m_next = newNode;
     newNode->button_setting = &form_setting;

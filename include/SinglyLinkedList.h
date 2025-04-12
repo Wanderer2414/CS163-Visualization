@@ -27,7 +27,8 @@ namespace SLL {
 	};	
 	class ListNode : public TextButton, public SlowMotion{
 	public:
-		ListNode(const int& value,const int& index);
+		ListNode(const int& value,const int& index, Camera2D& camera);
+		bool isFocus() const override;
 		int getValue() const;
 		int getIndex() const;
 		void setValue(const int& value);
@@ -39,7 +40,9 @@ namespace SLL {
 		virtual void handle() override;
 		virtual Vector2 getCenter() const,
                         getPosition() const override;
+		Camera2D& camera;
 	private:
+		bool m_is_focus;
 		int m_value;
 		int m_index;
 		Vector2 m_center;
@@ -49,7 +52,6 @@ namespace SLL {
 	public:
 
 		ButtonSetting temp_b_setting;
-		TextSetting temp_t_setting;
 
 		enum CommandCode {
 			_insert = 0,
