@@ -3,11 +3,11 @@
 
 #include "ColorPointer.h"
 #include "Controller.h"
-#include "EmptyButton.h"
 #include "Label.h"
 #include "SettingPackage.h"
 #include "SunMode.h"
 #include "TextButton.h"
+#include "EmptyButton.h"
 #include "TextureButton.h"
 #include "VerticalOpen.h"
 #include "MenuTab.h"

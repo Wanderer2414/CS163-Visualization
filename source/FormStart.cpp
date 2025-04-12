@@ -26,22 +26,22 @@ MenuStart::MenuStart(FormSetting* f_setting, const Vector2& windowSize) :
     image_list.add_vertex({180,m_windowSize.y / 2 - TransY(115)});
     image_list.moveNext();
 
-    image_list.push(0, AVL0);
-    image_list.push(0, AVL1);
-    image_list.push(0, AVL2);
-    image_list.push(0, AVL3);
-    image_list.push(1, SLL0);
-    image_list.push(1, SLL1);
-    image_list.push(1, SLL2);
-    image_list.push(1, SLL3);
-    image_list.push(2, Graph0);
-    image_list.push(2, Graph1);
-    image_list.push(2, Graph2);
-    image_list.push(2, Graph3);
-    image_list.push(3, HT0);
-    image_list.push(3, HT1);
-    image_list.push(3, HT2);
-    image_list.push(3, HT3);
+    image_list.push(0, form_setting->AVL0);
+    image_list.push(0, form_setting->AVL1);
+    image_list.push(0, form_setting->AVL2);
+    image_list.push(0, form_setting->AVL3);
+    image_list.push(1, form_setting->SLL0);
+    image_list.push(1, form_setting->SLL1);
+    image_list.push(1, form_setting->SLL2);
+    image_list.push(1, form_setting->SLL3);
+    image_list.push(2, form_setting->Graph0);
+    image_list.push(2, form_setting->Graph1);
+    image_list.push(2, form_setting->Graph2);
+    image_list.push(2, form_setting->Graph3);
+    image_list.push(3, form_setting->HT0);
+    image_list.push(3, form_setting->HT1);
+    image_list.push(3, form_setting->HT2);
+    image_list.push(3, form_setting->HT3);
     
     title_setting = *form_setting;
     title_setting.font = GetFontDefault();
