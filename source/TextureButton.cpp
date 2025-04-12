@@ -5,12 +5,16 @@ TextureButton::TextureButton() {
     m_sources.clear();
     m_sources_hover.clear();
     m_is_focus = false;
+    hover_remain_time = 0;
 }
 bool TextureButton::isFocus() const {
     return m_is_focus;
 }
 int TextureButton::getStage() const {
     return source_pointer;
+}
+void TextureButton::Hover() {
+    hover_remain_time = 10;
 }
 void TextureButton::setSize(const float& x, const float& y) {
     Controller::setSize(x, y);
@@ -26,6 +30,7 @@ void TextureButton::handle() {
     if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) {
         m_is_focus = m_is_hovered;
     }
+    if (hover_remain_time) m_is_hovered = hover_remain_time--;
 }
 void TextureButton::back() {
     source_pointer--;

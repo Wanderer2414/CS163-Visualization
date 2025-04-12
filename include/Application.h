@@ -21,7 +21,7 @@ private:
         Vector2({1820, 980}), 
         Vector2({1024, 600}),
     };
-    int window_size_index = 1;
+    int window_size_index = 0;
 
 };
 

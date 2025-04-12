@@ -24,8 +24,8 @@ public:
     virtual Path            front() const, pop(),
                             operator[](const int& index) const;
 protected:
-    vector<Path>    data;
-    virtual void    swap(Path& a, Path& b);
+    vector<Path> data;
+    virtual void swap(Path& a, Path& b);
 };
 
 #endif

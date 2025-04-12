@@ -353,8 +353,32 @@ void Form::handle() {
     else {
         if (!isFocus) {
             //Progress go next and go back
-            if (IsKeyReleased(KEY_RIGHT)) goNext();
-            else if (IsKeyReleased(KEY_LEFT)) goBack();
+            if (IsKeyReleased(KEY_RIGHT)) {
+                if (IsKeyDown(KEY_LEFT_CONTROL)) {
+                    small_skip_next_button.Hover();
+                    goMainNext();
+                }
+                else goNext();
+            }
+            else if (IsKeyReleased(KEY_LEFT)) {
+                if (IsKeyDown(KEY_LEFT_CONTROL)) {
+                    small_skip_back_button.Hover();
+                    goMainPrev();
+                }
+                else goBack();
+            }
+            else if (IsKeyReleased(KEY_END)) {
+                skip_button.Hover();
+                GotoCommandLine(1);
+            }
+            else if (IsKeyReleased(KEY_HOME)) {
+                restart_button.Hover();
+                GotoCommandLine(0);
+            }
+            else if (IsKeyReleased(KEY_SPACE)) {
+                play_button.Hover();
+                setPause(!isPause());
+            }
         }
         //Reshow progress
         progress = getProgress();

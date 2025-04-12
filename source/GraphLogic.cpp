@@ -144,9 +144,9 @@ void Graph::getVertex(const int& graph, vector<bool>& visited) {
         }
 }
 void Graph::Dijkstra_console_add(const int& value) {
-    console.InsertNextSubCommand("Create min heap");
+    console.InsertNextSubCommand("Create MinHeap");
     console.InsertNextSubCommand("add " + to_string(value) + " to heap");
-    console.InsertNextSubCommand("while heap not empty");
+    console.InsertNextSubCommand("while heap is not empty");
     console.InsertNextSubCommand("   vertex = heap.top()");
     console.InsertNextSubCommand("   Pop heap");
     console.InsertNextSubCommand("   if  !visited[vertex]");
@@ -158,21 +158,21 @@ void Graph::Dijkstra_console_add(const int& value) {
 }
 void Graph::kruskal_console_add() {
     console.InsertNextSubCommand("f(vertex)");
-    console.InsertNextSubCommand("  Add all edge to heap");
+    console.InsertNextSubCommand("  Add all edges to heap");
     console.InsertNextSubCommand("  while heap has element");
-    console.InsertNextSubCommand("      Pop all next edge make cycle");
-    console.InsertNextSubCommand("      Add top edges to DSU");
+    console.InsertNextSubCommand("      Pop all next edges make cycle");
+    console.InsertNextSubCommand("      Add top edge to DSU");
     console.InsertNextSubCommand("      Pop top edge");
 }
 void Graph::prim_console_add() {
     console.InsertNextSubCommand("f(vertex) ");
     console.InsertNextSubCommand("  Push vertex to heap");
-    console.InsertNextSubCommand("  while heap have element {");
-    console.InsertNextSubCommand("      vertex = top heap -> end");
-    console.InsertNextSubCommand("      Pop top heap");
+    console.InsertNextSubCommand("  while heap has element {");
+    console.InsertNextSubCommand("      vertex = topHeap -> end");
+    console.InsertNextSubCommand("      Pop topHeap");
     console.InsertNextSubCommand("      if !visited[vertex]");
     console.InsertNextSubCommand("          visited[vertex] = true");
-    console.InsertNextSubCommand("          Push all edge to heap");
+    console.InsertNextSubCommand("          Push all edges to heap");
     console.InsertNextSubCommand("  }");
 }
 void Graph::search_console_add(const int& vertex, const int& mode) {
@@ -180,16 +180,16 @@ void Graph::search_console_add(const int& vertex, const int& mode) {
     if (mode) {
         console.InsertNextSubCommand("Create queue");
         console.InsertNextSubCommand("add vertex = " + to_string(value) + " to queue");
-        console.InsertNextSubCommand("while queue not empty");
+        console.InsertNextSubCommand("while queue is not empty");
         console.InsertNextSubCommand("   Pop front of queue");
-        console.InsertNextSubCommand("   Push all child(not visited) to queue ");
+        console.InsertNextSubCommand("   Push all unvisited child to queue ");
     } else {
         console.InsertNextSubCommand("Create visited[n]");
         console.InsertNextSubCommand("vertex = " + to_string(value));
         console.InsertNextSubCommand("f(vertex) {");
         console.InsertNextSubCommand("   visited[vertex] = true ");
         console.InsertNextSubCommand("   for i = first_des to last_des ");
-        console.InsertNextSubCommand("      if this des didn't visited");
+        console.InsertNextSubCommand("      if this des was not visited");
         console.InsertNextSubCommand("          f(i)");
         console.InsertNextSubCommand("}");
     }

@@ -87,7 +87,7 @@ Vector2 SLL::ListNode::getPosition() const
 	return TextButton::getPosition();
 }
 
-SLL::SLLForm::SLLForm(const int &index, FormSetting fsetting, const Vector2 &window_size): Form(index,fsetting,window_size)
+SLL::SLLForm::SLLForm(const int &index, FormSetting f_setting, const Vector2 &window_size): Form(index,f_setting,window_size)
 {
 	m_node_size = 50;
 	m_node_spacing = 50;
@@ -135,6 +135,7 @@ void SLL::SLLForm::add(const vector<string> &str)
 }
 
 void SLL::SLLForm::handle() {
+
     Form::handle();
     ListNode* cur = m_head;
 	while (cur) {
@@ -642,4 +643,3 @@ void SLL::Arrow::draw()
 	DrawLineEx(m_tail,m_t1,m_thickness,color);
 	DrawTriangle(m_t2,m_head,m_t3,color);
 }
-

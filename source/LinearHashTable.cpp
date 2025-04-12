@@ -1,6 +1,7 @@
 #include "../include/LinearHashTable.h"
 #include "../include/General.h"
 #include "../include/IncludePath.h"
+#include <algorithm>
 
 HT::Node::Node(): TextButton(0, 0) {
     m_value = 0;
@@ -35,7 +36,7 @@ void HT::Node::draw() {
         DrawTextEx(text_setting->font, std::to_string(m_index).c_str(), index_pos, text_setting->font_size / 1.7, text_setting->spacing, text_setting->color);
     }
     else {
-        std::cerr << "Error: text_setting is null" << std::endl;
+        std::cerr << "Error: text_setting is null!" << std::endl;
     }
 }
 void HT::Node::handle() {
@@ -117,6 +118,7 @@ void HT::HashTable::handle() {
     if (m_memory_sz_textBox.isEnter() || create_button.isPressed()) {
         setMemorySize(to_int(m_memory_sz_textBox.getText()));
     }
+    m_camera.zoom = std::clamp(m_camera.zoom, 0.1f, 10.f);
     int count = m_workspace.width / m_camera.zoom / (m_node_size + m_node_spacing);
 
     if (count != max_size || m_memory_sz_textBox.isEnter() || create_button.isPressed()) {
@@ -176,19 +178,19 @@ void HT::HashTable::search_console_add()
 void HT::HashTable::update_console_add()
 {
     console.InsertNextSubCommand("index = key % table.size                                              ");
-    console.InsertNextSubCommand("if (table[index] = oldvalue) -> update to newvalue                    ");
+    console.InsertNextSubCommand("if (table[index] = oldValue) -> update to newValue                    ");
     console.InsertNextSubCommand("else {                                                                ");
     console.InsertNextSubCommand("   cur = index + 1                                                    ");
     console.InsertNextSubCommand("   while (table[cur] != value & cur != pos) cur++                     ");
-    console.InsertNextSubCommand("   if table[cur] = oldvalue -> update to newvalue                     ");
-    console.InsertNextSubCommand("   else oldvalue is not found in table -> return                      ");
+    console.InsertNextSubCommand("   if table[cur] = oldValue -> update to newValue                     ");
+    console.InsertNextSubCommand("   else oldValue is not found in table -> return                      ");
     console.InsertNextSubCommand("}                                                                     ");
 }
 void HT::HashTable::insert_console_add()
 {
     console.InsertNextSubCommand("index = key % table.size                                              ");
     console.InsertNextSubCommand("if (table[index] = value) value is already in table                   ");
-    console.InsertNextSubCommand("if table[index] not have value -> table[index] = value & return       ");
+    console.InsertNextSubCommand("if table[index] does not have value -> table[index] = value & return  ");
     console.InsertNextSubCommand("else {                                                                ");
     console.InsertNextSubCommand("   cur = index + 1                                                    ");
     console.InsertNextSubCommand("   while ( table[cur] != 0 & table[cur] != value & cur != pos) cur++  ");
