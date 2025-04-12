@@ -27,7 +27,6 @@ void SlowMotion::setDuration(const float& duration) {
     m_duration = duration;
 }
 void SlowMotion::handle() {
-	cout << "HaIn" << m_duration<< endl;
     if (!is_end) {
         float cur = GetTime();
         if (cur < m_start_time + m_duration) {
@@ -40,7 +39,6 @@ void SlowMotion::handle() {
             setPosition(pos.x, pos.y);
         }
     }
-	cout << "HaOut" << endl;
 }
 void SlowMotion::setPosition(const float& x, const float& y) {
 
