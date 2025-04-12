@@ -31,9 +31,11 @@ private:
     MoveButton      Start, Setting, Exit, AboutUs;
     MenuBox         setting_box;
     ImageTab        image_list;
+    GIF             LightAVL, LightHashTable, LightSLL, LightGraph;
+    GIF             DarkAVL, DarkHashTable, DarkSLL, DarkGraph;
     std::vector<Controller*> children;
     Vector2         m_windowSize;
-    void            update();
+    void            update(), update_gif();
 };
 
 #endif

@@ -70,6 +70,26 @@ public:
     const char* scissor_icon;
     const char* scissor_cursor_icon;
     const char* scissor_filled_icon;
+    const char* Graph0;
+    const char* Graph1;
+    const char* Graph2;
+    const char* Graph3;
+    const char* Graph2_hovered;
+    const char* AVL0;
+    const char* AVL1;
+    const char* AVL2;
+    const char* AVL3;
+    const char* AVL3_hovered;
+    const char* HT0;
+    const char* HT1;
+    const char* HT2;
+    const char* HT3;
+    const char* HT3_hovered;
+    const char* SLL0;
+    const char* SLL1;
+    const char* SLL2;
+    const char* SLL3;
+    const char* SLL2_hovered;
 };
 
 extern FormSetting LightTheme;

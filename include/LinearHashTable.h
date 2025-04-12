@@ -3,23 +3,39 @@
 
 #include "Form.h"
 #include "Label.h"
+#include "SettingPackage.h"
+#include "SlowMotion.h"
 #include "TextBox.h"
 #include "TextButton.h"
 #include "Global.h"
 #include "TextureButton.h"
+#include <string>
 
 namespace HT {
-    class Node : public TextButton {
+    class Node : public Controller, public SlowMotion {
     public:
-        Node();
+        Node(ButtonSetting* button_setting, TextSetting* text_setting, Camera2D&);
+        ButtonSetting       *button_setting;
+        TextSetting         *text_setting;
+        bool                isSizeChanged() const,
+                            isFocus() const override;
         int                 getValue() const;
         virtual void        setValue(const int& value),
                             draw()      override,
                             handle()    override,
-                            setIndex(const int& index);
-        Color               anim_color;
+                            setIndex(const int& index),
+                            setPosition(const float &x, const float &y) override,
+                            setSize(const float &width, const float &height) override,
+                            update() override;
+        Vector2             getPosition() const override;
         bool                is_animating = false;
+        Camera2D            &camera;
+        
     private:
+        bool                m_is_hovered, m_is_pressed, m_is_focus;
+        float               percent;
+        Vector2             m_text_size, m_index_position, m_text_position;
+        string              text, index_text;
         int                 m_value,
                             m_index;
     };
@@ -61,19 +77,19 @@ namespace HT {
         ~HashTable();
     private:
         int         m_storage_size,
-                    max_size,
-                    m_node_size,
                     m_node_spacing;
+        float       min_width, max_width, true_width, line;
 
         int         index(const int& value);
         void        insert(const int& value),
                     remove(const int& value),
                     search(const int& value),
-                    update(const int& oldvalue, const int& newvalue);
+                    update(const int& oldvalue, const int& newvalue),
+                    reLocate(const bool& visual = true);
         TextBox     m_memory_sz_textBox;
         Label       size_label;
         TextureButton random_size_button;
-        std::vector<Node> m_memory;
+        vector<Node> m_memory;
     };
 }
 

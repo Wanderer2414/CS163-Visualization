@@ -17,28 +17,28 @@ Menu::Menu(FormSetting f_setting, const Vector2& windowSize) :
     children.push_back(&MenuDSA);
 
     BSTForm.setSize(m_windowSize.x/2-10, m_windowSize.y/2-70);
-    BSTForm.setButtonStage(0, AVL0, AVL3);    
+    BSTForm.setButtonStage(0, form_setting.AVL0, form_setting.AVL3_hovered);    
     BSTForm.setPosition(-BSTForm.getSize().x-100, 100);
     BSTForm.add_vertex({-BSTForm.getSize().x-100, 100});
     BSTForm.add_vertex({0, 100});
     BSTForm.moveNext();
 
     GraphForm.setSize(m_windowSize.x/2-10, m_windowSize.y/2-70);
-    GraphForm.setButtonStage(0, Graph0, Graph2);
+    GraphForm.setButtonStage(0, form_setting.Graph0, form_setting.Graph2_hovered);
     GraphForm.setPosition(m_windowSize.x+100, 100);
     GraphForm.add_vertex({m_windowSize.x+100, 100});
     GraphForm.add_vertex({m_windowSize.x/2+10, 100});
     GraphForm.moveNext();
 
     HashTableForm.setSize(m_windowSize.x/2-10, m_windowSize.y/2-70);
-    HashTableForm.setButtonStage(0, HT0, HT3);
+    HashTableForm.setButtonStage(0, form_setting.HT0, form_setting.HT3_hovered);
     HashTableForm.setPosition(-HashTableForm.getSize().x*2, m_windowSize.y/2+50);
     HashTableForm.add_vertex({-HashTableForm.getSize().x*2, HashTableForm.getPosition().y});
     HashTableForm.add_vertex({0, HashTableForm.getPosition().y});
     HashTableForm.moveNext();
 
     SLLForm.setSize(m_windowSize.x/2-10, m_windowSize.y/2-70);
-    SLLForm.setButtonStage(0, SLL0, SLL2);
+    SLLForm.setButtonStage(0, form_setting.SLL0, form_setting.SLL2_hovered);
     SLLForm.setPosition(m_windowSize.x*2, m_windowSize.y/2+50);
     SLLForm.add_vertex({m_windowSize.x*2, SLLForm.getPosition().y});
     SLLForm.add_vertex({m_windowSize.x/2+10, SLLForm.getPosition().y});

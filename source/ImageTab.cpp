@@ -30,7 +30,6 @@ void ImageTab::handle() {
     
 }
 void ImageTab::draw() {
-    DrawRectangleRounded({m_position.x-5, m_position.y-5, m_size.x+10, m_size.y+10}, 0.1, 30, WHITE);
     BeginScissorMode(m_position.x, m_position.y, m_size.x, m_size.y);
     if (gif_pointer>=0 && gif_pointer<gifs.size()) gifs[gif_pointer]->draw();
     gifs[(gif_pointer+1)%gifs.size()]->draw();
@@ -47,18 +46,20 @@ void ImageTab::setPosition(const float& x, const float& y) {
     }
     Controller::setPosition(x, y);
 }
-void ImageTab::push(const int& index, const string& str) {
-    if (index==gifs.size()) {
-        gifs.push_back(new GIF());
-        gifs[index]->setPosition(m_position.x+m_size.x, m_position.y);
-        gifs[index]->add_vertex({m_position.x+m_size.x, m_position.y});
-        gifs[index]->add_vertex({m_position.x, m_position.y});
-        gifs[index]->add_vertex({m_position.x-m_size.x, m_position.y});
-        gifs[index]->setSize(m_size.x, m_size.y);
-        gifs[index]->setDuration(0.7);
-    }
-    gifs[index]->push(str);
+void ImageTab::push(GIF* gif) {
+    gifs.push_back(gif);
+    gif->clearVertices();
+    gif->setPosition(m_position.x+m_size.x, m_position.y);
+    gif->add_vertex({m_position.x+m_size.x, m_position.y});
+    gif->add_vertex({m_position.x, m_position.y});
+    gif->add_vertex({m_position.x-m_size.x, m_position.y});
+    gif->setSize(m_size.x, m_size.y);
+    gif->setDuration(0.7);
+}
+void ImageTab::clearGifs() {
+    gifs.clear();
+    gif_pointer = -1;
 }
 ImageTab::~ImageTab() {
-    for (int i = 0; i<gifs.size(); i++) delete gifs[i];
+    clearGifs();
 }

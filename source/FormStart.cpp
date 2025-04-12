@@ -26,22 +26,6 @@ MenuStart::MenuStart(FormSetting* f_setting, const Vector2& windowSize) :
     image_list.add_vertex({180,m_windowSize.y / 2 - TransY(115)});
     image_list.moveNext();
 
-    image_list.push(0, AVL0);
-    image_list.push(0, AVL1);
-    image_list.push(0, AVL2);
-    image_list.push(0, AVL3);
-    image_list.push(1, SLL0);
-    image_list.push(1, SLL1);
-    image_list.push(1, SLL2);
-    image_list.push(1, SLL3);
-    image_list.push(2, Graph0);
-    image_list.push(2, Graph1);
-    image_list.push(2, Graph2);
-    image_list.push(2, Graph3);
-    image_list.push(3, HT0);
-    image_list.push(3, HT1);
-    image_list.push(3, HT2);
-    image_list.push(3, HT3);
     
     title_setting = *form_setting;
     title_setting.font = GetFontDefault();
@@ -86,6 +70,42 @@ MenuStart::MenuStart(FormSetting* f_setting, const Vector2& windowSize) :
     Exit.add_vertex({m_windowSize.x*4, m_windowSize.y / 2 - Setting.getSize().y / 2 + TransY(180)});
     Exit.add_vertex({m_windowSize.x - Exit.getSize().x -100, m_windowSize.y / 2 - Exit.getSize().y / 2 + TransY(180)});
     Exit.moveNext();
+
+    LightAVL.push(LightTheme.AVL0);
+    LightAVL.push(LightTheme.AVL1);
+    LightAVL.push(LightTheme.AVL2);
+    LightAVL.push(LightTheme.AVL3);
+    LightSLL.push(LightTheme.SLL0);
+    LightSLL.push(LightTheme.SLL1);
+    LightSLL.push(LightTheme.SLL2);
+    LightSLL.push(LightTheme.SLL3);
+    LightGraph.push(LightTheme.Graph0);
+    LightGraph.push(LightTheme.Graph1);
+    LightGraph.push(LightTheme.Graph2);
+    LightGraph.push(LightTheme.Graph3);
+    LightHashTable.push(LightTheme.HT0);
+    LightHashTable.push(LightTheme.HT1);
+    LightHashTable.push(LightTheme.HT2);
+    LightHashTable.push(LightTheme.HT3);
+
+
+    DarkAVL.push(DarkTheme.AVL0);
+    DarkAVL.push(DarkTheme.AVL1);
+    DarkAVL.push(DarkTheme.AVL2);
+    DarkAVL.push(DarkTheme.AVL3);
+    DarkSLL.push(DarkTheme.SLL0);
+    DarkSLL.push(DarkTheme.SLL1);
+    DarkSLL.push(DarkTheme.SLL2);
+    DarkSLL.push(DarkTheme.SLL3);
+    DarkGraph.push(DarkTheme.Graph0);
+    DarkGraph.push(DarkTheme.Graph1);
+    DarkGraph.push(DarkTheme.Graph2);
+    DarkGraph.push(DarkTheme.Graph3);
+    DarkHashTable.push(DarkTheme.HT0);
+    DarkHashTable.push(DarkTheme.HT1);
+    DarkHashTable.push(DarkTheme.HT2);
+    DarkHashTable.push(DarkTheme.HT3);
+    update_gif();
 }
 int MenuStart::getMode() const {
     return setting_box.getMode();
@@ -115,12 +135,28 @@ void MenuStart::update() {
     Exit.button_setting = form_setting;
     Exit.text_setting = form_setting;
     title_setting.color = form_setting->color;
+
     for (auto i:children) i->update();
+}
+void MenuStart::update_gif() {
+    image_list.clearGifs();
+    if (form_setting == &LightTheme) {
+        image_list.push(&LightAVL);
+        image_list.push(&LightGraph);
+        image_list.push(&LightSLL);
+        image_list.push(&LightHashTable);
+    } else {
+        image_list.push(&DarkAVL);
+        image_list.push(&DarkGraph);
+        image_list.push(&DarkSLL);
+        image_list.push(&DarkHashTable);
+    }
 }
 void MenuStart::handle() {
     if (old_mode != setting_box.getMode()) {
         old_mode = setting_box.getMode();
         update();
+        update_gif();
     }
     if (setting_box.isSubmit()) {
         update();
