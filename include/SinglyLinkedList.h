@@ -77,6 +77,7 @@ namespace SLL {
 		void rePosition();
 		~SLLForm();
 	private:
+		ListNode* null = nullptr;
 		int m_node_size;
 		int m_node_spacing;
 		int size = 0;

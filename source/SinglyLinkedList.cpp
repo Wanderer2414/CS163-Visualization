@@ -56,7 +56,7 @@ void SLL::ListNode::handle()
 	if (this->m_next) {
 		this->m_arrow.setPosition(
 			{this->getCenter().x + m_size.x / 2, this->getCenter().y}, 
-			{this->m_next->getCenter().x - m_size.y / 2, this->m_next->getCenter().y}
+			{this->m_next->getCenter().x - this->m_next->m_size.x / 2, this->m_next->getCenter().y}
 		);
 		this->m_arrow.m_thickness = m_size.y / 10;
 		this->m_arrow.color = text_setting->color;
@@ -93,6 +93,17 @@ SLL::SLLForm::SLLForm(const int &index, FormSetting form_setting, const Vector2 
 	
 	m_dummy = new ListNode(-1,-1);
 	m_head = m_dummy;
+	m_dummy->setText("head");
+	m_dummy->text_setting = &form_setting;
+	m_dummy->button_setting = &form_setting;
+	
+	null = new ListNode(-1,0);
+	null->setText("NULL");
+	null->text_setting = &form_setting;
+	null->button_setting = &form_setting;
+
+	m_dummy->m_next = null;
+	rePosition();
 }
 
 void SLL::SLLForm::add(const vector<string> &str)
@@ -105,7 +116,7 @@ void SLL::SLLForm::add(const vector<string> &str)
 
 void SLL::SLLForm::handle() {
     Form::handle();
-    ListNode* cur = m_head->m_next;
+    ListNode* cur = m_head;
 	while (cur) {
 		cur->handle();
 		cur=cur->m_next;
@@ -113,15 +124,19 @@ void SLL::SLLForm::handle() {
 }
 
 void SLL::SLLForm::rePosition() {
-    ListNode* cur = m_head->m_next;
+    ListNode* cur = m_head;
     while (cur) {
 		if (cur) {
-			float target_x = m_workspace.x + 100 * cur->getIndex() - 100 * (size) / 2;
+			float target_x = m_workspace.x + 100 * cur->getIndex() - 100 * (size) / 2 - ((cur == m_dummy ) ? m_node_size : 0);
     		float target_y = m_workspace.y;
+			if (cur == null) {
+				float target_x = m_workspace.x + 100 * cur->getIndex() - 100 * (size) / 2;
+				float target_y = m_workspace.y;
+			}
     		cur->setDuration(getSpeed()/2); 
     		cur->setSlowPosition(target_x, target_y);
 		}
-		cur->setSize(m_node_size, m_node_size);
+		cur->setSize(m_node_size + ((cur == m_dummy || cur == null) ? m_node_size : 0), m_node_size);
 		cur=cur->m_next;
 	}
 }
@@ -158,7 +173,7 @@ void SLL::SLLForm::draw()
 {
 	BeginMode2D(m_camera);
     BeginScissorMode(m_workspace.x, m_workspace.y, m_workspace.width, m_workspace.height);
-	ListNode* cur = m_head->m_next;
+	ListNode* cur = m_head;
 	while (cur) {
 		cur->draw();
 		if (cur->m_next) cur->m_arrow.draw();
@@ -378,7 +393,7 @@ void SLL::SLLForm::insertSilent(const int& value, const int& index) {
     cur->m_next = newNode;
     newNode->button_setting = &form_setting;
     newNode->text_setting = &form_setting;
-    newNode->setPosition(m_workspace.width, getRandom(0, m_workspace.height));
+    newNode->setPosition(getRandom(-m_workspace.width,m_workspace.width), m_workspace.height);
     ListNode* temp = newNode->m_next;
     while (temp) {
         temp->setIndex(temp->getIndex() + 1);
