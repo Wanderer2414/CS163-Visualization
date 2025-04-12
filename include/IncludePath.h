@@ -18,9 +18,9 @@
 #define SLL1 source"/asset/images/SLL1.png"
 #define SLL2 source"/asset/images/SLL2.png"
 #define SLL3 source"/asset/images/SLL3.png"
-#define HT0 source"/asset/images/hash_table0.png"
-#define HT1 source"/asset/images/hash_table1.png"
-#define HT2 source"/asset/images/hash_table2.png"
-#define HT3 source"/asset/images/hash_table3.png"
+#define HT0 source"/asset/images/HT0.png"
+#define HT1 source"/asset/images/HT1.png"
+#define HT2 source"/asset/images/HT2.png"
+#define HT3 source"/asset/images/HT3.png"
 
 #endif

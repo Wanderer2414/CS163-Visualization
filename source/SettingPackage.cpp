@@ -48,6 +48,7 @@ FormSetting LightTheme = {
     source"/asset/images/dark/double-arrow-left-hoverd.png",
     source"/asset/Icon/Light.png",
     source"/asset/images/Rand.png",
+    source"/asset/images/Rand_hovered.png",
     source"/asset/images/dark/TitleMenu.png",
     source"/asset/Icon/pepicons-pencil--pen.png",
     source"/asset/Icon/pepicons-pencil--pen-circle-filled.png",
@@ -79,6 +80,7 @@ FormSetting DarkTheme = {
     {4, 13, 18, 255},         // Background (Deep Dark Green-Blue)
     {240, 240, 240, 255},
     {100, 100, 100, 255},
+
     source"/asset/images/back-normal.png",
     source"/asset/images/back-selected.png",
     source"/asset/images/home-normal.png",
@@ -107,6 +109,7 @@ FormSetting DarkTheme = {
     source"/asset/images/double-arrow-left-hoverd.png",
     source"/asset/Icon/Dark.png",
     source"/asset/images/Rand.png",
+    source"/asset/images/Rand_hovered.png",
     source"/asset/images/TitleMenu.png",
     source"/asset/Icon/pepicons-pencil--pen.png",
     source"/asset/Icon/pepicons-pencil--pen-circle-filled.png",

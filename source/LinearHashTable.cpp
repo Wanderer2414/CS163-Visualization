@@ -60,7 +60,7 @@ HT::HashTable::HashTable(const int& index, FormSetting f_setting, const Vector2&
     size_label.setText("Size: ");
     size_label.setAlignText(Label::Left);
 
-    random_size_button.setButtonStage(0, form_setting.Rand, form_setting.Rand);
+    random_size_button.setButtonStage(0, form_setting.Rand, form_setting.Rand_hovered);
     random_size_button.setPosition(275, 50);
     random_size_button.setSize(30, 30);
 
@@ -75,6 +75,7 @@ HT::HashTable::HashTable(const int& index, FormSetting f_setting, const Vector2&
     create_box.reLocate(&create_textbox);
     create_box.reLocate(&create_button);
 
+    m_memory_sz_textBox.setText(std::to_string(50));
     setMemorySize(50);
 
     m_camera.offset.y = m_workspace.y + 20;
@@ -119,7 +120,12 @@ void HT::HashTable::handle() {
     }
     m_camera.zoom = std::clamp(m_camera.zoom, 0.1f, 10.f);
     int count = m_workspace.width / m_camera.zoom / (m_node_size + m_node_spacing);
+
     if (count != max_size || m_memory_sz_textBox.isEnter() || create_button.isPressed()) {
+        if (m_memory_sz_textBox.getText() == "") {
+            setMemorySize(50);
+            m_memory_sz_textBox.setText(std::to_string(50));
+        }
         max_size = count;
         int i = 0;
         int y = 0;
@@ -146,6 +152,7 @@ void HT::HashTable::add(const vector<std::string>& data) {
         cnt++;
     }
 }
+
 void HT::HashTable::remove_console_add()
 {
     console.InsertNextSubCommand("index = key % table.size                                              ");
@@ -480,6 +487,13 @@ void HT::HashTable::FetchNextCommand(const std::vector<float>& command) {
         setDuration(0.2);
     }
                 break;
+    //case _empty: {
+    //    for (int i = 0; i < m_memory.size(); i++) {
+    //        m_memory[i].setValue(0);
+    //    }
+    //    setDuration(0.2);
+    //}
+    //           break;
     case _update: {
         update_console_add();
         console.goDown();

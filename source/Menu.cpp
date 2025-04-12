@@ -17,28 +17,28 @@ Menu::Menu(FormSetting f_setting, const Vector2& windowSize) :
     children.push_back(&MenuDSA);
 
     BSTForm.setSize(m_windowSize.x/2-10, m_windowSize.y/2-70);
-    BSTForm.setButtonStage(0, AVL0, AVL1);    
+    BSTForm.setButtonStage(0, AVL0, AVL3);    
     BSTForm.setPosition(-BSTForm.getSize().x-100, 100);
     BSTForm.add_vertex({-BSTForm.getSize().x-100, 100});
     BSTForm.add_vertex({0, 100});
     BSTForm.moveNext();
 
     GraphForm.setSize(m_windowSize.x/2-10, m_windowSize.y/2-70);
-    GraphForm.setButtonStage(0, Graph0, Graph1);
+    GraphForm.setButtonStage(0, Graph0, Graph2);
     GraphForm.setPosition(m_windowSize.x+100, 100);
     GraphForm.add_vertex({m_windowSize.x+100, 100});
     GraphForm.add_vertex({m_windowSize.x/2+10, 100});
     GraphForm.moveNext();
 
     HashTableForm.setSize(m_windowSize.x/2-10, m_windowSize.y/2-70);
-    HashTableForm.setButtonStage(0, HT0, HT1);
+    HashTableForm.setButtonStage(0, HT0, HT3);
     HashTableForm.setPosition(-HashTableForm.getSize().x*2, m_windowSize.y/2+50);
     HashTableForm.add_vertex({-HashTableForm.getSize().x*2, HashTableForm.getPosition().y});
     HashTableForm.add_vertex({0, HashTableForm.getPosition().y});
     HashTableForm.moveNext();
 
     SLLForm.setSize(m_windowSize.x/2-10, m_windowSize.y/2-70);
-    SLLForm.setButtonStage(0, SLL0, SLL1);
+    SLLForm.setButtonStage(0, SLL0, SLL2);
     SLLForm.setPosition(m_windowSize.x*2, m_windowSize.y/2+50);
     SLLForm.add_vertex({m_windowSize.x*2, SLLForm.getPosition().y});
     SLLForm.add_vertex({m_windowSize.x/2+10, SLLForm.getPosition().y});
@@ -51,9 +51,9 @@ Menu::Menu(FormSetting f_setting, const Vector2& windowSize) :
     Back.add_vertex({10, 10});
     Back.moveNext();
 
-    MenuDSA.setSize(400, 45);
     MenuDSA.setButtonStage(0, form_setting.TitleMenu, form_setting.TitleMenu);
-    MenuDSA.setPosition( m_windowSize.x / 2 - 200 , -100);
+    MenuDSA.setSize(600, 60);
+    MenuDSA.setPosition( m_windowSize.x / 2 - 300 , -100);
     MenuDSA.add_vertex({MenuDSA.getPosition().x, -100});
     MenuDSA.add_vertex({MenuDSA.getPosition().x, 10});
     MenuDSA.moveNext();
