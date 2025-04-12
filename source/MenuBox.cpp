@@ -19,6 +19,9 @@ MenuBox::MenuBox(FormSetting*& f_setting):
         highlight_color_label2(&text_setting),
         highlight_color_label3(&text_setting),
 
+        button_color_label(&text_setting),
+        text_color_label(&text_setting),
+
         color_pointer(form_setting),
 
         submit_button(form_setting, form_setting) {
@@ -38,9 +41,15 @@ MenuBox::MenuBox(FormSetting*& f_setting):
     children.push_back(&highlight_color_label2);
     children.push_back(&highlight_color_label3);
 
+    children.push_back(&button_color_label);
+    children.push_back(&text_color_label);
+
     children.push_back(&hightlight_color_button1);
     children.push_back(&hightlight_color_button2);
     children.push_back(&hightlight_color_button3);
+
+    children.push_back(&button_color_button);
+    children.push_back(&text_color_button);
 
     children.push_back(&color_pointer);
 
@@ -84,6 +93,16 @@ MenuBox::MenuBox(FormSetting*& f_setting):
     highlight_color_label3.setText("Hightlight color 3: ");
     highlight_color_label3.setAlignText(Label::Left);
 
+    button_color_label.setPosition(TransX(10),TransY(430));
+    button_color_label.setSize(TransX(150), TransY(40));
+    button_color_label.setText("Button color: ");
+    button_color_label.setAlignText(Label::Left);
+
+    text_color_label.setPosition(TransX(10),TransY(480));
+    text_color_label.setSize(TransX(150), TransY(40));
+    text_color_label.setText("Text color: ");
+    text_color_label.setAlignText(Label::Left);
+
     window_size.setPosition(TransX(270), TransY(80));
     window_size.setSize(TransX(200), TransY(40));
     window_size.push_back("1366x768");
@@ -111,8 +130,14 @@ MenuBox::MenuBox(FormSetting*& f_setting):
     hightlight_color_button3.setPosition(TransX(270), TransY(380));
     hightlight_color_button3.setSize(TransX(200), TransY(40));
 
-    submit_button.setSize(TransX(210), TransY(50));
-    submit_button.setPosition(TransX(280), TransY(540));
+    button_color_button.setPosition(TransX(270), TransY(430));
+    button_color_button.setSize(TransX(200), TransY(40));
+
+    text_color_button.setPosition(TransX(270), TransY(480));
+    text_color_button.setSize(TransX(200), TransY(40));
+
+    submit_button.setSize(TransX(200), TransY(50));
+    submit_button.setPosition(TransX(270), TransY(530));
     submit_button.setText("Done");
 
     color_pointer.setSize(200, 150);
@@ -157,6 +182,9 @@ void MenuBox::update() {
         hightlight_color_button3.normal_color = form_setting->hightlight_color3;
         hightlight_color_button2.normal_color = form_setting->hightlight_color2;
         hightlight_color_button1.normal_color = form_setting->hightlight_color1;
+
+        button_color_button.normal_color = form_setting->normal_color;
+        text_color_button.normal_color = form_setting->color;
 
         small_font_size.setSelection(form_setting->small_font_size - 10);
         small_font_size.button_setting = form_setting;
@@ -226,12 +254,30 @@ void MenuBox::handle() {
         color_pointer.setColor(hightlight_color_button3.normal_color);
         color_pointer_index = 2;
     }
+    else  if (button_color_button.isPressed()) {
+        color_pointer.setVisible(true);
+        Vector2 pos = button_color_button.getPosition();
+        pos.x -= color_pointer.getSize().x + 10;
+        color_pointer.setPosition(pos.x, pos.y);
+        color_pointer.setColor(button_color_button.normal_color);
+        color_pointer_index = 3;
+    }
+    else  if (text_color_button.isPressed()) {
+        color_pointer.setVisible(true);
+        Vector2 pos = text_color_button.getPosition();
+        pos.x -= color_pointer.getSize().x + 10;
+        color_pointer.setPosition(pos.x, pos.y);
+        color_pointer.setColor(text_color_button.normal_color);
+        color_pointer_index = 4;
+    }
     if (!color_pointer.isFocus() && color_pointer.isVisible()) {
         color_pointer.setVisible(false);
         switch (color_pointer_index) {
             case 0: hightlight_color_button1.normal_color = color_pointer.getColor(); break;
             case 1: hightlight_color_button2.normal_color = color_pointer.getColor(); break;
             case 2: hightlight_color_button3.normal_color = color_pointer.getColor(); break;
+            case 3: button_color_button.normal_color      = color_pointer.getColor(); break;
+            case 4: text_color_button.normal_color        = color_pointer.getColor(); break;
         }
     }
     m_is_submit = false;
@@ -246,6 +292,9 @@ void MenuBox::handle() {
             form_setting->hightlight_color1 = hightlight_color_button1.normal_color;
             form_setting->hightlight_color2 = hightlight_color_button2.normal_color;
             form_setting->hightlight_color3 = hightlight_color_button3.normal_color;
+
+            form_setting->color = text_color_button.normal_color;
+            form_setting->normal_color = button_color_button.normal_color;
 
             m_is_submit = true;
         }

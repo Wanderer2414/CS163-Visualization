@@ -58,11 +58,17 @@ protected:
 
                     highlight_color_label1,
                     highlight_color_label2,
-                    highlight_color_label3;
+                    highlight_color_label3,
+                    
+                    button_color_label,
+                    text_color_label;
 
     EmptyButton     hightlight_color_button1,
                     hightlight_color_button2,
-                    hightlight_color_button3;
+                    hightlight_color_button3,
+                    
+                    button_color_button,
+                    text_color_button;
 
     ColorPointer    color_pointer;
 
