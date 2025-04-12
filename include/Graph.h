@@ -41,6 +41,7 @@ public:
         
         remove_edge,
         remove_vertex,
+        remove_end_vertex,
 
         add_heap,
         pop_heap,
@@ -76,7 +77,11 @@ public:
                         FetchPrevCommand(const vector<float>& codes) override;
                         
     virtual string      RandomCreate() const override,
-                        RandomSearch() const override;
+                        RandomSearch() const override,
+                        RandomInsert() const override,
+                        RandomNewValue() const override,
+                        RandomOldValue() const override,
+                        RandomRemove() const override;
     void clearGraph();
     ~Graph();
   
@@ -126,7 +131,6 @@ private:
                         update(const int& index, const int& value);
 
     Texture2D           cursor_icon;
-    //TextSetting         console_setting;
 
     ColorPointer        color_box;
     HeapVisual          heap;

@@ -12,9 +12,35 @@ string Graph::RandomCreate() const {
     return "";
 }
 string Graph::RandomSearch() const {
+    if (vertices.empty()) return "";
     srand(clock());
     int index = rand()%vertices.size();
-    return to_string(vertices[index]->getValue());
+    return to_string(index);
+}
+string Graph::RandomInsert() const {
+    srand(clock());
+    int value = rand()%1000;
+    return to_string(value);
+};
+string Graph::RandomNewValue() const {
+    if (vertices.empty()) return "";
+    srand(clock());
+    int value;
+    do value = rand()%1000;
+    while (value == vertices[to_int(update_textbox_choice.getText())]->getValue());
+    return to_string(value);
+}
+string Graph::RandomOldValue() const {
+    if (vertices.empty()) return "";
+    srand(clock());
+    int index = rand()%vertices.size();
+    return to_string(index);
+}
+string Graph::RandomRemove() const {
+    if (vertices.empty()) return "";
+    srand(clock());
+    int index = rand()%vertices.size();
+    return to_string(index);
 }
 string Graph::RandomEdge() const {
     srand(clock());

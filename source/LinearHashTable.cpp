@@ -197,12 +197,6 @@ void HT::HashTable::insert_console_add()
     console.InsertNextSubCommand("   else table is full -> return                                       ");
     console.InsertNextSubCommand("}                                                                     ");
 }
-void HT::HashTable::empty()
-{
-    if (m_memory.size() == 0) return;
-    console.InsertNextMainCommand("Delete All");
-    InsertNextSubCommand({ _empty, 1 });
-}
 void HT::HashTable::update(const std::string& old_value, const std::string& new_value)
 {
     console.InsertNextMainCommand("Update " + old_value + " to " + new_value);
@@ -491,13 +485,13 @@ void HT::HashTable::FetchNextCommand(const std::vector<float>& command) {
         setDuration(0.2);
     }
                 break;
-    case _empty: {
-        for (int i = 0; i < m_memory.size(); i++) {
-            m_memory[i].setValue(0);
-        }
-        setDuration(0.2);
-    }
-               break;
+    //case _empty: {
+    //    for (int i = 0; i < m_memory.size(); i++) {
+    //        m_memory[i].setValue(0);
+    //    }
+    //    setDuration(0.2);
+    //}
+    //           break;
     case _update: {
         update_console_add();
         console.goDown();

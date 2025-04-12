@@ -6,31 +6,52 @@ MenuBox::MenuBox(FormSetting& f_setting):
         sun(&LightTheme, &DarkTheme), 
         window_size(&form_setting, &form_setting),
         window_size_label(&form_setting),
+        font_size_label(&form_setting),
+        medium_font_size_label(&form_setting),
+        small_font_size_label(&form_setting),
         submit_button(&form_setting, &form_setting) {
     window_size_index = 0;
     m_position = {0, 0};
     children.push_back(&sun);
     children.push_back(&window_size);
     children.push_back(&window_size_label);
+    children.push_back(&font_size_label);
+    children.push_back(&medium_font_size_label);
+    children.push_back(&small_font_size_label);
     children.push_back(&submit_button);
 
-    sun.setPosition(270, 20);
-    sun.setSize(200, 50);
+    sun.setPosition(TransX(270), TransY(20));
+    sun.setSize(TransX(200), TransY(50));
 
-    window_size_label.setPosition(10, 80);
-    window_size_label.setSize(150, 40);
+    window_size_label.setPosition(TransX(10),TransY(80));
+    window_size_label.setSize(TransX(150), TransY(40));
     window_size_label.setText("Resolution: ");
     window_size_label.setAlignText(Label::Left);
 
-    window_size.setPosition(270, 80);
-    window_size.setSize(200, 40);
+    font_size_label.setPosition(TransX(10),TransY(130));
+    font_size_label.setSize(TransX(150), TransY(40));
+    font_size_label.setText("Font size: ");
+    font_size_label.setAlignText(Label::Left);
+
+    medium_font_size_label.setPosition(TransX(10),TransY(180));
+    medium_font_size_label.setSize(TransX(150), TransY(40));
+    medium_font_size_label.setText("Medium font size: ");
+    medium_font_size_label.setAlignText(Label::Left);
+
+    small_font_size_label.setPosition(TransX(10),TransY(230));
+    small_font_size_label.setSize(TransX(150), TransY(40));
+    small_font_size_label.setText("Small font size: ");
+    small_font_size_label.setAlignText(Label::Left);
+
+    window_size.setPosition(TransX(270), TransY(80));
+    window_size.setSize(TransX(200), TransY(40));
     window_size.push_back("1366x768");
     window_size.push_back("1820x980");
     window_size.push_back("1024x600");
     window_size.setSelection(window_size_index);
 
-    submit_button.setSize(210, 50);
-    submit_button.setPosition(280, 540);
+    submit_button.setSize(TransX(210), TransY(50));
+    submit_button.setPosition(TransX(280), TransY(540));
     submit_button.setText("Done");
 
     window_size.setSelection(0);
@@ -60,9 +81,15 @@ void MenuBox::handle() {
     m_is_hovered = CheckCollisionPointRec(GetMousePosition(), {m_position.x, m_position.y, m_size.x, m_size.y});
     if (sun.getPercent() < 0.3) {
         window_size_label.text_setting = &DarkTheme;
+        font_size_label.text_setting = &DarkTheme;
+        medium_font_size_label.text_setting = &DarkTheme;
+        small_font_size_label.text_setting = &DarkTheme;
     }
     else if (sun.getPercent() > 0.7) {
         window_size_label.text_setting = &LightTheme;
+        font_size_label.text_setting = &LightTheme;
+        medium_font_size_label.text_setting = &LightTheme;
+        small_font_size_label.text_setting = &LightTheme;
     }
     if (!m_is_hovered && IsMouseButtonPressed(MOUSE_BUTTON_LEFT) || submit_button.isPressed()) {
         if (submit_button.isPressed()) if (window_size_index != window_size.GetSelection()) is_size_changed = true;

@@ -2,9 +2,12 @@
 #define FORMSTART_H
 
 #include "Console.h"
+#include "GIF.h"
+#include "ImageTab.h"
 #include "Label.h"
 #include "MenuBox.h"
 #include "MoveButton.h"
+#include "MoveLabel.h"
 #include "SettingPackage.h"
 #include "TextButton.h"
 #include "Global.h"
@@ -23,8 +26,11 @@ public:
     int             getWindowSizeIndex();
 private:
     int             old_mode = -1;
+    TextSetting     title_setting;
+    MoveLabel       Title;
     MoveButton      Start, Setting, Exit, AboutUs;
     MenuBox         setting_box;
+    ImageTab        image_list;
     std::vector<Controller*> children;
     Vector2         m_windowSize;
 };

@@ -1,5 +1,5 @@
 #include "../include/General.h"
-
+extern Vector2 WindowSize;
 float abs(const Vector2& vector) {
     return sqrt(vector.x * vector.x + vector.y * vector.y);
 };
@@ -53,6 +53,14 @@ bool operator==(const Color& a, const Color& b) {
     return a.r == b.r && a.g == b.g && a.b==b.g && a.a==b.a;
 }
 
+int to_int(const std::string& str) {
+    int ans = 0;
+    for (int i = 0; i < str.size(); i++) {
+        if (std::isdigit(str[i])) ans = ans * 10 + str[i] - '0';
+    }
+    return ans;
+}
+
 float arctan(const Vector2 &vector) {
     float ans = atan(vector.y/vector.x);
     if (vector.x < 0) ans+=M_PI;
@@ -66,12 +74,17 @@ float to_float(const Color& color) {
     memcpy(&x, &color, 4);
     return x;
 }
-int to_int(const std::string& str) {
-    int ans = 0;
-    for (int i = 0; i < str.size(); i++) {
-        if (std::isdigit(str[i])) ans = ans * 10 + str[i] - '0';
-    }
-    return ans;
+
+float TransX(const float& x) {
+    return x/1366*WindowSize.x;
+}
+
+float TransY(const float& y) {
+    return y/700*WindowSize.y;
+}
+
+Vector2 Trans(const Vector2& vector) {
+    return {TransX(vector.x), TransY(vector.y)};
 }
 
 Vector2 getCenter(const Vector2& a, const Vector2& b, const float& angular) {

@@ -47,7 +47,6 @@ namespace HT {
             remove(const std::string& data) override,
             search(const std::string& x) override,
             update(const std::string& old_value, const std::string& new_value) override,
-            empty() override,
                 
             draw()              override,
             handle()            override,

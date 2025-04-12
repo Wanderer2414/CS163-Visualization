@@ -4,6 +4,10 @@ TextureButton::TextureButton() {
     source_pointer = -1;
     m_sources.clear();
     m_sources_hover.clear();
+    m_is_focus = false;
+}
+bool TextureButton::isFocus() const {
+    return m_is_focus;
 }
 int TextureButton::getStage() const {
     return source_pointer;
@@ -19,6 +23,9 @@ void TextureButton::setSize(const float& x, const float& y) {
 }
 void TextureButton::handle() {
     Button::handle();
+    if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) {
+        m_is_focus = m_is_hovered;
+    }
 }
 void TextureButton::back() {
     source_pointer--;

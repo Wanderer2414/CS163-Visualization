@@ -95,12 +95,12 @@ Form::Form(const int& index, FormSetting f_setting, const Vector2& window_size) 
     option_box.setText(5, "Empty");
     option_box.setVisible(false);
 
-    console.setPosition(m_window_size.x - 510, m_window_size.y - 220);
-    console.setSize(500, 200);
-    console.setTextOrigin({ 10,10 });
+    console.setSize(TransX(500), TransY(200));
+    console.setPosition(m_window_size.x - console.getSize().x - TransX(10), m_window_size.y - console.getSize().y - TransY(20));
+    console.setTextOrigin({ TransX(10),TransY(10) });
 
-    buttonTab.setSize(400, 40);
-    buttonTab.setPosition(m_window_size.x/2 - 200, 10);
+    buttonTab.setSize(TransX(400), TransY(40));
+    buttonTab.setPosition(m_window_size.x/2 - buttonTab.getSize().x/2, TransY(10));
     buttonTab.push_back("AVL Tree");
     buttonTab.push_back("Graph");
     buttonTab.push_back("Hash Table");
@@ -241,7 +241,7 @@ Form::Form(const int& index, FormSetting f_setting, const Vector2& window_size) 
 
     speed_scroll.setPosition(m_window_size.x - 100, 10);
     speed_scroll.setSize(70, m_window_size.y - 160);
-    for (float i = 0.2; i<=5; i+=0.2) {
+    for (float i = 0.2; i<=8; i+=0.2) {
         stringstream s;
         s<< i <<"x";
         speed_scroll.push_back(i, s.str());
@@ -272,7 +272,7 @@ Form::Form(const int& index, FormSetting f_setting, const Vector2& window_size) 
     option_box.setPosition(-option_box.getSize().x, m_window_size.y/2);
     option_box.add_vertex({-option_box.getSize().x, m_window_size.y/2});
     option_box.add_vertex({10, m_window_size.y/2});
-    option_box.setSize(200, m_window_size.y/2-30);
+    option_box.setSize(option_box.getAutoSize().x + 20, option_box.getAutoSize().y);
     option_box.setVisible(false);
 
     track_hover.setText("");
@@ -281,18 +281,42 @@ Form::Form(const int& index, FormSetting f_setting, const Vector2& window_size) 
     setSpeed(1);
 }
 int Form::run() {
+    float transparent = 1;
+    bool isStart = false, isEnd = false;
     while (!WindowShouldClose()) {
         handle();
         BeginDrawing();
         ClearBackground(form_setting.background_color);
         draw();
+        if (!isStart) {
+            Color color = form_setting.reverse_color;
+            color.a = transparent*255;
+            transparent -= 0.03;
+            DrawRectangle(0, 0, m_window_size.x, m_window_size.y, color);
+            if (transparent<0) {
+                transparent = 0;
+                isStart = true;
+            }
+        }
+        if (isEnd) {
+            Color color = form_setting.reverse_color;
+            color.a = transparent*255;
+            transparent += 0.1;
+            DrawRectangle(0, 0, m_window_size.x, m_window_size.y, color);
+            if (transparent > 1) {
+                transparent = 1;
+                return 3 + buttonTab.GetSelection();
+            }
+        }
         EndDrawing();
         if (back_button.isPressed()) return 1;
         //Home button handle
         if (home_button.isPressed()) return 0;
         if (buttonTab.isChanged()) {
-            return 3 + buttonTab.GetSelection();
+            transparent = 0.1;
+            isEnd = true;
         }
+        if (empty_button.isPressed()) return 3 + buttonTab.GetSelection();
     }
     return 0;
 }
@@ -342,14 +366,14 @@ void Form::handle() {
             Vector2 pos = track_hover.getPosition();
             pos.y += GetMouseDelta().y;
             track_hover.setPosition(pos.x, pos.y);
-            option_box.setPosition(option_box.getPosition().x, pos.y);
+            option_box.setVerticesPosition(option_box.getPosition().x, pos.y);
         } 
         main_box_show();
     } else if (!track_hover.isHovered() && !option_box.isHovered()) {
         if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) {
             main_box_hide();
         }
-        else if (option_box.getVertexDone() == 0) {
+        else if (option_box.getProgress()<0.1) {
             option_box.setVisible(false);
         }
     }
@@ -407,9 +431,6 @@ void Form::handle() {
         remove(remove_textbox.getText());
         remove_textbox.clear();
     }
-    if (empty_button.isPressed()) {
-        empty();
-    }
     //Random create
     if (random_create.isPressed()) create_textbox.setText(RandomCreate());
     if (random_insert.isPressed()) insert_textbox.setText(RandomInsert());
@@ -437,14 +458,14 @@ void Form::search(const std::string& x) {
 
 }
 void Form::main_box_show() {
-    if (option_box.getVertexDone()==0) {
+    if (!option_box.isVisible()) {
         option_box.setVisible(true);
-        option_box.next();
+        option_box.moveNext();
     }
 }
 void Form::main_box_hide() {
     if (option_box.getVertexDone() == 1) {
-        option_box.next();
+        option_box.moveNext();
         option_box.select(-1);
         insert_textbox.setFocus(false);
         remove_textbox.setFocus(false);
