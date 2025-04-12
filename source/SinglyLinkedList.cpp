@@ -97,6 +97,7 @@ SLL::SLLForm::SLLForm(const int &index, FormSetting form_setting, const Vector2 
 
 void SLL::SLLForm::add(const vector<string> &str)
 {
+	if (str.size() == 0) return;
 	for (int i = str.size()-1; i>=0; i--) {
 		InsertNextMainCommand({_insert,1.0f * to_int(str[i])});
 	}
@@ -127,6 +128,7 @@ void SLL::SLLForm::rePosition() {
 
 void SLL::SLLForm::remove(const std::string & str)
 {
+	if (str.size() == 0) return;
 	ListNode* cur = m_head;
 	int value = stoi(str);
 	while (cur && cur->getValue() != value)
@@ -141,11 +143,13 @@ void SLL::SLLForm::remove(const std::string & str)
 
 void SLL::SLLForm::update(const std::string & old_value, const std::string & new_value)
 {
+	if (old_value.size() == 0 || new_value.size() == 0) return;
 	InsertNextMainCommand({_update,float(stoi(old_value)),float(stoi(new_value))});
 }
 
 void SLL::SLLForm::search(const std::string & x)
 {
+	if (x.size() == 0) return;
 	InsertNextMainCommand({_search,float(stoi(x))});
 }
 
