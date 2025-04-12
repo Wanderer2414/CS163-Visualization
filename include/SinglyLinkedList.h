@@ -12,8 +12,9 @@ namespace SLL {
 	class Arrow {
 	public:
 		Vector2 m_tail;
+		Vector2 m_head;
 		float m_length;
-		float m_thickness=5;
+		float m_thickness=3;
 		Vector2 m_t1;
 		Vector2 m_t2;
 		Vector2 m_t3;
@@ -21,6 +22,7 @@ namespace SLL {
 		void setPosition(Vector2 tail,Vector2 head);
 		void handle();
 		void draw();
+
 	private:
 	};	
 	class ListNode : public TextButton, public SlowMotion{
@@ -63,7 +65,9 @@ namespace SLL {
 			_removeSilent = 8,
 			_updateSilent = 9,
 			_GoUp = 12,
-			_GoDowm = 13
+			_GoDowm = 13,
+			_rePo = 14,
+			_rePoCur = 15
 		};
 		SLLForm(const int& index, FormSetting form_setting, const Vector2& window_size);
 		virtual void    add(const vector<string>& str) override,
@@ -83,6 +87,8 @@ namespace SLL {
 		int size = 0;
 		ListNode* m_head = nullptr;
 		ListNode* m_dummy = nullptr;
+		ListNode* m_cur = nullptr;
+		bool showCur = false;
 
 		void insert(const int& value, const int& index);
 		void insertSilent(const int& value, const int& index);
@@ -98,6 +104,7 @@ namespace SLL {
 
 		void search(const int& value);
 		void console_add_search(const int& value);
+		void rePoCur(const int& index);
 	};
 }
 
