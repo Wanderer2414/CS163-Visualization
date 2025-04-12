@@ -128,6 +128,7 @@ void Graph::getEdge(const int& graph, vector<bool>& visited) {
         }
 }
 vector<int> Graph::getVertex(const int& graph) {
+    if (vertices.empty()) return {};
     vector<bool> visited(vertices.size(), 0);
     getVertex(graph, visited);
     vector<int> ans;

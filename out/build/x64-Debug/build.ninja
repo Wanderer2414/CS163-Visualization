@@ -51,7 +51,7 @@ build cmake_object_order_depends_target_DSAVisualization: phony || .
 
 build CMakeFiles\DSAVisualization.dir\source\Application.cpp.obj: CXX_COMPILER__DSAVisualization_unscanned_Debug C$:\Users\MY$ PC\source\repos\Huy\source\Application.cpp || cmake_object_order_depends_target_DSAVisualization
   FLAGS = /DWIN32 /D_WINDOWS /W3 /GR /EHsc /MDd /Zi /Ob0 /Od /RTC1 -std:c++17
-  INCLUDES = -I"C:\Users\MY PC\ProjectDSA\CS163-DSAVisualization\raylib"
+  INCLUDES = -I"C:\Users\MY PC\ProjectDSA\../..\raylib"
   OBJECT_DIR = CMakeFiles\DSAVisualization.dir
   OBJECT_FILE_DIR = CMakeFiles\DSAVisualization.dir\source
   TARGET_COMPILE_PDB = CMakeFiles\DSAVisualization.dir\
@@ -59,7 +59,7 @@ build CMakeFiles\DSAVisualization.dir\source\Application.cpp.obj: CXX_COMPILER__
 
 build CMakeFiles\DSAVisualization.dir\source\Button.cpp.obj: CXX_COMPILER__DSAVisualization_unscanned_Debug C$:\Users\MY$ PC\source\repos\Huy\source\Button.cpp || cmake_object_order_depends_target_DSAVisualization
   FLAGS = /DWIN32 /D_WINDOWS /W3 /GR /EHsc /MDd /Zi /Ob0 /Od /RTC1 -std:c++17
-  INCLUDES = -I"C:\Users\MY PC\ProjectDSA\CS163-DSAVisualization\raylib"
+  INCLUDES = -I"C:\Users\MY PC\ProjectDSA\../..\raylib"
   OBJECT_DIR = CMakeFiles\DSAVisualization.dir
   OBJECT_FILE_DIR = CMakeFiles\DSAVisualization.dir\source
   TARGET_COMPILE_PDB = CMakeFiles\DSAVisualization.dir\
@@ -67,7 +67,7 @@ build CMakeFiles\DSAVisualization.dir\source\Button.cpp.obj: CXX_COMPILER__DSAVi
 
 build CMakeFiles\DSAVisualization.dir\source\Clock.cpp.obj: CXX_COMPILER__DSAVisualization_unscanned_Debug C$:\Users\MY$ PC\source\repos\Huy\source\Clock.cpp || cmake_object_order_depends_target_DSAVisualization
   FLAGS = /DWIN32 /D_WINDOWS /W3 /GR /EHsc /MDd /Zi /Ob0 /Od /RTC1 -std:c++17
-  INCLUDES = -I"C:\Users\MY PC\ProjectDSA\CS163-DSAVisualization\raylib"
+  INCLUDES = -I"C:\Users\MY PC\ProjectDSA\../..\raylib"
   OBJECT_DIR = CMakeFiles\DSAVisualization.dir
   OBJECT_FILE_DIR = CMakeFiles\DSAVisualization.dir\source
   TARGET_COMPILE_PDB = CMakeFiles\DSAVisualization.dir\
@@ -75,7 +75,7 @@ build CMakeFiles\DSAVisualization.dir\source\Clock.cpp.obj: CXX_COMPILER__DSAVis
 
 build CMakeFiles\DSAVisualization.dir\source\Console.cpp.obj: CXX_COMPILER__DSAVisualization_unscanned_Debug C$:\Users\MY$ PC\source\repos\Huy\source\Console.cpp || cmake_object_order_depends_target_DSAVisualization
   FLAGS = /DWIN32 /D_WINDOWS /W3 /GR /EHsc /MDd /Zi /Ob0 /Od /RTC1 -std:c++17
-  INCLUDES = -I"C:\Users\MY PC\ProjectDSA\CS163-DSAVisualization\raylib"
+  INCLUDES = -I"C:\Users\MY PC\ProjectDSA\../..\raylib"
   OBJECT_DIR = CMakeFiles\DSAVisualization.dir
   OBJECT_FILE_DIR = CMakeFiles\DSAVisualization.dir\source
   TARGET_COMPILE_PDB = CMakeFiles\DSAVisualization.dir\
@@ -83,7 +83,7 @@ build CMakeFiles\DSAVisualization.dir\source\Console.cpp.obj: CXX_COMPILER__DSAV
 
 build CMakeFiles\DSAVisualization.dir\source\Controller.cpp.obj: CXX_COMPILER__DSAVisualization_unscanned_Debug C$:\Users\MY$ PC\source\repos\Huy\source\Controller.cpp || cmake_object_order_depends_target_DSAVisualization
   FLAGS = /DWIN32 /D_WINDOWS /W3 /GR /EHsc /MDd /Zi /Ob0 /Od /RTC1 -std:c++17
-  INCLUDES = -I"C:\Users\MY PC\ProjectDSA\CS163-DSAVisualization\raylib"
+  INCLUDES = -I"C:\Users\MY PC\ProjectDSA\../..\raylib"
   OBJECT_DIR = CMakeFiles\DSAVisualization.dir
   OBJECT_FILE_DIR = CMakeFiles\DSAVisualization.dir\source
   TARGET_COMPILE_PDB = CMakeFiles\DSAVisualization.dir\
@@ -91,7 +91,7 @@ build CMakeFiles\DSAVisualization.dir\source\Controller.cpp.obj: CXX_COMPILER__D
 
 build CMakeFiles\DSAVisualization.dir\source\Form.cpp.obj: CXX_COMPILER__DSAVisualization_unscanned_Debug C$:\Users\MY$ PC\source\repos\Huy\source\Form.cpp || cmake_object_order_depends_target_DSAVisualization
   FLAGS = /DWIN32 /D_WINDOWS /W3 /GR /EHsc /MDd /Zi /Ob0 /Od /RTC1 -std:c++17
-  INCLUDES = -I"C:\Users\MY PC\ProjectDSA\CS163-DSAVisualization\raylib"
+  INCLUDES = -I"C:\Users\MY PC\ProjectDSA\../..\raylib"
   OBJECT_DIR = CMakeFiles\DSAVisualization.dir
   OBJECT_FILE_DIR = CMakeFiles\DSAVisualization.dir\source
   TARGET_COMPILE_PDB = CMakeFiles\DSAVisualization.dir\
@@ -99,7 +99,7 @@ build CMakeFiles\DSAVisualization.dir\source\Form.cpp.obj: CXX_COMPILER__DSAVisu
 
 build CMakeFiles\DSAVisualization.dir\source\General.cpp.obj: CXX_COMPILER__DSAVisualization_unscanned_Debug C$:\Users\MY$ PC\source\repos\Huy\source\General.cpp || cmake_object_order_depends_target_DSAVisualization
   FLAGS = /DWIN32 /D_WINDOWS /W3 /GR /EHsc /MDd /Zi /Ob0 /Od /RTC1 -std:c++17
-  INCLUDES = -I"C:\Users\MY PC\ProjectDSA\CS163-DSAVisualization\raylib"
+  INCLUDES = -I"C:\Users\MY PC\ProjectDSA\../..\raylib"
   OBJECT_DIR = CMakeFiles\DSAVisualization.dir
   OBJECT_FILE_DIR = CMakeFiles\DSAVisualization.dir\source
   TARGET_COMPILE_PDB = CMakeFiles\DSAVisualization.dir\
@@ -107,7 +107,7 @@ build CMakeFiles\DSAVisualization.dir\source\General.cpp.obj: CXX_COMPILER__DSAV
 
 build CMakeFiles\DSAVisualization.dir\source\main.cpp.obj: CXX_COMPILER__DSAVisualization_unscanned_Debug C$:\Users\MY$ PC\source\repos\Huy\source\main.cpp || cmake_object_order_depends_target_DSAVisualization
   FLAGS = /DWIN32 /D_WINDOWS /W3 /GR /EHsc /MDd /Zi /Ob0 /Od /RTC1 -std:c++17
-  INCLUDES = -I"C:\Users\MY PC\ProjectDSA\CS163-DSAVisualization\raylib"
+  INCLUDES = -I"C:\Users\MY PC\ProjectDSA\../..\raylib"
   OBJECT_DIR = CMakeFiles\DSAVisualization.dir
   OBJECT_FILE_DIR = CMakeFiles\DSAVisualization.dir\source
   TARGET_COMPILE_PDB = CMakeFiles\DSAVisualization.dir\
@@ -115,7 +115,7 @@ build CMakeFiles\DSAVisualization.dir\source\main.cpp.obj: CXX_COMPILER__DSAVisu
 
 build CMakeFiles\DSAVisualization.dir\source\Menu.cpp.obj: CXX_COMPILER__DSAVisualization_unscanned_Debug C$:\Users\MY$ PC\source\repos\Huy\source\Menu.cpp || cmake_object_order_depends_target_DSAVisualization
   FLAGS = /DWIN32 /D_WINDOWS /W3 /GR /EHsc /MDd /Zi /Ob0 /Od /RTC1 -std:c++17
-  INCLUDES = -I"C:\Users\MY PC\ProjectDSA\CS163-DSAVisualization\raylib"
+  INCLUDES = -I"C:\Users\MY PC\ProjectDSA\../..\raylib"
   OBJECT_DIR = CMakeFiles\DSAVisualization.dir
   OBJECT_FILE_DIR = CMakeFiles\DSAVisualization.dir\source
   TARGET_COMPILE_PDB = CMakeFiles\DSAVisualization.dir\
@@ -123,7 +123,7 @@ build CMakeFiles\DSAVisualization.dir\source\Menu.cpp.obj: CXX_COMPILER__DSAVisu
 
 build CMakeFiles\DSAVisualization.dir\source\TextBox.cpp.obj: CXX_COMPILER__DSAVisualization_unscanned_Debug C$:\Users\MY$ PC\source\repos\Huy\source\TextBox.cpp || cmake_object_order_depends_target_DSAVisualization
   FLAGS = /DWIN32 /D_WINDOWS /W3 /GR /EHsc /MDd /Zi /Ob0 /Od /RTC1 -std:c++17
-  INCLUDES = -I"C:\Users\MY PC\ProjectDSA\CS163-DSAVisualization\raylib"
+  INCLUDES = -I"C:\Users\MY PC\ProjectDSA\../..\raylib"
   OBJECT_DIR = CMakeFiles\DSAVisualization.dir
   OBJECT_FILE_DIR = CMakeFiles\DSAVisualization.dir\source
   TARGET_COMPILE_PDB = CMakeFiles\DSAVisualization.dir\
@@ -131,7 +131,7 @@ build CMakeFiles\DSAVisualization.dir\source\TextBox.cpp.obj: CXX_COMPILER__DSAV
 
 build CMakeFiles\DSAVisualization.dir\source\TextButton.cpp.obj: CXX_COMPILER__DSAVisualization_unscanned_Debug C$:\Users\MY$ PC\source\repos\Huy\source\TextButton.cpp || cmake_object_order_depends_target_DSAVisualization
   FLAGS = /DWIN32 /D_WINDOWS /W3 /GR /EHsc /MDd /Zi /Ob0 /Od /RTC1 -std:c++17
-  INCLUDES = -I"C:\Users\MY PC\ProjectDSA\CS163-DSAVisualization\raylib"
+  INCLUDES = -I"C:\Users\MY PC\ProjectDSA\../..\raylib"
   OBJECT_DIR = CMakeFiles\DSAVisualization.dir
   OBJECT_FILE_DIR = CMakeFiles\DSAVisualization.dir\source
   TARGET_COMPILE_PDB = CMakeFiles\DSAVisualization.dir\
@@ -139,7 +139,7 @@ build CMakeFiles\DSAVisualization.dir\source\TextButton.cpp.obj: CXX_COMPILER__D
 
 build CMakeFiles\DSAVisualization.dir\source\TextureButton.cpp.obj: CXX_COMPILER__DSAVisualization_unscanned_Debug C$:\Users\MY$ PC\source\repos\Huy\source\TextureButton.cpp || cmake_object_order_depends_target_DSAVisualization
   FLAGS = /DWIN32 /D_WINDOWS /W3 /GR /EHsc /MDd /Zi /Ob0 /Od /RTC1 -std:c++17
-  INCLUDES = -I"C:\Users\MY PC\ProjectDSA\CS163-DSAVisualization\raylib"
+  INCLUDES = -I"C:\Users\MY PC\ProjectDSA\../..\raylib"
   OBJECT_DIR = CMakeFiles\DSAVisualization.dir
   OBJECT_FILE_DIR = CMakeFiles\DSAVisualization.dir\source
   TARGET_COMPILE_PDB = CMakeFiles\DSAVisualization.dir\
@@ -147,7 +147,7 @@ build CMakeFiles\DSAVisualization.dir\source\TextureButton.cpp.obj: CXX_COMPILER
 
 build CMakeFiles\DSAVisualization.dir\source\Colors.cpp.obj: CXX_COMPILER__DSAVisualization_unscanned_Debug C$:\Users\MY$ PC\source\repos\Huy\source\Colors.cpp || cmake_object_order_depends_target_DSAVisualization
   FLAGS = /DWIN32 /D_WINDOWS /W3 /GR /EHsc /MDd /Zi /Ob0 /Od /RTC1 -std:c++17
-  INCLUDES = -I"C:\Users\MY PC\ProjectDSA\CS163-DSAVisualization\raylib"
+  INCLUDES = -I"C:\Users\MY PC\ProjectDSA\../..\raylib"
   OBJECT_DIR = CMakeFiles\DSAVisualization.dir
   OBJECT_FILE_DIR = CMakeFiles\DSAVisualization.dir\source
   TARGET_COMPILE_PDB = CMakeFiles\DSAVisualization.dir\
@@ -155,7 +155,7 @@ build CMakeFiles\DSAVisualization.dir\source\Colors.cpp.obj: CXX_COMPILER__DSAVi
 
 build CMakeFiles\DSAVisualization.dir\source\Mode.cpp.obj: CXX_COMPILER__DSAVisualization_unscanned_Debug C$:\Users\MY$ PC\source\repos\Huy\source\Mode.cpp || cmake_object_order_depends_target_DSAVisualization
   FLAGS = /DWIN32 /D_WINDOWS /W3 /GR /EHsc /MDd /Zi /Ob0 /Od /RTC1 -std:c++17
-  INCLUDES = -I"C:\Users\MY PC\ProjectDSA\CS163-DSAVisualization\raylib"
+  INCLUDES = -I"C:\Users\MY PC\ProjectDSA\../..\raylib"
   OBJECT_DIR = CMakeFiles\DSAVisualization.dir
   OBJECT_FILE_DIR = CMakeFiles\DSAVisualization.dir\source
   TARGET_COMPILE_PDB = CMakeFiles\DSAVisualization.dir\

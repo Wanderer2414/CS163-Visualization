@@ -14,7 +14,7 @@
 
 class MenuStart {
 public:
-    MenuStart(FormSetting form_setting, const Vector2& windowSize);
+    MenuStart(FormSetting* form_setting, const Vector2& windowSize);
     int             getMode() const;
     virtual int     run();
     virtual void    handle(),
@@ -22,7 +22,7 @@ public:
                     
     virtual void    setMode(const int& mode),
                     setSizeIndex(const int& index);
-    FormSetting     form_setting;
+    FormSetting     *form_setting;
     int             getWindowSizeIndex();
 private:
     int             old_mode = -1;
@@ -33,6 +33,7 @@ private:
     ImageTab        image_list;
     std::vector<Controller*> children;
     Vector2         m_windowSize;
+    void            update();
 };
 
 #endif

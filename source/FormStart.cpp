@@ -2,17 +2,16 @@
 #include "../include/IncludePath.h"
 #include "../include/General.h"
 extern Vector2 WindowSize;
-MenuStart::MenuStart(FormSetting f_setting, const Vector2& windowSize) :
+MenuStart::MenuStart(FormSetting* f_setting, const Vector2& windowSize) :
     form_setting(f_setting),
     m_windowSize(windowSize),
     Title(&title_setting),
-    Start(&form_setting,&form_setting),
-    Setting(&form_setting, &form_setting),
-    AboutUs(&form_setting ,&form_setting),
-    Exit(&form_setting,&form_setting),
+    Start(form_setting,form_setting),
+    Setting(form_setting, form_setting),
+    AboutUs(form_setting ,form_setting),
+    Exit(form_setting,form_setting),
     setting_box(form_setting)
 {
-
     children.push_back(&Start);
     children.push_back(&Setting);
     children.push_back(&Exit);
@@ -44,7 +43,7 @@ MenuStart::MenuStart(FormSetting f_setting, const Vector2& windowSize) :
     image_list.push(3, HT2);
     image_list.push(3, HT3);
     
-    title_setting = form_setting;
+    title_setting = *form_setting;
     title_setting.font = GetFontDefault();
     title_setting.font_size = TransY(50);
     Title.setPosition(0, -120);
@@ -96,7 +95,7 @@ int MenuStart::run() {
         handle();
         for (auto i : children) i->handle();
         BeginDrawing();
-        ClearBackground(form_setting.background_color);
+        ClearBackground(form_setting->background_color);
         draw();
         EndDrawing();
         if (!setting_box.isHovered() && Start.getProgress()<0.05) return 1;
@@ -106,12 +105,25 @@ int MenuStart::run() {
     };
     return 0;
 };
+void MenuStart::update() {
+    Start.button_setting = form_setting;
+    Start.text_setting = form_setting;
+    Setting.button_setting = form_setting;
+    Setting.text_setting = form_setting;
+    AboutUs.button_setting = form_setting;
+    AboutUs.text_setting = form_setting;
+    Exit.button_setting = form_setting;
+    Exit.text_setting = form_setting;
+    title_setting.color = form_setting->color;
+    for (auto i:children) i->update();
+}
 void MenuStart::handle() {
     if (old_mode != setting_box.getMode()) {
         old_mode = setting_box.getMode();
-        if (old_mode) form_setting = DarkTheme;
-        else form_setting = LightTheme;
-        title_setting.color = form_setting.color;
+        update();
+    }
+    if (setting_box.isSubmit()) {
+        update();
     }
     if (!setting_box.isHovered() && (Start.isPressed() || Exit.isPressed())) {
         Start.moveNext();
