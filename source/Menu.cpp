@@ -17,14 +17,14 @@ Menu::Menu(FormSetting f_setting, const Vector2& windowSize) :
     children.push_back(&MenuDSA);
 
     BSTForm.setSize(m_windowSize.x/2-10, m_windowSize.y/2-70);
-    BSTForm.setButtonStage(0, form_setting.AVL0, form_setting.AVL3_hovered);    
+    BSTForm.setButtonStage(0, form_setting.AVL1, form_setting.AVL3_hovered);    
     BSTForm.setPosition(-BSTForm.getSize().x-100, 100);
     BSTForm.add_vertex({-BSTForm.getSize().x-100, 100});
     BSTForm.add_vertex({0, 100});
     BSTForm.moveNext();
 
     GraphForm.setSize(m_windowSize.x/2-10, m_windowSize.y/2-70);
-    GraphForm.setButtonStage(0, form_setting.Graph0, form_setting.Graph2_hovered);
+    GraphForm.setButtonStage(0, form_setting.Graph1, form_setting.Graph2_hovered);
     GraphForm.setPosition(m_windowSize.x+100, 100);
     GraphForm.add_vertex({m_windowSize.x+100, 100});
     GraphForm.add_vertex({m_windowSize.x/2+10, 100});
