@@ -23,10 +23,13 @@ FormSetting LightTheme = {
 
     source"/asset/images/dark/back-normal.png",
     source"/asset/images/dark/back-selected.png",
+
     source"/asset/images/dark/home-normal.png",
     source"/asset/images/dark/home-selected.png",
+
     source"/asset/images/dark/menu-avl-normal.png",
     source"/asset/images/menu-avl-selected.png",
+    
     source"/asset/images/dark/menu-maxheap-normal.png",
     source"/asset/images/dark/menu-maxheap-selected.png",
     source"/asset/images/dark/menu-graph-normal.png",
@@ -106,16 +109,22 @@ FormSetting DarkTheme = {
     source"/asset/images/back-selected.png",
     source"/asset/images/home-normal.png",
     source"/asset/images/home-selected.png",
+
     source"/asset/images/menu-avl-normal.png",
     source"/asset/images/menu-avl-selected.png",
+
     source"/asset/images/menu-maxheap-normal.png",
     source"/asset/images/menu-maxheap-selected.png",
+
     source"/asset/images/menu-graph-normal.png",
     source"/asset/images/menu-graph-selected.png",
+
     source"/asset/images/menu-hash-normal.png",
     source"/asset/images/menu-hash-selected.png",
+
     source"/asset/images/play-normal.png",
     source"/asset/images/play-selected.png",
+
     source"/asset/images/pause-normal.png",
     source"/asset/images/pause-selected.png",
     source"/asset/images/replay-normal.png",

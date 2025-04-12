@@ -80,7 +80,7 @@ void Menu::handle() {
     zoom.handle();
     for (int i = 0; i<children.size() ;i++) {
         children[i]->handle();
-        if (zoom.host == children[i]) {
+        if (zoom.host == children[i] && i) {
             swap(children[i],children[0]);
         }
     }
@@ -121,6 +121,8 @@ void Menu::handle() {
     }
 }
 void Menu::draw() {
-    for (int i = children.size()-1; i>=0; i--) children[i]->draw();
+    for (int i = children.size()-1; i>=0; i--) {
+        children[i]->draw();
+    }
     zoom.draw();
 }

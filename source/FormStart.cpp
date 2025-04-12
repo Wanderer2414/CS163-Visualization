@@ -173,7 +173,10 @@ void MenuStart::handle() {
 void MenuStart::draw() {
     // Draw Title
     // Calculate the position to center the text
-    for (auto i : children) i->draw();
+    for (auto i : children) {
+        cout << i->getPosition().x << " " << i->getPosition().y << " " << i->getSize().x << " " << i->getSize().y << endl;
+        i->draw();
+    }
 
 }
 void MenuStart::setMode(const int& mode) {
