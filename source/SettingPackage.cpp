@@ -78,7 +78,7 @@ FormSetting LightTheme = {
     source"/asset/images/dark/SLL1.png"
     source"/asset/images/dark/SLL2.png"
     source"/asset/images/dark/SLL3.png"
-    source"/asset/images/dark/SLL2_hovered.png"
+    source"/asset/images/dark/SLL2_hovered.png"git 
 };
 
 FormSetting DarkTheme = {
