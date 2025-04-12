@@ -6,7 +6,8 @@ MenuStart::MenuStart(FormSetting f_setting, const Vector2& windowSize) :
     Start(&form_setting,&form_setting),
     Setting(&form_setting, &form_setting),
     AboutUs(&form_setting ,&form_setting),
-    Exit(&form_setting,&form_setting)
+    Exit(&form_setting,&form_setting),
+    setting_box(form_setting)
 {
     
     children.push_back(&Start);
@@ -59,9 +60,10 @@ int MenuStart::run() {
             ClearBackground(form_setting.background_color);
             draw();
         EndDrawing();
-        if (Start.getVertexDone()==0) return 1;
+        if (!setting_box.isHovered() && Start.getVertexDone()==0) return 1;
         if (!setting_box.isHovered() && setting_box.isEnd() && Setting.isPressed()) setting_box.open();
-        if (Exit.getVertexDone() == 0) return -1;
+        if (!setting_box.isHovered() && Exit.isPressed()) return -1;
+        if (setting_box.isSizeChanged()) return 0;
     };
     return 0;
 };
@@ -91,4 +93,10 @@ void MenuStart::draw() {
 }
 void MenuStart::setMode(const int& mode) {
     setting_box.setMode(mode);
+}
+void MenuStart::setSizeIndex(const int& index) {
+    setting_box.setWindowSize(index);
+}
+int MenuStart::getWindowSizeIndex() {
+    return setting_box.getWindowSizeIndex();
 }
