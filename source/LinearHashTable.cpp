@@ -59,7 +59,7 @@ HT::HashTable::HashTable(const int& index, FormSetting f_setting, const Vector2&
     size_label.setText("Size: ");
     size_label.setAlignText(Label::Left);
 
-    random_size_button.setButtonStage(0, form_setting.Rand, form_setting.Rand);
+    random_size_button.setButtonStage(0, form_setting.Rand, form_setting.Rand_hovered);
     random_size_button.setPosition(275, 50);
     random_size_button.setSize(30, 30);
 

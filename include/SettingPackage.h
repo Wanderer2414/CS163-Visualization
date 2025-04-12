@@ -59,6 +59,7 @@ public:
     const char* DoubleArrowLeft_Hovered;
     const char* sun;
     const char* Rand;
+    const char* Rand_hovered;
     const char* TitleMenu;
     const char* match_cursor_icon;
     const char* match_filled_icon;

@@ -122,7 +122,7 @@ Form::Form(const int& index, FormSetting f_setting, const Vector2& window_size) 
 
     random_create.setPosition(270, 5);
     random_create.setSize(30, 30);
-    random_create.setButtonStage(0, form_setting.Rand,form_setting.Rand);
+    random_create.setButtonStage(0, form_setting.Rand,form_setting.Rand_hovered);
 
     m_drop_box.setVisible(false);
     m_drop_box.setPosition(create_textbox.getPosition().x,create_textbox.getPosition().y);
@@ -137,7 +137,7 @@ Form::Form(const int& index, FormSetting f_setting, const Vector2& window_size) 
 
     random_insert.setPosition(155, 5);
     random_insert.setSize(40, 40);
-    random_insert.setButtonStage(0, form_setting.Rand, form_setting.Rand);
+    random_insert.setButtonStage(0, form_setting.Rand, form_setting.Rand_hovered);
 
     insert_textbox.setPosition(5, 5);
     insert_textbox.setSize(145,40);
@@ -157,7 +157,7 @@ Form::Form(const int& index, FormSetting f_setting, const Vector2& window_size) 
 
     random_update_choice.setPosition(305, 5);
     random_update_choice.setSize(40, 40);
-    random_update_choice.setButtonStage(0, form_setting.Rand, form_setting.Rand);
+    random_update_choice.setButtonStage(0, form_setting.Rand, form_setting.Rand_hovered);
 
     update_new_value_label.setPosition(5, 50);
     update_new_value_label.setSize(150, 40);
@@ -170,7 +170,7 @@ Form::Form(const int& index, FormSetting f_setting, const Vector2& window_size) 
     
     random_update_value.setPosition(305, 50);
     random_update_value.setSize(40, 40);
-    random_update_value.setButtonStage(0, form_setting.Rand, form_setting.Rand);
+    random_update_value.setButtonStage(0, form_setting.Rand, form_setting.Rand_hovered);
 
     update_button.setPosition(5, 95);
     update_button.setSize(340,40);
@@ -185,7 +185,7 @@ Form::Form(const int& index, FormSetting f_setting, const Vector2& window_size) 
 
     random_search.setPosition(155, 5);
     random_search.setSize(40, 40);
-    random_search.setButtonStage(0, form_setting.Rand, form_setting.Rand);
+    random_search.setButtonStage(0, form_setting.Rand, form_setting.Rand_hovered);
 
     search_button.setPosition(200, 5);
     search_button.setSize(145,40);
@@ -200,7 +200,7 @@ Form::Form(const int& index, FormSetting f_setting, const Vector2& window_size) 
 
     random_remove.setPosition(155, 5);
     random_remove.setSize(40, 40);
-    random_remove.setButtonStage(0, form_setting.Rand, form_setting.Rand);
+    random_remove.setButtonStage(0, form_setting.Rand, form_setting.Rand_hovered);
     
     remove_textbox.setPosition(5, 5);
     remove_textbox.setSize(145, 40);

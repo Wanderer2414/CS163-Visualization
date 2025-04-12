@@ -135,7 +135,7 @@ Graph::Graph(const int& index, FormSetting f_setting, const Vector2& window_size
 
     random_Dijkstra_button.setPosition(110, 5);
     random_Dijkstra_button.setSize(40, 40);
-    random_Dijkstra_button.setButtonStage(0, form_setting.Rand, form_setting.Rand);
+    random_Dijkstra_button.setButtonStage(0, form_setting.Rand, form_setting.Rand_hovered);
 
     Dijkstra_button.setPosition(155, 5);
     Dijkstra_button.setSize(100, 40);
@@ -146,7 +146,7 @@ Graph::Graph(const int& index, FormSetting f_setting, const Vector2& window_size
 
     random_prim_button.setPosition(110, 5);
     random_prim_button.setSize(40, 40);
-    random_prim_button.setButtonStage(0, form_setting.Rand, form_setting.Rand);
+    random_prim_button.setButtonStage(0, form_setting.Rand, form_setting.Rand_hovered);
 
     prim_button.setPosition(155, 5);
     prim_button.setSize(100, 40);
@@ -157,7 +157,7 @@ Graph::Graph(const int& index, FormSetting f_setting, const Vector2& window_size
 
     random_kruskal_button.setPosition(110, 5);
     random_kruskal_button.setSize(40, 40);
-    random_kruskal_button.setButtonStage(0, form_setting.Rand, form_setting.Rand);
+    random_kruskal_button.setButtonStage(0, form_setting.Rand, form_setting.Rand_hovered);
 
     kruskal_button.setPosition(155, 5);
     kruskal_button.setSize(100, 40);
@@ -245,7 +245,7 @@ Graph::Graph(const int& index, FormSetting f_setting, const Vector2& window_size
 
     random_vertex_button.setPosition(110, 40);
     random_vertex_button.setSize(30, 30);
-    random_vertex_button.setButtonStage(0, form_setting.Rand, form_setting.Rand);
+    random_vertex_button.setButtonStage(0, form_setting.Rand, form_setting.Rand_hovered);
 
     edge_label.setText("E: ");
     edge_label.setPosition(160, 35);
@@ -257,7 +257,7 @@ Graph::Graph(const int& index, FormSetting f_setting, const Vector2& window_size
 
     random_edge_button.setPosition(265, 40);
     random_edge_button.setSize(30, 30);
-    random_edge_button.setButtonStage(0, form_setting.Rand, form_setting.Rand);
+    random_edge_button.setButtonStage(0, form_setting.Rand, form_setting.Rand_hovered);
     
     create_textbox.setPosition(5, 80);
     create_button.setPosition(5, 190);
