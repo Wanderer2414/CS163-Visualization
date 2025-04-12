@@ -9,7 +9,8 @@ public:
                     draw()      override,
                     setSize(const float& x, const float& y) override,
                     setPosition(const float &x, const float &y) override,
-                    push(const int& index, const string& str);
+                    push(GIF* gif),
+                    clearGifs();
     Vector2         getPosition() const override;
     ~ImageTab();
 private:

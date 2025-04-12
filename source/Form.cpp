@@ -448,7 +448,7 @@ void Form::handle() {
     if (search_button.isPressed() || search_textbox.isEnter()) {
         search(search_textbox.getText());
     }
-    if (update_button.isPressed()) {
+    if (update_button.isPressed() || update_textbox_value.isEnter()) {
         update(update_textbox_choice.getText(), update_textbox_value.getText());
     }
     if (remove_button.isPressed() || remove_textbox.isEnter()) {

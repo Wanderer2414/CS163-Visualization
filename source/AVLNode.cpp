@@ -63,17 +63,6 @@ void AVLNode::end_color(const float& duration) {
 }
 void AVLNode::draw() {
     if (button_setting && text_setting) {
-        Color bcolor = button_setting->normal_color;
-        if (m_is_focus) bcolor = button_setting->click_color;
-        else if (m_is_hovered) bcolor = button_setting->hover_color;
-            
-        DrawEllipse(m_position.x, m_position.y, m_size.x / 2, m_size.y / 2, bcolor);
-
-        DrawTextEx(text_setting->font, to_string(m_value).c_str(), m_text_position, text_setting->font_size, text_setting->spacing, text_setting->color);
-        Vector2 pos = m_position;
-        pos.x += m_size.x/2;
-        pos.y -= m_size.y/2 + text_setting->font_size/1.5;
-        DrawTextEx(text_setting->font, to_string(height).c_str(), pos, text_setting->font_size/1.5, text_setting->spacing, text_setting->color);
 
         if (parent) {
             Vector2 pos = m_position, delta = pos-parent->getPosition();
@@ -93,13 +82,13 @@ void AVLNode::draw() {
                     } else {
                         m_point = m_position-radius;
                         lcolor = color;
-                        DrawRing(m_position, m_size.x / 2 - 4 , m_size.x/2, 0, 360, 60, color);
+                        DrawEllipse(m_position.x, m_position.y, m_size.x / 2, m_size.y / 2, color);
                     }
                 } else {
                     if (length*percent > m_size.x) {
                         m_point = m_position+radius-delta*percent;
                     }
-                    DrawRing(m_position, m_size.x / 2 - 4 , m_size.x/2, 0, 360, 60, button_setting->click_color);
+                    DrawEllipse(m_position.x, m_position.y, m_size.x / 2, m_size.y / 2, button_setting->click_color);
                 }
 
                 DrawLineEx(parent->getPosition()+radius, m_point, 4, color);
@@ -112,11 +101,22 @@ void AVLNode::draw() {
         }
         else {
             if (!is_reverse) {
-                DrawRing(m_position, m_size.x / 2 - 4 , m_size.x/2, 0, 360, 30, color);
+                DrawEllipse(m_position.x, m_position.y, m_size.x / 2, m_size.y / 2, color);
             } else {
-                DrawRing(m_position, m_size.x / 2 - 4 , m_size.x/2, 0, 360, 30, button_setting->click_color);
+                DrawEllipse(m_position.x, m_position.y, m_size.x / 2, m_size.y / 2, button_setting->click_color);
             }
         }
+
+        Color bcolor = button_setting->normal_color;
+        if (m_is_focus) bcolor = button_setting->click_color;
+        else if (m_is_hovered) bcolor = button_setting->hover_color;
+        DrawEllipse(m_position.x, m_position.y, m_size.x / 2 - 4, m_size.y / 2 - 4, bcolor);
+
+        DrawTextEx(text_setting->font, to_string(m_value).c_str(), m_text_position, text_setting->font_size, text_setting->spacing, text_setting->color);
+        Vector2 pos = m_position;
+        pos.x += m_size.x/2;
+        pos.y -= m_size.y/2 + text_setting->font_size/1.5;
+        DrawTextEx(text_setting->font, to_string(height).c_str(), pos, text_setting->font_size/1.5, text_setting->spacing, text_setting->color);
     }
 }
 

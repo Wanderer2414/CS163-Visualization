@@ -15,6 +15,11 @@ int Move::size() const {
 float Move::getProgress() const {
     return progress;
 }
+void Move::clearVertices() {
+    progress = 0;
+    pointer = 0;
+    m_vertices.clear();
+}
 void Move::handle() {
     if (progress != pointer) {
         Vector2 delta = m_vertices[pointer] - getPosition();

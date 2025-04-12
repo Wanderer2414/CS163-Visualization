@@ -1,46 +1,82 @@
 #include "../include/LinearHashTable.h"
 #include "../include/General.h"
-#include "../include/IncludePath.h"
+#include "../include/RaylibExtra.h"
 #include <algorithm>
+#include <ctime>
+#include <limits>
+#include <raylib.h>
 
-HT::Node::Node(): TextButton(0, 0) {
+HT::Node::Node(ButtonSetting* b_setting, TextSetting* t_setting, Camera2D& c): 
+    button_setting(b_setting), text_setting(t_setting), camera(c) {
     m_value = 0;
     m_index = 0;
     is_animating = false;
-    anim_color = WHITE;
+    m_is_hovered = m_is_pressed = m_is_focus = false;
+    percent = 1;
+}
+bool HT::Node::isFocus() const {
+    return m_is_focus;
 }
 int HT::Node::getValue() const {
     return m_value;
 };
+Vector2 HT::Node::getPosition() const { 
+    return Controller::getPosition();
+}
 void HT::Node::setIndex(const int& index) {
     m_index = index;
+    index_text = to_string(index);
+    m_index_position = m_position + m_size/2 - MeasureSmallText(text_setting, index_text)/2;
+    m_index_position.y -= m_size.y/2 + 10;
 }
 void HT::Node::setValue(const int& value) {
     m_value = value;
-    setText(std::to_string(value));
+    text = std::to_string(value);
+    m_text_size = MeasureText(text_setting, text);
+    setSize(max(m_text_size.x + 10, 50.f), max(m_text_size.y + 10, 50.f));
+    percent = 0.1;
+    m_text_position = m_position + m_size/2 - m_text_size*percent/2;
+}
+void HT::Node::setPosition(const float &x, const float &y) {
+    m_text_position = m_text_position - m_position + Vector2({x, y});
+    m_index_position = m_index_position - m_position + Vector2({x, y});
+    Controller::setPosition(x, y);
+}
+void HT::Node::setSize(const float &width, const float &height) {
+    m_index_position = m_index_position - m_size/2 + Vector2({width, height})/2;
+    m_text_position = m_text_position - m_size/2 + Vector2({width, height})/2;
+    Controller::setSize(width, height);
+}
+void HT::Node::update() {
+    
 }
 void HT::Node::draw() {
-    Color curr;
-    if (is_animating) curr = anim_color;
-    else curr = button_setting->normal_color;
-
-    if (button_setting) DrawRectangleRounded({ m_position.x, m_position.y, m_size.x, m_size.y }, button_setting->roundness, button_setting->segment, curr);
+    if (is_animating) DrawRectangleRounded(button_setting, m_position, m_size, button_setting->hightlight_color1);
+    else if (m_is_hovered) DrawRectangleRoundedHover(button_setting, m_position, m_size);
+    else if (m_is_focus) DrawRectangleRoundedClick(button_setting, m_position, m_size); 
+    else DrawRectangleRoundedNormal(button_setting, m_position, m_size);
 
     if (text_setting) {
-        DrawTextEx(text_setting->font, m_text.c_str(), m_text_position, text_setting->font_size, text_setting->spacing, text_setting->color);
-        
-        Vector2 index_pos = m_position;
-        float x = MeasureTextEx(text_setting->font, std::to_string(m_index).c_str(), text_setting->font_size/1.7, text_setting->spacing).x;
-        index_pos.x = index_pos.x + m_size.x / 2 - x / 2;
-        index_pos.y -= text_setting->font_size/1.7 + 5;
-        DrawTextEx(text_setting->font, std::to_string(m_index).c_str(), index_pos, text_setting->font_size / 1.7, text_setting->spacing, text_setting->color);
+        DrawText(text_setting, m_text_position, text, text_setting->font_size*percent);
+        DrawSmallText(text_setting, m_index_position, index_text);
     }
     else {
         std::cerr << "Error: text_setting is null!" << std::endl;
     }
 }
 void HT::Node::handle() {
-    TextButton::handle();
+    SlowMotion::handle();
+    m_is_hovered = CheckCollisionPointRec(TransToGlobalPoint(camera,GetMousePosition()), { m_position.x, m_position.y, m_size.x, m_size.y });
+    m_is_pressed = m_is_hovered && IsMouseButtonPressed(MOUSE_BUTTON_LEFT);
+    if (IsMouseButtonPressed(MOUSE_LEFT_BUTTON)) {
+        m_is_focus = m_is_pressed;
+    }
+    if (percent < 1) {
+        m_text_position = m_text_position + m_text_size*percent/2;
+        percent *= 1.1;
+        if (percent > 1) percent = 1;
+        m_text_position = m_text_position - m_text_size*percent/2;
+    }
 }
 
 HT::HashTable::HashTable(const int& index, FormSetting f_setting, const Vector2& window_size) : 
@@ -48,9 +84,7 @@ HT::HashTable::HashTable(const int& index, FormSetting f_setting, const Vector2&
     size_label(&form_setting),
     m_memory_sz_textBox(&form_setting, &form_setting) {
         
-    m_node_size = 50;
-    m_node_spacing = 30;
-    max_size = 0;
+    m_node_spacing = 10;
 
     m_memory_sz_textBox.setPosition(95, 45);
     m_memory_sz_textBox.setSize(170, 40);
@@ -76,19 +110,23 @@ HT::HashTable::HashTable(const int& index, FormSetting f_setting, const Vector2&
     create_box.reLocate(&create_button);
 
     m_memory_sz_textBox.setText(std::to_string(50));
-    setMemorySize(50);
+    true_width = m_workspace.width/m_camera.zoom;
+    min_width = 0, max_width = numeric_limits<float>::max();
 
     m_camera.offset.y = m_workspace.y + 20;
+    line = 0;
 }
 void HT::HashTable::setMemorySize(const int& sz) {
-    m_memory.resize(sz);
-    for (int i = 0; i < sz; i++) {
-        m_memory[i].button_setting = &form_setting;
-        m_memory[i].text_setting = &form_setting;
-        m_memory[i].setSize(m_node_size, m_node_size);
-        m_memory[i].setValue(0);
-        m_memory[i].setIndex(i);
+    int old_size = m_memory.size();
+    if (sz > old_size) {
+        for (int i = old_size; i < sz; i++) {
+            m_memory.push_back(Node(&form_setting, &form_setting, m_camera));
+            m_memory.back().setSize(50, 50);
+            m_memory.back().setValue(0);
+            m_memory.back().setIndex(i);
+        }
     }
+    reLocate();
 }
 void HT::HashTable::draw() {
     BeginMode2D(m_camera);
@@ -100,41 +138,67 @@ void HT::HashTable::draw() {
 }
 string HT::HashTable::RandomCreateSize(int _max, int _min)
 {
-    static bool seeded = false;
-    if (!seeded) {
-        std::srand(std::time(nullptr));
-        seeded = true;
-    }
+    srand(clock());
     return std::to_string(_min + std::rand() % (_max - _min + 1));
+}
+void HT::HashTable::reLocate(const bool& visual) {
+    float width = 0;
+    line = form_setting.small_font_size + 10;
+    min_width = 0, max_width = numeric_limits<float>::max();
+    for (int i = 0; i<m_memory.size(); i++) {
+        if (width + m_memory[i].getSize().x > true_width) {
+            min_width = max(width, min_width);
+            if (width + m_memory[i].getSize().x > min_width) max_width = min(width + m_memory[i].getSize().x, max_width);
+            width = 0;
+            line += form_setting.small_font_size + 10 + m_memory[i].getSize().y;
+        }
+    
+        if (m_memory[i].getPosition() != Vector2({width, line})) {
+            if (visual) {
+                if (m_memory[i].getPosition().y != line) m_memory[i].setPosition(0, line);
+                m_memory[i].setDuration(getSpeed()/2);
+                m_memory[i].setSlowPosition(width, line);
+            }
+            else m_memory[i].setPosition(width, line);
+        }
+        width += m_memory[i].getSize().x + m_node_spacing;
+    }
+    min_width = max(width, min_width);
+    if (min_width > max_width) max_width = min(width, max_width);
+    line += form_setting.small_font_size + 10 + m_memory.back().getSize().y;
 }
 void HT::HashTable::handle() {
     Form::handle();
-    for (auto& i:m_memory) i.handle();
+    int chosen = -1;
+    for (int i = 0; i<m_memory.size(); i++) {
+        m_memory[i].handle();
+        if (m_memory[i].isFocus()) chosen = i;
+    }
+    if (chosen != -1) {
+        if (IsKeyDown(KEY_DELETE)) {
+            main_box_show();
+            option_box.select(4);
+            remove_textbox.setText(to_string(m_memory[chosen].getValue()));
+            remove_textbox.setFocus(true);
+        }
+        else if (IsKeyDown(KEY_F2)) {
+            main_box_show();
+            option_box.select(2);
+            update_textbox_choice.setText(to_string(m_memory[chosen].getValue()));
+            update_textbox_value.setFocus(true);
+        }
+    }
     
     m_camera.offset.x = m_workspace.x + 10;
+    m_camera.offset.y = clamp(m_camera.offset.y, m_workspace.y + m_workspace.height - line*m_camera.zoom, m_workspace.y);
+
     if (random_size_button.isPressed()) {
         m_memory_sz_textBox.setText(RandomCreateSize(100, 10));
     }
-    if (m_memory_sz_textBox.isEnter() || create_button.isPressed()) {
-        setMemorySize(to_int(m_memory_sz_textBox.getText()));
-    }
     m_camera.zoom = std::clamp(m_camera.zoom, 0.1f, 10.f);
-    int count = m_workspace.width / m_camera.zoom / (m_node_size + m_node_spacing);
-
-    if (count != max_size || m_memory_sz_textBox.isEnter() || create_button.isPressed()) {
-        if (m_memory_sz_textBox.getText() == "") {
-            setMemorySize(50);
-            m_memory_sz_textBox.setText(std::to_string(50));
-        }
-        max_size = count;
-        int i = 0;
-        int y = 0;
-        while (i < m_memory.size()) {
-            int offset = i;
-            for (; i < m_memory.size() && (i - offset) < count; i++)
-                m_memory[i].setPosition((m_node_size + m_node_spacing) * (i - offset), y);
-            y += m_node_size + form_setting.font_size + 10;
-        }
+    true_width = m_workspace.width/m_camera.zoom;
+    if (true_width < min_width || true_width>max_width) {
+        reLocate(false);
     }
 };
 HT::HashTable::~HashTable() {
@@ -144,6 +208,7 @@ int HT::HashTable::index(const int& value) {
     return value % m_memory.size();
 }
 void HT::HashTable::add(const vector<std::string>& data) {
+    setMemorySize(to_int(m_memory_sz_textBox.getText()));
     int cnt = 0;
     for (auto& i:data) {
         if (cnt > m_memory.size()) return;
@@ -466,34 +531,27 @@ void HT::HashTable::FetchNextCommand(const std::vector<float>& command) {
     }
                 break;
     case _choose: {
-        m_memory[(int)command[1]].anim_color = RED;
         m_memory[(int)command[1]].is_animating = true;
         setDuration(command[2]);
     }
                 break;
     case _unchoose: {
-        m_memory[(int)command[1]].anim_color = WHITE;
         m_memory[(int)command[1]].is_animating = false;
         setDuration(0.2);
     }
                  break;
     case _add: {
         m_memory[(int)command[1]].setValue(command[2]);
+        reLocate();
         setDuration(command[3]);
     }
              break;
     case _remove: {
         m_memory[(int)command[1]].setValue(0);
+        reLocate();
         setDuration(0.2);
     }
                 break;
-    //case _empty: {
-    //    for (int i = 0; i < m_memory.size(); i++) {
-    //        m_memory[i].setValue(0);
-    //    }
-    //    setDuration(0.2);
-    //}
-    //           break;
     case _update: {
         update_console_add();
         console.goDown();
@@ -555,6 +613,7 @@ void HT::HashTable::FetchPrevCommand(const std::vector<float>& command) {
                 break;
     case _remove: {
         m_memory[(int)command[1]].setValue(command[2]);
+        reLocate();
         setDuration((int)command[3]);
     }
                 break;
@@ -564,19 +623,18 @@ void HT::HashTable::FetchPrevCommand(const std::vector<float>& command) {
     }
                 break;
     case _choose: {
-        m_memory[(int)command[1]].anim_color = WHITE;
         m_memory[(int)command[1]].is_animating = false;
         setDuration(0.2);
     }
                 break;
     case _unchoose: {
-        m_memory[(int)command[1]].anim_color = RED;
         m_memory[(int)command[1]].is_animating = true;
         setDuration(0.2);
     }
                 break;
     case _add: {
         m_memory[(int)command[1]].setValue(0);
+        reLocate();
         setDuration(command[3]);
     }
                 break;
