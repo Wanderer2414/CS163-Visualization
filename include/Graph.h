@@ -126,7 +126,7 @@ private:
                         update(const int& index, const int& value);
 
     Texture2D           cursor_icon;
-    TextSetting         console_setting;
+    //TextSetting         console_setting;
 
     ColorPointer        color_box;
     HeapVisual          heap;

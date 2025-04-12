@@ -13,23 +13,25 @@ Form::Form(const int& index, FormSetting f_setting, const Vector2& window_size) 
     update_box(&form_setting),
     search_box(&form_setting),
     insert_box(&form_setting),
+    empty_box(&form_setting),
 
     create_label(&form_setting),
     update_old_value_label(&form_setting),
     update_new_value_label(&form_setting),
 
     create_button(&form_setting, &form_setting),
-    insert_button(&form_setting,&form_setting),
-    search_button(&form_setting,&form_setting),
+    insert_button(&form_setting, &form_setting),
+    search_button(&form_setting, &form_setting),
     update_button(&form_setting, &form_setting),
     remove_button(&form_setting, &form_setting),
+    empty_button(&form_setting, &form_setting),
 
     create_textbox(&form_setting, &form_setting),
     insert_textbox(&form_setting, &form_setting),
     search_textbox(&form_setting, &form_setting),
     update_textbox_choice(&form_setting, &form_setting),
     update_textbox_value(&form_setting, &form_setting),
-    remove_textbox(&form_setting,&form_setting),
+    remove_textbox(&form_setting, &form_setting),
 
     speed_scroll(&form_setting),
     option_box(&form_setting),
@@ -76,17 +78,21 @@ Form::Form(const int& index, FormSetting f_setting, const Vector2& window_size) 
     remove_box.push_back(&random_remove);
     remove_box.push_back(&remove_textbox);
 
+    empty_box.push_back(&empty_button);
+
     option_box.push_back(0, &create_box);
     option_box.push_back(1, &insert_box);
     option_box.push_back(2, &update_box);
     option_box.push_back(3, &search_box);
     option_box.push_back(4, &remove_box);
+    option_box.push_back(5, &empty_box);
 
     option_box.setText(0,"Create");
     option_box.setText(1,"Insert");
     option_box.setText(2,"Update");
     option_box.setText(3,"Search");
     option_box.setText(4,"Remove");
+    option_box.setText(5, "Empty");
     option_box.setVisible(false);
 
     console.setPosition(m_window_size.x - 510, m_window_size.y - 220);
@@ -201,6 +207,13 @@ Form::Form(const int& index, FormSetting f_setting, const Vector2& window_size) 
 
     remove_box.setPosition(130, 180);
     remove_box.setSize(350, 50);
+    // Empty box
+    empty_box.setPosition(130, 225);
+    empty_box.setSize(150, 50);
+
+    empty_button.setText("Empty");
+    empty_button.setSize(140, 40);
+    empty_button.setPosition(135, 230);
 
     play_button.setPosition(m_window_size.x / 2 - 25, m_window_size.y - 80);
     play_button.setSize(50, 50);
@@ -394,6 +407,9 @@ void Form::handle() {
         remove(remove_textbox.getText());
         remove_textbox.clear();
     }
+    if (empty_button.isPressed()) {
+        empty();
+    }
     //Random create
     if (random_create.isPressed()) create_textbox.setText(RandomCreate());
     if (random_insert.isPressed()) insert_textbox.setText(RandomInsert());
@@ -407,6 +423,9 @@ void Form::draw() {
 }
 void Form::add(const vector<string>& x) {
 
+}
+void Form::empty()
+{
 }
 void Form::remove(const std::string& str) {
 

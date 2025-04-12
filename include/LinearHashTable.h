@@ -34,6 +34,7 @@ namespace HT {
             _remove = 4,
             _search = 6,
             _update = 7,
+            _empty = 8,
             _goUp = 9,
             _goDown = 10,
             _insert_end_code = 12,
@@ -46,7 +47,8 @@ namespace HT {
             remove(const std::string& data) override,
             search(const std::string& x) override,
             update(const std::string& old_value, const std::string& new_value) override,
-
+            empty() override,
+                
             draw()              override,
             handle()            override,
             setMemorySize(const int& size),

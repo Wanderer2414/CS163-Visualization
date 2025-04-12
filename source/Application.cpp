@@ -12,7 +12,7 @@ Application::Application()
 }
 void Application::run() {
     int form_index = 0;
-    int mode = 1;
+    int mode = 0;
     int size_index = 1;
     FormSetting* form_setting = &DarkTheme;
     while (!WindowShouldClose()) {

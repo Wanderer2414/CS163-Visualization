@@ -28,7 +28,8 @@ public:
     virtual void    add(const vector<string>& str),
                     remove(const std::string& str),
                     update(const std::string& old_value, const std::string& new_value),
-                    search(const std::string& x);
+                    search(const std::string& x),
+                    empty();
 
     virtual string  RandomCreate() const,
                     RandomInsert() const,
@@ -77,7 +78,8 @@ protected:
                     remove_button,
                     search_button,
                     update_button,
-                    create_button;
+                    create_button,
+                    empty_button;
     
     DropBox         m_drop_box;
     ButtonTab       buttonTab;
@@ -86,7 +88,8 @@ protected:
                     insert_box,
                     remove_box,
                     search_box,
-                    update_box;
+                    update_box,
+                    empty_box;
 
     Console         console;
     Rectangle       m_workspace;
