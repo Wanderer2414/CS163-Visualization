@@ -3,7 +3,6 @@
 #include <string.h>
 #include <random>
 #include "../include/SinglyLinkedList.h"
-#include "SinglyLinkedList.h"
 
 int getRandom(int min, int max) {
     static std::random_device rd; 
@@ -604,7 +603,7 @@ void SLL::SLLForm::rePoCur(const int& index)
 		showCur = true;
 		m_cur->m_next = cur;
 		m_cur->setDuration(getSpeed()/2);
-		m_cur->setSlowPosition(cur->getPosition().x,cur->getPosition().y+200);
+		m_cur->setSlowPosition(cur->getPosition().x,cur->getPosition().y+125);
 	}
 
 }
