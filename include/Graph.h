@@ -4,7 +4,7 @@
 #include "ColorBox.h"
 #include "ColorPointer.h"
 #include "Container.h"
-#include "Dijkstra_margin.h"
+#include "DijkstraMargin.h"
 #include "Edge.h"
 #include "Form.h"
 #include "GUI.h"
@@ -158,7 +158,6 @@ private:
                         create_Dmargin(),
                         free_Dmargin();
                         
-    vector<vector<int>> pull(const int& index);
     vector<int>         getEdge(const int& graph),
                         getVertex(const int& graph);
     void                getVertex(const int& graph, vector<bool>& visited),

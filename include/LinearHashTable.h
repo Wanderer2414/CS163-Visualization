@@ -43,7 +43,7 @@ namespace HT {
             _update_end_code = 15
         };
         HashTable(const int& index, FormSetting form_setting, const Vector2& window_size);
-        virtual void        add(const vector<std::string>& data) override,
+        virtual void add(const vector<std::string>& data) override,
             remove(const std::string& data) override,
             search(const std::string& x) override,
             update(const std::string& old_value, const std::string& new_value) override,
@@ -78,4 +78,3 @@ namespace HT {
 }
 
 #endif
-   

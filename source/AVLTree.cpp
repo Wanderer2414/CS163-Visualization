@@ -925,7 +925,7 @@ void AVLTreeForm::remove_console_add() {
 	console.InsertNextSubCommand("else	");
 	console.InsertNextSubCommand("		if root doesn't have child");
 	console.InsertNextSubCommand("			remove root");
-	console.InsertNextSubCommand("		else if root have both left and right child");
+	console.InsertNextSubCommand("		else if root has both left and right child");
 	console.InsertNextSubCommand("			if left node is heavier");
 	console.InsertNextSubCommand("				Rotate right");
 	console.InsertNextSubCommand("				f(root->right, x)");

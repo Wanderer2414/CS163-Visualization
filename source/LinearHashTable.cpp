@@ -36,7 +36,7 @@ void HT::Node::draw() {
         DrawTextEx(text_setting->font, std::to_string(m_index).c_str(), index_pos, text_setting->font_size / 1.7, text_setting->spacing, text_setting->color);
     }
     else {
-        std::cerr << "Error: text_setting is null" << std::endl;
+        std::cerr << "Error: text_setting is null!" << std::endl;
     }
 }
 void HT::Node::handle() {
@@ -178,19 +178,19 @@ void HT::HashTable::search_console_add()
 void HT::HashTable::update_console_add()
 {
     console.InsertNextSubCommand("index = key % table.size                                              ");
-    console.InsertNextSubCommand("if (table[index] = oldvalue) -> update to newvalue                    ");
+    console.InsertNextSubCommand("if (table[index] = oldValue) -> update to newValue                    ");
     console.InsertNextSubCommand("else {                                                                ");
     console.InsertNextSubCommand("   cur = index + 1                                                    ");
     console.InsertNextSubCommand("   while (table[cur] != value & cur != pos) cur++                     ");
-    console.InsertNextSubCommand("   if table[cur] = oldvalue -> update to newvalue                     ");
-    console.InsertNextSubCommand("   else oldvalue is not found in table -> return                      ");
+    console.InsertNextSubCommand("   if table[cur] = oldValue -> update to newValue                     ");
+    console.InsertNextSubCommand("   else oldValue is not found in table -> return                      ");
     console.InsertNextSubCommand("}                                                                     ");
 }
 void HT::HashTable::insert_console_add()
 {
     console.InsertNextSubCommand("index = key % table.size                                              ");
     console.InsertNextSubCommand("if (table[index] = value) value is already in table                   ");
-    console.InsertNextSubCommand("if table[index] not have value -> table[index] = value & return       ");
+    console.InsertNextSubCommand("if table[index] does not have value -> table[index] = value & return  ");
     console.InsertNextSubCommand("else {                                                                ");
     console.InsertNextSubCommand("   cur = index + 1                                                    ");
     console.InsertNextSubCommand("   while ( table[cur] != 0 & table[cur] != value & cur != pos) cur++  ");

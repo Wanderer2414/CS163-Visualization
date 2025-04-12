@@ -5,7 +5,7 @@ Node::Node(const int& index, const int& val): TextButton(0, 0), m_index(index), 
     setSize(50, 50);
     setText(std::to_string(val));
     left = right = parent = nullptr;
-    m_height = 1; // M
+    m_height = 1;
     is_animating = false;
     anim_color = WHITE;
 }

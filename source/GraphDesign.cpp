@@ -1,7 +1,6 @@
 #include "../include/Graph.h"
 #include "../include/IncludePath.h"
 #include "../include/General.h"
-#include <cmath>
 
 Graph::Graph(const int& index, FormSetting f_setting, const Vector2& window_size):
     Form(index, f_setting, window_size),

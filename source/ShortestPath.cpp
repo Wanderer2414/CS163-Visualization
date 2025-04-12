@@ -1,5 +1,10 @@
+<<<<<<< HEAD
 // #include "../include/ShortestPath.h"
 // #include "../include/Global.h"
+=======
+/*#include "../include/ShortestPath.h"
+#include "../include/Global.h"
+>>>>>>> origin/ThienHoa
 
 // vector<int> dijkstra(vector<vector<pair<int, int>>>& graph, int start, int end) {
 //     priority_queue<pair<int, int>, vector<pair<int, int>>, greater<pair<int, int>>> minHeap;
@@ -245,6 +250,7 @@
 // }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 //GraphVisual::GraphVisual(Font font) : font(font), isChosen(false), numComponent(0), graph(Graph()) {
 //    
 //}
@@ -271,6 +277,25 @@
 //     numComponent = 0;
 //     colorComponent.clear();
 // }
+=======
+void GraphVisual::random() {
+    int vertexCount = rand() % 10 + 5;
+    graph = Graph();
+    for (int i = 0; i < vertexCount; ++i) {
+        graph.addVertex();
+    }
+    for (int i = 0; i < vertexCount; ++i) {
+        for (int j = i + 1; j < vertexCount; ++j) {
+            if (rand() % 3 == 0) {
+                int weight = rand() % 10 + 1;
+                graph.addEdge(i, j, weight);
+            }
+        }
+    }
+    numComponent = 0;
+    colorComponent.clear();
+}
+>>>>>>> origin/ThienHoa
 
 // void GraphVisual::drawButton() {
 //     this->createButton.draw();
@@ -285,6 +310,7 @@
 //     return this->graph.drawGraph(this->font, this->colorComponent);
 // }
 
+<<<<<<< HEAD
 // int GraphVisual::loadFile(const std::string filename) {
 //     ifstream inputFile(filename);
 //     if (!inputFile) {
@@ -309,3 +335,29 @@
 //     inputFile.close();
 //     return 1;
 // }
+=======
+int GraphVisual::loadFile(const std::string filename) {
+    ifstream inputFile(filename);
+    if (!inputFile) {
+        cerr << "Error: Cannot open file!" << endl;
+        return 0;
+    }
+    int n;
+    inputFile >> n;
+    this->graph = Graph();
+    for (int i = 0; i < n; ++i) {
+        graph.addVertex();
+    }
+    int weight;
+    for (int i = 0; i < n; ++i) {
+        for (int j = 0; j < n; ++j) {
+            inputFile >> weight;
+            if (weight > 0) {
+                graph.addEdge(i, j, weight);
+            }
+        }
+    }
+    inputFile.close();
+    return 1;
+}*/
+>>>>>>> origin/ThienHoa
