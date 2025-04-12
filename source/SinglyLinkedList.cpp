@@ -347,15 +347,17 @@ void SLL::SLLForm::insert(const int &value, const int &index)
 			cur = cur->m_next;
 			continue;
 		}
-		InsertNextSubCommand({_GoUp,1,0.75});
+		InsertNextSubCommand({_GoUp,1,1});
 		InsertNextSubCommand({_GoDowm,1,0.75});
 		InsertNextSubCommand({_choose,float(cur->getIndex()),1});
 		InsertNextSubCommand({_unchoose,float(cur->getIndex()),1});
 		cur = cur->m_next;
 	}
+	InsertNextSubCommand({_GoUp,1,1});
+	InsertNextSubCommand({_GoDowm,1,0.75});
 	InsertNextSubCommand({_choose,float(cur->getIndex()),1});
-	InsertNextSubCommand({_unchoose,float(cur->getIndex()),1});
 	InsertNextSubCommand({_GoDowm,1,0.5});
+	InsertNextSubCommand({_unchoose,float(cur->getIndex()),1});
 	InsertNextSubCommand({_insertSilent,float(value),float(index)});
 	InsertNextSubCommand({_choose,float(cur->getIndex()+1),1});
 	InsertNextSubCommand({_unchoose,float(cur->getIndex()+1),1});
@@ -393,13 +395,13 @@ void SLL::SLLForm::remove(const int &value,const int& index)
 {
 	ListNode* cur = m_head->m_next;
 	if (index == 0) {
-		InsertNextSubCommand({_GoDowm,1,0.75});
-		InsertNextSubCommand({_GoDowm,1,0.75});
+		InsertNextSubCommand({_GoDowm,1,1});
+		InsertNextSubCommand({_GoDowm,1,1});
 		InsertNextSubCommand({_removeSilent,float(value),float(index)});
 		return;
 	}
 	while (cur && cur->getIndex() != index-1) {
-		InsertNextSubCommand({_GoUp,1,0.75});
+		InsertNextSubCommand({_GoUp,1,1});
 		InsertNextSubCommand({_GoDowm,1,0.75});
 		InsertNextSubCommand({_choose,float(cur->getIndex()),1});
 		InsertNextSubCommand({_unchoose,float(cur->getIndex()),1});
@@ -457,8 +459,8 @@ void SLL::SLLForm::update(const int &old_value, const int &new_value)
 {
 	ListNode* cur = m_head;
 	while (cur && cur->getValue() != old_value) {
-		InsertNextSubCommand({_GoUp,1,0.5});
-		InsertNextSubCommand({_GoDowm,1,0.5});
+		InsertNextSubCommand({_GoUp,1,1});
+		InsertNextSubCommand({_GoDowm,1,1});
 		InsertNextSubCommand({_choose,float(cur->getIndex()),1});
 		InsertNextSubCommand({_unchoose,float(cur->getIndex()),1});
 		cur = cur->m_next;
@@ -493,8 +495,8 @@ void SLL::SLLForm::search(const int &value)
 {
 	ListNode* cur = m_head->m_next;
 	while (cur && cur->getValue() != value) {
-		InsertNextSubCommand({_GoUp,1,0.5});
-		InsertNextSubCommand({_GoDowm,1,0.5});
+		InsertNextSubCommand({_GoUp,1,1});
+		InsertNextSubCommand({_GoDowm,1,1});
 		InsertNextSubCommand({_choose,float(cur->getIndex()),1});
 		InsertNextSubCommand({_unchoose,float(cur->getIndex()),1});
 		cur=cur->m_next;
