@@ -66,16 +66,6 @@ void Graph::insert(const int& value) {
 }
 void Graph::remove(const int& i) {
     InsertNextMainCommand({remove_vertex, 1.0f*i, 1.0f*vertices[i]->getValue(), vertices[i]->getPosition().x, vertices[i]->getPosition().y, to_float(vertices[i]->getColor()), 0.2});
-    for (Edge* edge: vertices[i]->edges) {
-        if (edge) {
-            int reverse = -1;
-            if (edge->reverse) {
-                reverse = edge->reverse->getGlobalIndex();
-                InsertNextMainCommand({remove_edge,  1.0f*edge->m_end->getIndex(), 1.0f*i, 1.0f*edge->reverse->getLocalIndex(), 1.0f*reverse, 1.0f*edge->getGlobalIndex(), 1.0f*edge->reverse->getWeight(), 0.2});
-            }
-            InsertNextMainCommand({remove_edge,  1.0f*i, 1.0f*edge->m_end->getIndex(), 1.0f*edge->getLocalIndex(), 1.0f*edge->getGlobalIndex(), 1.0f*reverse, 1.0f*edge->getWeight(), 0.2});
-        }
-    }
 }
 void Graph::update(const int& index, const int& value) {
     vertices[index]->setValue(value);
@@ -334,11 +324,28 @@ void Graph::FetchNextCommand(const vector<float>& codes) {
         }
         break;
         case remove_vertex: {
+            float index = codes[1];
+            float value = codes[2], x = codes[3], y = codes[4], color = codes[5];
+            for (Edge* edge: vertices[index]->edges) {
+                if (edge) {
+                    int reverse = -1;
+                    if (edge->reverse) {
+                        reverse = edge->reverse->getGlobalIndex();
+                        InsertNextSubCommand({remove_edge,  1.0f*edge->m_end->getIndex(), 1.0f*index, 1.0f*edge->reverse->getLocalIndex(), 1.0f*reverse, 1.0f*edge->getGlobalIndex(), 1.0f*edge->reverse->getWeight(), 0.2});
+                    }
+                    InsertNextSubCommand({remove_edge,  1.0f*index, 1.0f*edge->m_end->getIndex(), 1.0f*edge->getLocalIndex(), 1.0f*edge->getGlobalIndex(), 1.0f*reverse, 1.0f*edge->getWeight(), 0.2});
+                }
+            }
+            InsertNextSubCommand({remove_end_vertex, 1.0f*index, value, x, y, color, 1});
+            setDuration(0.1);
+        }
+        break;
+        case remove_end_vertex: {
             int index = codes[1];
             if (notation_box.vertex == vertices[index]) notation_box.vertex = 0;
             delete vertices[index];
             vertices[index] = 0;
-            setDuration(0.1);
+            setDuration(codes.back());
         }
         break;
         case prim_code: {
@@ -609,6 +616,10 @@ void Graph::FetchPrevCommand(const vector<float>& codes) {
         }
         break;
         case remove_vertex: {
+            setDuration(codes.back());
+        }
+        break;
+        case remove_end_vertex: {
             int index = codes[1];
             vertices[index] = new Vertex(&form_setting, index);
             vertices[index]->setValue(codes[2]);
@@ -776,7 +787,7 @@ void Graph::kruskal_algorithms(const int& index) {
     InsertNextSubCommand({goDown, 1, 0.5});
     while (q.size()) {
         if (dsu.check(q.front().start, q.front().end)) {
-            InsertNextSubCommand({ pop_heap, 1.0f * q.front().start, 1.0f * q.front().end, 1.0f * q.front().weight, 0 });
+            InsertNextSubCommand({pop_heap, 1.0f*q.front().start, 1.0f*q.front().end, 1.0f*q.front().weight, 0});
             q.pop();
         } else {
             InsertNextSubCommand({goDown, 1, 0.5});

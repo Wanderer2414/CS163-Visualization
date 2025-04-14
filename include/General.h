@@ -2,7 +2,6 @@
 #define GENERAL_H
 
 #include "Global.h"
-
 float abs(const Vector2& vector);
 
 Vector2 operator+(const Vector2& a, const Vector2& b);
@@ -24,14 +23,19 @@ bool operator!=(const Vector2& a, const Vector2& b);
 bool operator==(const Color& a, const Color& b);
 bool operator!=(const Color& a, const Color& b);
 
+int to_int(const std::string& str);
+
 float arctan(const Vector2& vector);
 float to_degree(const float& radian);
+float TransX(const float& x);
+float TransY(const float& y);
 
-int to_int(const std::string& str);
-Rectangle TransToCameraRec(const Camera2D& camera, Rectangle rec);
+Vector2 Trans(const Vector2& vector);
 Vector2 TransToGlobalPoint(const Camera2D& camera, const Vector2& point);
 
 Vector2 getCenter(const Vector2& a, const Vector2& b, const float& angular);
+
+Rectangle TransToCameraRec(const Camera2D& camera, Rectangle rec);
 
 string readFromFile(const string& link);
 vector<string> readFromFileStr(const string& link);

@@ -9,6 +9,10 @@ ColorPointer::ColorPointer(ButtonSetting* b_setting): red(WHITE, RED), blue(WHIT
     button_setting = b_setting;
     m_is_visible = true;
     m_is_hovered = false;
+    m_is_focus = false;
+}
+bool ColorPointer::isFocus() const {
+    return m_is_focus;
 }
 bool ColorPointer::isVisible() const {
     return m_is_visible;
@@ -28,12 +32,13 @@ void ColorPointer::draw() {
         color.g = green.getPercent()*255;
         color.b = blue.getPercent()*255;
         color.a = alpha.getPercent()*255;
-        DrawRectangle(m_position.x + m_size.x - 25, m_position.y + 5, 20, 95, color);
+        DrawRectangle(m_position.x + m_size.x - 25, m_position.y + 5, 20, m_size.y - 10, color);
     }
 }
 void ColorPointer::handle() {
     if (m_is_visible) {
         m_is_hovered = CheckCollisionPointRec(GetMousePosition(), {m_position.x, m_position.y, m_size.x, m_size.y});
+        if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) m_is_focus = m_is_hovered;
         red.handle();
         green.handle();
         blue.handle();
@@ -50,13 +55,21 @@ void ColorPointer::setPosition(const float& x, const float& y) {
 }
 void ColorPointer::setVisible(const bool& visible) {
     m_is_visible = visible;
+    m_is_focus = visible;
 }
 void ColorPointer::setSize(const float& width, const float& height) {
     Controller::setSize(width, height);
-    red.setSize(width - 35, 20);
-    green.setSize(width - 35, 20);
-    blue.setSize(width - 35, 20);
-    alpha.setSize(width - 35, 20);
+    red.setSize(width - 35, (height-25)/4);
+    red.setPosition(red.getPosition().x, m_position.y + 5);
+
+    green.setSize(width - 35, (height-25)/4);
+    green.setPosition(green.getPosition().x, red.getPosition().y + red.getSize().y + 5);
+
+    blue.setSize(width - 35, (height-25)/4);
+    blue.setPosition(blue.getPosition().x,green.getPosition().y + green.getSize().y + 5);
+
+    alpha.setSize(width - 35, (height-25)/4);
+    alpha.setPosition(alpha.getPosition().x,blue.getPosition().y + blue.getSize().y + 5);
 }
 void ColorPointer::setColor(const Color& color) {
     red.setPercent(1.*color.r/255);

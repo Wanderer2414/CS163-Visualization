@@ -28,6 +28,11 @@ public:
                     draw()                      override,
                     handle()                    override;
     
+    string          RandomInsert() const override,
+                    RandomSearch() const override,
+                    RandomRemove() const override,
+                    RandomOldValue() const override,
+                    RandomNewValue() const override;
     ~AVLTreeForm();
 private:
     Node* m_root;
@@ -56,12 +61,10 @@ private:
                     show(AVLNode* root, const int& indent)                          ;
     
     int             remove(Node*& root, const int& x)                               ;
-    void            visual_remove(AVLNode*& root, const int& x)                     ,
-                    swap(AVLNode* rootA, AVLNode* rootB)                            ,
+    void            swap(AVLNode* rootA, AVLNode* rootB)                            ,
                     swap(Node* rootA, Node* rootB)                                  ,
                     rePosition(const float& dur)                                    ,
                     draw(AVLNode* root)                                             ,
-                    handle(AVLNode* root)                                           ,
                     free()                                                          ,
                     free(AVLNode* root)                                             ,
                     reFocusCamera()                                                 ;

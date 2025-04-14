@@ -13,23 +13,25 @@ Form::Form(const int& index, FormSetting f_setting, const Vector2& window_size) 
     update_box(&form_setting),
     search_box(&form_setting),
     insert_box(&form_setting),
+    empty_box(&form_setting),
 
     create_label(&form_setting),
     update_old_value_label(&form_setting),
     update_new_value_label(&form_setting),
 
     create_button(&form_setting, &form_setting),
-    insert_button(&form_setting,&form_setting),
-    search_button(&form_setting,&form_setting),
+    insert_button(&form_setting, &form_setting),
+    search_button(&form_setting, &form_setting),
     update_button(&form_setting, &form_setting),
     remove_button(&form_setting, &form_setting),
+    empty_button(&form_setting, &form_setting),
 
     create_textbox(&form_setting, &form_setting),
     insert_textbox(&form_setting, &form_setting),
     search_textbox(&form_setting, &form_setting),
     update_textbox_choice(&form_setting, &form_setting),
     update_textbox_value(&form_setting, &form_setting),
-    remove_textbox(&form_setting,&form_setting),
+    remove_textbox(&form_setting, &form_setting),
 
     speed_scroll(&form_setting),
     option_box(&form_setting),
@@ -76,25 +78,29 @@ Form::Form(const int& index, FormSetting f_setting, const Vector2& window_size) 
     remove_box.push_back(&random_remove);
     remove_box.push_back(&remove_textbox);
 
+    empty_box.push_back(&empty_button);
+
     option_box.push_back(0, &create_box);
     option_box.push_back(1, &insert_box);
     option_box.push_back(2, &update_box);
     option_box.push_back(3, &search_box);
     option_box.push_back(4, &remove_box);
+    option_box.push_back(5, &empty_box);
 
     option_box.setText(0,"Create");
     option_box.setText(1,"Insert");
     option_box.setText(2,"Update");
     option_box.setText(3,"Search");
     option_box.setText(4,"Remove");
+    option_box.setText(5, "Empty");
     option_box.setVisible(false);
 
-    console.setPosition(m_window_size.x - 510, m_window_size.y - 220);
-    console.setSize(500, 200);
-    console.setTextOrigin({ 10,10 });
+    console.setSize(TransX(500), TransY(200));
+    console.setPosition(m_window_size.x - console.getSize().x - TransX(10), m_window_size.y - console.getSize().y - TransY(20));
+    console.setTextOrigin({ TransX(10),TransY(10) });
 
-    buttonTab.setSize(400, 40);
-    buttonTab.setPosition(m_window_size.x/2 - 200, 10);
+    buttonTab.setSize(TransX(400), TransY(40));
+    buttonTab.setPosition(m_window_size.x/2 - buttonTab.getSize().x/2, TransY(10));
     buttonTab.push_back("AVL Tree");
     buttonTab.push_back("Graph");
     buttonTab.push_back("Hash Table");
@@ -116,7 +122,7 @@ Form::Form(const int& index, FormSetting f_setting, const Vector2& window_size) 
 
     random_create.setPosition(270, 5);
     random_create.setSize(30, 30);
-    random_create.setButtonStage(0, form_setting.Rand,form_setting.Rand);
+    random_create.setButtonStage(0, form_setting.Rand,form_setting.Rand_hovered);
 
     m_drop_box.setVisible(false);
     m_drop_box.setPosition(create_textbox.getPosition().x,create_textbox.getPosition().y);
@@ -131,7 +137,7 @@ Form::Form(const int& index, FormSetting f_setting, const Vector2& window_size) 
 
     random_insert.setPosition(155, 5);
     random_insert.setSize(40, 40);
-    random_insert.setButtonStage(0, form_setting.Rand, form_setting.Rand);
+    random_insert.setButtonStage(0, form_setting.Rand, form_setting.Rand_hovered);
 
     insert_textbox.setPosition(5, 5);
     insert_textbox.setSize(145,40);
@@ -151,7 +157,7 @@ Form::Form(const int& index, FormSetting f_setting, const Vector2& window_size) 
 
     random_update_choice.setPosition(305, 5);
     random_update_choice.setSize(40, 40);
-    random_update_choice.setButtonStage(0, form_setting.Rand, form_setting.Rand);
+    random_update_choice.setButtonStage(0, form_setting.Rand, form_setting.Rand_hovered);
 
     update_new_value_label.setPosition(5, 50);
     update_new_value_label.setSize(150, 40);
@@ -164,7 +170,7 @@ Form::Form(const int& index, FormSetting f_setting, const Vector2& window_size) 
     
     random_update_value.setPosition(305, 50);
     random_update_value.setSize(40, 40);
-    random_update_value.setButtonStage(0, form_setting.Rand, form_setting.Rand);
+    random_update_value.setButtonStage(0, form_setting.Rand, form_setting.Rand_hovered);
 
     update_button.setPosition(5, 95);
     update_button.setSize(340,40);
@@ -179,7 +185,7 @@ Form::Form(const int& index, FormSetting f_setting, const Vector2& window_size) 
 
     random_search.setPosition(155, 5);
     random_search.setSize(40, 40);
-    random_search.setButtonStage(0, form_setting.Rand, form_setting.Rand);
+    random_search.setButtonStage(0, form_setting.Rand, form_setting.Rand_hovered);
 
     search_button.setPosition(200, 5);
     search_button.setSize(145,40);
@@ -194,13 +200,20 @@ Form::Form(const int& index, FormSetting f_setting, const Vector2& window_size) 
 
     random_remove.setPosition(155, 5);
     random_remove.setSize(40, 40);
-    random_remove.setButtonStage(0, form_setting.Rand, form_setting.Rand);
+    random_remove.setButtonStage(0, form_setting.Rand, form_setting.Rand_hovered);
     
     remove_textbox.setPosition(5, 5);
     remove_textbox.setSize(145, 40);
 
     remove_box.setPosition(130, 180);
     remove_box.setSize(350, 50);
+    // Empty box
+    empty_box.setPosition(130, 225);
+    empty_box.setSize(150, 50);
+
+    empty_button.setText("Empty");
+    empty_button.setSize(140, 40);
+    empty_button.setPosition(135, 230);
 
     play_button.setPosition(m_window_size.x / 2 - 25, m_window_size.y - 80);
     play_button.setSize(50, 50);
@@ -228,7 +241,7 @@ Form::Form(const int& index, FormSetting f_setting, const Vector2& window_size) 
 
     speed_scroll.setPosition(m_window_size.x - 100, 10);
     speed_scroll.setSize(70, m_window_size.y - 160);
-    for (float i = 0.2; i<=5; i+=0.2) {
+    for (float i = 0.2; i<=8; i+=0.2) {
         stringstream s;
         s<< i <<"x";
         speed_scroll.push_back(i, s.str());
@@ -259,7 +272,7 @@ Form::Form(const int& index, FormSetting f_setting, const Vector2& window_size) 
     option_box.setPosition(-option_box.getSize().x, m_window_size.y/2);
     option_box.add_vertex({-option_box.getSize().x, m_window_size.y/2});
     option_box.add_vertex({10, m_window_size.y/2});
-    option_box.setSize(200, m_window_size.y/2-30);
+    option_box.setSize(option_box.getAutoSize().x + 20, option_box.getAutoSize().y);
     option_box.setVisible(false);
 
     track_hover.setText("");
@@ -268,18 +281,42 @@ Form::Form(const int& index, FormSetting f_setting, const Vector2& window_size) 
     setSpeed(1);
 }
 int Form::run() {
+    float transparent = 1;
+    bool isStart = false, isEnd = false;
     while (!WindowShouldClose()) {
         handle();
         BeginDrawing();
         ClearBackground(form_setting.background_color);
         draw();
+        if (!isStart) {
+            Color color = form_setting.reverse_color;
+            color.a = transparent*255;
+            transparent -= 0.03;
+            DrawRectangle(0, 0, m_window_size.x, m_window_size.y, color);
+            if (transparent<0) {
+                transparent = 0;
+                isStart = true;
+            }
+        }
+        if (isEnd) {
+            Color color = form_setting.reverse_color;
+            color.a = transparent*255;
+            transparent += 0.1;
+            DrawRectangle(0, 0, m_window_size.x, m_window_size.y, color);
+            if (transparent > 1) {
+                transparent = 1;
+                return 3 + buttonTab.GetSelection();
+            }
+        }
         EndDrawing();
         if (back_button.isPressed()) return 1;
         //Home button handle
         if (home_button.isPressed()) return 0;
         if (buttonTab.isChanged()) {
-            return 3 + buttonTab.GetSelection();
+            transparent = 0.1;
+            isEnd = true;
         }
+        if (empty_button.isPressed()) return 3 + buttonTab.GetSelection();
     }
     return 0;
 }
@@ -316,8 +353,32 @@ void Form::handle() {
     else {
         if (!isFocus) {
             //Progress go next and go back
-            if (IsKeyReleased(KEY_RIGHT)) goNext();
-            else if (IsKeyReleased(KEY_LEFT)) goBack();
+            if (IsKeyReleased(KEY_RIGHT)) {
+                if (IsKeyDown(KEY_LEFT_CONTROL)) {
+                    small_skip_next_button.Hover();
+                    goMainNext();
+                }
+                else goNext();
+            }
+            else if (IsKeyReleased(KEY_LEFT)) {
+                if (IsKeyDown(KEY_LEFT_CONTROL)) {
+                    small_skip_back_button.Hover();
+                    goMainPrev();
+                }
+                else goBack();
+            }
+            else if (IsKeyReleased(KEY_END)) {
+                skip_button.Hover();
+                GotoCommandLine(1);
+            }
+            else if (IsKeyReleased(KEY_HOME)) {
+                restart_button.Hover();
+                GotoCommandLine(0);
+            }
+            else if (IsKeyReleased(KEY_SPACE)) {
+                play_button.Hover();
+                setPause(!isPause());
+            }
         }
         //Reshow progress
         progress = getProgress();
@@ -329,14 +390,14 @@ void Form::handle() {
             Vector2 pos = track_hover.getPosition();
             pos.y += GetMouseDelta().y;
             track_hover.setPosition(pos.x, pos.y);
-            option_box.setPosition(option_box.getPosition().x, pos.y);
+            option_box.setVerticesPosition(option_box.getPosition().x, pos.y);
         } 
         main_box_show();
     } else if (!track_hover.isHovered() && !option_box.isHovered()) {
         if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) {
             main_box_hide();
         }
-        else if (option_box.getVertexDone() == 0) {
+        else if (option_box.getProgress()<0.1) {
             option_box.setVisible(false);
         }
     }
@@ -387,7 +448,7 @@ void Form::handle() {
     if (search_button.isPressed() || search_textbox.isEnter()) {
         search(search_textbox.getText());
     }
-    if (update_button.isPressed()) {
+    if (update_button.isPressed() || update_textbox_value.isEnter()) {
         update(update_textbox_choice.getText(), update_textbox_value.getText());
     }
     if (remove_button.isPressed() || remove_textbox.isEnter()) {
@@ -408,6 +469,9 @@ void Form::draw() {
 void Form::add(const vector<string>& x) {
 
 }
+void Form::empty()
+{
+}
 void Form::remove(const std::string& str) {
 
 }
@@ -418,14 +482,14 @@ void Form::search(const std::string& x) {
 
 }
 void Form::main_box_show() {
-    if (option_box.getVertexDone()==0) {
+    if (!option_box.isVisible()) {
         option_box.setVisible(true);
-        option_box.next();
+        option_box.moveNext();
     }
 }
 void Form::main_box_hide() {
     if (option_box.getVertexDone() == 1) {
-        option_box.next();
+        option_box.moveNext();
         option_box.select(-1);
         insert_textbox.setFocus(false);
         remove_textbox.setFocus(false);
