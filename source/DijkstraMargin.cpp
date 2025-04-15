@@ -1,4 +1,4 @@
-#include "../include/Dijkstra_margin.h"
+#include "../include/DijkstraMargin.h"
 
 Dijkstra_Margin::Dijkstra_Margin(Vertex* vertex) {
     m_value = numeric_limits<float>::max();

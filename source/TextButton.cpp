@@ -20,7 +20,7 @@ void TextButton::setPosition(const float& x, const float& y) {
 }
 void TextButton::draw() {
     if (button_setting) {
-        if (before_press < 3)
+        if (before_press < 3 || isFocus())
             DrawRectangleRounded({ m_position.x, m_position.y, m_size.x, m_size.y }, button_setting->roundness, button_setting->segment, button_setting->click_color);
         else if (m_is_hovered)    
             DrawRectangleRounded({ m_position.x, m_position.y, m_size.x, m_size.y }, button_setting->roundness, button_setting->segment, button_setting->hover_color);
@@ -31,7 +31,9 @@ void TextButton::draw() {
         DrawTextEx(text_setting->font, m_text.c_str(), m_text_position, text_setting->font_size, text_setting->spacing,text_setting->color);
     else cerr<<"[TEXT_SETTING DOES NOT EXIST IN TEXTBUTTON!]" << endl;
 }
-
+void TextButton::update() {
+    update_text();
+}
 void TextButton::update_text() {
     if (text_setting) {
         m_text_position = m_position + m_size / 2;

@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 # Install script for directory: C:/Github_milu/CS163-DSAVisualization
+=======
+# Install script for directory: C:/Users/Dell/Downloads/CS163-DSAVisualization
+>>>>>>> origin/ThienHoa
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)
@@ -12,7 +16,11 @@ if(NOT DEFINED CMAKE_INSTALL_CONFIG_NAME)
     string(REGEX REPLACE "^[^A-Za-z0-9_]+" ""
            CMAKE_INSTALL_CONFIG_NAME "${BUILD_TYPE}")
   else()
+<<<<<<< HEAD
     set(CMAKE_INSTALL_CONFIG_NAME "Release")
+=======
+    set(CMAKE_INSTALL_CONFIG_NAME "")
+>>>>>>> origin/ThienHoa
   endif()
   message(STATUS "Install configuration: \"${CMAKE_INSTALL_CONFIG_NAME}\"")
 endif()
@@ -50,7 +58,13 @@ else()
   set(CMAKE_INSTALL_MANIFEST "install_manifest.txt")
 endif()
 
+<<<<<<< HEAD
 if(NOT CMAKE_INSTALL_LOCAL_ONLY)
   file(WRITE "C:/Github_milu/CS163-DSAVisualization/build/${CMAKE_INSTALL_MANIFEST}"
+=======
+string(REPLACE ";" "\n" CMAKE_INSTALL_MANIFEST_CONTENT
+       "${CMAKE_INSTALL_MANIFEST_FILES}")
+file(WRITE "C:/Users/Dell/Downloads/CS163-DSAVisualization/build/${CMAKE_INSTALL_MANIFEST}"
+>>>>>>> origin/ThienHoa
      "${CMAKE_INSTALL_MANIFEST_CONTENT}")
 endif()

@@ -12,6 +12,14 @@ int Move::getVertexDone() const {
 int Move::size() const {
     return m_vertices.size();
 }
+float Move::getProgress() const {
+    return progress;
+}
+void Move::clearVertices() {
+    progress = 0;
+    pointer = 0;
+    m_vertices.clear();
+}
 void Move::handle() {
     if (progress != pointer) {
         Vector2 delta = m_vertices[pointer] - getPosition();
@@ -25,23 +33,26 @@ void Move::handle() {
         }
     }
 }
-void Move::setPosition(const float& x, const float& y) {
-    if (progress == pointer) {
-        for (int i = 0; i<m_vertices.size(); i++) {
-            m_vertices[i] = m_vertices[i] - getPosition() + Vector2({x, y});
-        }
+void Move::skip() {
+    setPosition(m_vertices[pointer].x, m_vertices[pointer].y);
+    progress = pointer;
+}
+void Move::setVerticesPosition(const float& x, const float& y) {
+    for (int i = 0; i<m_vertices.size(); i++) {
+        m_vertices[i] = m_vertices[i] - getPosition() + Vector2({x, y});
     }
+    setPosition(x, y);
+}
+void Move::setPosition(const float& x, const float& y) {
 }
 void Move::add_vertex(const Vector2& point) {
     m_vertices.push_back(point);
 }
-void Move::next() {
-    pointer++;
-    if (pointer == m_vertices.size()) pointer = 0;
+void Move::moveNext() {
+    pointer = (pointer+1)%m_vertices.size();
 }
-void Move::back() {
-    pointer--;
-    if (!pointer) pointer = m_vertices.size()-1;
+void Move::moveBack() {
+    pointer = (pointer-1)%m_vertices.size();
 }
 
 Vector2 Move::getPosition() const {

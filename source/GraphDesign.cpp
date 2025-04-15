@@ -1,7 +1,6 @@
 #include "../include/Graph.h"
 #include "../include/IncludePath.h"
 #include "../include/General.h"
-#include <cmath>
 
 Graph::Graph(const int& index, FormSetting f_setting, const Vector2& window_size):
     Form(index, f_setting, window_size),
@@ -135,7 +134,7 @@ Graph::Graph(const int& index, FormSetting f_setting, const Vector2& window_size
 
     random_Dijkstra_button.setPosition(110, 5);
     random_Dijkstra_button.setSize(40, 40);
-    random_Dijkstra_button.setButtonStage(0, form_setting.Rand, form_setting.Rand);
+    random_Dijkstra_button.setButtonStage(0, form_setting.Rand, form_setting.Rand_hovered);
 
     Dijkstra_button.setPosition(155, 5);
     Dijkstra_button.setSize(100, 40);
@@ -146,7 +145,7 @@ Graph::Graph(const int& index, FormSetting f_setting, const Vector2& window_size
 
     random_prim_button.setPosition(110, 5);
     random_prim_button.setSize(40, 40);
-    random_prim_button.setButtonStage(0, form_setting.Rand, form_setting.Rand);
+    random_prim_button.setButtonStage(0, form_setting.Rand, form_setting.Rand_hovered);
 
     prim_button.setPosition(155, 5);
     prim_button.setSize(100, 40);
@@ -157,7 +156,7 @@ Graph::Graph(const int& index, FormSetting f_setting, const Vector2& window_size
 
     random_kruskal_button.setPosition(110, 5);
     random_kruskal_button.setSize(40, 40);
-    random_kruskal_button.setButtonStage(0, form_setting.Rand, form_setting.Rand);
+    random_kruskal_button.setButtonStage(0, form_setting.Rand, form_setting.Rand_hovered);
 
     kruskal_button.setPosition(155, 5);
     kruskal_button.setSize(100, 40);
@@ -189,11 +188,11 @@ Graph::Graph(const int& index, FormSetting f_setting, const Vector2& window_size
 
     //Graph setting
     graph_setting.setPosition(-300, 100);
-    graph_setting.setSize(300, 500);
     graph_setting.setText(0, "Settings");
     graph_setting.setText(1, "Tools");
     graph_setting.setText(2, "Algorithms");
     graph_setting.setText(3,"Extract");
+    graph_setting.setSize(graph_setting.getAutoSize().x+20, graph_setting.getAutoSize().y);
     graph_setting.add_vertex({-300, 100});
     graph_setting.add_vertex({10, 100});
     graph_setting.setVisible(false);
@@ -233,13 +232,6 @@ Graph::Graph(const int& index, FormSetting f_setting, const Vector2& window_size
     search_graph_box.setSize(search_box.getSize().x, 100);
     option_box.push_back(3, &search_graph_box);
 
-    //ReSetting console
-    console_setting.font = LoadFont(font_link);
-    console_setting.font_size = 20;
-    console_setting.spacing = 2;
-    console_setting.color = BLACK;
-    console.text_setting = &console_setting;
-
     //Add random button to create box
     vertex_label.setText("V: ");
     vertex_label.setPosition(5, 35);
@@ -252,7 +244,7 @@ Graph::Graph(const int& index, FormSetting f_setting, const Vector2& window_size
 
     random_vertex_button.setPosition(110, 40);
     random_vertex_button.setSize(30, 30);
-    random_vertex_button.setButtonStage(0, form_setting.Rand, form_setting.Rand);
+    random_vertex_button.setButtonStage(0, form_setting.Rand, form_setting.Rand_hovered);
 
     edge_label.setText("E: ");
     edge_label.setPosition(160, 35);
@@ -264,7 +256,7 @@ Graph::Graph(const int& index, FormSetting f_setting, const Vector2& window_size
 
     random_edge_button.setPosition(265, 40);
     random_edge_button.setSize(30, 30);
-    random_edge_button.setButtonStage(0, form_setting.Rand, form_setting.Rand);
+    random_edge_button.setButtonStage(0, form_setting.Rand, form_setting.Rand_hovered);
     
     create_textbox.setPosition(5, 80);
     create_button.setPosition(5, 190);
@@ -347,6 +339,9 @@ void Graph::handle() {
     if (random_vertex_button.isPressed()) {
         vertex_textbox.setText(RandomVertex());
     }
+    if (random_Dijkstra_button.isPressed()) Dijkstra_textbox.setText(RandomSearch());
+    if (random_prim_button.isPressed()) prim_textbox.setText(RandomSearch());
+    if (random_kruskal_button.isPressed()) kruskal_textbox.setText(RandomSearch());
     Form::handle();
     for (Edge* edge:edges) {
         if (edge) {
@@ -543,18 +538,18 @@ void Graph::handle() {
             track_graph_hover.setPosition(pos.x, pos.y);
             pos = graph_setting.getPosition();
             pos.y += GetMouseDelta().y;
-            graph_setting.setPosition(pos.x, pos.y);
+            graph_setting.setVerticesPosition(pos.x, pos.y);
         }
-        if (graph_setting.getVertexDone() == 0) {
+        if (!graph_setting.isVisible()) {
             graph_setting.setVisible(true);
-            graph_setting.next();
+            graph_setting.moveNext();
         }
     }
     else if (!graph_setting.isHovered()) {
-        if (graph_setting.getVertexDone() == 0)
+        if (graph_setting.getProgress()<0.1)
             graph_setting.setVisible(false);
-        else if (graph_setting.getVertexDone() == 1) {
-            graph_setting.next();
+        else if (graph_setting.isVisible() && IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) {
+            graph_setting.moveNext();
             graph_setting.select(-1);
         }
     }
@@ -616,6 +611,8 @@ void Graph::handle() {
     if (Dijkstra_button.isPressed()) {
         Dijkstra(Dijkstra_textbox.getText());
     }
+    //Random insert
+
 }
 
 void Graph::search(const string& val) {

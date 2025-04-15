@@ -147,6 +147,9 @@ void Label::setAlignText(const int& align) {
     m_align = align;
     update_text();
 }
+void Label::update() {
+    update_text();
+}
 std::string Label::getText() const {
     string ans;
     for (auto& i:m_text) ans+=i+'\n';

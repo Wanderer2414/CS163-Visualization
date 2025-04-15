@@ -16,6 +16,7 @@ public:
                     setSize(const float& width, const float& height)    override,
                     setText(const std::string& text);
     std::string     getText() const;
+    virtual void    update() override;
     ~TextButton();
 protected:
     std::string     m_text;

@@ -4,9 +4,13 @@ TextureButton::TextureButton() {
     source_pointer = -1;
     m_sources.clear();
     m_sources_hover.clear();
+    hover_remain_time = 0;
 }
 int TextureButton::getStage() const {
     return source_pointer;
+}
+void TextureButton::Hover() {
+    hover_remain_time = 10;
 }
 void TextureButton::setSize(const float& x, const float& y) {
     Controller::setSize(x, y);
@@ -19,6 +23,7 @@ void TextureButton::setSize(const float& x, const float& y) {
 }
 void TextureButton::handle() {
     Button::handle();
+    if (hover_remain_time) m_is_hovered = hover_remain_time--;
 }
 void TextureButton::back() {
     source_pointer--;

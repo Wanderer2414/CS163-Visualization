@@ -35,16 +35,22 @@ public:
     const char* back_hovered;
     const char* home_normal;
     const char* home_hovered;
+
     const char* menu_avltree_normal;
     const char* menu_avltree_hovered;
+
     const char* menu_sll_normal;
     const char* menu_sll_hovered;
+
     const char* menu_graph_normal;
     const char* menu_graph_hovered;
+
     const char* menu_hash_normal;
     const char* menu_hash_hoverd;
+
     const char* PlayButton;
     const char* PlayButtonHovered;
+    
     const char* PauseButton;
     const char* PauseButtonHovered;
     const char* Replay;
@@ -59,6 +65,7 @@ public:
     const char* DoubleArrowLeft_Hovered;
     const char* sun;
     const char* Rand;
+    const char* Rand_hovered;
     const char* TitleMenu;
     const char* match_cursor_icon;
     const char* match_filled_icon;
@@ -69,6 +76,26 @@ public:
     const char* scissor_icon;
     const char* scissor_cursor_icon;
     const char* scissor_filled_icon;
+    const char* Graph0;
+    const char* Graph1;
+    const char* Graph2;
+    const char* Graph3;
+    const char* Graph2_hovered;
+    const char* AVL0;
+    const char* AVL1;
+    const char* AVL2;
+    const char* AVL3;
+    const char* AVL3_hovered;
+    const char* HT0;
+    const char* HT1;
+    const char* HT2;
+    const char* HT3;
+    const char* HT3_hovered;
+    const char* SLL0;
+    const char* SLL1;
+    const char* SLL2;
+    const char* SLL3;
+    const char* SLL2_hovered;
 };
 
 extern FormSetting LightTheme;

@@ -1,59 +1,66 @@
 #include "../include/Menu.h"
 #include "../include/General.h"
 #include "../include/IncludePath.h"
+#include <utility>
 
 Menu::Menu(FormSetting f_setting, const Vector2& windowSize) :
     form_setting(f_setting),
     m_windowSize(windowSize),
-    BSTForm(&form_setting, &form_setting),
-    GraphForm(&form_setting, &form_setting),
-    HashTableForm(&form_setting, &form_setting),
-    SLLForm(&form_setting,&form_setting)
+    return_value(-1)
 {
 
     children.push_back(&BSTForm);
     children.push_back(&GraphForm);
     children.push_back(&HashTableForm);
+    children.push_back(&Back);
     children.push_back(&SLLForm);
+    children.push_back(&MenuDSA);
 
-    BSTForm.setSize(main_button_width, main_button_height);
-    BSTForm.setText("AVL Tree");
+    BSTForm.setSize(m_windowSize.x/2-10, m_windowSize.y/2-70);
+    BSTForm.setButtonStage(0, form_setting.AVL0, form_setting.AVL3_hovered);    
+    BSTForm.setPosition(-BSTForm.getSize().x-100, 100);
+    BSTForm.add_vertex({-BSTForm.getSize().x-100, 100});
+    BSTForm.add_vertex({0, 100});
+    BSTForm.moveNext();
 
-    GraphForm.setSize(main_button_width, main_button_height);
-    GraphForm.setText("Graph");
+    GraphForm.setSize(m_windowSize.x/2-10, m_windowSize.y/2-70);
+    GraphForm.setButtonStage(0, form_setting.Graph0, form_setting.Graph2_hovered);
+    GraphForm.setPosition(m_windowSize.x+100, 100);
+    GraphForm.add_vertex({m_windowSize.x+100, 100});
+    GraphForm.add_vertex({m_windowSize.x/2+10, 100});
+    GraphForm.moveNext();
 
-    HashTableForm.setSize(main_button_width, main_button_height);
-    HashTableForm.setText("HashTable");
+    HashTableForm.setSize(m_windowSize.x/2-10, m_windowSize.y/2-70);
+    HashTableForm.setButtonStage(0, form_setting.HT0, form_setting.HT3_hovered);
+    HashTableForm.setPosition(-HashTableForm.getSize().x*2, m_windowSize.y/2+50);
+    HashTableForm.add_vertex({-HashTableForm.getSize().x*2, HashTableForm.getPosition().y});
+    HashTableForm.add_vertex({0, HashTableForm.getPosition().y});
+    HashTableForm.moveNext();
 
-    SLLForm.setSize(main_button_width, main_button_height);
-    SLLForm.setText("Singly Linked List");
+    SLLForm.setSize(m_windowSize.x/2-10, m_windowSize.y/2-70);
+    SLLForm.setButtonStage(0, form_setting.SLL0, form_setting.SLL2_hovered);
+    SLLForm.setPosition(m_windowSize.x*2, m_windowSize.y/2+50);
+    SLLForm.add_vertex({m_windowSize.x*2, SLLForm.getPosition().y});
+    SLLForm.add_vertex({m_windowSize.x/2+10, SLLForm.getPosition().y});
+    SLLForm.moveNext();
     
-    Back.setPosition(10, 10);
     Back.setButtonStage(0, form_setting.back_normal, form_setting.back_hovered);
-    Back.setSize(30, 30);
     Back.setSize(40, 40);
+    Back.setPosition(-100, 10);
+    Back.add_vertex({-100, 10});
+    Back.add_vertex({10, 10});
+    Back.moveNext();
 
-    MenuDSA.setPosition( m_windowSize.x / 2 - 200 , 30);
-    MenuDSA.setSize(400, 50);
     MenuDSA.setButtonStage(0, form_setting.TitleMenu, form_setting.TitleMenu);
+    MenuDSA.setSize(600, 60);
+    MenuDSA.setPosition( m_windowSize.x / 2 - 300 , -100);
+    MenuDSA.add_vertex({MenuDSA.getPosition().x, -100});
+    MenuDSA.add_vertex({MenuDSA.getPosition().x, 10});
+    MenuDSA.moveNext();
 
-    Vector2 center = m_windowSize / 2;
-    int cols = 2;
-    int rows = (children.size() + cols - 1) / cols;
-    float spacing_x = main_button_width + 50;
-    float spacing_y = main_button_height + 50;
-    float total_width = cols * spacing_x - 50;
-    float total_height = rows * spacing_y - 50;
-    // Corrected origin calculation
-    Vector2 origin = {
-        center.x - total_width / 2, center.y - total_height / 2
-    };
-
-    for (int i = 0; i < children.size(); i++) {
-        int row = i / cols;
-        int col = i % cols;
-        children[i]->setPosition(origin.x + col * spacing_x, origin.y + row * spacing_y);
-    }
+    zoom.setPosition(m_windowSize.x/2, m_windowSize.y/2);
+    zoom.setSize(m_windowSize.x*10, m_windowSize.y*10);
+    zoom.color = form_setting.reverse_color;
 }
 
 int Menu::run() {
@@ -61,22 +68,61 @@ int Menu::run() {
         handle();
         BeginDrawing();
         ClearBackground(form_setting.background_color);
-
+        if (MenuDSA.getProgress()<0.05) return return_value;
         draw();
         EndDrawing();
-        if (Back.isPressed()) return 0;
-        if (BSTForm.isPressed()) return 3;
-        if (GraphForm.isPressed()) return 4;
-        if (HashTableForm.isPressed()) return 5;
-        if (SLLForm.isPressed()) return 6;
+        if ((zoom.getProgress() == 1 || IsMouseButtonPressed(MOUSE_LEFT_BUTTON)) && return_value > 0) 
+            return return_value;
     };
     return 0;
 };
 void Menu::handle() {
-    for (auto i : children) i->handle();
-    Back.handle();
+    zoom.handle();
+    for (int i = 0; i<children.size() ;i++) {
+        children[i]->handle();
+        if (zoom.host == children[i] && i) {
+            swap(children[i],children[0]);
+        }
+    }
+    if (Back.isPressed()) {
+        return_value = 0;
+        Back.moveNext();
+        BSTForm.moveNext();
+        GraphForm.moveNext();
+        HashTableForm.moveNext();
+        SLLForm.moveNext();
+        MenuDSA.moveNext();
+    }
+    if (zoom.getProgress()==1) {
+        if (BSTForm.isPressed()) {
+            return_value = 3;
+            BSTForm.skip();
+            zoom.host = &BSTForm;
+            zoom.start();
+        }
+        if (GraphForm.isPressed()) {
+            return_value = 4;
+            GraphForm.skip();
+            zoom.host = &GraphForm;
+            zoom.start();
+        }
+        if (HashTableForm.isPressed()) {
+            return_value = 5;
+            HashTableForm.skip();
+            zoom.host = &HashTableForm;
+            zoom.start();
+        }
+        if (SLLForm.isPressed()) {
+            return_value = 6;
+            SLLForm.skip();
+            zoom.host = &SLLForm;
+            zoom.start();
+        }
+    }
 }
 void Menu::draw() {
-    for (auto i : children) i->draw();
-    Back.draw();
+    for (int i = children.size()-1; i>=0; i--) {
+        children[i]->draw();
+    }
+    zoom.draw();
 }

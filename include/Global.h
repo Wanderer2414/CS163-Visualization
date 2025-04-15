@@ -22,14 +22,10 @@
 #include <cfloat>
 #include <cctype>
 #include <new>
-#include <algorithm>
 #include <cstdlib>
 #include <limits>
 #include <utility>
-
-#define standard_x 1820
-#define standard_y 1080
-extern Vector2 windowSize;
+#include <random>
 
 using namespace std;
 

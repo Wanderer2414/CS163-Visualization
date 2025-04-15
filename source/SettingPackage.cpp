@@ -1,5 +1,6 @@
 #include "../include/SettingPackage.h"
 #include "../include/IncludePath.h"
+
 FormSetting LightTheme = {
     {
         0.1f, 30,
@@ -22,10 +23,13 @@ FormSetting LightTheme = {
 
     source"/asset/images/dark/back-normal.png",
     source"/asset/images/dark/back-selected.png",
+
     source"/asset/images/dark/home-normal.png",
     source"/asset/images/dark/home-selected.png",
+
     source"/asset/images/dark/menu-avl-normal.png",
     source"/asset/images/menu-avl-selected.png",
+    
     source"/asset/images/dark/menu-maxheap-normal.png",
     source"/asset/images/dark/menu-maxheap-selected.png",
     source"/asset/images/dark/menu-graph-normal.png",
@@ -48,6 +52,7 @@ FormSetting LightTheme = {
     source"/asset/images/dark/double-arrow-left-hoverd.png",
     source"/asset/Icon/Light.png",
     source"/asset/images/Rand.png",
+    source"/asset/images/Rand_hovered.png",
     source"/asset/images/dark/TitleMenu.png",
     source"/asset/Icon/pepicons-pencil--pen.png",
     source"/asset/Icon/pepicons-pencil--pen-circle-filled.png",
@@ -57,7 +62,27 @@ FormSetting LightTheme = {
     source"/asset/Icon/paint-pallet-circle-filled.png",
     source"/asset/Icon/scissors-circle.png",
     source"/asset/Icon/scissors.png",
-    source"/asset/Icon/scissors-circle-filled.png"
+    source"/asset/Icon/scissors-circle-filled.png",
+    source"/asset/images/dark/Graph0.png",
+    source"/asset/images/dark/Graph1.png",
+    source"/asset/images/dark/Graph2.png",
+    source"/asset/images/dark/Graph3.png",
+    source"/asset/images/dark/Graph2_hovered.png",
+    source"/asset/images/dark/AVL0.png",
+    source"/asset/images/dark/AVL1.png",
+    source"/asset/images/dark/AVL2.png",
+    source"/asset/images/dark/AVL3.png",
+    source"/asset/images/dark/AVL3_hovered.png",
+    source"/asset/images/dark/HT0.png",
+    source"/asset/images/dark/HT1.png",
+    source"/asset/images/dark/HT2.png",
+    source"/asset/images/dark/HT3.png",
+    source"/asset/images/dark/HT3_hovered.png",
+    source"/asset/images/dark/SLL0.png",
+    source"/asset/images/dark/SLL1.png",
+    source"/asset/images/dark/SLL2.png",
+    source"/asset/images/dark/SLL3.png",
+    source"/asset/images/dark/SLL2_hovered.png"
 };
 
 FormSetting DarkTheme = {
@@ -79,20 +104,27 @@ FormSetting DarkTheme = {
     {4, 13, 18, 255},         // Background (Deep Dark Green-Blue)
     {240, 240, 240, 255},
     {100, 100, 100, 255},
+
     source"/asset/images/back-normal.png",
     source"/asset/images/back-selected.png",
     source"/asset/images/home-normal.png",
     source"/asset/images/home-selected.png",
+
     source"/asset/images/menu-avl-normal.png",
     source"/asset/images/menu-avl-selected.png",
+
     source"/asset/images/menu-maxheap-normal.png",
     source"/asset/images/menu-maxheap-selected.png",
+
     source"/asset/images/menu-graph-normal.png",
     source"/asset/images/menu-graph-selected.png",
+
     source"/asset/images/menu-hash-normal.png",
     source"/asset/images/menu-hash-selected.png",
+
     source"/asset/images/play-normal.png",
     source"/asset/images/play-selected.png",
+
     source"/asset/images/pause-normal.png",
     source"/asset/images/pause-selected.png",
     source"/asset/images/replay-normal.png",
@@ -107,6 +139,7 @@ FormSetting DarkTheme = {
     source"/asset/images/double-arrow-left-hoverd.png",
     source"/asset/Icon/Dark.png",
     source"/asset/images/Rand.png",
+    source"/asset/images/Rand_hovered.png",
     source"/asset/images/TitleMenu.png",
     source"/asset/Icon/pepicons-pencil--pen.png",
     source"/asset/Icon/pepicons-pencil--pen-circle-filled.png",
@@ -116,5 +149,25 @@ FormSetting DarkTheme = {
     source"/asset/Icon/paint-pallet-circle-filled.png",
     source"/asset/Icon/scissors-circle.png",
     source"/asset/Icon/scissors.png",
-    source"/asset/Icon/scissors-circle-filled.png"
+    source"/asset/Icon/scissors-circle-filled.png",
+    source"/asset/images/Graph0.png",
+    source"/asset/images/Graph1.png",
+    source"/asset/images/Graph2.png",
+    source"/asset/images/Graph3.png",
+    source"/asset/images/Graph2_hovered.png",
+    source"/asset/images/AVL0.png",
+    source"/asset/images/AVL1.png",
+    source"/asset/images/AVL2.png",
+    source"/asset/images/AVL3.png",
+    source"/asset/images/AVL3_hovered.png",
+    source"/asset/images/HT0.png",
+    source"/asset/images/HT1.png",
+    source"/asset/images/HT2.png",
+    source"/asset/images/HT3.png",
+    source"/asset/images/HT3_hovered.png",
+    source"/asset/images/SLL0.png",
+    source"/asset/images/SLL1.png",
+    source"/asset/images/SLL2.png",
+    source"/asset/images/SLL3.png",
+    source"/asset/images/SLL2_hovered.png",
 };
