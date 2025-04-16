@@ -5,6 +5,7 @@
 class ZoomInTransition:public Controller {
 public:
     Controller* host;
+    ZoomInTransition();
     float           getProgress() const;
     virtual void    handle() override,
                     draw() override,

@@ -1,5 +1,9 @@
 #include "../include/ZoomInTransition.h"
 #include "../include/General.h"
+ZoomInTransition::ZoomInTransition() {
+    host = 0;
+    percent = 1;
+}
 float ZoomInTransition::getProgress() const {
     return percent;
 }

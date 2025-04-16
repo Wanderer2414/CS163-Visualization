@@ -30,6 +30,7 @@ void ImageTab::handle() {
     
 }
 void ImageTab::draw() {
+    if (m_position.x + m_size.x < 0) return;
     BeginScissorMode(m_position.x, m_position.y, m_size.x, m_size.y);
     if (gif_pointer>=0 && gif_pointer<gifs.size()) gifs[gif_pointer]->draw();
     gifs[(gif_pointer+1)%gifs.size()]->draw();

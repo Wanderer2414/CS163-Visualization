@@ -80,9 +80,9 @@ void Menu::handle() {
     zoom.handle();
     for (int i = 0; i<children.size() ;i++) {
         children[i]->handle();
-        if (children[i]->isFocus() && i) {
-            swap(children[i], children[0]);
-        };
+        if (zoom.host == children[i] && i) {
+            swap(children[i],children[0]);
+        }
     }
     if (Back.isPressed()) {
         return_value = 0;
@@ -121,6 +121,8 @@ void Menu::handle() {
     }
 }
 void Menu::draw() {
-    for (int i = children.size()-1; i>=0; i--) children[i]->draw();
+    for (int i = children.size()-1; i>=0; i--) {
+        children[i]->draw();
+    }
     zoom.draw();
 }
