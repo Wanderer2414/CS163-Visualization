@@ -83,8 +83,8 @@ HT::HashTable::HashTable(const int& index, FormSetting f_setting, const Vector2&
     Form(index, f_setting, window_size),
     size_label(&form_setting),
     m_memory_sz_textBox(&form_setting, &form_setting) {
-        
-    m_node_spacing = 10;
+    cout << "Oke" << endl;
+    m_node_spacing = 30;
 
     m_memory_sz_textBox.setPosition(95, 45);
     m_memory_sz_textBox.setSize(170, 40);
@@ -190,8 +190,9 @@ void HT::HashTable::handle() {
     }
     
     m_camera.offset.x = m_workspace.x + 10;
-    m_camera.offset.y = clamp(m_camera.offset.y, m_workspace.y + m_workspace.height - line*m_camera.zoom, m_workspace.y);
-
+    float bound = m_workspace.y + m_workspace.height - line * m_camera.zoom;
+    if (bound < m_workspace.y) m_camera.offset.y = clamp(m_camera.offset.y, bound, m_workspace.y);
+    else m_camera.offset.y = m_workspace.y;
     if (random_size_button.isPressed()) {
         m_memory_sz_textBox.setText(RandomCreateSize(100, 10));
     }

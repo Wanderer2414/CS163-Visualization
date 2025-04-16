@@ -92,7 +92,6 @@ MenuStart::MenuStart(FormSetting* f_setting, const Vector2& windowSize) :
     DarkAVL.push(DarkTheme.AVL1);
     DarkAVL.push(DarkTheme.AVL2);
     DarkAVL.push(DarkTheme.AVL3);
-    cout << DarkTheme.SLL0 << endl;
     DarkSLL.push(DarkTheme.SLL0);
     DarkSLL.push(DarkTheme.SLL1);
     DarkSLL.push(DarkTheme.SLL2);
@@ -171,13 +170,9 @@ void MenuStart::handle() {
     }
 }
 void MenuStart::draw() {
-    // Draw Title
-    // Calculate the position to center the text
     for (auto i : children) {
-        cout << i->getPosition().x << " " << i->getPosition().y << " " << i->getSize().x << " " << i->getSize().y << endl;
         i->draw();
     }
-
 }
 void MenuStart::setMode(const int& mode) {
     setting_box.setMode(mode);
