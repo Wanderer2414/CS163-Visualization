@@ -1,6 +1,5 @@
 #include "../include/Form.h"
 #include "../include/General.h"
-#include <raylib.h>
 
 Form::Form(const int& index, FormSetting f_setting, const Vector2& window_size) :
     m_window_size(window_size),
