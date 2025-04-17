@@ -1,5 +1,6 @@
 #include "../include/Form.h"
 #include "../include/General.h"
+#include <raylib.h>
 
 Form::Form(const int& index, FormSetting f_setting, const Vector2& window_size) :
     m_window_size(window_size),
@@ -378,6 +379,16 @@ void Form::handle() {
             else if (IsKeyReleased(KEY_SPACE)) {
                 play_button.Hover();
                 setPause(!isPause());
+            }
+            else if (IsKeyDown(KEY_UP)) {
+                if (IsKeyDown(KEY_LEFT_CONTROL)) speed_scroll.select(speed_scroll.getChoiceIndex() - 3);
+                else speed_scroll.select(speed_scroll.getChoiceIndex() - 1);
+                setSpeed(1.0f/(speed_scroll.getValue()));
+            }
+            else if (IsKeyDown(KEY_DOWN)) {
+                if (IsKeyDown(KEY_LEFT_CONTROL)) speed_scroll.select(speed_scroll.getChoiceIndex() + 3);
+                else speed_scroll.select(speed_scroll.getChoiceIndex() + 1);
+                setSpeed(1.0f/(speed_scroll.getValue()));
             }
         }
         //Reshow progress

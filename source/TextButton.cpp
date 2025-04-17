@@ -20,7 +20,7 @@ void TextButton::setPosition(const float& x, const float& y) {
 }
 void TextButton::draw() {
     if (button_setting) {
-        if (before_press < 3)
+        if (before_press < 3 || isFocus())
             DrawRectangleRounded({ m_position.x, m_position.y, m_size.x, m_size.y }, button_setting->roundness, button_setting->segment, button_setting->click_color);
         else if (m_is_hovered)    
             DrawRectangleRounded({ m_position.x, m_position.y, m_size.x, m_size.y }, button_setting->roundness, button_setting->segment, button_setting->hover_color);

@@ -73,6 +73,11 @@ void ValueScroll::handle() {
         float delta = pointer - m_index;
         if (abs(delta)>0.1) pointer -= delta/10;
         else pointer = m_index;
+        if (pointer >= m_text_position.size())
+            pointer -= m_text_position.size();
+        if (pointer < 0)
+            pointer += m_text_position.size();
+        m_index = round(pointer);
         update_text();
         m_is_changed = false;
     }
