@@ -11,7 +11,7 @@ public:
     TextSetting             *text_setting                                                   ;
     bool                    empty() const                                                   ,
                             isChanged() const                                               ,
-                            isHovered() const                                      override ;
+                            isHovered() const override                                      ;
 
     int                     getChoiceIndex() const                                          ;
     float                   getValue() const;

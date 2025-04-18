@@ -1,8 +1,5 @@
 #include "../include/SinglyLinkedList.h"
-#include <math.h>
-#include <raylib.h>
-#include <string.h>
-#include <random>
+
 int getRandom(int min, int max) {
     static std::random_device rd; 
     static std::mt19937 gen(rd());
@@ -246,7 +243,6 @@ void SLL::SLLForm::FetchNextCommand(const std::vector<float>& command)
 	case _insertSilent:
 	{
 		insertSilent(int(command[1]),int(command[2]));
-		//rePosition();
 		break;
 	}
 	case _delete:
@@ -264,7 +260,6 @@ void SLL::SLLForm::FetchNextCommand(const std::vector<float>& command)
 	{
 		console.goDown();
 		removeSilent(int(command[1]),int(command[2]));
-		//rePosition();
 		break;
 	}
 	case _update:
@@ -429,8 +424,6 @@ void SLL::SLLForm::insert(const int &value, const int &index)
 		InsertNextSubCommand({_unchoose,float(cur->getIndex()),1});
 		cur = cur->m_next;
 	}
-	// InsertNextSubCommand({_GoUp,1,1});
-	// InsertNextSubCommand({_GoDowm,1,0.75});
 	InsertNextSubCommand({_GoDowm,1,0.5});
 	InsertNextSubCommand({_rePoCur,float(cur->getIndex())});
 	InsertNextSubCommand({_choose,float(cur->getIndex()),1});
@@ -647,7 +640,7 @@ void SLL::Arrow::setPosition(Vector2 tail, Vector2 head) {
 
 void SLL::Arrow::handle()
 {
-
+	
 }
 
 void SLL::Arrow::draw()

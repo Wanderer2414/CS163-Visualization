@@ -1,5 +1,4 @@
 #include "../include/RaylibExtra.h"
-#include <raylib.h>
 
 void DrawText(TextSetting* setting, const Vector2& position, const string& text) {
     DrawTextEx(setting->font, text.c_str(), position, setting->font_size, setting->spacing, setting->color);

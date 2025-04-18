@@ -150,7 +150,7 @@ void Graph::Dijkstra_console_add(const int& value) {
     console.InsertNextSubCommand("   vertex = heap.top()");
     console.InsertNextSubCommand("   Pop heap");
     console.InsertNextSubCommand("   if  !visited[vertex]");
-    console.InsertNextSubCommand("      for first edge to last edge");
+    console.InsertNextSubCommand("      from first edge to last edge");
     console.InsertNextSubCommand("          if cost[vertex] + cost[edge] < cost[end]");
     console.InsertNextSubCommand("              cost[end] = cost[vertex] + cost[edge]");
     console.InsertNextSubCommand("              add end to min heap");
@@ -188,7 +188,7 @@ void Graph::search_console_add(const int& vertex, const int& mode) {
         console.InsertNextSubCommand("vertex = " + to_string(value));
         console.InsertNextSubCommand("f(vertex) {");
         console.InsertNextSubCommand("   visited[vertex] = true ");
-        console.InsertNextSubCommand("   for i = first_des to last_des ");
+        console.InsertNextSubCommand("   from i = first_des to last_des ");
         console.InsertNextSubCommand("      if this des was not visited");
         console.InsertNextSubCommand("          f(i)");
         console.InsertNextSubCommand("}");
