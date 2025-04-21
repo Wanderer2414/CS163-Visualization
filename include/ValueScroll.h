@@ -23,7 +23,8 @@ public:
 
                             push_back(const float& value, const std::string& str)           ,
                             select(const int& pointer)                                      ,
-                            clear()                                                         ;
+                            clear()                                                         ,
+                            add_velocity(const float& velocity)                             ;
 
     std::string             getText()                                                       ,
                             getChoice()                                                     ;

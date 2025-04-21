@@ -143,6 +143,7 @@ void Console::update_text() {
 }
 void Console::handle() {
     TextButton::handle();
+    Move::handle();
     if (line_cursor != current_line) {
         current_line += (line_cursor-current_line)/10;
         if (abs(line_cursor-current_line)<0.1) current_line = line_cursor;
@@ -163,6 +164,12 @@ void Console::handle() {
     if (m_delta.y > 0) m_delta.y = m_fixed.y = 0;
     if (m_delta.x < min_x) m_delta.x = m_fixed.x = min_x;
     if (m_delta.y < min_y) m_delta.y = m_fixed.y = min_y;
+}
+void Console::setPosition(const float &x, const float &y) {
+    TextButton::setPosition(x, y);
+}
+Vector2 Console::getPosition() const {
+    return TextButton::getPosition();
 }
 void Console::draw() {
     if (m_is_hovered)

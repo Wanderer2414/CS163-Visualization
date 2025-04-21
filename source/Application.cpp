@@ -38,6 +38,11 @@ void Application::run() {
             form_index = menu.run();
         }
             break;
+        case 2: {
+            AboutUsForm aboutus(*form_setting, window_sizes[window_size_index]);
+            form_index = aboutus.run();
+        }
+            break;
         case 3: {
             AVLTreeForm AVLtreeForm(0, *form_setting, window_sizes[window_size_index]);
             form_index = AVLtreeForm.run();

@@ -1,0 +1,47 @@
+#include "../include/AboutUsForm.h"
+AboutUsForm::AboutUsForm(FormSetting f_setting, const Vector2& window_size):
+    form_setting(f_setting),
+    m_window_size(window_size),
+    main_letter(&form_setting),
+    main_container(&form_setting) {
+    form_setting.roundness = 0.05f;
+
+    children.push_back(&main_container);
+
+    main_container.push_back(&main_letter);
+
+    main_letter.setPosition(10, 10);
+    main_letter.setSize(680, 480);
+    main_letter.setText(main_letter_content);
+    main_letter.setSize(680, main_letter.getAutoHeight());
+
+    main_container.setSize(700, main_letter.getAutoHeight()+20);
+    main_container.setPosition(m_window_size.x/2-main_container.getSize().x/2, m_window_size.y);
+}
+int AboutUsForm::run() {
+    float init = 0;
+    while (!WindowShouldClose()) {
+        handle();
+        BeginDrawing();
+        if (init<50) {
+            Color color = form_setting.background_color;
+            if (init < 50) color.a = init/50*255;
+            else color.a = 255-(init-50)/50*255;
+            DrawRectangle(0, 0, m_window_size.x, m_window_size.y, color);
+            init++;
+        } else {
+            ClearBackground(form_setting.background_color);
+            draw();
+        }
+        EndDrawing();
+        if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) return 0;
+    }
+    return 0;
+}
+void AboutUsForm::handle() {
+    for (auto i:children) i->handle();
+    main_container.setPosition(main_container.getPosition().x, main_container.getPosition().y - 0.5);
+}
+void AboutUsForm::draw() {
+    for (auto i:children) i->draw();
+}
