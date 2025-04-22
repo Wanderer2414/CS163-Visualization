@@ -12,6 +12,7 @@ public:
     virtual void    handle(),
                     draw();
 private:
+    Camera2D        camera;
     Vector2         m_window_size;
     FormSetting     form_setting;
     MoveContainer   main_container;
@@ -52,7 +53,7 @@ Dear future us (and anyone reading this),\n\
 \n\
 \\right    With gratitude,      \n\
 \\rightFrom APCS students,\n\
-\\right     Group 2     \n\
+\\right     Group 2             \n\
 "
 
 #endif

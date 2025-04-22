@@ -4,6 +4,7 @@
 #include "Controller.h"
 #include "SettingPackage.h"
 #include "Global.h"
+#include "Clock.h"
 
 class LabelEx: public Controller {
 public:
@@ -25,21 +26,26 @@ public:
                             setText(const std::string& str),
 
                             setAlignText(const int& line, const int& align),
-                            insert(const int& row, const int& col, const char& c),
-                            insert(int& row, int& col, const string& c),
-                            erase(const int& row, const int& col),
-                            erase(const Vector2& start, const Vector2& end),
                             clear();
     float                   margin;
     float                   getAutoHeight() const;
-    virtual void            update() override;
+    virtual void            update() override,
+                            skip();
+    Vector2                 getCursorPosition() const;
     ~LabelEx();
 protected:
-    vector<string>          m_text;
+    Clock                   clock;
+    int                     size = 0, total_text_length;
+    string                  dummy_string;
+    vector<vector<string>>  m_text;
     virtual void            update_text(),
                             update_line(const int& line);
-    vector<Rectangle>         m_text_position;
+    vector<vector<Vector2>> m_text_position;
+    vector<vector<float>>   text_size;
+    vector<vector<float>>   spacing;
+    vector<vector<int>>     number_word;
     vector<char>            align;
+    Vector2                 cursor_position;
 };
 
 #endif
