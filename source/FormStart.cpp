@@ -25,7 +25,6 @@ MenuStart::MenuStart(FormSetting* f_setting, const Vector2& windowSize) :
     image_list.add_vertex({-600,m_windowSize.y / 2 - TransY(115)});
     image_list.add_vertex({180,m_windowSize.y / 2 - TransY(115)});
     image_list.moveNext();
-
     
     title_setting = *form_setting;
     title_setting.font = GetFontDefault();

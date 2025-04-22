@@ -22,7 +22,7 @@ namespace SLL {
 		void setPosition(Vector2 tail,Vector2 head);
 		void handle();
 		void draw();
-
+		bool show = false;
 	private:
 	};	
 	class ListNode : public TextButton, public SlowMotion{
@@ -69,7 +69,10 @@ namespace SLL {
 			_GoUp = 12,
 			_GoDowm = 13,
 			_rePo = 14,
-			_rePoCur = 15
+			_rePoCur = 15,
+			_showArrow = 16,
+			_moveCorner = 17,
+			_forRemove = 18
 		};
 		SLLForm(const int& index, FormSetting form_setting, const Vector2& window_size);
 		virtual void    add(const vector<string>& str) override,
@@ -98,6 +101,7 @@ namespace SLL {
 
 		void remove(const int& value, const int& index);
 		void removeSilent(const int& value,const int& index);
+		void moveCorner(const int& index);
 		void console_add_remove(const int& value);
 
 		void update(const int& old_value, const int& new_value);
@@ -106,6 +110,7 @@ namespace SLL {
 
 		void search(const int& value);
 		void console_add_search(const int& value);
+
 		void rePoCur(const int& index);
 	};
 }

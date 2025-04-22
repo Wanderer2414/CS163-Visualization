@@ -20,6 +20,7 @@ private:
     vector<Controller*> children;
 };
 #define main_letter_content "\
+\\centerABOUT US\n\
 \\rightMonday, April 21st, 2025\n\
 \n\
 Dear future us (and anyone reading this),\n\
