@@ -1,10 +1,6 @@
 #include "../include/LinearHashTable.h"
 #include "../include/General.h"
 #include "../include/RaylibExtra.h"
-#include <algorithm>
-#include <ctime>
-#include <limits>
-#include <raylib.h>
 
 HT::Node::Node(ButtonSetting* b_setting, TextSetting* t_setting, Camera2D& c): 
     button_setting(b_setting), text_setting(t_setting), camera(c) {

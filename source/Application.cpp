@@ -32,12 +32,12 @@ void Application::run() {
                 SetWindowSize(window_sizes[window_size_index].x,window_sizes[window_size_index].y);
             }
         }
-              break;
+            break;
         case 1: {
             Menu menu(*form_setting, window_sizes[window_size_index]);
             form_index = menu.run();
         }
-              break;
+            break;
         case 3: {
             AVLTreeForm AVLtreeForm(0, *form_setting, window_sizes[window_size_index]);
             form_index = AVLtreeForm.run();
@@ -47,7 +47,7 @@ void Application::run() {
             Graph GraphForm(1,*form_setting, window_sizes[window_size_index]);
             form_index = GraphForm.run();
         }
-              break;
+            break;
         case 5: {
             HT::HashTable HashTableForm(2, *form_setting, window_sizes[window_size_index]);
             form_index = HashTableForm.run();
@@ -57,11 +57,11 @@ void Application::run() {
             SLL::SLLForm SLLForm(3, *form_setting, window_sizes[window_size_index]);
             form_index = SLLForm.run();
         }
-              break;
+            break;
         default: {
             return;
         }
-               break;
+            break;
         }
     }
 }

@@ -1,7 +1,5 @@
 ﻿#include "../include/AVLTree.h"
 #include "../include/General.h"
-#include <cstdlib>
-#include <string>
 
 AVLTreeForm::AVLTreeForm(const int& index, FormSetting form_setting, const Vector2& window_size) :
 	Form(index, form_setting, window_size) {
@@ -485,8 +483,7 @@ void AVLTreeForm::FetchPrevCommand(const std::vector<float>& codes)
 		setDuration(dur);
 	}
 	break;
-	default:
-		break;
+	default: break;
 	}
 }
 
@@ -649,8 +646,7 @@ void AVLTreeForm::FetchNextCommand(const std::vector<float>& codes)
 		setDuration(dur);
 	}
 	break;
-	default:
-		break;
+	default: break;
 	}
 }
 

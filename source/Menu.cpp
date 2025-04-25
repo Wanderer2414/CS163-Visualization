@@ -1,7 +1,6 @@
 #include "../include/Menu.h"
 #include "../include/General.h"
 #include "../include/IncludePath.h"
-#include <utility>
 
 Menu::Menu(FormSetting f_setting, const Vector2& windowSize) :
     form_setting(f_setting),
