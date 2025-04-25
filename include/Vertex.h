@@ -7,7 +7,7 @@
 #include "SettingPackage.h"
 #include "DynamicColorCircle.h"
 
-class Vertex: public Controller, public DynamicColorCircle {
+class Vertex : public Controller, public DynamicColorCircle {
     public:
         Vertex(FormSetting* form_setting, const int& index);
         FormSetting         *form_setting;

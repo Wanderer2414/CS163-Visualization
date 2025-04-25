@@ -1,5 +1,6 @@
 #ifndef RAYLIB_EXTRA_H
 #define RAYLIB_EXTRA_H
+
 #include "Global.h"
 #include "SettingPackage.h"
 

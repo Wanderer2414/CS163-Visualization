@@ -1,4 +1,5 @@
 #include "../include/GIF.h"
+
 GIF::GIF() {
     image_pointer = 0;
 }

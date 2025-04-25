@@ -80,17 +80,17 @@ MenuBox::MenuBox(FormSetting*& f_setting):
 
     highlight_color_label1.setPosition(TransX(10),TransY(280));
     highlight_color_label1.setSize(TransX(150), TransY(40));
-    highlight_color_label1.setText("Hightlight color 1: ");
+    highlight_color_label1.setText("Highlight color 1: ");
     highlight_color_label1.setAlignText(Label::Left);
 
     highlight_color_label2.setPosition(TransX(10),TransY(330));
     highlight_color_label2.setSize(TransX(150), TransY(40));
-    highlight_color_label2.setText("Hightlight color 2: ");
+    highlight_color_label2.setText("Highlight color 2: ");
     highlight_color_label2.setAlignText(Label::Left);
 
     highlight_color_label3.setPosition(TransX(10),TransY(380));
     highlight_color_label3.setSize(TransX(150), TransY(40));
-    highlight_color_label3.setText("Hightlight color 3: ");
+    highlight_color_label3.setText("Highlight color 3: ");
     highlight_color_label3.setAlignText(Label::Left);
 
     button_color_label.setPosition(TransX(10),TransY(430));

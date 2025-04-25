@@ -6,7 +6,7 @@
 #include "Move.h"
 #include "Global.h"
 
-class TabBox: public Controller, public Move {
+class TabBox : public Controller, public Move {
 public:
     TabBox(FormSetting* form_setting);
     FormSetting     *form_setting;

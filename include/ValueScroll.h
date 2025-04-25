@@ -5,13 +5,13 @@
 #include "SettingPackage.h"
 #include "Global.h"
 
-class ValueScroll: public Controller {
+class ValueScroll : public Controller {
 public:
     ValueScroll(TextSetting* text_setting);
     TextSetting             *text_setting                                                   ;
     bool                    empty() const                                                   ,
                             isChanged() const                                               ,
-                            isHovered() const                                      override ;
+                            isHovered() const override                                      ;
 
     int                     getChoiceIndex() const                                          ;
     float                   getValue() const;
@@ -23,7 +23,8 @@ public:
 
                             push_back(const float& value, const std::string& str)           ,
                             select(const int& pointer)                                      ,
-                            clear()                                                         ;
+                            clear()                                                         ,
+                            add_velocity(const float& velocity)                             ;
 
     std::string             getText()                                                       ,
                             getChoice()                                                     ;

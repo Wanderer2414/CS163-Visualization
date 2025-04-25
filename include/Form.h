@@ -7,6 +7,7 @@
 #include "Controller.h"
 #include "FileDropBox.h"
 #include "Label.h"
+#include "MoveButton.h"
 #include "TabBox.h"
 #include "TextureButton.h"
 #include "ProgressBar.h"
@@ -55,6 +56,7 @@ protected:
                     search_textbox;
 
     TextButton      track_hover;
+    MoveButton      console_button;
 
     TextureButton   play_button,
                     back_button,
@@ -98,4 +100,4 @@ protected:
     void main_box_show(), main_box_hide();
 };
 
-#endif //FORM_H
+#endif

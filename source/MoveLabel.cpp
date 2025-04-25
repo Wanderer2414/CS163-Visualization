@@ -1,4 +1,5 @@
 #include "../include/MoveLabel.h"
+
 MoveLabel::MoveLabel(TextSetting* text_setting):Label(text_setting) {
 
 }

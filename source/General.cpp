@@ -1,5 +1,7 @@
 #include "../include/General.h"
+
 extern Vector2 WindowSize;
+
 float abs(const Vector2& vector) {
     return sqrt(vector.x * vector.x + vector.y * vector.y);
 };
@@ -105,6 +107,10 @@ Rectangle TransToCameraRec(const Camera2D& camera, Rectangle rec) {
 }
 Vector2 TransToGlobalPoint(const Camera2D& camera, const Vector2& point) {
     return (point - camera.offset) / camera.zoom;
+}
+
+Vector2 TransToCameraPoint(const Camera2D& camera, const Vector2& point) {
+    return point*camera.zoom + camera.offset;
 }
 string readFromFile(const string& link) {
     string ans;

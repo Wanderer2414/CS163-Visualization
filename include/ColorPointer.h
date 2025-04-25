@@ -4,7 +4,7 @@
 #include "ColorBox.h"
 #include "Controller.h"
 
-class ColorPointer: public Controller {
+class ColorPointer : public Controller {
 public:
     ColorPointer(ButtonSetting* button_setting);
     ButtonSetting       *button_setting;

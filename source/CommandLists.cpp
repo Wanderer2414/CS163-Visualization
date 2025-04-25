@@ -28,7 +28,6 @@ float CommandList::getProgress() {
     if (!sub_command.empty() && command_pointer < sub_command.size() && !sub_command[command_pointer].empty()) {
         ans += 1.0f * sub_command_pointer / sub_command[command_pointer].size() / command_code.size();
     }
-    
     return ans;
 }
 float CommandList::getSpeed() const {
@@ -124,7 +123,6 @@ void CommandList::GotoCommandLine(const float& percent) {
         if (sub_command[command_pointer].size() == 1) BeforeFetchNext();
         if (sub_command[command_pointer].size()==1) BeforeFetchPrev();
         int sub_cur = delta * sub_command[command_pointer].size();
-        
         while (sub_cur > sub_command_pointer) BeforeFetchNext();
         while (sub_cur < sub_command_pointer) BeforeFetchPrev();
     }

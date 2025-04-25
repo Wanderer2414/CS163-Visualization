@@ -9,7 +9,6 @@
 #include "TextButton.h"
 #include "Global.h"
 #include "TextureButton.h"
-#include <string>
 
 namespace HT {
     class Node : public Controller, public SlowMotion {

@@ -5,7 +5,7 @@
 #include "SettingPackage.h"
 #include "Global.h"
 
-class TextButton: public Button {
+class TextButton : public Button {
 public:
     TextButton(ButtonSetting* b_setting, TextSetting* t_setting);
     ButtonSetting   *button_setting;

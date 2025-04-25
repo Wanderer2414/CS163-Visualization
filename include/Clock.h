@@ -15,4 +15,4 @@ private:
     float       m_duration      = 0;
 };
 
-#endif //CLOCK_H
+#endif

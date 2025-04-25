@@ -8,6 +8,7 @@
 #include "SinglyLinkedList.h"
 #include "AVLTree.h"
 #include "FormStart.h"
+#include "AboutUsForm.h"
 #include "Graph.h"
 
 class Application {

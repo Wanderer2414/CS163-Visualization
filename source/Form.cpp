@@ -1,6 +1,5 @@
 #include "../include/Form.h"
 #include "../include/General.h"
-#include <raylib.h>
 
 Form::Form(const int& index, FormSetting f_setting, const Vector2& window_size) :
     m_window_size(window_size),
@@ -26,6 +25,7 @@ Form::Form(const int& index, FormSetting f_setting, const Vector2& window_size) 
     update_button(&form_setting, &form_setting),
     remove_button(&form_setting, &form_setting),
     empty_button(&form_setting, &form_setting),
+    console_button(&form_setting, &form_setting),
 
     create_textbox(&form_setting, &form_setting),
     insert_textbox(&form_setting, &form_setting),
@@ -42,6 +42,7 @@ Form::Form(const int& index, FormSetting f_setting, const Vector2& window_size) 
     children.push_back(&console);
     children.push_back(&m_progress);
     children.push_back(&track_hover);
+    children.push_back(&console_button);
     children.push_back(&option_box);
     children.push_back(&skip_button);
     children.push_back(&speed_scroll);
@@ -96,9 +97,16 @@ Form::Form(const int& index, FormSetting f_setting, const Vector2& window_size) 
     option_box.setText(5, "Empty");
     option_box.setVisible(false);
 
-    console.setSize(TransX(500), TransY(200));
+    console.setSize(TransX(450), TransY(200));
     console.setPosition(m_window_size.x - console.getSize().x - TransX(10), m_window_size.y - console.getSize().y - TransY(20));
     console.setTextOrigin({ TransX(10),TransY(10) });
+    console.add_vertex(console.getPosition());
+    console.add_vertex({m_window_size.x, console.getPosition().y});
+
+    console_button.setSize(20, console.getSize().y);
+    console_button.setPosition(console.getPosition().x - 20, console.getPosition().y);
+    console_button.add_vertex(console_button.getPosition());
+    console_button.add_vertex({m_window_size.x-20, console_button.getPosition().y});
 
     buttonTab.setSize(TransX(400), TransY(40));
     buttonTab.setPosition(m_window_size.x/2 - buttonTab.getSize().x/2, TransY(10));
@@ -381,14 +389,12 @@ void Form::handle() {
                 setPause(!isPause());
             }
             else if (IsKeyDown(KEY_UP)) {
-                if (IsKeyDown(KEY_LEFT_CONTROL)) speed_scroll.select(speed_scroll.getChoiceIndex() - 3);
-                else speed_scroll.select(speed_scroll.getChoiceIndex() - 1);
-                setSpeed(1.0f/(speed_scroll.getValue()));
+                if (IsKeyDown(KEY_LEFT_CONTROL)) speed_scroll.add_velocity(-0.5);
+                else speed_scroll.add_velocity(-0.15);
             }
             else if (IsKeyDown(KEY_DOWN)) {
-                if (IsKeyDown(KEY_LEFT_CONTROL)) speed_scroll.select(speed_scroll.getChoiceIndex() + 3);
-                else speed_scroll.select(speed_scroll.getChoiceIndex() + 1);
-                setSpeed(1.0f/(speed_scroll.getValue()));
+                if (IsKeyDown(KEY_LEFT_CONTROL)) speed_scroll.add_velocity(0.5);
+                else speed_scroll.add_velocity(0.15);
             }
         }
         //Reshow progress
@@ -417,7 +423,7 @@ void Form::handle() {
         create_textbox.setText(readFromFile(m_drop_box.getFiles()[0]));
     }
     //Play button;
-    //Stage 0: Pause, 1: Continue, 3:Replay
+    //Stage 0: Pause, 1: Continue, 3: Replay
     if (play_button.isPressed()) {
         if (play_button.getStage() == 0) {
             setPause(true);
@@ -465,6 +471,11 @@ void Form::handle() {
     if (remove_button.isPressed() || remove_textbox.isEnter()) {
         remove(remove_textbox.getText());
         remove_textbox.clear();
+    }
+    //Console track
+    if (console_button.isPressed()) {
+        console_button.moveNext();
+        console.moveNext();
     }
     //Random create
     if (random_create.isPressed()) create_textbox.setText(RandomCreate());
