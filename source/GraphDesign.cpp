@@ -31,6 +31,7 @@ Graph::Graph(const int& index, FormSetting f_setting, const Vector2& window_size
     kruskal_box(&form_setting),
     Dijkstra_box(&form_setting),
     extract_box(&form_setting),
+    update_edge(&form_setting),
 
     extract_text_bx(&form_setting, &form_setting),
     Dijkstra_textbox(&form_setting, &form_setting),
@@ -38,11 +39,12 @@ Graph::Graph(const int& index, FormSetting f_setting, const Vector2& window_size
     kruskal_textbox(&form_setting, &form_setting),
     pull_matrix_button(&form_setting, &form_setting),
     pull_input_textbox(&form_setting, &form_setting),
+    edge_textbox(&form_setting, &form_setting),
+    update_edge_textbox(&form_setting, &form_setting),
 
     vertex_label(&form_setting),
     edge_label(&form_setting),
     vertex_textbox(&form_setting, &form_setting),
-    edge_textbox(&form_setting, &form_setting),
 
     color_box(&form_setting),
 
@@ -50,6 +52,9 @@ Graph::Graph(const int& index, FormSetting f_setting, const Vector2& window_size
 {
     children.push_back(&track_graph_hover);
     children.push_back(&graph_setting); 
+    children.push_back(&update_edge);
+
+    update_edge.push_back(&update_edge_textbox);
 
     setting_box.push_back(&fixed_choice);
     setting_box.push_back(&drag_choice);
@@ -279,6 +284,12 @@ Graph::Graph(const int& index, FormSetting f_setting, const Vector2& window_size
     heap.setSize(100, 500);
     heap.setVisible(false);
 
+    update_edge_textbox.setPosition(5, 5);
+    update_edge_textbox.setSize(140, 40);
+
+    update_edge.setSize(150, 50);
+    update_edge.setVisible(false);
+
     update_old_value_label.setText("Index: ");
 
     children.push_back(&color_box);
@@ -286,7 +297,7 @@ Graph::Graph(const int& index, FormSetting f_setting, const Vector2& window_size
 
     srand(time(0));
 
-    chosen = -1;
+    chosen = edge_chosen = -1;
     m_mode = 2;
     m_weight = 1;
     m_type = 1;
@@ -343,6 +354,7 @@ void Graph::handle() {
     if (random_prim_button.isPressed()) prim_textbox.setText(RandomSearch());
     if (random_kruskal_button.isPressed()) kruskal_textbox.setText(RandomSearch());
     Form::handle();
+    bool isFocus = false;
     for (Edge* edge:edges) {
         if (edge) {
             if (m_type == 1) {
@@ -368,7 +380,16 @@ void Graph::handle() {
             }
             //Check press delete
             if (edge->isPressed()) {
-                if (m_tool == 2) {
+                isFocus = true;
+                edge_chosen = edge->getGlobalIndex();
+                if (m_tool == 0) {
+                    update_edge.setPosition(GetMousePosition().x-10, GetMousePosition().y-10);
+                    update_edge.setVisible(true);
+                    update_edge_textbox.setText(to_string(edge->getWeight()));
+                    update_edge.handle();
+                    update_edge_textbox.setFocus(true);
+                }
+                else if (m_tool == 2) {
                     int reverse = -1;
                     if (edge->reverse) {
                         reverse = edge->reverse->getGlobalIndex();
@@ -391,7 +412,7 @@ void Graph::handle() {
             }
         }
     }
-    bool isFocus = false;
+    isFocus = false;
     notation_box.hide();
     for (int i = 0; i<vertices.size(); i++) {
         if (vertices[i]) {
@@ -500,6 +521,17 @@ void Graph::handle() {
             }
         }
     }
+    //Check update edge
+    if (update_edge_textbox.isEnter()) {
+        if (edge_chosen != -1) {
+            edges[edge_chosen]->setWeight(to_int(update_edge_textbox.getText()));
+            if (m_type == 1) {
+                edges[edge_chosen]->reverse->setWeight(to_int(update_edge_textbox.getText()));
+            }
+            edge_chosen = -1;
+            update_edge.setVisible(false);
+        }
+    }
     //Open Color pointer
     if (IsMouseButtonPressed(MOUSE_BUTTON_RIGHT) && m_tool == 1) {
         color_box.setVisible(true);
@@ -507,6 +539,9 @@ void Graph::handle() {
     }
     if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT) && m_tool == 1 && !color_box.isHovered()) {
         color_box.setVisible(false);
+    }
+    if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT) && m_tool == 0 && !update_edge.isHovered()) {
+        update_edge.setVisible(false);
     }
     //Change type
     if (direct_choice.isChanged() && direct_choice.isPressed()) {

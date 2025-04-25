@@ -1,5 +1,6 @@
 #ifndef ABOUTUS_FORM_H
 #define ABOUTUS_FORM_H
+
 #include "Bubble.h"
 #include "Clock.h"
 #include "Controller.h"
@@ -7,7 +8,7 @@
 #include "LabelExtra.h"
 #include "MoveContainer.h"
 #include "SettingPackage.h"
-#include <cstddef>
+
 class AboutUsForm {
 public:
     AboutUsForm(FormSetting form_setting, const Vector2& window_size);

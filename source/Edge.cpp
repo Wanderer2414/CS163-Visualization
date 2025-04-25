@@ -1,77 +1,8 @@
 #include "../include/Edge.h"
 #include "../include/Vertex.h"
 #include "../include/General.h"
+#include "../include/RaylibExtra.h"
 
-void DrawArc(const Vector2& start, const Vector2& end, const float& angular, const Color& color) {
-    Vector2 middle = (start+end)/2;
-    Vector2 delta = end - start;
-    Vector2 u = Vector2({-delta.y, delta.x})/abs(delta);
-    float dis = abs(delta);
-    float side = dis/2;
-    float radius = side/sin(angular/2);
-
-    side = sqrt(radius*radius - side*side);
-    Vector2 center =  middle + u*side;
-    Vector2 middle_arc = center - u*radius;
-    Vector2 arrow_start = middle_arc - delta/dis*7;
-    Vector2 arrow_end = middle_arc + delta/dis*7;
-
-    DrawLineEx(arrow_start-u*10, arrow_end, 3.0f, color);
-    DrawLineEx(arrow_start+u*10, arrow_end, 3.0f, color);
-
-    float start_angular = arctan(start-center);
-    float end_angular = arctan(end-center);
-    if (start_angular>end_angular) {
-        start_angular -= 2*M_PI;
-    }
-    float delta_angular = (end_angular-start_angular)/30;
-    Vector2 start_point = center;
-    start_point.x += radius*cos(start_angular);
-    start_point.y +=  radius*sin(start_angular);
-    for (float i = start_angular+delta_angular; i<=end_angular; i+=delta_angular) {
-        Vector2 end_point = center;
-        end_point.x += radius*cos(i);
-        end_point.y +=  radius*sin(i);
-        DrawLineEx(start_point, end_point, 3.0f, color);
-        start_point = end_point;
-    }
-}
-void DrawText(TextSetting* text_setting, const Vector2& start, const Vector2& end, const float& angular, const string& text, const Color& color) {
-    Vector2 middle = (start+end)/2;
-    Vector2 delta = end - start;
-    float dis = abs(delta);
-    Vector2 u = Vector2({-delta.y, delta.x})/dis;
-    float side = dis/2;
-    float radius = side/sin(angular/2);
-
-    side = sqrt(radius*radius - side*side);
-    Vector2 center =  middle + u*side;
-    Vector2 sz = MeasureTextEx(text_setting->font, text.c_str(), text_setting->font_size, text_setting->spacing);
-    Vector2 center_text = center - u*(radius+sz.y/2 + 15);
-    float rotate = to_degree(arctan(delta));
-    DrawTextPro(text_setting->font, text.c_str(), center_text, sz/2, rotate, text_setting->font_size/1.2, text_setting->spacing, color);
-}
-Vector2 PointOnArc(const Vector2& start, const Vector2& end, const float& angular, const float& current_angular) {
-    Vector2 middle = (start+end)/2;
-    Vector2 delta = end - start;
-    Vector2 u = Vector2({-delta.y, delta.x})/abs(delta);
-    float dis = abs(delta);
-    float side = dis/2;
-    float radius = side/sin(angular/2);
-
-    side = sqrt(radius*radius - side*side);
-    Vector2 center =  middle + u*side;
-
-    float start_angular = arctan(start-center);
-    float end_angular = arctan(end-center);
-    if (start_angular>end_angular) {
-        start_angular -= 2*M_PI;
-    }
-    Vector2 ans = center;
-    ans.x += radius*cos(start_angular+current_angular);
-    ans.y +=  radius*sin(start_angular+current_angular);
-    return ans;
-}
 Edge::Edge(Vertex* start, Vertex* end, const int& globalIndex, const int& localIndex, TextSetting* t_setting) {
     text_setting = t_setting;
     m_start = start;
@@ -146,7 +77,7 @@ void Edge::draw() {
             Vector2 delta = m_end->getCenter() - m_start->getCenter();
             Vector2 middle = (m_end->getCenter() + m_start->getCenter())/2;
             Vector2 u = {delta.y, -delta.x};
-            Vector2 sz = MeasureTextEx(text_setting->font, to_string(weight).c_str(), text_setting->font_size, text_setting->spacing);
+            Vector2 sz = MeasureText(text_setting, to_string(weight));
             Vector2 pos = middle + u/abs(u)*(sz.y/2 + 5);
             float angular = to_degree(arctan(delta));
             DrawTextPro(text_setting->font, to_string(weight).c_str(), pos, sz/2, angular, text_setting->font_size, text_setting->spacing, start_color);
@@ -154,7 +85,10 @@ void Edge::draw() {
     }
 }
 void Edge::handle() {
-    m_is_hovered = CheckCollisionPointLine(GetMousePosition(), m_start->getCenter(), m_end->getCenter(), 10);
+    if (!m_is_direct) {
+        m_is_hovered = CheckCollisionPointLine(GetMousePosition(), m_start->getCenter(), m_end->getCenter(), 15);
+    }
+    else m_is_hovered = CheckCollisionArc(GetMousePosition(), m_start->getCenter(), m_end->getCenter(), M_PI/6, 15);
     m_is_pressed = m_is_hovered && IsMouseButtonPressed(MOUSE_BUTTON_LEFT);
     m_is_color_changed = false;
     Vector2 delta = m_end->getCenter() - m_start->getCenter();

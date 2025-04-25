@@ -5,7 +5,7 @@
 #include "SettingPackage.h"
 #include "TextButton.h"
 
-class MoveButton: public TextButton, public Move {
+class MoveButton : public TextButton, public Move {
 public:
     MoveButton(ButtonSetting*, TextSetting*);
     virtual void    setPosition(const float& x, const float& y) override,

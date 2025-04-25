@@ -1,7 +1,9 @@
 #include "../include/FormStart.h"
 #include "../include/IncludePath.h"
 #include "../include/General.h"
+
 extern Vector2 WindowSize;
+
 MenuStart::MenuStart(FormSetting* f_setting, const Vector2& windowSize) :
     form_setting(f_setting),
     m_windowSize(windowSize),

@@ -1,7 +1,5 @@
 #include "../include/LabelExtra.h"
 #include "../include/IncludePath.h"
-#include <cmath>
-#include <cstdlib>
 
 LabelEx::LabelEx(TextSetting* t_setting) {
     text_setting = t_setting;

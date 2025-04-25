@@ -22,4 +22,4 @@ protected:
                     m_size;
 };
 
-#endif //CONTROLLER_H
+#endif

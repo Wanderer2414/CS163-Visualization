@@ -423,7 +423,7 @@ void Form::handle() {
         create_textbox.setText(readFromFile(m_drop_box.getFiles()[0]));
     }
     //Play button;
-    //Stage 0: Pause, 1: Continue, 3:Replay
+    //Stage 0: Pause, 1: Continue, 3: Replay
     if (play_button.isPressed()) {
         if (play_button.getStage() == 0) {
             setPause(true);

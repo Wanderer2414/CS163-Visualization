@@ -13,7 +13,6 @@ bool Clock::get() {
     }
     return false;
 }
-
 float Clock::getDuration() const {
     return m_duration;
 }

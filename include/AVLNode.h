@@ -43,4 +43,5 @@ private:
     Vector2             m_text_position, m_point;
     Color               color;
 };
+
 #endif

@@ -6,7 +6,7 @@
 #include "Global.h"
 #include "Clock.h"
 
-class LabelEx: public Controller {
+class LabelEx : public Controller {
 public:
     LabelEx(TextSetting* text_setting);
     enum Align {
