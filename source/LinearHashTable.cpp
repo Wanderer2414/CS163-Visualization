@@ -199,7 +199,7 @@ void HT::HashTable::handle() {
     }
 };
 HT::HashTable::~HashTable() {
-
+    
 }
 int HT::HashTable::index(const int& value) {
     return value % m_memory.size();
