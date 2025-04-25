@@ -1,5 +1,7 @@
 #ifndef ABOUTUS_FORM_H
 #define ABOUTUS_FORM_H
+#include "Bubble.h"
+#include "Clock.h"
 #include "Controller.h"
 #include "Global.h"
 #include "LabelExtra.h"
@@ -12,18 +14,19 @@ public:
     virtual void    handle(),
                     draw();
 private:
-    Camera2D        camera;
     Vector2         m_window_size;
     FormSetting     form_setting;
     MoveContainer   main_container;
     LabelEx         main_letter;
     vector<Controller*> children;
+    vector<Bubble>      bubbles;
+    Clock               clock;
 };
 #define main_letter_content "\
 \\centerABOUT US\n\
 \\rightMonday, April 21st, 2025\n\
 \n\
-Dear future us (and anyone reading this),\n\
+Dear you (and us in the future),\n\
 \n\
     Are you a student in the same major and school as us? Or perhaps a fellow computer science student?\n\
     First of all, thank you for taking the time to follow our project!\n\

@@ -1,5 +1,6 @@
 #include "../include/AboutUsForm.h"
 #include "../include/General.h"
+#include <cmath>
 AboutUsForm::AboutUsForm(FormSetting f_setting, const Vector2& window_size):
     form_setting(f_setting),
     m_window_size(window_size),
@@ -14,15 +15,14 @@ AboutUsForm::AboutUsForm(FormSetting f_setting, const Vector2& window_size):
     main_letter.setPosition(10, 10);
     main_letter.setSize(680, 480);
     main_letter.setText(main_letter_content);
-    main_letter.setSize(680, main_letter.getAutoHeight());
 
-    main_container.setSize(700, main_letter.getAutoHeight() + 20);
+    main_container.setSize(700, m_window_size.y - 20);
     main_container.setPosition(m_window_size.x/2-main_container.getSize().x/2, 10);
     main_container.add_vertex(main_container.getPosition());
-    camera.offset = {0, 0};
-    camera.rotation = 0;
-    camera.zoom = 1;
-    camera.target = {0, 0};
+
+    main_letter.setSize(680, main_container.getSize().y - 20);
+
+    clock.setDuration(1);
 }
 int AboutUsForm::run() {
     float init = 0;
@@ -46,21 +46,53 @@ int AboutUsForm::run() {
 }
 void AboutUsForm::handle() {
     for (auto i:children) i->handle();
-    if (main_letter.getCursorPosition().y > m_window_size.y - 50 && main_container.getVertexDone() != -1) {
-        main_container.add_vertex({main_container.getPosition().x, main_container.getPosition().y - 100});
-        main_container.moveNext();
+    if (GetMouseWheelMoveV().y != 0) {
+        Vector2 pos = main_letter.getPosition();
+        pos.y = pos.y+GetMouseWheelMoveV().y*10;
+        main_letter.setPosition(pos.x, pos.y);
+    } 
+    if ((main_letter.getCursorPosition().y + 100 > main_container.getPosition().y + main_container.getSize().y) && (main_letter.getTextSize()!=main_letter.getCurrentTextSize())) {
+        Vector2 pos = main_letter.getPosition();
+        pos.y = pos.y-5;
+        main_letter.setPosition(pos.x, pos.y);
     }
     if (main_container.isHovered() && IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) {
         main_letter.skip();
-        main_container.add_vertex({main_container.getPosition().x, m_window_size.y - main_container.getSize().y - 10});
-        main_container.moveNext();
+        Vector2 pos = main_letter.getPosition();
+        pos.y = pos.y + main_container.getPosition().y + main_container.getSize().y - main_letter.getAutoHeight();
+        main_letter.setPosition(pos.x, pos.y);
     }
-    if (GetMouseWheelMoveV().y != 0) {
-        camera.offset = camera.offset + GetMouseWheelMoveV()*20;
+    if (clock.get() && rand()%4 && bubbles.size()<20) {
+        bubbles.push_back(Bubble());
+        bubbles.back().setRadius(10 + rand()%10);
+        bubbles.back().setColor(form_setting.reverse_color);
+        if (rand()%2) 
+            bubbles.back().setPosition(rand()%int(m_window_size.x/2 - 350), m_window_size.y+20);
+        else bubbles.back().setPosition(rand()%int(m_window_size.x/2 - 350) + m_window_size.x/2 + 350, m_window_size.y+20);
+    }
+    for (int i = 0; i<bubbles.size(); i++) {
+        Vector2 pos = bubbles[i].getPosition();
+        float radius = bubbles[i].getRadius();
+        if (pos.y<=10) {
+            bubbles[i].setRadius(10 + rand()%10);
+            pos.x = rand()%int(m_window_size.x/2 - 350);
+            pos.y = m_window_size.y+20;
+            if (rand()%2)
+                bubbles[i].setPosition(pos.x, pos.y);
+            else {
+                pos.x += m_window_size.x/2 + 350;
+                bubbles[i].setPosition(pos.x, pos.y);
+            }
+            continue;
+        } else {
+            radius = radius*exp(1.0/3*log(pos.y/(pos.y-(1.5 - pos.y/m_window_size.y))));
+            bubbles[i].setRadius(radius);
+            pos.y = pos.y-(1.5 - pos.y/m_window_size.y);
+            bubbles[i].setPosition(pos.x, pos.y);
+        }
     }
 }
 void AboutUsForm::draw() {
-    BeginMode2D(camera);
     for (auto i:children) i->draw();
-    EndMode2D();
+    for (auto& i:bubbles) i.draw();
 }

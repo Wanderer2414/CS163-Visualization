@@ -29,6 +29,8 @@ public:
                             clear();
     float                   margin;
     float                   getAutoHeight() const;
+    int                     getTextSize()       const,
+                            getCurrentTextSize() const;
     virtual void            update() override,
                             skip();
     Vector2                 getCursorPosition() const;

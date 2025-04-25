@@ -21,6 +21,12 @@ LabelEx::LabelEx(TextSetting* t_setting) {
 bool LabelEx::empty() const {
     return (m_text.size()<=1) && (m_text[0].empty());
 }
+int LabelEx::getTextSize() const {
+    return total_text_length;
+}
+int LabelEx::getCurrentTextSize() const {
+    return size;
+}
 void LabelEx::clear() {
     m_text.clear();
     m_text_position.clear();
