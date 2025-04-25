@@ -25,7 +25,7 @@ public:
     FormSetting     *form_setting;
     int             getWindowSizeIndex();
 private:
-    int             old_mode = -1;
+    int             old_mode = -1, return_value;
     TextSetting     title_setting;
     MoveLabel       Title;
     MoveButton      Start, Setting, Exit, AboutUs;

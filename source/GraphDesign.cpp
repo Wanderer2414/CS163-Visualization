@@ -98,7 +98,7 @@ Graph::Graph(const int& index, FormSetting f_setting, const Vector2& window_size
 
     collision_choice.setPosition(10, 75);
     collision_choice.setSize(100, 30);
-    collision_choice.setText("Collision");
+    collision_choice.setText("Dynamic");
 
     weight_choice.setPosition(170, 5);
     weight_choice.setSize(100, 30);
@@ -309,10 +309,10 @@ void Graph::draw() {
     }
     for (int i =0 ;i <vertices.size(); i++) 
         if (vertices[i]) vertices[i]->draw();
-    for (int i = 0; i<DMargins.size(); i++) DMargins[i]->draw();
+    for (int i = 0; i<DMargins.size(); i++) 
+        if (vertices[i]) DMargins[i]->draw();
     heap.draw();
     Form::draw();
-
     if (m_tool==0) 
         DrawTexture(cursor_icon, GetMousePosition().x, GetMousePosition().y-cursor_icon.height,form_setting.reverse_color);
     else 
@@ -617,7 +617,7 @@ void Graph::handle() {
 
 void Graph::search(const string& val) {
     float i = to_int(val);
-    if (i<vertices.size()) {
+    if (i<vertices.size() && vertices[i]) {
         int value = vertices[i]->getValue();
         if (search_type == 0)
             console.InsertNextMainCommand("Search " + to_string(value) + " with DFS");

@@ -72,27 +72,27 @@ void Graph::update(const int& index, const int& value) {
 }
 void Graph::update(const std::string &old_value, const std::string &new_value) {
     int i = to_int(old_value);
-    if (i<vertices.size()) {
+    if (i<vertices.size() && vertices[i]) {
         InsertNextMainCommand({update_code, 1.0f*i, 1.0f*vertices[i]->getValue(), 1.0f*to_int(new_value), 0.1});
     }
 }
 void Graph::prim(const std::string& str) {
     float i = to_int(str);
-    if (i<vertices.size()) {
+    if (i<vertices.size() && vertices[i]) {
         console.InsertNextMainCommand("Prim: start at vertex = " + to_string(vertices[i]->getValue()));
         InsertNextMainCommand({prim_code, i, 1});
     }
 }
 void Graph::kruskal(const string& str) {
     float i = to_int(str);
-    if (i<vertices.size()) {
+    if (i<vertices.size() && vertices[i]) {
         console.InsertNextMainCommand("Kruskal");
         InsertNextMainCommand({kruskal_code, i, 1});
     }
 }
 void Graph::Dijkstra(const string& str) {
     float i = to_int(str);
-    if (i<vertices.size()) {
+    if (i<vertices.size() && vertices[i]) {
         console.InsertNextMainCommand("Dijkstra at " + str);
         InsertNextMainCommand({Dijkstra_code, i, 1});
     }

@@ -7,13 +7,22 @@
 #include "LabelExtra.h"
 #include "MoveContainer.h"
 #include "SettingPackage.h"
+#include <cstddef>
 class AboutUsForm {
 public:
     AboutUsForm(FormSetting form_setting, const Vector2& window_size);
     int             run();
     virtual void    handle(),
                     draw();
+    ~AboutUsForm();
 private:
+    float           *music_sample, 
+                    music_length, music_current,
+                    bubble_velocity;
+    Wave            wave;
+    vector<float>   music_show;
+    size_t          samples_size, current_index;
+    Music           music;
     Vector2         m_window_size;
     FormSetting     form_setting;
     MoveContainer   main_container;

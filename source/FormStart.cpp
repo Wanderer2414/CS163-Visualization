@@ -117,11 +117,10 @@ int MenuStart::run() {
         ClearBackground(form_setting->background_color);
         draw();
         EndDrawing();
-        if (!setting_box.isHovered() && Start.getProgress()<0.05) return 1;
+        if (!setting_box.isHovered() && Start.getProgress()<0.05) return return_value;
         if (!setting_box.isHovered() && setting_box.isEnd() && Setting.isPressed()) setting_box.open();
         if (!setting_box.isHovered() && Exit.isPressed()) return -1;
         if (setting_box.isSizeChanged()) return 0;
-        if (AboutUs.isPressed()) return 2;
     };
     return 0;
 };
@@ -161,7 +160,9 @@ void MenuStart::handle() {
     if (setting_box.isSubmit()) {
         update();
     }
-    if (!setting_box.isHovered() && (Start.isPressed() || Exit.isPressed())) {
+    if (!setting_box.isHovered() && (Start.isPressed() || AboutUs.isPressed())) {
+        if (Start.isPressed()) return_value = 1;
+        else return_value = 2;
         Start.moveNext();
         AboutUs.moveNext();
         Setting.moveNext();

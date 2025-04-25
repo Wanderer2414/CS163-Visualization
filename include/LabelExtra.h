@@ -32,11 +32,14 @@ public:
     int                     getTextSize()       const,
                             getCurrentTextSize() const;
     virtual void            update() override,
-                            skip();
+                            skip(),
+                            Push();
     Vector2                 getCursorPosition() const;
     ~LabelEx();
 protected:
+    Sound                   wave1, wave2, wave3;
     Clock                   clock;
+    bool                    canReset, is_push;
     int                     size = 0, total_text_length;
     string                  dummy_string;
     vector<vector<string>>  m_text;

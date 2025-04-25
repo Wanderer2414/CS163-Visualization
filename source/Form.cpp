@@ -94,7 +94,7 @@ Form::Form(const int& index, FormSetting f_setting, const Vector2& window_size) 
     option_box.setText(2,"Update");
     option_box.setText(3,"Search");
     option_box.setText(4,"Remove");
-    option_box.setText(5, "Empty");
+    option_box.setText(5, "Clear");
     option_box.setVisible(false);
 
     console.setSize(TransX(450), TransY(200));
@@ -220,7 +220,7 @@ Form::Form(const int& index, FormSetting f_setting, const Vector2& window_size) 
     empty_box.setPosition(130, 225);
     empty_box.setSize(150, 50);
 
-    empty_button.setText("Empty");
+    empty_button.setText("Clear");
     empty_button.setSize(140, 40);
     empty_button.setPosition(135, 230);
 
