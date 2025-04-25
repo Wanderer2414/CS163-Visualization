@@ -190,7 +190,7 @@ void HT::HashTable::handle() {
     if (bound < m_workspace.y) m_camera.offset.y = clamp(m_camera.offset.y, bound, m_workspace.y);
     else m_camera.offset.y = m_workspace.y;
     if (random_size_button.isPressed()) {
-        m_memory_sz_textBox.setText(RandomCreateSize(100, 10));
+        m_memory_sz_textBox.setText(RandomCreateSize(200, 50));
     }
     m_camera.zoom = std::clamp(m_camera.zoom, 0.1f, 10.f);
     true_width = m_workspace.width/m_camera.zoom;
@@ -244,7 +244,7 @@ void HT::HashTable::update_console_add()
     console.InsertNextSubCommand("else {                                                                ");
     console.InsertNextSubCommand("   cur = index + 1                                                    ");
     console.InsertNextSubCommand("   while (table[cur] != value & cur != pos) cur++                     ");
-    console.InsertNextSubCommand("   if table[cur] = oldValue -> update to newValue                     ");
+    console.InsertNextSubCommand("   if table[cur] = oldValue -> update new value                       ");
     console.InsertNextSubCommand("   else oldValue is not found in table -> return                      ");
     console.InsertNextSubCommand("}                                                                     ");
 }
@@ -316,8 +316,61 @@ void HT::HashTable::update(const int& oldvalue, const int& newvalue)
             InsertNextSubCommand({ _unchoose, (float)cur, 0.25 });
             InsertNextSubCommand({ _choose, (float)cur, 0.5 });
             InsertNextSubCommand({ _remove, (float)cur, (float)oldvalue, 0.5 });
-            InsertNextSubCommand({ _add, (float)cur, (float)newvalue, 0.5 });
             InsertNextSubCommand({ _unchoose, (float)cur, 0.5 });
+
+            pos = index(newvalue);
+            InsertNextSubCommand({ _choose, (float)pos, 0.5 });
+            if (m_memory[pos].getValue() == newvalue) {
+                InsertNextSubCommand({ _unchoose, (float)pos, 0.25 });
+                InsertNextSubCommand({ _choose, (float)pos, 0.25 });
+                InsertNextSubCommand({ _unchoose, (float)pos, 0.25 });
+                InsertNextSubCommand({ _choose, (float)pos, 0.25 });
+                InsertNextSubCommand({ _unchoose, (float)pos, 0.25 });
+                InsertNextSubCommand({ _goDown, 2, 1 });
+                return;
+            }
+            if (!m_memory[pos].getValue()) {
+                InsertNextSubCommand({ _unchoose, (float)pos, 0.25 });
+                InsertNextSubCommand({ _choose, (float)pos, 0.25 });
+                InsertNextSubCommand({ _unchoose, (float)pos, 0.25 });
+                InsertNextSubCommand({ _choose, (float)pos, 0.5 });
+                InsertNextSubCommand({ _add, (float)pos, (float)newvalue, 0.5 });
+                InsertNextSubCommand({ _unchoose, (float)pos, 0.5 });
+                InsertNextSubCommand({ _goDown, 2, 1 });
+                return;
+            }
+            else {
+                InsertNextSubCommand({ _unchoose, (float)pos, 0.5 });
+
+                cur = pos + 1;
+                if (cur == m_memory.size()) cur = 0;
+                InsertNextSubCommand({ _choose, (float)cur, 0.5 });
+
+                while (cur != pos && m_memory[cur].getValue() && m_memory[cur].getValue() != newvalue) {
+
+                    InsertNextSubCommand({ _choose, (float)cur, 0.5 });
+                    InsertNextSubCommand({ _unchoose, (float)cur, 0.5 });
+                    cur++;
+                    if (cur == m_memory.size()) {
+                        cur = 0;
+                    }
+                }
+                if (!m_memory[cur].getValue()) {
+                    InsertNextSubCommand({ _choose, (float)cur, 0.25 });
+                    InsertNextSubCommand({ _unchoose, (float)cur, 0.25 });
+                    InsertNextSubCommand({ _choose, (float)cur, 0.25 });
+                    InsertNextSubCommand({ _unchoose, (float)cur, 0.25 });
+                    InsertNextSubCommand({ _choose, (float)cur, 0.5 });
+                    InsertNextSubCommand({ _add, (float)cur, (float)newvalue, 0.5 });
+                    InsertNextSubCommand({ _unchoose, (float)cur, 0.5 });
+                }
+                else if (m_memory[cur].getValue() == newvalue) {
+                    InsertNextSubCommand({ _choose, (float)cur, 0.25 });
+                    InsertNextSubCommand({ _unchoose, (float)cur, 0.25 });
+                    InsertNextSubCommand({ _choose, (float)cur, 0.25 });
+                    InsertNextSubCommand({ _unchoose, (float)cur, 0.25 });
+                }
+            }
             InsertNextSubCommand({ _goDown, 2, 1 });
         }
         else {
