@@ -5,7 +5,7 @@
 #include "SettingPackage.h"
 #include "Global.h"
 
-class OptionBox: public Controller {
+class OptionBox : public Controller {
 public:
     OptionBox(TextSetting* text_setting, const int& index, int& option_choice);
     TextSetting *text_setting;

@@ -7,7 +7,7 @@
 #include "SettingPackage.h"
 #include "SlowMotion.h"
 
-class HeapBlock: public Controller, public SlowMotion {
+class HeapBlock : public Controller, public SlowMotion {
 public:
     HeapBlock(ButtonSetting* button_setting, TextSetting* text_setting);
     ButtonSetting       *button_setting;
@@ -23,7 +23,7 @@ private:
     Vector2             m_des_position, m_weight_position;
 };
 
-class HeapVisual: public Controller, public MinHeap {
+class HeapVisual : public Controller, public MinHeap {
 public:
     HeapVisual(FormSetting* form_setting);
     FormSetting         *form_setting;

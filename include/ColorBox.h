@@ -3,7 +3,7 @@
 
 #include "Controller.h"
 
-class ColorBox: public Controller {
+class ColorBox : public Controller {
 public:
     ColorBox(const Color& a, const Color& b);
     float               getPercent() const;

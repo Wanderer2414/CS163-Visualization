@@ -13,7 +13,7 @@
 #include "MenuTab.h"
 #include "Global.h"
 
-class MenuBox: public Controller, public VerticalOpen {
+class MenuBox : public Controller, public VerticalOpen {
 public:
     MenuBox(FormSetting*& f_setting);
     int             getMode() const,

@@ -643,7 +643,7 @@ void SLL::SLLForm::console_add_search(const int &value)
 	console.InsertNextSubCommand("while (cur->val != " + to_string(value) + ")");
 	console.InsertNextSubCommand("cur=cur->next;");
 	console.InsertNextSubCommand("if (cur)");
-	console.InsertNextSubCommand("Hightlight");
+	console.InsertNextSubCommand("Highlight");
 	console.InsertNextSubCommand("return;");
 }
 

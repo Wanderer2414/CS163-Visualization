@@ -5,7 +5,7 @@
 #include "SettingPackage.h"
 #include "Global.h"
 
-class Label: public Controller {
+class Label : public Controller {
 public:
     Label(TextSetting* text_setting);
     enum Align {
