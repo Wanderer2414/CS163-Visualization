@@ -57,7 +57,7 @@ void HT::Node::draw() {
         DrawSmallText(text_setting, m_index_position, index_text);
     }
     else {
-        std::cerr << "Error: text_setting is null!" << std::endl;
+        std::cerr << "Error: Text_setting is null!" << std::endl;
     }
 }
 void HT::Node::handle() {

@@ -1,5 +1,7 @@
 #include "../include/General.h"
+
 extern Vector2 WindowSize;
+
 float abs(const Vector2& vector) {
     return sqrt(vector.x * vector.x + vector.y * vector.y);
 };

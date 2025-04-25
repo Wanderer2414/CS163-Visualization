@@ -8,7 +8,7 @@
 #include "TextButton.h"
 #include "Global.h"
 
-class Console :public TextButton, public Move {
+class Console : public TextButton, public Move {
 public:
     Console(ButtonSetting *b_setting, TextSetting* t_setting);
     int             getFillLine() const;
@@ -52,4 +52,4 @@ private:
     Clock       clock;
 };
 
-#endif //CONSOLE_H
+#endif

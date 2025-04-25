@@ -100,4 +100,4 @@ protected:
     void main_box_show(), main_box_hide();
 };
 
-#endif //FORM_H
+#endif

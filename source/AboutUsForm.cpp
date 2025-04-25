@@ -1,6 +1,6 @@
 #include "../include/AboutUsForm.h"
 #include "../include/General.h"
-#include <cmath>
+
 AboutUsForm::AboutUsForm(FormSetting f_setting, const Vector2& window_size):
     form_setting(f_setting),
     m_window_size(window_size),
@@ -13,7 +13,6 @@ AboutUsForm::AboutUsForm(FormSetting f_setting, const Vector2& window_size):
     main_container.push_back(&main_letter);
 
     main_letter.setPosition(10, 10);
-    main_letter.setSize(680, 480);
     main_letter.setText(main_letter_content);
 
     main_container.setSize(700, m_window_size.y - 20);
@@ -93,6 +92,6 @@ void AboutUsForm::handle() {
     }
 }
 void AboutUsForm::draw() {
-    for (auto i:children) i->draw();
-    for (auto& i:bubbles) i.draw();
+    for (const auto& child : children) child->draw();
+    for (auto& i : bubbles) i.draw();
 }

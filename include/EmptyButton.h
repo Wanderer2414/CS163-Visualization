@@ -5,7 +5,7 @@
 #include "SettingPackage.h"
 #include "Global.h"
 
-class EmptyButton: public Controller {
+class EmptyButton : public Controller {
 public:
     EmptyButton();
     bool                isHovered() const override,
@@ -23,4 +23,4 @@ protected:
                         m_is_pressed = false;
 };
 
-#endif //BUTTON_H
+#endif

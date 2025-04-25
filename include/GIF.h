@@ -1,9 +1,11 @@
 #ifndef GIF_H
 #define GIF_H
+
 #include "Clock.h"
 #include "Controller.h"
 #include "Move.h"
-class GIF: public Controller, public Move {
+
+class GIF : public Controller, public Move {
 public:
     GIF();
     Vector2 getPosition() const override;
@@ -17,6 +19,7 @@ public:
 private:
     int image_pointer = 0;
     vector<Texture2D> image_list;
-    Clock   clock;
+    Clock clock;
 };
+
 #endif

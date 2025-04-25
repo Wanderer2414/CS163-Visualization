@@ -20,4 +20,4 @@ protected:
                         m_is_pressed = false;
 };
 
-#endif //BUTTON_H
+#endif

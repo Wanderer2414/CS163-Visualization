@@ -5,7 +5,7 @@
 #include "SettingPackage.h"
 #include "Global.h"
 
-class ValueScroll: public Controller {
+class ValueScroll : public Controller {
 public:
     ValueScroll(TextSetting* text_setting);
     TextSetting             *text_setting                                                   ;

@@ -172,4 +172,4 @@ string to_string(const vector<vector<int>>& matrix);
 vector<vector<int>> to_matrix(const vector<string>& str);
 vector<vector<int>> create_graph(const int& vertex, const int& edge, const bool& is_direct, const bool& is_weight);
 
-#endif //GRAPH_H
+#endif
