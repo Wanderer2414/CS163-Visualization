@@ -79,8 +79,7 @@ HT::HashTable::HashTable(const int& index, FormSetting f_setting, const Vector2&
     Form(index, f_setting, window_size),
     size_label(&form_setting),
     m_memory_sz_textBox(&form_setting, &form_setting) {
-    cout << "Oke" << endl;
-    m_node_spacing = 30;
+    m_node_spacing = 10;
 
     m_memory_sz_textBox.setPosition(95, 45);
     m_memory_sz_textBox.setSize(170, 40);

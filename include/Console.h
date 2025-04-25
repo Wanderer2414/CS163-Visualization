@@ -3,11 +3,12 @@
 
 #include "Clock.h"
 #include "Controller.h"
+#include "Move.h"
 #include "SettingPackage.h"
 #include "TextButton.h"
 #include "Global.h"
 
-class Console :public TextButton {
+class Console :public TextButton, public Move {
 public:
     Console(ButtonSetting *b_setting, TextSetting* t_setting);
     int             getFillLine() const;
@@ -24,7 +25,9 @@ public:
                     setSize(const float& width, const float& y) override,
                     setText(const std::string& str)             override,
                     setTextOrigin(const Vector2& origin),
-                    setEnable(const bool& enable);
+                    setEnable(const bool& enable),
+                    setPosition(const float &x, const float &y) override;
+    Vector2         getPosition() const override;
     bool            isEmpty();
     ~Console();
 private:

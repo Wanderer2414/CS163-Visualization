@@ -121,6 +121,7 @@ int MenuStart::run() {
         if (!setting_box.isHovered() && setting_box.isEnd() && Setting.isPressed()) setting_box.open();
         if (!setting_box.isHovered() && Exit.isPressed()) return -1;
         if (setting_box.isSizeChanged()) return 0;
+        if (AboutUs.isPressed()) return 2;
     };
     return 0;
 };
@@ -170,9 +171,9 @@ void MenuStart::handle() {
     }
 }
 void MenuStart::draw() {
-    for (auto i : children) {
-        i->draw();
-    }
+    // Draw Title
+    // Calculate the position to center the text
+    for (auto i : children) i->draw();
 }
 void MenuStart::setMode(const int& mode) {
     setting_box.setMode(mode);

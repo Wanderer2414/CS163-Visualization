@@ -32,6 +32,7 @@ float TransY(const float& y);
 
 Vector2 Trans(const Vector2& vector);
 Vector2 TransToGlobalPoint(const Camera2D& camera, const Vector2& point);
+Vector2 TransToCameraPoint(const Camera2D& camera, const Vector2& point);
 
 Vector2 getCenter(const Vector2& a, const Vector2& b, const float& angular);
 

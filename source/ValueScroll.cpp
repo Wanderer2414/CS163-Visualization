@@ -43,8 +43,12 @@ void ValueScroll::draw() {
         EndScissorMode();
     }
 }
-void ValueScroll::select(const int& pointer) {
-    m_index = pointer;
+void ValueScroll::select(const int& p) {
+    m_index = pointer = p;
+    update_text();
+}
+void ValueScroll::add_velocity(const float& v) {
+    velocity = v;
 }
 void ValueScroll::handle() {
     m_is_hover = CheckCollisionPointRec(GetMousePosition(), {m_position.x, m_position.y, m_size.x, m_size.y});   
@@ -68,18 +72,6 @@ void ValueScroll::handle() {
         if (m_index >= m_text_position.size()) m_index = m_text_position.size() - 1;
         m_is_changed = true;
         update_text();
-    }
-    if (!m_is_hover && pointer!=m_index) {
-        float delta = pointer - m_index;
-        if (abs(delta)>0.1) pointer -= delta/10;
-        else pointer = m_index;
-        if (pointer >= m_text_position.size())
-            pointer -= m_text_position.size();
-        if (pointer < 0)
-            pointer += m_text_position.size();
-        m_index = round(pointer);
-        update_text();
-        m_is_changed = false;
     }
 }
 void ValueScroll::push_back(const float& value, const std::string& str) {
