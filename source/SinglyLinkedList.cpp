@@ -19,28 +19,23 @@ SLL::ListNode::ListNode(const int &value, const int &index, Camera2D& c) : TextB
 bool SLL::ListNode::isFocus() const {
 	return m_is_focus;	
 }
-
 int SLL::ListNode::getValue() const
 {
     return m_value;
 }
-
 int SLL::ListNode::getIndex() const
 {
     return m_index;
 }
-
 void SLL::ListNode::setValue(const int &value)
 {
 	m_value = value;
 	TextButton::setText(to_string(m_value));
 }
-
 void SLL::ListNode::setIndex(const int &index)
 {
 	m_index = index;
 }
-
 void SLL::ListNode::setPosition(const float &x, const float &y)
 {
 	TextButton::setPosition(x, y);
@@ -84,7 +79,6 @@ Vector2 SLL::ListNode::getCenter() const
 {
     return m_center;
 }
-
 Vector2 SLL::ListNode::getPosition() const
 {
 	return TextButton::getPosition();
@@ -205,7 +199,6 @@ void SLL::SLLForm::search(const std::string & x)
 	InsertNextMainCommand({_search,float(stoi(x))});
 }
 
-
 void SLL::SLLForm::draw()
 {
 	BeginMode2D(m_camera);
@@ -224,7 +217,6 @@ void SLL::SLLForm::draw()
     EndMode2D();
 	Form::draw();
 }
-
 
 void SLL::SLLForm::FetchNextCommand(const std::vector<float>& command)
 {
@@ -352,7 +344,6 @@ void SLL::SLLForm::FetchNextCommand(const std::vector<float>& command)
 		break;
 	}
 }
-
 
 void SLL::SLLForm::FetchPrevCommand(const std::vector<float>& command)
 {
@@ -559,7 +550,6 @@ void SLL::SLLForm::removeSilent(const int &value, const int &index)
         size--;
     }
 }
-
 //void SLL::SLLForm::moveCorner(const int &index)
 //{
 //	ListNode* cur = m_head;
@@ -689,7 +679,6 @@ void SLL::Arrow::handle()
 {
 	
 }
-
 void SLL::Arrow::draw()
 {
 	DrawLineEx(m_tail,m_t1,m_thickness,color);
