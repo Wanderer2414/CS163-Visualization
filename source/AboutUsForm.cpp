@@ -116,7 +116,7 @@ void AboutUsForm::handle() {
     }
 }
 void AboutUsForm::draw() {
-    for (auto i:children) i->draw();
+    for (const auto& child:children) child->draw();
     for (auto& i:bubbles) i.draw();
 
     for (int i = 0; i<m_window_size.x; i++) {
