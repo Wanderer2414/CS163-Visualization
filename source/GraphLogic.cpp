@@ -89,8 +89,10 @@ void Graph::pull_matrix(const int& graph) {
     vector<vector<int>> ans(vertices.size(), vector<int>(vertices.size(), 0));
     for (auto i: vertices_index) {
         for (Edge* edge:vertices[i]->edges) {
-            if (edge) ans[edge->m_start->getIndex()][edge->m_end->getIndex()] = edge->getWeight();
-            if (edge->reverse) ans[edge->m_end->getIndex()][edge->m_start->getIndex()] = edge->reverse->getWeight();
+            if (edge) {
+                ans[edge->m_start->getIndex()][edge->m_end->getIndex()] = edge->getWeight();
+                if (edge->reverse) ans[edge->m_end->getIndex()][edge->m_start->getIndex()] = edge->reverse->getWeight();
+            }
         }
     }
     extract_text_bx.setText(to_string(ans));
