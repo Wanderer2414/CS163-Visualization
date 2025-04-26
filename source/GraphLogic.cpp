@@ -23,11 +23,13 @@ string Graph::RandomInsert() const {
     return to_string(value);
 };
 string Graph::RandomNewValue() const {
-    if (vertices.empty()) return "";
+    int index = to_int(update_textbox_choice.getText());
+    if (vertices.empty() || !vertices[index]) return "";
     srand(clock());
     int value;
+
     do value = rand()%1000;
-    while (value == vertices[to_int(update_textbox_choice.getText())]->getValue());
+    while (value == vertices[index]->getValue());
     return to_string(value);
 }
 string Graph::RandomOldValue() const {
@@ -82,6 +84,7 @@ void Graph::add_edge(const int& globalIndex, const int& localIndex, const int& s
     }
 }
 void Graph::pull_matrix(const int& graph) {
+    if (graph >= vertices.size() || graph < 0 || !vertices[graph]) return ;
     auto vertices_index = getVertex(graph);
     vector<vector<int>> ans(vertices.size(), vector<int>(vertices.size(), 0));
     for (auto i: vertices_index) {
@@ -215,6 +218,7 @@ vector<vector<int>> create_graph_undir(const int& vertex, const int& edge) {
             done.pop();
         }
         start = done.front();
+        done.pop();
         int end = rand()%q.size();
         for (int i = 0; i<end; i++) {
             q.push(q.front());
@@ -222,9 +226,14 @@ vector<vector<int>> create_graph_undir(const int& vertex, const int& edge) {
         }
         end = q.front();
         q.pop();
-        count[start]++;
-        count[end]++;
-        if (count[end]<vertex-1) done.push(end);
+        if (count[end]<vertex-2) {
+            done.push(end);
+            count[end]++;
+        }
+        if (count[start]<vertex-2) {
+            done.push(start);
+            count[start]++;
+        }
         matrix[start][end] = matrix[end][start] = rand()%100 + 1;
     }
     for (int i = vertex-1; i<edge && done.size()>1; i++) {
@@ -236,6 +245,10 @@ vector<vector<int>> create_graph_undir(const int& vertex, const int& edge) {
         start = done.front();
         done.pop();
         int end = rand()%done.size();
+        for (int i = 0; i<done.size(); i++) {
+            done.push(done.front());
+            done.pop();
+        }
         for (int i = 0; i<end || matrix[start][done.front()];i ++) {
             done.push(done.front());
             done.pop();

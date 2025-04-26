@@ -39,7 +39,7 @@ FormSetting LightTheme = {
     source"/asset/images/dark/play-normal.png",
     source"/asset/images/dark/play-selected.png",
     source"/asset/images/dark/pause-normal.png",
-    source"/asset/dark/images/pause-selected.png",
+    source"/asset/images/dark/pause-selected.png",
     source"/asset/images/dark/replay-normal.png",
     source"/asset/images/dark/replay-selected.png",
     source"/asset/images/dark/skip_normal.png",

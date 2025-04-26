@@ -7,7 +7,7 @@
 #include "SettingPackage.h"
 #include "Vertex.h"
 
-class NotationBox:public Controller {
+class NotationBox : public Controller {
 public:
     NotationBox(FormSetting* form_setting);
     FormSetting         *form_setting;

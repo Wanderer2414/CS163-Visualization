@@ -6,6 +6,7 @@ Vector2 WindowSize;
 Application::Application()
 {
     InitWindow(window_sizes[window_size_index].x, window_sizes[window_size_index].y, "Visualization");
+    InitAudioDevice();
     SetTargetFPS(60);
     WindowSize = window_sizes[window_size_index];
     LightTheme.font = LoadFont(font_link);
@@ -72,4 +73,5 @@ void Application::run() {
 }
 Application::~Application() {
     CloseWindow();
+    CloseAudioDevice();
 }

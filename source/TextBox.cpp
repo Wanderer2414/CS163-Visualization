@@ -284,7 +284,6 @@ void TextBox::handle() {
         }
     }
 }
-
 void TextBox::draw() {
     DrawRectangleRounded({m_position.x, m_position.y, m_size.x, m_size.y}, button_setting->roundness, button_setting->segment, button_setting->normal_color);
     if (text_setting) {

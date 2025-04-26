@@ -1,7 +1,5 @@
 #include "../include/LabelExtra.h"
-#include "../include/General.h"
-#include <cmath>
-#include <cstdlib>
+#include "../include/IncludePath.h"
 
 LabelEx::LabelEx(TextSetting* t_setting) {
     text_setting = t_setting;
@@ -13,9 +11,15 @@ LabelEx::LabelEx(TextSetting* t_setting) {
     align = {Top | Middle};
     margin = 5;
     size = 0;
+
+    wave1 = LoadSound(keyboard_press_1);
+    wave2 = LoadSound(keyboard_press_2);
+    wave3 = LoadSound(keyboard_press_3);
+
     clock.setDuration(0.1);
     cursor_position = {0, 0};
     total_text_length = 0;
+    canReset = is_push = false;
     update_text();
 }
 bool LabelEx::empty() const {
@@ -59,7 +63,10 @@ void LabelEx::draw() {
                             DrawLineEx(cursor_position, {x, pos.y + text_setting->font_size}, 3.f, text_setting->color);
                         }
                         n-=m_text[i][index+count].size();
-                        if (!n) clock.setDuration(1.0f*(rand()%3+2)/10);
+                        if (!n && canReset) {
+                            clock.setDuration(1.0f*(rand()%3+5)/10);
+                            canReset = false;
+                        }
                     }
                     else { 
                         DrawTextEx(text_setting->font, m_text[i][index+count].substr(0, n).c_str(), pos, text_setting->font_size, text_setting->spacing,text_setting->color);
@@ -72,7 +79,10 @@ void LabelEx::draw() {
                         cursor_position = {x, pos.y};
                         DrawLineEx(cursor_position, {x, pos.y + text_setting->font_size}, 3.f, text_setting->color);
                         n = 0;
-                        clock.setDuration(1.0f*(rand()%30)/100);
+                        if (canReset) {
+                            clock.setDuration(1.0f*(rand()%3+2)/10);
+                            canReset = false;
+                        }
                     }
                     pos.x += text_size[i][index+count] + spacing[i][j];
                 }
@@ -82,22 +92,28 @@ void LabelEx::draw() {
     }
 }
 void LabelEx::handle() {
-    if (clock.get() && size < total_text_length) {
+    if ((clock.get() || is_push) && size < total_text_length) {
+        is_push = false;
         int r = rand()%20;
-        if (dummy_string.empty()) {
-            if (r>18) {
-                dummy_string=rand()%26+'a';
-            }
-            else size++;
+        canReset = true;
+        if (r>16 && dummy_string.size()<5) {
+            dummy_string=rand()%26+'a';
         }
         else {
-            int r = rand()%20;
-            if (r>10 && dummy_string.size() < 5) {
-                dummy_string=rand()%26+'a';
+            if (dummy_string.empty()) {
+                if (rand()%2) PlaySound(wave1);
+                else PlaySound(wave2);
+                size++;
             }
-            else dummy_string.pop_back();
+            else {
+                dummy_string.pop_back();
+                PlaySound(wave3);
+            }
         }
     }
+}
+void LabelEx::Push()  {
+    is_push = true;
 }
 void LabelEx::setText(const std::string& str) {
     m_text.clear();
@@ -217,5 +233,7 @@ Vector2 LabelEx::getCursorPosition() const {
     return cursor_position;
 }
 LabelEx::~LabelEx() {
-
+    UnloadSound(wave1);
+    UnloadSound(wave2);
+    UnloadSound(wave3);
 }

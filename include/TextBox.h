@@ -6,7 +6,7 @@
 #include "TextButton.h"
 #include "Global.h"
 
-class TextBox: public Label {
+class TextBox : public Label {
 public:
     TextBox(ButtonSetting* button_setting, TextSetting* text_setting);
     ButtonSetting       *button_setting;

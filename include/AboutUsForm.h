@@ -1,5 +1,6 @@
 #ifndef ABOUTUS_FORM_H
 #define ABOUTUS_FORM_H
+
 #include "Bubble.h"
 #include "Clock.h"
 #include "Controller.h"
@@ -7,13 +8,22 @@
 #include "LabelExtra.h"
 #include "MoveContainer.h"
 #include "SettingPackage.h"
+
 class AboutUsForm {
 public:
     AboutUsForm(FormSetting form_setting, const Vector2& window_size);
     int             run();
     virtual void    handle(),
                     draw();
+    ~AboutUsForm();
 private:
+    float           *music_sample, 
+                    music_length, music_current,
+                    bubble_velocity;
+    Wave            wave;
+    vector<float>   music_show;
+    size_t          samples_size, current_index;
+    Music           music;
     Vector2         m_window_size;
     FormSetting     form_setting;
     MoveContainer   main_container;

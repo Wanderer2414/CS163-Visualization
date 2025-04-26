@@ -88,7 +88,8 @@ public:
 private:
     bool                m_is_physics,
                         m_is_lock;
-    int                 chosen,
+    int                 chosen, 
+                        edge_chosen,
                         m_mode,
                         m_type,
                         m_weight,
@@ -97,7 +98,9 @@ private:
                         color_pointer;
 
     Label               edge_label, vertex_label;
-    TextBox             edge_textbox, vertex_textbox, extract_text_bx, prim_textbox, kruskal_textbox, pull_input_textbox,
+    TextBox             edge_textbox, vertex_textbox, 
+                        extract_text_bx, prim_textbox, kruskal_textbox, pull_input_textbox,
+                        update_edge_textbox,
                         Dijkstra_textbox;
 
     TextureButton       random_edge_button, random_vertex_button, random_prim_button, random_kruskal_button,
@@ -113,9 +116,14 @@ private:
 
     vector<Edge*>       edges;
 
-    Container           setting_box, tools_box, extract_box, prim_box, kruskal_box, Dijkstra_box;
-
-    Container           search_graph_box;
+    Container           setting_box, 
+                        tools_box, 
+                        extract_box, 
+                        prim_box, 
+                        kruskal_box, 
+                        Dijkstra_box,
+                        search_graph_box,
+                        update_edge;
 
     TextureButton       match_tool, filled_tool, scissors_tool;
     
@@ -172,4 +180,4 @@ string to_string(const vector<vector<int>>& matrix);
 vector<vector<int>> to_matrix(const vector<string>& str);
 vector<vector<int>> create_graph(const int& vertex, const int& edge, const bool& is_direct, const bool& is_weight);
 
-#endif //GRAPH_H
+#endif

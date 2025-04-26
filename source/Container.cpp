@@ -15,10 +15,12 @@ bool Container::isFocus() const {
 }
 void Container::draw() {
     if (form_setting) {
-        BeginScissorMode(m_position.x, m_position.y, m_size.x, m_size.y);
-        DrawRectangleRounded({m_position.x, m_position.y, m_size.x, m_size.y}, form_setting->roundness, form_setting->segment,  form_setting->middle_color);
-        for (auto& i:children) i->draw();
-        EndScissorMode();
+        if (m_is_visible) {
+            BeginScissorMode(m_position.x, m_position.y, m_size.x, m_size.y);
+            DrawRectangleRounded({m_position.x, m_position.y, m_size.x, m_size.y}, form_setting->roundness, form_setting->segment,  form_setting->middle_color);
+            for (auto& i:children) i->draw();
+            EndScissorMode();
+        }
     } else std::cerr << "[FORM SETTING DOES NOT EXIST IN CONTAINER!]" << endl;
 }
 void Container::setPosition(const float& x, const float& y) {
