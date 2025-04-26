@@ -4,7 +4,7 @@
 #include "Clock.h"
 #include "Controller.h"
 
-class ZoomInTransition:public Controller {
+class ZoomInTransition : public Controller {
 public:
     Controller* host;
     ZoomInTransition();

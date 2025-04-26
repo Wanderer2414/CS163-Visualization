@@ -101,7 +101,6 @@ namespace SLL {
 
 		void remove(const int& value, const int& index);
 		void removeSilent(const int& value,const int& index);
-		void moveCorner(const int& index);
 		void console_add_remove(const int& value);
 
 		void update(const int& old_value, const int& new_value);

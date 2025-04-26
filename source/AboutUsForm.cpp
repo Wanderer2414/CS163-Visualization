@@ -1,8 +1,7 @@
 #include "../include/AboutUsForm.h"
 #include "../include/IncludePath.h"
 #include "../include/General.h"
-#include <cmath>
-#include <raylib.h>
+
 AboutUsForm::AboutUsForm(FormSetting f_setting, const Vector2& window_size):
     form_setting(f_setting),
     m_window_size(window_size),

@@ -550,13 +550,6 @@ void SLL::SLLForm::removeSilent(const int &value, const int &index)
         size--;
     }
 }
-//void SLL::SLLForm::moveCorner(const int &index)
-//{
-//	ListNode* cur = m_head;
-//	while (cur->getIndex() != index) cur = cur->m_next;
-//	cur->setDuration(getSpeed());
-//	cur->setSlowPosition(m_workspace.width,m_workspace.height);
-//}
 void SLL::SLLForm::console_add_remove(const int &value)
 {
 	console.InsertNextMainCommand("Remove " + to_string(value));
