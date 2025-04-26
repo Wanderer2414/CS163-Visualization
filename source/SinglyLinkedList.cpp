@@ -221,21 +221,6 @@ void SLL::SLLForm::FetchNextCommand(const std::vector<float>& command)
 	if (command.empty()) return;
 	switch ((int)command[0])
 	{
-	//case _moveCorner:
-	//{
-	//	moveCorner(int(command[1]));
-	//	setDuration(1);
-	//	break;
-	//}
-	//case _showArrow:
-	//{
-	//	int index = int(command[1]);
-	//	ListNode* cur = m_head;
-	//	while (cur->getIndex() != index) cur = cur->m_next;
-	//	cur->m_arrow.show = true;
-	//	setDuration(int(command[2]));
-	//	break;
-	//}
 	case _insert:
 	{
 		console.goDown();
@@ -330,7 +315,6 @@ void SLL::SLLForm::FetchNextCommand(const std::vector<float>& command)
 	case _rePo:
 	{
 		rePosition();
-		//setDuration(1);
 		break;
 	}
 	case _rePoCur:
@@ -348,20 +332,6 @@ void SLL::SLLForm::FetchPrevCommand(const std::vector<float>& command)
 	if (command.empty()) return;
 	switch ((int)command[0])
 	{
-	/*	case _forRemove: 
-		{
-			moveCorner(int(command[1]));
-			setDuration(1);
-			break;
-		}
-		case _showArrow:
-		{
-			int index = int(command[1]);
-			ListNode* cur = m_head;
-			while (cur->getIndex() != index) cur = cur->m_next;
-			cur->m_arrow.show = false;
-			break;
-		}*/
 		case _rePoCur:
 		{
 			if (int(command[1] == -1)) return;
@@ -408,10 +378,6 @@ void SLL::SLLForm::FetchPrevCommand(const std::vector<float>& command)
 		case _removeSilent:
 		{
 			insertSilent(int(command[1]),int(command[2]));
-			/*int index = int(command[2]);
-			ListNode* cur = m_head;
-			while (cur->getIndex() != index) cur = cur->m_next;
-			cur->m_arrow.show = true;*/
 			rePosition();
 			break;
 		}
@@ -454,9 +420,7 @@ void SLL::SLLForm::insert(const int &value, const int &index)
 	InsertNextSubCommand({_choose,float(cur->getIndex()),1});
 	InsertNextSubCommand({_unchoose,float(cur->getIndex()),1});
 	InsertNextSubCommand({_insertSilent,float(value),float(index)});
-	//InsertNextSubCommand({_forRemove,float(cur->getIndex()+1)});
 	InsertNextSubCommand({_rePo});
-	//InsertNextSubCommand({_showArrow,float(cur->getIndex()+1),1});
 	InsertNextSubCommand({_choose,float(cur->getIndex()+1),1});
 	InsertNextSubCommand({_unchoose,float(cur->getIndex()+1),1});
 }
@@ -472,9 +436,7 @@ void SLL::SLLForm::insertSilent(const int& value, const int& index) {
     cur->m_next = newNode;
     newNode->button_setting = &form_setting;
     newNode->text_setting = &form_setting;
-    //newNode->setPosition(m_workspace.width,m_workspace.height);
 	newNode->setSize(m_node_size,m_node_size);
-	//newNode->m_arrow.show = false;
     ListNode* temp = newNode->m_next;
     while (temp) {
         temp->setIndex(temp->getIndex() + 1);
@@ -513,7 +475,6 @@ void SLL::SLLForm::remove(const int &value,const int& index)
 		InsertNextSubCommand({_rePoCur,float(cur->getIndex())});
 		InsertNextSubCommand({_GoDowm,1,0});
 		InsertNextSubCommand({_choose,float(cur->getIndex()),1});
-		//InsertNextSubCommand({_moveCorner,float(index)});
 		InsertNextSubCommand({_removeSilent,float(value),float(index)});
 		InsertNextSubCommand({_rePo});
 		InsertNextSubCommand({_unchoose,float(cur->getIndex()),1});

@@ -6,7 +6,7 @@
 #include "SlowMotion.h"
 #include "Global.h"
 
-class Button: public Controller {
+class Button : public Controller {
 public:
     Button();
     bool                isHovered() const override,

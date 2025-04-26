@@ -5,7 +5,7 @@
 #include "SettingPackage.h"
 #include "Global.h"
 
-class Container: public Controller {
+class Container : public Controller {
 public:
     Container(FormSetting* form_setting);
     FormSetting         *form_setting;

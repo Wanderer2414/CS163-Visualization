@@ -3,7 +3,7 @@
 
 #include "Controller.h"
 
-class Bubble: public Controller {
+class Bubble : public Controller {
 public:
     Bubble();
     float               getRadius() const;

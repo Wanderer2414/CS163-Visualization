@@ -7,7 +7,7 @@ class Vertex;
 
 void DrawArc(const Vector2& start, const Vector2& end, const float& angular, const Color& color);
 
-class Edge:public Controller {
+class Edge : public Controller {
 public:
     Edge(Vertex* start, Vertex* end, const int& globalIndex, const int& localIndex, TextSetting* text_setting);
     TextSetting*    text_setting;

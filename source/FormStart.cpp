@@ -47,7 +47,7 @@ MenuStart::MenuStart(FormSetting* f_setting, const Vector2& windowSize) :
     Start.moveNext();
 
     Setting.setSize(TransX(400), TransY(60));
-    Setting.setText("Setting");
+    Setting.setText("Settings");
     Setting.setPosition(m_windowSize.x*2, m_windowSize.y / 2 - Setting.getSize().y / 2);
     Setting.add_vertex({m_windowSize.x*2, m_windowSize.y / 2 - Setting.getSize().y / 2});
     Setting.add_vertex({m_windowSize.x - Setting.getSize().x -100, m_windowSize.y / 2 - Setting.getSize().y / 2});

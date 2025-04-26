@@ -5,7 +5,7 @@
 #include "TextButton.h"
 #include "Global.h"
 
-class DropBox:public Button {
+class DropBox : public Button {
 public:
     DropBox();
     bool            isVisible() const,

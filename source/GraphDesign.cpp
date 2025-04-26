@@ -227,11 +227,11 @@ Graph::Graph(const int& index, FormSetting f_setting, const Vector2& window_size
     //Search box controller
     dfs_choice.setSize(100, 30);
     dfs_choice.setPosition(15, 5);
-    dfs_choice.setText("Depth first search");
+    dfs_choice.setText("Depth-first search");
 
     bfs_choice.setSize(200, 30);
     bfs_choice.setPosition(15, 50);
-    bfs_choice.setText("Breath first search");
+    bfs_choice.setText("Breath-first search");
 
     search_graph_box.setPosition(option_box.getAutoSize().x + 15, 30);
     search_graph_box.setSize(search_box.getSize().x, 100);
