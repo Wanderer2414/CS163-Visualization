@@ -1,7 +1,7 @@
 #ifndef INCLUDEPATH_H
 #define INCLUDEPATH_H
 
-// For Thinh: CS163-DSAVisualization
+// For Thinh: "D:/DSA"
 //For ThienHoa: ../
 #define source "../"
 
