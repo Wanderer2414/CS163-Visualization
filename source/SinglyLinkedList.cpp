@@ -109,10 +109,8 @@ SLL::SLLForm::SLLForm(const int &index, FormSetting f_setting, const Vector2 &wi
 	m_cur->button_setting = &form_setting;
 	m_cur->setPosition(m_dummy->getPosition().x,m_dummy->getPosition().y);
 	m_cur->setSize(m_node_size,m_node_size);
-	m_cur->m_arrow.show = true;
 	showCur = false;
 
-	m_head->m_arrow.show = true;
 	m_dummy->m_next = null;
 	rePosition();
 }
