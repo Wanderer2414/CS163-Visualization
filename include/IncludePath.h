@@ -1,8 +1,9 @@
 #ifndef INCLUDEPATH_H
 #define INCLUDEPATH_H
 
-// For Thinh
-#define source "CS163-DSAVisualization"
+// For Thinh: CS163-DSAVisualization
+//For ThienHoa: ../
+#define source "../"
 
 #define font_link source"/asset/Font/PublicSans-Regular.ttf"
 
