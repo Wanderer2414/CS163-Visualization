@@ -1,9 +1,7 @@
 #ifndef INCLUDEPATH_H
 #define INCLUDEPATH_H
 
-// For Thinh: "D:/DSA"
-//For ThienHoa: ../
-#define source "../"
+#define source "."
 
 #define font_link source"/asset/Font/PublicSans-Regular.ttf"
 

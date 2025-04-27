@@ -5,14 +5,11 @@ project(DSAVisualization)
 # Set C++ standard
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
+set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_SOURCE_DIR})
 
-# Set the path to Raylib (adjust this to your actual folder structure)
-set(RAYLIB_INCLUDE_DIR "${CMAKE_SOURCE_DIR}/raylib/include")
-set(RAYLIB_LIB_DIR "${CMAKE_SOURCE_DIR}/raylib/lib")
-
+add_subdirectory(${CMAKE_SOURCE_DIR}/raylib)
 # Include directories
 include_directories(
-    ${RAYLIB_INCLUDE_DIR}
     ${CMAKE_SOURCE_DIR}/include
 )
 
@@ -20,16 +17,11 @@ include_directories(
 file(GLOB SOURCES
     ${CMAKE_SOURCE_DIR}/source/*.cpp
 )
-
-# Create executable
 add_executable(DSAVisualization ${SOURCES})
 
-# Link Raylib (MinGW-compatible .a or .dll.a file)
-# Example: raylib.dll.a or libraylib.a
-# Adjust the name to match the actual file you have in your lib folder
-target_link_libraries(DSAVisualization
-    ${RAYLIB_LIB_DIR}/libraylib.a
-    opengl32
-    gdi32
-    winmm
+add_custom_command(TARGET DSAVisualization POST_BUILD
+    COMMAND ${CMAKE_COMMAND} -E copy_directory_if_different
+        ${CMAKE_SOURCE_DIR}/asset ${CMAKE_BINARY_DIR}/asset
 )
+
+target_link_libraries(DSAVisualization PRIVATE raylib)

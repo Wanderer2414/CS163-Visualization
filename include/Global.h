@@ -3,7 +3,7 @@
 
 #define _USE_MATH_DEFINES
 
-#include "../raylib/raylib.h"
+#include <raylib.h>
 #include <iostream>
 #include <fstream>
 #include <sstream>
