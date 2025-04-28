@@ -13,8 +13,10 @@ public:
     virtual void        draw() override,
                         handle() override;
 
-    virtual void        setValue(const int& value);
-    virtual Vector2     getPosition() const override;
+    virtual void        setValue(const int& value),
+                        setPosition(const float& x, const float& y) override;
+    virtual Vector2     getPosition() const override,
+                        getCenter() const;
     ~Node();
 private:
 };

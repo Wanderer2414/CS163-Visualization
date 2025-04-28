@@ -1,6 +1,8 @@
 ﻿#include "../include/AVLTree.h"
 #include "../include/General.h"
 
+extern Camera2D m_camera;
+
 AVLTreeForm::AVLTreeForm(const int& index) :
 	Form(index) {
 	m_root = 0;

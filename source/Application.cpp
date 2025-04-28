@@ -25,17 +25,17 @@ Application::Application()
 void Application::run() {
     int form_index = 0;
     int mode = 1;
-    FormSetting* form_setting = &DarkTheme;
+    setting = &DarkTheme;
     while (!WindowShouldClose()) {
         switch (form_index) {
         case 0: {
-            MenuStart menuStart(form_setting, window_sizes[window_size_index]);
+            MenuStart menuStart(setting, window_sizes[window_size_index]);
             menuStart.setMode(mode);
             menuStart.setSizeIndex(window_size_index);
             form_index = menuStart.run();
             mode = menuStart.getMode();
-            if (mode == 0) form_setting = &LightTheme;
-            else form_setting = &DarkTheme;
+            if (mode == 0) setting = &LightTheme;
+            else setting = &DarkTheme;
             int wsize_index = menuStart.getWindowSizeIndex();
             if (wsize_index != window_size_index) {
                 window_size_index = wsize_index;
@@ -45,12 +45,12 @@ void Application::run() {
         }
             break;
         case 1: {
-            Menu menu(*form_setting, window_sizes[window_size_index]);
+            Menu menu(*setting, window_sizes[window_size_index]);
             form_index = menu.run();
         }
             break;
         case 2: {
-            AboutUsForm aboutus(*form_setting, window_sizes[window_size_index]);
+            AboutUsForm aboutus(*setting, window_sizes[window_size_index]);
             form_index = aboutus.run();
         }
             break;

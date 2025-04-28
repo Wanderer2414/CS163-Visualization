@@ -2,6 +2,8 @@
 #include "../include/General.h"
 #include "../include/RaylibExtra.h"
 
+extern Camera2D m_camera;
+
 HT::Node::Node(ButtonSetting* b_setting, TextSetting* t_setting, Camera2D& c): 
     button_setting(b_setting), text_setting(t_setting), camera(c) {
     m_value = 0;

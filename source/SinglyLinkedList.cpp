@@ -1,5 +1,6 @@
 #include "../include/SinglyLinkedList.h"
 
+extern Camera2D m_camera;
 int getRandom(int min, int max) {
     static std::random_device rd; 
     static std::mt19937 gen(rd());

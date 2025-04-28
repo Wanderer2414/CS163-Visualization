@@ -1,9 +1,11 @@
 #include "Form.h"
 #include "General.h"
+#include "raylib.h"
 
 extern FormSetting* setting;
 extern Vector2 WindowSize;
 extern const vector<string> form_name;
+Camera2D m_camera;
 
 Form::Form(const int& index) :
     m_window_size(WindowSize),
