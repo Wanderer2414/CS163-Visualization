@@ -1,5 +1,6 @@
-#include "../include/Form.h"
-#include "../include/General.h"
+#include "Form.h"
+#include "Application.h"
+#include "General.h"
 
 Form::Form(const int& index, FormSetting f_setting, const Vector2& window_size) :
     m_window_size(window_size),
@@ -102,18 +103,17 @@ Form::Form(const int& index, FormSetting f_setting, const Vector2& window_size) 
     console.setTextOrigin({ TransX(10),TransY(10) });
     console.add_vertex(console.getPosition());
     console.add_vertex({m_window_size.x, console.getPosition().y});
+    console.moveNext();
 
     console_button.setSize(20, console.getSize().y);
     console_button.setPosition(console.getPosition().x - 20, console.getPosition().y);
     console_button.add_vertex(console_button.getPosition());
     console_button.add_vertex({m_window_size.x-20, console_button.getPosition().y});
+    console_button.moveNext();
 
     buttonTab.setSize(TransX(400), TransY(40));
     buttonTab.setPosition(m_window_size.x/2 - buttonTab.getSize().x/2, TransY(10));
-    buttonTab.push_back("AVL Tree");
-    buttonTab.push_back("Graph");
-    buttonTab.push_back("Hash Table");
-    buttonTab.push_back("Singly Linked List");
+    for (const auto& i:form_name) buttonTab.push_back(i);
     buttonTab.setSelection(index);
 
     create_label.setText("Create");

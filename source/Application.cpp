@@ -1,8 +1,18 @@
 #include "../include/Application.h"
 #include "../include/IncludePath.h"
 #include "../include/Global.h"
+#include "RedBlackForm.h"
 
 Vector2 WindowSize;
+
+const vector<string> form_name {
+    "AVL Tree",
+    "Graph",
+    "Hash Table",
+    "Singly Linked List",
+    "Red black tree"
+};
+
 Application::Application()
 {
     InitWindow(window_sizes[window_size_index].x, window_sizes[window_size_index].y, "Visualization");
@@ -62,6 +72,11 @@ void Application::run() {
         case 6: {
             SLL::SLLForm SLLForm(3, *form_setting, window_sizes[window_size_index]);
             form_index = SLLForm.run();
+        }
+            break;
+        case 7: {
+            RedBlackForm RBForm(4, *form_setting, window_sizes[window_size_index]);
+            form_index = RBForm.run();
         }
             break;
         default: {

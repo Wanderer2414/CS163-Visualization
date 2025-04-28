@@ -1,23 +1,10 @@
-#include "../include/GUI.h"
-#include "../include/General.h"
+#include "GUI.h"
+#include "SettingPackage.h"
+#include "RaylibExtra.h"
+#include "raylib.h"
 
-Node::Node(const int& index, const int& val): TextButton(0, 0), m_index(index), m_value(val) {
+Node::Node(ButtonSetting* button_setting, TextSetting* text_setting): TextButton(button_setting, text_setting) {
     setSize(50, 50);
-    setText(std::to_string(val));
-    left = right = parent = nullptr;
-    m_height = 1;
-    is_animating = false;
-    anim_color = WHITE;
-}
-int Node::getIndex() const {
-    return m_index;
-}
-int Node::getValue() const {
-    return m_value;
-}
-void Node::setPosition(const float& x, const float& y) {
-    TextButton::setPosition(x, y);
-    m_center = m_position + m_size / 2;
 }
 void Node::handle() {
     TextButton::handle();
@@ -25,37 +12,15 @@ void Node::handle() {
 }
 void Node::draw() {
     if (button_setting) {
-        Color cur;
-        if (is_animating) {
-            cur = anim_color;
-        }
-        else {
-            if (m_is_hovered) cur = button_setting->hover_color;
-            else cur = button_setting->normal_color;
-        }
-        DrawEllipse(m_center.x, m_center.y, m_size.x / 2, m_size.y / 2, cur); // M
-        DrawTextEx(text_setting->font, m_text.c_str(), m_text_position, text_setting->font_size, text_setting->spacing, text_setting->color); // M
+        Color color = button_setting->normal_color;
+        if (m_is_pressed) color = button_setting->click_color;
+        else if (m_is_hovered) color = button_setting->hover_color;
+        DrawCircleV(m_position, m_size.x, color);
+        DrawText(text_setting, m_text_position, m_text);
     }
-}
-void Node::updateHeight()
-{
-    int leftHeight = left ? left->getHeight() : 0;
-    int rightHeight = right ? right->getHeight() : 0;
-    m_height = 1 + std::max(leftHeight, rightHeight);
-}
-
-Vector2 Node::getCenter() const {
-    return m_center;
 }
 Vector2 Node::getPosition() const {
     return TextButton::getPosition();
-}
-void Node::setValue(int x) 
-{
-    m_value = x;
-}
-int Node::getHeight() const {
-    return m_height;
 }
 Node::~Node() {
 

@@ -7,42 +7,33 @@ Menu::Menu(FormSetting f_setting, const Vector2& windowSize) :
     m_windowSize(windowSize),
     return_value(-1)
 {
+    form_button.resize(form_name.size(), MoveButton(&form_setting, &form_setting));
 
-    children.push_back(&BSTForm);
-    children.push_back(&GraphForm);
-    children.push_back(&HashTableForm);
     children.push_back(&Back);
-    children.push_back(&SLLForm);
     children.push_back(&MenuDSA);
+    for (auto& i:form_button) children.push_back(&i);
 
-    BSTForm.setSize(m_windowSize.x/2-10, m_windowSize.y/2-70);
-    BSTForm.setButtonStage(0, form_setting.AVL1, form_setting.AVL3_hovered);    
-    BSTForm.setPosition(-BSTForm.getSize().x-100, 100);
-    BSTForm.add_vertex({-BSTForm.getSize().x-100, 100});
-    BSTForm.add_vertex({0, 100});
-    BSTForm.moveNext();
+    float old_y = 100;
+    for (int i = 0; i<form_button.size(); i++) {
+        if (i%2) {
+            form_button[i].setSize(m_windowSize.x-20, 40);
+            form_button[i].setPosition(-form_button[i].getSize().x*(i+1)-100, old_y);
+            form_button[i].add_vertex({form_button[i].getSize().x, old_y});
+            form_button[i].add_vertex({0, old_y});
+            form_button[i].setText(form_name[i]);
+            form_button[i].moveNext();
+        }
+        else {
+            form_button[i].setSize(m_windowSize.x-20, 40);
+            form_button[i].setPosition(m_windowSize.x+100, old_y);
+            form_button[i].add_vertex({m_windowSize.x*(i+1)+100, old_y});
+            form_button[i].add_vertex({m_windowSize.x - form_button[i].getSize().x, old_y});
+            form_button[i].setText(form_name[i]);
+            form_button[i].moveNext();
+        }
+        old_y+=form_button[i].getSize().y + 10;
+    }
 
-    GraphForm.setSize(m_windowSize.x/2-10, m_windowSize.y/2-70);
-    GraphForm.setButtonStage(0, form_setting.Graph1, form_setting.Graph2_hovered);
-    GraphForm.setPosition(m_windowSize.x+100, 100);
-    GraphForm.add_vertex({m_windowSize.x+100, 100});
-    GraphForm.add_vertex({m_windowSize.x/2+10, 100});
-    GraphForm.moveNext();
-
-    HashTableForm.setSize(m_windowSize.x/2-10, m_windowSize.y/2-70);
-    HashTableForm.setButtonStage(0, form_setting.HT0, form_setting.HT3_hovered);
-    HashTableForm.setPosition(-HashTableForm.getSize().x*2, m_windowSize.y/2+50);
-    HashTableForm.add_vertex({-HashTableForm.getSize().x*2, HashTableForm.getPosition().y});
-    HashTableForm.add_vertex({0, HashTableForm.getPosition().y});
-    HashTableForm.moveNext();
-
-    SLLForm.setSize(m_windowSize.x/2-10, m_windowSize.y/2-70);
-    SLLForm.setButtonStage(0, form_setting.SLL0, form_setting.SLL2_hovered);
-    SLLForm.setPosition(m_windowSize.x*2, m_windowSize.y/2+50);
-    SLLForm.add_vertex({m_windowSize.x*2, SLLForm.getPosition().y});
-    SLLForm.add_vertex({m_windowSize.x/2+10, SLLForm.getPosition().y});
-    SLLForm.moveNext();
-    
     Back.setButtonStage(0, form_setting.back_normal, form_setting.back_hovered);
     Back.setSize(40, 40);
     Back.setPosition(-100, 10);
@@ -86,36 +77,17 @@ void Menu::handle() {
     if (Back.isPressed()) {
         return_value = 0;
         Back.moveNext();
-        BSTForm.moveNext();
-        GraphForm.moveNext();
-        HashTableForm.moveNext();
-        SLLForm.moveNext();
+        for (auto& i:form_button) i.moveNext();
         MenuDSA.moveNext();
     }
     if (zoom.getProgress()==1) {
-        if (BSTForm.isPressed()) {
-            return_value = 3;
-            BSTForm.skip();
-            zoom.host = &BSTForm;
-            zoom.start();
-        }
-        if (GraphForm.isPressed()) {
-            return_value = 4;
-            GraphForm.skip();
-            zoom.host = &GraphForm;
-            zoom.start();
-        }
-        if (HashTableForm.isPressed()) {
-            return_value = 5;
-            HashTableForm.skip();
-            zoom.host = &HashTableForm;
-            zoom.start();
-        }
-        if (SLLForm.isPressed()) {
-            return_value = 6;
-            SLLForm.skip();
-            zoom.host = &SLLForm;
-            zoom.start();
+        for (int i = 0; i<form_button.size(); i++) {
+            if (form_button[i].isPressed()) {
+                return_value = i+3;
+                form_button[i].skip();
+                zoom.host = &form_button[i];
+                zoom.start();
+            }
         }
     }
 }

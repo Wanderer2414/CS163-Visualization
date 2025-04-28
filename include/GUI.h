@@ -2,33 +2,18 @@
 #define GUI_H
 
 #include "Global.h"
+#include "SettingPackage.h"
 #include "SlowMotion.h"
 #include "TextButton.h"
 
 class Node : public TextButton, public SlowMotion {
 public:
-    Node(const int& index, const int& val);
-    virtual int         getIndex() const,
-                        getValue() const,
-                        getHeight() const;
+    Node(ButtonSetting* button_setting, TextSetting* text_setting);
     virtual void        draw() override,
-                        handle() override,
-                        setPosition(const float& x, const float& y) override,
-                        updateHeight();
-    Node                *left = nullptr,
-                        *right = nullptr,
-                        *parent = nullptr;
-    virtual Vector2     getCenter() const,
-                        getPosition() const override;
-    void                setValue(int x);
-    Color               anim_color;
-    bool                is_animating = false;
+                        handle() override;
+    virtual Vector2     getPosition() const override;
     ~Node();
 private:
-    int                 m_index = 0,
-                        m_value = 0,
-                        m_height = 1;
-    Vector2             m_center;
 };
 
 #endif
