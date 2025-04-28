@@ -8,9 +8,12 @@
 
 class Node : public TextButton, public SlowMotion {
 public:
-    Node(ButtonSetting* button_setting, TextSetting* text_setting);
+    Node();
+    virtual int         getValue() const;
     virtual void        draw() override,
                         handle() override;
+
+    virtual void        setValue(const int& value);
     virtual Vector2     getPosition() const override;
     ~Node();
 private:

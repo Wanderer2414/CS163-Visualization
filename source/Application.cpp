@@ -1,6 +1,6 @@
-#include "../include/Application.h"
-#include "../include/IncludePath.h"
-#include "../include/Global.h"
+#include "Application.h"
+#include "IncludePath.h"
+#include "Global.h"
 #include "RedBlackForm.h"
 
 Vector2 WindowSize;
@@ -12,7 +12,7 @@ const vector<string> form_name {
     "Singly Linked List",
     "Red black tree"
 };
-
+FormSetting* setting = 0;
 Application::Application()
 {
     InitWindow(window_sizes[window_size_index].x, window_sizes[window_size_index].y, "Visualization");
@@ -55,27 +55,27 @@ void Application::run() {
         }
             break;
         case 3: {
-            AVLTreeForm AVLtreeForm(0, *form_setting, window_sizes[window_size_index]);
+            AVLTreeForm AVLtreeForm(0);
             form_index = AVLtreeForm.run();
         }
             break;
         case 4: {
-            Graph GraphForm(1,*form_setting, window_sizes[window_size_index]);
+            Graph GraphForm(1);
             form_index = GraphForm.run();
         }
             break;
         case 5: {
-            HT::HashTable HashTableForm(2, *form_setting, window_sizes[window_size_index]);
+            HT::HashTable HashTableForm(2);
             form_index = HashTableForm.run();
         }
             break;
         case 6: {
-            SLL::SLLForm SLLForm(3, *form_setting, window_sizes[window_size_index]);
+            SLL::SLLForm SLLForm(3);
             form_index = SLLForm.run();
         }
             break;
         case 7: {
-            RedBlackForm RBForm(4, *form_setting, window_sizes[window_size_index]);
+            RedBlackForm RBForm(4);
             form_index = RBForm.run();
         }
             break;

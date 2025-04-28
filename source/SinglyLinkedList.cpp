@@ -84,7 +84,8 @@ Vector2 SLL::ListNode::getPosition() const
 	return TextButton::getPosition();
 }
 
-SLL::SLLForm::SLLForm(const int &index, FormSetting f_setting, const Vector2 &window_size): Form(index,f_setting,window_size)
+SLL::SLLForm::SLLForm(const int &index): 
+	Form(index)
 {
 	m_node_size = 50;
 	m_node_spacing = 50;

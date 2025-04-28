@@ -10,7 +10,7 @@
 
 class AVLTreeForm : public Form {
 public:
-    AVLTreeForm(const int& index, FormSetting form_setting, const Vector2& window_size);
+    AVLTreeForm(const int& index);
     struct Node {
         int val;
         int height;

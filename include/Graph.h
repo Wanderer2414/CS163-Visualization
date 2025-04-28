@@ -61,7 +61,7 @@ public:
         
         wait
     };
-    Graph(const int& index, FormSetting form_setting, const Vector2& window_size);
+    Graph(const int& index);
     
     virtual void        add(const vector<std::string>& value) override,
                         remove(const std::string &str)        override,

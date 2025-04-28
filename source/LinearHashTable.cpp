@@ -75,8 +75,8 @@ void HT::Node::handle() {
     }
 }
 
-HT::HashTable::HashTable(const int& index, FormSetting f_setting, const Vector2& window_size) : 
-    Form(index, f_setting, window_size),
+HT::HashTable::HashTable(const int& index) : 
+    Form(index),
     size_label(&form_setting),
     m_memory_sz_textBox(&form_setting, &form_setting) {
     m_node_spacing = 20;

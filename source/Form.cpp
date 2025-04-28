@@ -1,10 +1,13 @@
 #include "Form.h"
-#include "Application.h"
 #include "General.h"
 
-Form::Form(const int& index, FormSetting f_setting, const Vector2& window_size) :
-    m_window_size(window_size),
-    form_setting(f_setting),
+extern FormSetting* setting;
+extern Vector2 WindowSize;
+extern const vector<string> form_name;
+
+Form::Form(const int& index) :
+    m_window_size(WindowSize),
+    form_setting(*setting),
     m_progress(&form_setting),
     console(&form_setting, &form_setting),
     buttonTab(&form_setting, &form_setting),

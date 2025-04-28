@@ -1,8 +1,8 @@
 ﻿#include "../include/AVLTree.h"
 #include "../include/General.h"
 
-AVLTreeForm::AVLTreeForm(const int& index, FormSetting form_setting, const Vector2& window_size) :
-	Form(index, form_setting, window_size) {
+AVLTreeForm::AVLTreeForm(const int& index) :
+	Form(index) {
 	m_root = 0;
 	vroot = 0;
 }

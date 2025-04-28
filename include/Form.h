@@ -20,7 +20,7 @@
 
 class Form : public CommandList {
 public:
-    Form(const int& index, FormSetting form_setting, const Vector2& window_size);
+    Form(const int& index);
     FormSetting     form_setting;
     virtual int     run();
     virtual void    handle(),

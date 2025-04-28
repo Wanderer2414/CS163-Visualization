@@ -74,7 +74,7 @@ namespace SLL {
 			_moveCorner = 17,
 			_forRemove = 18
 		};
-		SLLForm(const int& index, FormSetting form_setting, const Vector2& window_size);
+		SLLForm(const int& index);
 		virtual void    add(const vector<string>& str) override,
 						remove(const std::string& str) override,
 						draw() override,

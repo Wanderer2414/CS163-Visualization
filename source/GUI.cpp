@@ -3,10 +3,17 @@
 #include "RaylibExtra.h"
 #include "raylib.h"
 
-Node::Node(ButtonSetting* button_setting, TextSetting* text_setting): TextButton(button_setting, text_setting) {
+extern FormSetting* setting;
+Node::Node(): TextButton(setting, setting) {
     setSize(50, 50);
 }
+int Node::getValue() const {
+    return 0;
+}
+void Node::setValue(const int& value) {
+}
 void Node::handle() {
+    setText(to_string(getValue()));
     TextButton::handle();
     SlowMotion::handle();
 }

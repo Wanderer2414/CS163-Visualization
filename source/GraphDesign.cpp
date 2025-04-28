@@ -2,8 +2,8 @@
 #include "../include/IncludePath.h"
 #include "../include/General.h"
 
-Graph::Graph(const int& index, FormSetting f_setting, const Vector2& window_size):
-    Form(index, f_setting, window_size),
+Graph::Graph(const int& index):
+    Form(index),
     notation_box(&form_setting),
     heap(&form_setting),
     track_graph_hover(&form_setting, &form_setting),
@@ -276,7 +276,7 @@ Graph::Graph(const int& index, FormSetting f_setting, const Vector2& window_size
     create_box.reLocate(&create_textbox);
     create_box.reLocate(&create_button);
 
-    color_box.setPosition(window_size.x - 500,100);
+    color_box.setPosition(m_window_size.x - 500,100);
     color_box.setSize(120, 105);
     color_box.setVisible(false);
 
