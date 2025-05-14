@@ -1,28 +1,31 @@
-#include "../include/Button.h"
+#include "Button.h"
+#include "Controller.h"
+#include "RaylibExtra.h"
 
-Button::Button() {
-    before_press = 6;
-    m_is_pressed = m_is_hovered = 0;
+Button::Button(ButtonSetting* button_setting, TextSetting *text_setting) {
+    buttonSetting   = button_setting;
+    textSetting     = text_setting;
 }
-bool Button::isHovered() const {
-    return m_is_hovered;
-}
-bool Button::isPressed() const {
-    return m_is_pressed;
-}
-void Button::draw() {
-    
-}
-void Button::handle() {
-    m_is_hovered = CheckCollisionPointRec(GetMousePosition(), { m_position.x, m_position.y, m_size.x, m_size.y });
-    if (m_is_hovered && IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) before_press = 0;
-    if (before_press < 3) before_press++;
-    else if (before_press == 3) {
-        m_is_pressed = true;
-        before_press++;
-    }
-    else m_is_pressed = false;
-}
+
 Button::~Button() {
 
+}
+bool Button::setHover(const bool& hover) {
+    bool ans = Controller::setHover(hover);
+    if (ans) {
+        pColor = buttonSetting->normal_color;
+        if (hover) pColor = buttonSetting->hover_color;
+    }
+    return ans;
+}
+bool Button::contains(const Vector2& position) const {
+    return CheckCollisionPointRec(position, REC(getPosition(), getSize()));
+}
+bool Button::afterHandle() {
+    bool is_changed = Controller::afterHandle();
+    
+    return is_changed;
+}
+void Button::draw() const {
+    DrawRectangleRounded(buttonSetting, getPosition(), getSize(), pColor);
 }

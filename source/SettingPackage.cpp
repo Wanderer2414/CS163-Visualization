@@ -1,7 +1,21 @@
 #include "../include/SettingPackage.h"
 #include "../include/IncludePath.h"
 
-FormSetting LightTheme = {
+ButtonSetting ButtonSetting::Default = {
+    0.1f, 30,
+    {100, 160, 220, 255},  // Button Pressed 
+    {130, 180, 230, 255},  // Button Hover 
+    {160, 200, 250, 255},   // Button 
+
+    {255, 0, 0, 255},
+    {89, 254, 89, 255},
+    {255, 255, 51, 255},
+};
+TextSetting TextSetting::Default = {
+    {}, 30, 25, 15, 2,
+    {20, 40, 80, 255},     // Text 
+};
+FormSetting FormSetting::LightTheme = {
     {
         0.1f, 30,
         {100, 160, 220, 255},  // Button Pressed 
@@ -85,7 +99,7 @@ FormSetting LightTheme = {
     source"/asset/images/dark/SLL2_hovered.png"
 };
 
-FormSetting DarkTheme = {
+FormSetting FormSetting::DarkTheme = {
     {
         0.1f, 30,
         {54, 63, 68, 255},    // Button Pressed (Deepest Green-Blue)

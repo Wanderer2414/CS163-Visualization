@@ -5,31 +5,34 @@
 
 class ButtonSetting {
 public:
-    float   roundness;
-    int     segment;
-    Color   click_color ,     
-            hover_color ,
-            normal_color;
+        static ButtonSetting Default;
+        float   roundness;
+        int     segment;
+        Color   click_color ,     
+                hover_color ,
+                normal_color;
     
-    Color   hightlight_color1,
-            hightlight_color2,
-            hightlight_color3;
+        Color   hightlight_color1,
+                hightlight_color2,
+                hightlight_color3;
 };
 class TextSetting {
 public:
-    Font    font;
-    float   font_size,
-            medium_font_size,
-            small_font_size,
-            spacing;
-    Color   color;
+        static TextSetting Default;
+        Font    font;
+        float   font_size,
+                medium_font_size,
+                small_font_size,
+                spacing;
+        Color   color;
 };
 class FormSetting: public ButtonSetting, public TextSetting {
 public:
-    Color   middle_color;
-    Color   background_color,
-            reverse_color,
-            middle_reverse_color;
+        static FormSetting LightTheme, DarkTheme;
+        Color   middle_color;
+        Color   background_color,
+                reverse_color,
+                middle_reverse_color;
 
     const char* back_normal;
     const char* back_hovered;
@@ -97,8 +100,5 @@ public:
     const char* SLL3;
     const char* SLL2_hovered;
 };
-
-extern FormSetting LightTheme;
-extern FormSetting DarkTheme;
 
 #endif

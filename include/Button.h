@@ -5,19 +5,20 @@
 #include "SettingPackage.h"
 #include "SlowMotion.h"
 #include "Global.h"
+#include "raylib.h"
 
-class Button : public Controller {
+class Button: public Controller {
 public:
-    Button();
-    bool                isHovered() const override,
-                        isPressed() const;
-    virtual void        handle()        override,
-                        draw()          override;
+    Button(ButtonSetting* button_setting = &ButtonSetting::Default, TextSetting* text_setting = &TextSetting::Default);
     ~Button();
-protected:
-    char                before_press;
-    bool                m_is_hovered = false,
-                        m_is_pressed = false;
+    ButtonSetting*  buttonSetting;
+    TextSetting*    textSetting;
+    virtual bool    contains(const Vector2& position) const override,
+                    setHover(const bool& hover) override,
+                    afterHandle()               override;
+    virtual void    draw() const override;
+private:
+    Color           pColor;
 };
 
 #endif

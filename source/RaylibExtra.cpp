@@ -1,4 +1,5 @@
-#include "../include/RaylibExtra.h"
+#include "RaylibExtra.h"
+#include "raylib.h"
 
 bool CheckCollisionArc(const Vector2& point, const Vector2& start, const Vector2& end, const float& angular, const float& width) {
     Vector2 middle = (start+end)/2;

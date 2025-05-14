@@ -7,19 +7,31 @@
 class Controller {
 public:
     Controller();
-    virtual bool    isHovered() const,
-                    isFocus() const;
-    virtual void    handle()    ,
-                    draw()      ,
-                    setPosition(const float& x, const float& y),
-                    setSize(const float& width, const float& height);
-    virtual Vector2 getSize() const,
-                    getPosition() const;
-    virtual void    update();
     ~Controller();
-protected:
-    Vector2         m_position,
-                    m_size;
+    virtual bool    isHovered()     const,
+                    isFocus()       const;
+    virtual Vector2 getSize()       const,
+                    getPosition()   const;
+    virtual bool    setHover(const Vector2& position),
+                    setHover(const bool& hover),
+                    contains(const Vector2& position) const,
+                    beforeHandle(),
+                    handle(),
+                    afterHandle();
+    virtual void    draw()          const,
+                    setSize(const float& width, const float& height),
+                    setSize(const Vector2& size),
+                    setPosition(const float& x, const float& y),
+                    setPosition(const Vector2& position),
+                    setFocus(const bool& focus);
+    virtual void    update();
+private:
+    bool            pIsFocus,
+                    pIsHovered,
+                    pIsPress,
+                    pIsRelease;
+    Vector2         pPosition,
+                    pSize;
 };
 
 #endif
