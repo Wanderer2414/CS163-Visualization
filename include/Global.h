@@ -29,4 +29,14 @@
 
 using namespace std;
 
+#ifdef __linux__
+namespace XL {
+    #include "X11/Xlib.h"
+    #include "X11/Xutil.h"
+}
+#endif
+#ifdef _WIN32
+#include <windows.h>
+#endif
+
 #endif

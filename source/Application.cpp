@@ -1,4 +1,5 @@
 #include "Application.h"
+#include "General.h"
 #include "IncludePath.h"
 #include "Global.h"
 #include "RedBlackForm.h"
@@ -15,6 +16,8 @@ const vector<string> form_name {
 FormSetting* setting = 0;
 Application::Application()
 {
+    window_sizes.push_back(MyBase::getWindowSize());
+    window_size_index = window_sizes.size()-1;
     InitWindow(window_sizes[window_size_index].x, window_sizes[window_size_index].y, "Visualization");
     InitAudioDevice();
     SetTargetFPS(60);
@@ -29,7 +32,7 @@ void Application::run() {
     while (!WindowShouldClose()) {
         switch (form_index) {
         case 0: {
-            MenuStart menuStart(setting, window_sizes[window_size_index]);
+            MenuStart menuStart(setting, window_sizes[window_size_index], window_sizes);
             menuStart.setMode(mode);
             menuStart.setSizeIndex(window_size_index);
             form_index = menuStart.run();

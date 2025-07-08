@@ -4,7 +4,7 @@
 
 extern Vector2 WindowSize;
 
-MenuStart::MenuStart(FormSetting* f_setting, const Vector2& windowSize) :
+MenuStart::MenuStart(FormSetting* f_setting, const Vector2& windowSize, const std::vector<Vector2>& windowSizes) :
     form_setting(f_setting),
     m_windowSize(windowSize),
     Title(&title_setting),
@@ -12,7 +12,7 @@ MenuStart::MenuStart(FormSetting* f_setting, const Vector2& windowSize) :
     Setting(form_setting, form_setting),
     AboutUs(form_setting ,form_setting),
     Exit(form_setting,form_setting),
-    setting_box(form_setting)
+    setting_box(form_setting, windowSizes)
 {
     children.push_back(&Start);
     children.push_back(&Setting);

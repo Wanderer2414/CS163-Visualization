@@ -14,7 +14,7 @@
 
 class MenuStart {
 public:
-    MenuStart(FormSetting* form_setting, const Vector2& windowSize);
+    MenuStart(FormSetting* form_setting, const Vector2& windowSize, const std::vector<Vector2>& windowSizes);
     int             getMode() const;
     virtual int     run();
     virtual void    handle(),

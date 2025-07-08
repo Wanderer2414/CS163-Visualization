@@ -1,4 +1,5 @@
 #include "../include/General.h"
+#include "raylib.h"
 
 extern Vector2 WindowSize;
 
@@ -155,4 +156,31 @@ vector<string> split(const string& str) {
     }
     if (ans.back().empty()) ans.pop_back();
     return ans;
+}
+namespace MyBase {
+    Vector2 getWindowSize() {
+        #ifdef __linux__
+        using namespace XL;
+        XL::Display* display = XL::XOpenDisplay(NULL);
+        if (!display) {
+            std::cerr << "Cannot open display\n";
+            exit(0);
+        }
+        XL::Screen* screen = ScreenOfDisplay(display, 0);
+        float x = screen->width, y = screen->height;
+        XCloseDisplay(display);
+        return {x, y-40.f/1010*y};
+        #endif
+
+        #ifdef _WIN32
+        SetProcessDPIAware();
+        int width = GetSystemMetrics(SM_CXSCREEN);
+        int height = GetSystemMetrics(SM_CYSCREEN);
+        std::cout << width << " " << height << std::endl;
+        return {width, height-40.f/1010*height};
+        #endif
+    }
+    std::string toString(const Vector2& vector) {
+        return TextFormat("{%.f,%.f}", vector.x, vector.y);
+    }
 }

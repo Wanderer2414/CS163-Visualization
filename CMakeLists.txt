@@ -19,4 +19,9 @@ file(GLOB SOURCES
 )
 add_executable(DSAVisualization ${SOURCES})
 
-target_link_libraries(DSAVisualization PRIVATE raylib)
+set(LIB raylib)
+if (UNIX) 
+    set(LIB X11 raylib)
+endif()
+
+target_link_libraries(DSAVisualization PRIVATE ${LIB})

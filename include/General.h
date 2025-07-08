@@ -2,6 +2,7 @@
 #define GENERAL_H
 
 #include "Global.h"
+#include "raylib.h"
 
 float abs(const Vector2& vector);
 
@@ -45,4 +46,8 @@ vector<int> readFromFileInt(const string& link);
 
 vector<string> split(const string& str);
 
+namespace MyBase {
+    Vector2 getWindowSize();
+    std::string toString(const Vector2& vector);
+}
 #endif

@@ -15,7 +15,7 @@
 
 class MenuBox : public Controller, public VerticalOpen {
 public:
-    MenuBox(FormSetting*& f_setting);
+    MenuBox(FormSetting*& f_setting, const std::vector<Vector2>& windowSizes);
     int             getMode() const,
                     getWindowSizeIndex();
     FormSetting     *&form_setting;

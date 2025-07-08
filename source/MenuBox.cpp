@@ -1,7 +1,7 @@
 #include "../include/MenuBox.h"
 #include "../include/General.h"
 
-MenuBox::MenuBox(FormSetting*& f_setting): 
+MenuBox::MenuBox(FormSetting*& f_setting, const std::vector<Vector2>& windowSizes): 
         form_setting(f_setting), 
         text_setting(*f_setting),
         sun(&LightTheme, &DarkTheme), 
@@ -105,9 +105,7 @@ MenuBox::MenuBox(FormSetting*& f_setting):
 
     window_size.setPosition(TransX(270), TransY(80));
     window_size.setSize(TransX(200), TransY(40));
-    window_size.push_back("1366x768");
-    window_size.push_back("1820x980");
-    window_size.push_back("1024x600");
+    for (auto& size:windowSizes) window_size.push_back(MyBase::toString(size));
 
     font_size.setPosition(TransX(270), TransY(130));
     font_size.setSize(TransX(200), TransY(40));

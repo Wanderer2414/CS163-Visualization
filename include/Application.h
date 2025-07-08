@@ -17,7 +17,7 @@ public:
     void    run();
     ~Application();
 private:
-    const Vector2 window_sizes[3] = {
+    std::vector<Vector2> window_sizes = {
         Vector2({1366, 700}), 
         Vector2({1820, 980}), 
         Vector2({1024, 600}),
