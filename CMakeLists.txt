@@ -19,9 +19,4 @@ file(GLOB SOURCES
 )
 add_executable(DSAVisualization ${SOURCES})
 
-add_custom_command(TARGET DSAVisualization POST_BUILD
-    COMMAND ${CMAKE_COMMAND} -E copy_directory_if_different
-        ${CMAKE_SOURCE_DIR}/asset ${CMAKE_BINARY_DIR}/asset
-)
-
 target_link_libraries(DSAVisualization PRIVATE raylib)

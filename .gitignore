@@ -1,5 +1,6 @@
 # Ignore Visual Studio-specific files
 .vs/
+.vscode/
 *.suo
 *.user
 *.vcxproj.user
@@ -37,11 +38,7 @@ x86/
 *.bak
 *.swp
 *.vsidx
-
+.clangd
+DSAVisualization
 build/
-build/.cmake/api/v1/reply/cmakeFiles-v1-9c0105ce7a2589c26b58.json
-build/.cmake/api/v1/reply/codemodel-v2-4fcd21d4603e4ff388c3.json
-build/.cmake/api/v1/reply/directory-.-Debug-d0094a50bb2071803777.json
-/build
-out/build/x64-Debug/.cmake/api/v1/reply/target-DSAVisualization-Debug-669b9b573ca8d85e0b5d.json
-out/build/x64-Debug/build.ninja
+out/
