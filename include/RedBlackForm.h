@@ -44,6 +44,8 @@ private:
 
     void    rotateRight(RBNode*& root),
             rotateLeft(RBNode*& root),
+            rotateLeftRight(RBNode*& root),
+            rotateRightLeft(RBNode*& root),
             free(RBNode*& root),
             erase(RBNode*& root),
             erase(RBNode* root, RBNode*& k);

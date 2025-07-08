@@ -101,12 +101,36 @@ void RBList::rotateLeft(RBNode*& root) {
     root = root->right;
     tmp->right = root->left;
     root->left = tmp;
+    root->red = false;                                                                  
+    root->right->red = root->left->red = true;
 }
 void RBList::rotateRight(RBNode*& root) {
     RBNode* tmp = root;
     root = root->left;
     tmp->left = root->right;
     root->right = tmp;
+    root->red = false;                                                                  
+    root->right->red = root->left->red = true;
+}
+void RBList::rotateLeftRight(RBNode*& root) {
+    RBNode* tmp = root->left->right;
+    root->left->right = tmp->left;
+    tmp->left = root->left;
+    root->left = tmp->right;
+    tmp->right = root;
+    root = tmp;
+    root->red = false;
+    root->right->red = root->left->red = true;
+}
+void RBList::rotateRightLeft(RBNode*& root) {
+    RBNode* tmp = root->right->left;
+    root->right->left = tmp->right;
+    tmp->right = root->right;
+    root->right = tmp->left;
+    tmp->left = root;
+    root = tmp;
+    root->red = false;
+    root->right->red = root->left->red = true;
 }
 bool RBList::insert(RBNode*& root, const int& value) {
     bool ans = false;
@@ -116,9 +140,17 @@ bool RBList::insert(RBNode*& root, const int& value) {
         ans = true;
     }
     else {
-        if (!root->red && root->right && root->right->red && root->left && root->left->red) {
+        if (root == RBList::root) {
+            if (root->right && root->right->red && root->left && root->left->red) {
+                root->right->red = root->left->red = false;
+            }
+        }
+        if (!root->red && 
+            root->right && root->right->red && 
+            root->left && root->left->red) {
+
             root->right->red = root->left->red = false;
-            if (root!=RBList::root) root->red = true;
+            root->red = !root->red;
         }
         if (value>root->value) {
             ans = insert(root->right, value);
@@ -127,12 +159,8 @@ bool RBList::insert(RBNode*& root, const int& value) {
                     rotateLeft(root);
                 }
                 else if (root->right->left && root->right->left->red) {
-                    rotateRight(root->right);
-                    rotateLeft(root);
+                    rotateRightLeft(root);
                 }
-                root->red = false;
-                if (root->left) root->left->red = true;
-                if (root->right) root->right->red = true;
             }
         }
         else if (value<root->value)  {
@@ -142,12 +170,8 @@ bool RBList::insert(RBNode*& root, const int& value) {
                     rotateRight(root);
                 }
                 else if (root->left->right && root->left->right->red) {
-                    rotateLeft(root->left);
-                    rotateRight(root);
+                    rotateLeftRight(root);
                 }
-                root->red = false;
-                if (root->left) root->left->red = true;
-                if (root->right) root->right->red = true;
             }
         }
     }
